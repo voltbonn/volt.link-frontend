@@ -18,7 +18,6 @@ function App() {
           && !!data.user
           && !!data.user.id
           && !!data.user.status
-          && data.user.status === 'internal'
         ) {
           setUser(data.user)
           setLoggedIn(true)
