@@ -57,6 +57,15 @@ footer {
   padding: var(--basis_x4);
   text-align: center;
 }
+header {
+  padding: var(--basis_x2);
+  display: flex;
+  justify-content: space-between;
+}
+header h2,
+header button{
+  margin: 0;
+}
 
 h1{
   font-size: calc(var(--font-add) + var(--basis_x4));
