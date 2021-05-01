@@ -31,11 +31,11 @@ function App() {
         loggedIn
           ? <>
             <h2>Hi {user.displayName}!</h2>
-            <a href="https://volt.link/logout"><button>Logout</button></a>
+            <a href="https://volt.link/logout?redirect_to=https://edit.volt.link/"><button>Logout</button></a>
           </>
           : <>
             <h2>edit.volt.link</h2>
-            <a href="https://volt.link/login"><button>Login</button></a>
+            <a href="https://volt.link/login?redirect_to=https://edit.volt.link/"><button>Login</button></a>
           </>
       }
     </header>
