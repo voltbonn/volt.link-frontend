@@ -15,7 +15,7 @@ function App() {
     </div>
     <footer>
       <a href="mailto:thomas.rosen@volteuropa.org">Contact</a>
-      &nsbsp; • &nsbsp;
+      &nbsp; • &nbsp;
       <a href="https://github.com/voltbonn/edit.volt.link">Source Code</a>
     </footer>
   </>)
