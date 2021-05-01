@@ -4,7 +4,9 @@ import classes from './App.module.css'
 function App() {
 
   useEffect(()=>{
-    fetch('https://volt.link/user.json')
+    fetch('https://volt.link/user.json', {
+      credentials: 'same-origin'
+    })
       .then(response => response.json())
       .then(data => console.log(data))
       .catch(error => console.error(error))
