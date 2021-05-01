@@ -5,6 +5,7 @@ function App() {
     <div className={classes.app}>
     </div>
     <footer>
+      <a href="mailto:thomas.rosen@volteuropa.org">Contact</a>
     </footer>
   </>)
 }
