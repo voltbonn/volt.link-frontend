@@ -14,7 +14,13 @@ function App() {
       .then(response => response.json())
       .then(data => {
         console.log(data)
-        if (!!data && !!data.user && !!data.user.id) {
+        if (
+          !!data
+          && !!data.user
+          && !!data.user.id
+          && !!data.user.status
+          && data.user.status === 'internal'
+        ) {
           setUser(data.user)
           setLoggedIn(true)
         } else {
@@ -25,17 +31,19 @@ function App() {
       .catch(error => console.error(error))
   }, [setUser, setLoggedIn])
 
+  console.log('window.location.toString()', window.location.toString())
+
   return (<>
     <header>
       {
         loggedIn
           ? <>
             <h2>Hi {user.displayName}!</h2>
-            <a href="https://volt.link/logout?redirect_to=https://edit.volt.link/"><button>Logout</button></a>
+            <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}><button>Logout</button></a>
           </>
           : <>
             <h2>edit.volt.link</h2>
-            <a href="https://volt.link/login?redirect_to=https://edit.volt.link/"><button>Login</button></a>
+            <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}><button>Login</button></a>
           </>
       }
     </header>
