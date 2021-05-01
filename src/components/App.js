@@ -29,8 +29,6 @@ function App() {
       .catch(error => console.error(error))
   }, [setUser, setLoggedIn])
 
-  console.log('window.location.toString()', window.location.toString())
-
   return (<>
     <header>
       {
