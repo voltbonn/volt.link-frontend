@@ -5,7 +5,7 @@ function App() {
 
   useEffect(()=>{
     fetch('https://volt.link/user.json', {
-      credentials: 'same-origin'
+      credentials: 'include'
     })
       .then(response => response.json())
       .then(data => console.log(data))
