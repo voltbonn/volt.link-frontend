@@ -5,7 +5,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState({})
 
-
   useEffect(()=>{
     fetch('https://volt.link/user.json', {
       mode: 'cors',
