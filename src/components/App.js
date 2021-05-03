@@ -35,7 +35,7 @@ function App() {
         loggedIn
           ? <>
             <h2>Hi {user.displayName}!</h2>
-            <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}><button>Logout</button></a>
+            <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}><button className="red">Logout</button></a>
           </>
           : <>
             <h2>edit.volt.link</h2>
