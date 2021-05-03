@@ -15,8 +15,7 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange }) {
     aria-label={ariaLabel}
     className="buttonRow"
     style={{
-      margin: '0 var(--basis)',
-      display: 'inline-block',
+      display: 'inline-block'
     }}
   >
     {

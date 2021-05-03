@@ -196,14 +196,8 @@ button:focus.choosen:after {
     box-shadow: 0 0 0 var(--basis_x0_2) var(--on-background-contrast);
 }
 
-.buttonRow{
-  margin-top: var(--basis);
-}
 .buttonRow button{
-  margin: 0 var(--basis_x0_5);
-}
-.buttonRow button:first-of-type{
-  margin-left: 0;
+  margin: var(--basis) var(--basis) 0 0;
 }
 .buttonRow button:laft-of-type{
   margin-right: 0;

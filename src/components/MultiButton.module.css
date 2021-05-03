@@ -1,0 +1,10 @@
+
+.buttonRow{
+  margin-top: var(--basis);
+}
+.buttonRow button{
+  margin: var(--basis) var(--basis) 0 0;
+}
+.buttonRow button:laft-of-type{
+  margin-right: 0;
+}

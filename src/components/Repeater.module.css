@@ -4,6 +4,9 @@
   flex-direction: row;
   align-items: flex-start;
 }
+.row:first-of-type {
+  margin-top: 0;
+}
 
 .row .item {
   flex-grow: 1;

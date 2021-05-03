@@ -22,7 +22,7 @@ function Item({ item, style, className }){
       {
         type === 'headline'
         ? <p>Headline:</p>
-        : <p>Link:</p>
+        : null
       }
 
       {
@@ -139,7 +139,7 @@ function Editor() {
 
       <hr />
 
-      <p>Title:</p>
+      <p style={{marginBottom: 'var(--basis)'}}>Title:</p>
       <Repeater
         defaultValue={[
           { locale: 'de', value: 'Volt Bonn' },
@@ -175,8 +175,7 @@ function Editor() {
         }
       />
       <br />
-      <br />
-      <p>Short Description:</p>
+      <p style={{ marginBottom: 'var(--basis)' }}>Short Description:</p>
       <Repeater
         defaultValue={[
           {locale: 'en', value: 'hello'},
@@ -212,30 +211,18 @@ function Editor() {
         }
       />
 
-      {/* <textarea
-        aria-label="Short Description"
-        placeholder="description"
-        style={{
-          marginRight: '0',
-          marginLeft: '0',
-          width: 'calc(100% - var(--basis_x2))'
-        }}
-      /> */}
       <br />
-      <br />
-      <div>
-        <p style={{display: 'inline'}}>Use as:</p>
-        <MultiButton
-          ariaLabel="Use as"
-          defaultValue={useAsDefault}
-          items={[
-            { value: 'redirect', title: 'Redirect' },
-            { value: 'linklist', title: 'Linklist' },
-            { value: 'deactivated', title: 'Nothing / Deactivated' }
-          ]}
-          onChange={handleUseAsChange}
-        />
-      </div>
+      <p>Use as:</p>
+      <MultiButton
+        ariaLabel="Use as"
+        defaultValue={useAsDefault}
+        items={[
+          { value: 'redirect', title: 'Redirect' },
+          { value: 'linklist', title: 'Linklist' },
+          { value: 'deactivated', title: 'Nothing / Deactivated' }
+        ]}
+        onChange={handleUseAsChange}
+      />
 
       <hr />
 
@@ -268,7 +255,7 @@ function Editor() {
 
       <div className="buttonRow">
         <button className="green">Save</button>
-        <button>Share</button>
+        {/* <button>Share</button> */}
       </div>
 
     </div>
