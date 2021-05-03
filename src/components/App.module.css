@@ -1,9 +1,9 @@
 .app {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: flex-start;
-  text-align: center;
+  /* text-align: center; */
 
   padding: var(--basis_x4);
   min-height: 80vh;

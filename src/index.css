@@ -1,11 +1,22 @@
 :root {
   --white: #fff;
   --grey: #ede8f1;
+  --dark-grey: #aa94c0;
 
   --purple: #502379;
   --purple-dark: #140022;
 
-  --basis: 2vmin;
+  --yellow: #FDC220;
+  --on-yellow: #fff;
+  --green: #1BBE6F;
+  --on-green: #fff;
+  --blue: #82D0F4;
+  --on-blue: #fff;
+  --red: #E63E12;
+  --on-red: #fff;
+
+  --basis: 0.5rem;
+  --basis_x0_2: calc(0.2 * var(--basis));
   --basis_x0_5: calc(0.5 * var(--basis));
   --basis_x2: calc(2 * var(--basis));
   --basis_x4: calc(4 * var(--basis));
@@ -36,14 +47,16 @@ html{
     --background: var(--purple-dark);
     --background-contrast: var(--purple);
     --on-background: var(--white);
-    --on-background-contrast: var(--grey);
+    --on-background-contrast: var(--dark-grey);
   }
 }
 
 body{
   background: var(--background-contrast);
   color: var(--on-background);
-  font-size: calc(var(--font-add) + var(--basis));
+
+  --body-font-size: calc(var(--font-add) + var(--basis));
+  font-size: var(--body-font-size);
 }
 a,
 a:visited{
@@ -61,6 +74,7 @@ header {
   padding: var(--basis_x2);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 header h2,
 header button{
@@ -83,24 +97,127 @@ p{
   max-width: 100%;
 }
 
-button{
-  position: relative;
+button,
+textarea,
+input[type="text"],
+select{
+  min-width: 0px;
   outline: none;
   border: none;
   margin: var(--basis);
-  padding: var(--basis_x0_5) var(--basis);
-  font-size: calc(var(--font-add) + var(--basis));
-  font-weight: bold;
-  cursor: pointer;
-
+  font-size: var(--body-font-size);
+}
+textarea,
+input[type="text"]{
+  padding: var(--basis);
+  background: var(--background-contrast);
+  color: var(--on-background);
+  box-shadow: inset 0 0 0 calc(0.2 * var(--basis)) var(--on-background);
+}
+textarea.inverted,
+input[type="text"].inverted{
   background: var(--on-background);
   color: var(--background-contrast);
-  transition: transform 0.2s ease;
+  box-shadow: inset 0 0 0 calc(0.2 * var(--basis)) var(--on-background);
 }
-button.isInRow{
-  margin: var(--basis_x0_5);
+
+textarea:focus,
+input[type="text"]:focus{
+  background: var(--background-contrast);
+  color: var(--on-background);
+  box-shadow: inset 0 0 0 calc(0.2 * var(--basis)) var(--on-background-contrast);
+}
+textarea {
+  resize: vertical;
+}
+
+button,
+select{
+  font-weight: bold;
+  transition: transform 0.2s ease;
+  background: var(--on-background);
+  color: var(--background-contrast);
+  position: relative;
+  cursor: pointer;
+  padding: var(--basis) var(--basis_x2);
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 6px);
+  background-position-y: 50%;
+  padding: var(--basis) calc(var(--basis_x2) + 14px) var(--basis) var(--basis_x2);
+
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+}
+@media (prefers-color-scheme: dark) {
+  select {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  }
+}
+
+button.yellow {
+  background: var(--yellow);
+  color: var(--on-yellow);
+}
+button.green {
+  background: var(--green);
+  color: var(--on-green);
+}
+button.blue {
+  background: var(--blue);
+  color: var(--on-blue);
+}
+button.red {
+  background: var(--red);
+  color: var(--on-red);
+}
+button:focus {
+  background: var(--on-background-contrast);
+  color: var(--background-contrast);
 }
 button:hover{
   transform-origin: center center;
   transform: scale(1.05);
+}
+button.choosen:after {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--basis_x0_2));
+    right: calc(-1 * var(--basis_x0_2));
+    bottom: calc(-1 * var(--basis_x0_2));
+    left: calc(-1 * var(--basis_x0_2));
+    box-shadow: 0 0 0 var(--basis_x0_2) var(--on-background);
+}
+button:focus.choosen:after {
+    box-shadow: 0 0 0 var(--basis_x0_2) var(--on-background-contrast);
+}
+
+.buttonRow{
+  margin-top: var(--basis);
+}
+.buttonRow button{
+  margin: 0 var(--basis_x0_5);
+}
+.buttonRow button:first-of-type{
+  margin-left: 0;
+}
+.buttonRow button:laft-of-type{
+  margin-right: 0;
+}
+
+hr {
+  margin: var(--basis_x4) 0;
+  border: none;
+  height: var(--basis_x0_2);
+  background: var(--on-background);
+}
+
+@media (max-width: 1000px) {
+  .hideOnSmallScreen {
+    display: none;
+  }
 }

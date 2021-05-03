@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react'
 import classes from './App.module.css'
 
+import {
+  Switch,
+  Route,
+} from 'react-router-dom'
+
+import Chooser from './Chooser.js'
+import Editor from './Editor.js'
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState({})
@@ -44,6 +52,20 @@ function App() {
       }
     </header>
     <div className={classes.app}>
+      {
+        !loggedIn
+          ? <p>Login in the upper right corner, to edit volt.link urls.</p>
+          : <>
+              <Switch>
+                <Route path="/edit/:code">
+                  <Editor />
+                </Route>
+                <Route path="/">
+                  <Chooser />
+                </Route>
+              </Switch>
+            </>
+      }
     </div>
     <footer>
       <a href="mailto:thomas.rosen@volteuropa.org">Contact</a>

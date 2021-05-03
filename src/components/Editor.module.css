@@ -1,0 +1,10 @@
+.editor .item {
+  background: var(--background-contrast);
+  color: var(--on-background);
+  padding: var(--basis_x2);
+}
+
+.editor .item.chooseTypeScreen{
+  text-align: center;
+  padding: var(--basis_x4) var(--basis_x2);
+}
