@@ -260,7 +260,7 @@ function Editor() {
         }
       />
       <br />
-      <p style={{ marginBottom: 'var(--basis)' }}>Short Description:</p>
+      <p style={{ marginBottom: 'var(--basis)' }}>Short description:</p>
       <Repeater
         onChange={handleChange_Description}
         defaultValue={description}
@@ -279,8 +279,8 @@ function Editor() {
               {...repeater_props}
             >
               {InputWithLocal_props => <textarea
-                aria-label="Short Description"
-                placeholder="description"
+                aria-label="Short description"
+                placeholder="Future Made in Europa"
                 {...InputWithLocal_props}
                 style={{
                   ...InputWithLocal_props.style,
