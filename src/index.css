@@ -56,6 +56,7 @@ body{
   color: var(--on-background);
 
   --body-font-size: calc(var(--font-add) + var(--basis));
+  --body2-font-size: calc(var(--font-add) + var(--basis_x0_5));
   font-size: var(--body-font-size);
 }
 a,
@@ -95,6 +96,10 @@ h2{
 p{
   /* width: calc(var(--basis_x16) + var(--basis_x8)); */
   max-width: 100%;
+}
+
+.body2{
+  font-size: var(--body2-font-size);
 }
 
 button,
