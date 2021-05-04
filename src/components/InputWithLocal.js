@@ -49,7 +49,7 @@ function InputWithLocal({ locale, defaultValue, children, style, onChange, ...pr
       onChange={handleLocaleChange}
       defaultValue={locale}
       style={{
-        margin: '0 var(--basis_x0_5) 0 0'
+        margin: '0 var(--basis) 0 0'
       }}
     >
       {locales.map(({ code, nativeName }) => <option key={code} value={code}>{nativeName}</option>) }
