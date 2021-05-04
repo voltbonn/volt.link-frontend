@@ -15,7 +15,7 @@
   --red: #E63E12;
   --on-red: #fff;
 
-  --basis: 0.5rem;
+  --basis: 0.4rem;
   --basis_x0_2: calc(0.2 * var(--basis));
   --basis_x0_5: calc(0.5 * var(--basis));
   --basis_x2: calc(2 * var(--basis));
