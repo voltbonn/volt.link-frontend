@@ -4,7 +4,7 @@ import ISO6391 from 'iso-639-1'
 
 const locales = ISO6391.getLanguages('en de es fr it nl pt'.split(' '))
 
-function InputWithLocal({ locale, defaultValue, children, style, className, onChange, ...props }) {
+function InputWithLocal({ locale, defaultValue, children, style, onChange, ...props }) {
   const wrapperDiv = useRef(null)
 
   const [changedLocale, setChangedLocale] = useState(locale)
@@ -43,7 +43,6 @@ function InputWithLocal({ locale, defaultValue, children, style, className, onCh
       maxWidth: '100%',
       ...style
     }}
-    className={className}
     {...props}
   >
     <select
