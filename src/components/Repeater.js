@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 
 import classes from './Repeater.module.css'
 
-function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style, onChange }) {
+function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style, onChange, prependNewItems }) {
   if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
     defaultValue = [addDefaultValue()]
   }
@@ -37,15 +37,28 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style,
   }, [rows, setRows, onChange])
 
   const handleAddRow = useCallback(() => {
-    const new_rows = [...rows]
-    new_rows.push(addDefaultValue() || null)
+    const newValue = addDefaultValue() || null
+
+    let new_rows = null
+    if (prependNewItems === true) {
+      new_rows = [newValue, ...rows]
+    } else {
+      new_rows = [...rows, newValue]
+    }
+
     setRows(new_rows)
     onChange(new_rows)
-  }, [rows, addDefaultValue, setRows, onChange])
+  }, [rows, addDefaultValue, setRows, onChange, prependNewItems])
 
   const hasOnlyOneRow = rows.length === 1
 
+  const addButton = <div style={{ textAlign: 'right' }}>
+    <button className={`green ${classes.addRowButton}`} onClick={handleAddRow}>{addButtonText}</button>
+  </div>
+
   return <div style={style}>
+    { !hasOnlyOneRow && prependNewItems ? addButton : null }
+
     {
       rows.map(
         (subDefaultValue, index) => (
@@ -70,11 +83,8 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style,
       )
       .filter(Boolean)
     }
-    {
-      hasOnlyOneRow
-        ? null
-        : <div style={{textAlign: 'right'}}><button className={`green ${classes.addRowButton}`} onClick={handleAddRow}>{addButtonText}</button></div>
-    }
+
+    {!hasOnlyOneRow && !prependNewItems ? addButton : null}
   </div>
 }
 
