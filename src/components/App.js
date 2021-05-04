@@ -11,7 +11,7 @@ import Editor from './Editor.js'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
-  const [user, setUser] = useState({})
+  // const [user, setUser] = useState({})
 
   useEffect(()=>{
     fetch('https://volt.link/user.json', {
@@ -27,28 +27,27 @@ function App() {
           && !!data.user.id
           && !!data.user.status
         ) {
-          setUser(data.user)
+          // setUser(data.user)
           setLoggedIn(true)
         } else {
-          setUser({})
+          // setUser({})
           setLoggedIn(false)
         }
       })
       .catch(error => console.error(error))
-  }, [setUser, setLoggedIn])
+  }, [setLoggedIn])
 
   return (<>
     <header>
+      <h2>edit.volt.link</h2>
       {
         loggedIn
-          ? <>
-            <h2>Hi {user.displayName}!</h2>
-            <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}><button className="red">Logout</button></a>
-          </>
-          : <>
-            <h2>edit.volt.link</h2>
-            <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}><button>Login</button></a>
-          </>
+          ? <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+            <button className="red">Logout</button>
+          </a>
+          : <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+            <button>Login</button>
+          </a>
       }
     </header>
     <div className={classes.app}>
