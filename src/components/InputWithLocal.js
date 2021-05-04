@@ -1,4 +1,7 @@
 import { useState, useCallback } from 'react'
+import ISO6391 from 'iso-639-1'
+
+const locales = ISO6391.getLanguages('en de es fr it nl pt'.split(' '))
 
 function InputWithLocal({ locale, defaultValue, children, style, className, onChange }) {
   const [changedLocale, setChangedLocale] = useState(locale)
@@ -41,8 +44,7 @@ function InputWithLocal({ locale, defaultValue, children, style, className, onCh
         margin: '0 var(--basis_x0_5) 0 0'
       }}
     >
-      <option value="en">English</option>
-      <option value="de">German</option>
+      {locales.map(({ code, nativeName }) => <option key={code} value={code}>{nativeName}</option>) }
     </select>
     {
       !!children
