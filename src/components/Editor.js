@@ -1,4 +1,6 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
+
+import { v4 as uuidv4 } from 'uuid'
 
 import {
   useParams
@@ -9,95 +11,147 @@ import MultiButton from './MultiButton.js'
 import InputWithLocal from './InputWithLocal.js'
 import Repeater from './Repeater.js'
 
-function Item({ item, style, className }){
-  const [type, setType] = useState(item.type)
+function Item({ item, className, onChange, ...props }) {
+  const wrapperDiv = useRef(null)
 
-  const handleTypeClick = useCallback(event => {
-    const value = event.target.dataset.value
-    setType(value)
-  }, [setType])
+  const [type, setType] = useState(item.type || null)
+  const [title, setTitle] = useState(item.title || [{ locale: 'de', value: 'Website' }])
+  const [link, setLink] = useState(item.link || '')
 
-  if (!!type) {
-    return <div className={`${classes.item} ${className}`} style={style}>
-      {
-        type === 'headline'
-        ? <p>Headline:</p>
+  const handleTypeChange = useCallback(newValue => {
+    setType(newValue)
+    if (onChange) {
+      const target = wrapperDiv.current
+      target.value = { type: newValue, title, link }
+      onChange({ target })
+    }
+  }, [setType, onChange, title, link])
+
+  const handleChange_Title = useCallback(rows => {
+    const newValue = rows
+    setTitle(newValue)
+
+    if (onChange) {
+      const target = wrapperDiv.current
+      target.value = { type, title: newValue, link }
+      onChange({ target })
+    }
+  }, [setTitle, onChange, type, link])
+
+  const handleChange_Link = useCallback(event => {
+    const newValue = event.target.value
+    setLink(newValue)
+
+    if (onChange) {
+      const target = wrapperDiv.current
+      target.value = { type, title, link: newValue }
+      onChange({ target })
+    }
+  }, [setLink, onChange, type, title])
+
+  return <div
+    ref={wrapperDiv}
+    className={`${classes.item} ${!!type ? '' : classes.chooseTypeScreen} ${className}`}
+    {...props}
+  >
+    {
+      !!type
+        ? null
+        : <p style={{
+            marginBottom: 'var(--basis)'
+          }}>Choose an item type:</p>
+    }
+
+    <MultiButton
+      onChange={handleTypeChange}
+      ariaLabel="Use as"
+      defaultValue={type}
+      items={[
+        { value: 'link', title: 'Link' },
+        { value: 'headline', title: 'Headline' }
+      ]}
+      style={{
+        marginTop: 'calc(-1 * var(--basis))'
+      }}
+    />
+
+    {
+      !!type
+        ? <>
+          {/*
+            type === 'headline'
+            ? <p style={{marginBottom: 'var(--basis)'}}>Headline</p>
+            : <p style={{marginBottom: 'var(--basis)'}}>Link</p>
+          */}
+
+          {
+            type === 'link' || type === 'headline'
+              ? <Repeater
+                onChange={handleChange_Title}
+                defaultValue={title}
+                addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
+                addButtonText="Add Translation"
+                style={{
+                  marginTop: 'var(--basis_x4)'
+                }}
+                render={
+                  ({ defaultValue, ...repeater_props }) => {
+                    const locale = defaultValue.locale
+                    const value = defaultValue.value
+                    return <InputWithLocal
+                      locale={locale}
+                      defaultValue={value}
+                      style={{
+                        maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
+                      }}
+                      {...repeater_props}
+                    >
+                      {InputWithLocal_props => <input type="text" placeholder="Title" {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
+                    </InputWithLocal>
+                  }
+                }
+              />
+              : null
+          }
+
+          {
+            type === 'link'
+              ? <input
+                onChange={handleChange_Link}
+                type="text"
+                defaultValue={link}
+                placeholder="Link"
+                style={{
+                  marginRight: '0',
+                  marginBottom: '0',
+                  marginLeft: '0',
+                  width: 'calc(100% - var(--basis_x2))',
+                }}
+              />
+              : null
+          }
+        </>
         : null
-      }
-
-      {
-        type === 'link' || type === 'headline'
-          ? <Repeater
-            defaultValue={Object.entries(item.title)}
-            addDefaultValue={{ locale: 'en', value: '' }}
-            addButtonText="Add Translation"
-            render={
-              ({ defaultValue, className }) => {
-                const locale = defaultValue[0]
-                const value = defaultValue[1]
-                return <InputWithLocal
-                  key={locale}
-                  locale={locale}
-                  defaultValue={value}
-                  style={{
-                    maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-                  }}
-                  className={className}
-                >
-                  {props => <input type="text" placeholder="Title" {...props} style={{ ...props.style, margin: '0' }} />}
-                </InputWithLocal>
-              }
-            }
-          />
-          : null
-      }
-
-      {
-        type === 'link'
-          ? <input
-            type="text"
-            defaultValue={item.link}
-            placeholder="Link"
-            style={{
-              marginRight: '0',
-              marginBottom: '0',
-              marginLeft: '0',
-              width: 'calc(100% - var(--basis_x2))',
-            }}
-          />
-          : null
-      }
-    </div>
-  } else {
-    return <div className={`${classes.item} ${classes.chooseTypeScreen} ${className}`} style={style}>
-      <p>Choose an item type:</p>
-
-      <div className="buttonRow">
-        <button data-value="link" onClick={handleTypeClick}>Link</button>
-        <button data-value="headline" onClick={handleTypeClick}>Headline</button>
-      </div>
-    </div>
-  }
+    }
+  </div>
 }
 
-function Items({ defaultValue }){
-  const [items,] = useState(defaultValue)
+function Items({ defaultValue, onChange }){
+  const items = defaultValue
 
   return <Repeater
+    onChange={onChange}
     defaultValue={items}
-    addDefaultValue={{ type: null, title: {}, link: '', active: true }}
+    addDefaultValue={() => ({ _id: uuidv4(), type: null, title: [], link: '', active: true })}
     // addButtonText="Add Row"
     render={
-      ({ defaultValue, className, onChange }) => {
-        const key = JSON.stringify(defaultValue)
+      ({ defaultValue, ...repeater_props }) => {
         return <Item
-          key={key}
           item={defaultValue}
           style={{
             maxWidth: 'calc(100% - calc(var(--basis_x8) + var(--basis_x2)))',
           }}
-          className={className}
-          onChange={onChange}
+          {...repeater_props}
         />
       }
     }
@@ -107,30 +161,60 @@ function Items({ defaultValue }){
 function Editor() {
   const { code } = useParams()
 
-  const useAsDefault = null // 'linklist'
-  const [useAs, setUseAs] = useState(useAsDefault)
+  const [useAs, setUseAs] = useState(null)
+  const handleUseAsChange = useCallback(newValue => setUseAs(newValue), [setUseAs])
 
-  const linklistItemsDefault = [
-    // {
-    //   type: 'headline',
-    //   title: {
-    //     en: 'Headline',
-    //     de: 'Titel'
-    //   }
-    // },
-    // {
-    //   type: 'link',
-    //   title: {
-    //     en: 'Website',
-    //     de: 'Webseite'
-    //   },
-    //   link: 'https://volt-bonn.de',
-    // }
-  ]
+  const [title, setTitle] = useState([
+    { _id: uuidv4(), locale: 'de', value: 'Volt Bonn' },
+  ])
+  const handleChange_Title = useCallback(rows => setTitle(rows), [setTitle])
 
-  const handleUseAsChange = useCallback(newValue => {
-    setUseAs(newValue)
-  }, [setUseAs])
+  const [description, setDescription] = useState([
+    { _id: uuidv4(), locale: 'en', value: 'hello' },
+    { _id: uuidv4(), locale: 'de', value: 'hallo' }
+  ])
+  const handleChange_Description = useCallback(rows => setDescription(rows), [setDescription])
+
+  const [redirect, setRedirect] = useState('')
+  const handleChange_Redirect = useCallback(event => setRedirect(event.target.value), [setRedirect])
+
+  const [linklist, setLinklist] = useState([
+    {
+      _id: uuidv4(),
+      type: 'headline',
+      title: [
+        { _id: uuidv4(), locale: 'en', value: 'Headline' },
+        { _id: uuidv4(), locale: 'de', value: 'Titel' }
+      ]
+    },
+    {
+      _id: uuidv4(),
+      type: 'link',
+      title: [
+        { _id: uuidv4(), locale: 'en', value: 'Website' },
+        { _id: uuidv4(), locale: 'de', value: 'Webseite' }
+      ],
+      link: 'https://volt-bonn.de',
+    }
+  ])
+  const handleChange_Linklist = useCallback(rows => setLinklist(rows), [setLinklist])
+
+  const handleSave = useCallback(() => {
+    const data = { useAs, redirect, title, description, linklist }
+
+    fetch('http://0.0.0.0:4000/save/path', {
+      mode: 'cors',
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(r => r.json())
+      .then(console.log)
+      .catch(console.error)
+  }, [useAs, redirect, title, description, linklist])
 
   return <>
     <div className={`${classes.editor}`}>
@@ -141,32 +225,29 @@ function Editor() {
 
       <p style={{marginBottom: 'var(--basis)'}}>Title:</p>
       <Repeater
-        defaultValue={[
-          { locale: 'de', value: 'Volt Bonn' },
-        ]}
-        addDefaultValue={{ locale: 'en', value: '' }}
+        onChange={handleChange_Title}
+        defaultValue={title}
+        addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
         addButtonText="Add Translation"
         render={
-          ({ defaultValue, className, onChange }) => {
+          ({ defaultValue, ...repeater_props }) => {
             const locale = defaultValue.locale
             const value = defaultValue.value
             return <InputWithLocal
-              key={locale}
               locale={locale}
               defaultValue={value}
               style={{
                 maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
               }}
-              className={className}
-              onChange={onChange}
+              {...repeater_props}
             >
-              {props => <input
+              {InputWithLocal_props => <input
                 aria-label="Title"
                 type="text"
                 placeholder="Volt Bonn"
-                {...props}
+                {...InputWithLocal_props}
                 style={{
-                  ...props.style,
+                  ...InputWithLocal_props.style,
                   margin: '0',
                 }}
               />}
@@ -177,32 +258,28 @@ function Editor() {
       <br />
       <p style={{ marginBottom: 'var(--basis)' }}>Short Description:</p>
       <Repeater
-        defaultValue={[
-          {locale: 'en', value: 'hello'},
-          {locale: 'de', value: 'hallo'}
-        ]}
-        addDefaultValue={{ locale: 'en', value: '' }}
+        onChange={handleChange_Description}
+        defaultValue={description}
+        addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
         addButtonText="Add Translation"
         render={
-          ({ defaultValue, className, onChange }) => {
+          ({ defaultValue, ...repeater_props }) => {
             const locale = defaultValue.locale
             const value = defaultValue.value
             return <InputWithLocal
-              key={locale}
               locale={locale}
               defaultValue={value}
               style={{
                 maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
               }}
-              className={className}
-              onChange={onChange}
+              {...repeater_props}
             >
-              {props => <textarea
+              {InputWithLocal_props => <textarea
                 aria-label="Short Description"
                 placeholder="description"
-                {...props}
+                {...InputWithLocal_props}
                 style={{
-                  ...props.style,
+                  ...InputWithLocal_props.style,
                   margin: '0',
                 }}
               />}
@@ -214,14 +291,14 @@ function Editor() {
       <br />
       <p>Use as:</p>
       <MultiButton
+        onChange={handleUseAsChange}
         ariaLabel="Use as"
-        defaultValue={useAsDefault}
+        defaultValue={useAs}
         items={[
           { value: 'redirect', title: 'Redirect' },
           { value: 'linklist', title: 'Linklist' },
           { value: 'deactivated', title: 'Nothing / Deactivated' }
         ]}
-        onChange={handleUseAsChange}
       />
 
       <hr />
@@ -229,18 +306,21 @@ function Editor() {
       {
         useAs === 'linklist'
           ? <>
-              <Items
-                defaultValue={linklistItemsDefault}
-              />
-              <hr />
-            </>
+            <Items
+              onChange={handleChange_Linklist}
+              defaultValue={linklist}
+            />
+            <hr />
+          </>
           : (
             useAs === 'redirect'
               ? <>
                 <p>Url to redirect to:</p>
                 <input
+                  onChange={handleChange_Redirect}
                   type="text"
                   placeholder="https://volt-bonn.de"
+                  defaultValue={redirect}
                   style={{
                     marginRight: '0',
                     marginLeft: '0',
@@ -253,8 +333,8 @@ function Editor() {
           )
       }
 
-      <div className="buttonRow">
-        <button className="green">Save</button>
+      <div className="buttonRow" style={{ textAlign: 'center' }}>
+        <button className="green" onClick={handleSave}>Save</button>
         {/* <button>Share</button> */}
       </div>
 

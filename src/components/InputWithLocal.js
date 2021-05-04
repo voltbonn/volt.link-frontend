@@ -1,33 +1,41 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
+
 import ISO6391 from 'iso-639-1'
 
 const locales = ISO6391.getLanguages('en de es fr it nl pt'.split(' '))
 
-function InputWithLocal({ locale, defaultValue, children, style, className, onChange }) {
+function InputWithLocal({ locale, defaultValue, children, style, className, onChange, ...props }) {
+  const wrapperDiv = useRef(null)
+
   const [changedLocale, setChangedLocale] = useState(locale)
   const [changedValue, setChangedValue] = useState(defaultValue)
 
   const handleLocaleChange = useCallback((event) => {
     setChangedLocale(event.target.value)
     if (onChange) {
-      onChange({
+      const target = wrapperDiv.current
+      target.value = {
         locale: event.target.value,
         value: changedValue,
-      })
+      }
+      onChange({ target })
     }
   }, [setChangedLocale, onChange, changedValue])
 
   const handleTextChange = useCallback((event) => {
     setChangedValue(event.target.value)
     if (onChange) {
-      onChange({
+      const target = wrapperDiv.current
+      target.value = {
         locale: changedLocale,
         value: event.target.value,
-      })
+      }
+      onChange({ target })
     }
   }, [setChangedValue, onChange, changedLocale])
 
   return <div
+    ref={wrapperDiv}
     style={{
       display: 'flex',
       flexDirection: 'row',
@@ -36,6 +44,7 @@ function InputWithLocal({ locale, defaultValue, children, style, className, onCh
       ...style
     }}
     className={className}
+    {...props}
   >
     <select
       onChange={handleLocaleChange}
