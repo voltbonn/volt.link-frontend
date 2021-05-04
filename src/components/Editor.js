@@ -176,6 +176,9 @@ function Editor() {
   ])
   const handleChange_Description = useCallback(rows => setDescription(rows), [setDescription])
 
+  const [internal_contact, setInternalContact] = useState('')
+  const handleChange_InternalContact = useCallback(event => setInternalContact(event.target.value), [setInternalContact])
+
   const [redirect, setRedirect] = useState('')
   const handleChange_Redirect = useCallback(event => setRedirect(event.target.value), [setRedirect])
 
@@ -201,7 +204,7 @@ function Editor() {
   const handleChange_Linklist = useCallback(rows => setLinklist(rows), [setLinklist])
 
   const handleSave = useCallback(() => {
-    const data = { useAs, redirect, title, description, linklist }
+    const data = { useAs, redirect, title, description, internal_contact, linklist, last_modified: new Date() }
 
     fetch('http://0.0.0.0:4000/save/path', {
       mode: 'cors',
@@ -215,7 +218,7 @@ function Editor() {
       .then(r => r.json())
       .then(console.log)
       .catch(console.error)
-  }, [useAs, redirect, title, description, linklist])
+  }, [useAs, redirect, title, description, internal_contact, linklist])
 
   return <>
     <div className={`${classes.editor}`}>
@@ -289,6 +292,22 @@ function Editor() {
         }
       />
 
+      <br />
+      <p style={{ marginBottom: 'var(--basis)' }}>Main contact for this link:</p>
+      <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>(Only used internally. This won't be published.)</em>
+      <input
+        onChange={handleChange_InternalContact}
+        defaultValue={internal_contact}
+        type="text"
+        placeholder="thomas.rosen@volteuropa.org"
+        style={{
+          marginRight: '0',
+          marginLeft: '0',
+          width: 'calc(100% - var(--basis_x2))'
+        }}
+      />
+
+      <br />
       <br />
       <p>Use as:</p>
       <MultiButton
