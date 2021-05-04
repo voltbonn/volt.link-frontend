@@ -161,7 +161,7 @@ function Items({ defaultValue, onChange }){
 function Editor() {
   const { code } = useParams()
 
-  const [useAs, setUseAs] = useState(null)
+  const [useAs, setUseAs] = useState('')
   const handleUseAsChange = useCallback(newValue => setUseAs(newValue), [setUseAs])
 
   const [title, setTitle] = useState([
@@ -297,7 +297,7 @@ function Editor() {
         items={[
           { value: 'redirect', title: 'Redirect' },
           { value: 'linklist', title: 'Linklist' },
-          { value: 'deactivated', title: 'Nothing / Deactivated' }
+          { value: '', title: 'Nothing / Deactivated' }
         ]}
       />
 
