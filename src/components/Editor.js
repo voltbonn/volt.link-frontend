@@ -247,7 +247,8 @@ function Editor() {
 
       <h2>volt.link/{code}</h2>
 
-      <hr />
+      <br />
+      <br />
 
       <p style={{marginBottom: 'var(--basis)'}}>Title:</p>
       <Repeater
@@ -343,7 +344,8 @@ function Editor() {
         ]}
       />
 
-      <hr />
+      <br />
+      <br />
 
       {
         useAs === 'linklist'
@@ -406,7 +408,8 @@ function Editor() {
               onChange={handleChange_Items}
               defaultValue={items}
             />
-            <hr />
+            <br />
+            <br />
           </>
           : (
             useAs === 'redirect'
@@ -423,13 +426,14 @@ function Editor() {
                     width: 'calc(100% - var(--basis_x2))'
                   }}
                 />
-                <hr />
+                <br />
+                <br />
               </>
               : null
           )
       }
 
-      <div className="buttonRow" style={{ textAlign: 'center' }}>
+      <div className="buttonRow" style={{ textAlign: 'left' }}>
         <button className="green" onClick={handleSave}>Save</button>
         {/* <button>Share</button> */}
       </div>
