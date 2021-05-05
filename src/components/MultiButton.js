@@ -1,7 +1,9 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 function MultiButton({ ariaLabel, items, defaultValue, onChange, style }) {
-  const [choosen, setChoosen] = useState(defaultValue)
+  const [choosen, setChoosen] = useState()
+
+  useEffect(() => setChoosen(defaultValue), [defaultValue, setChoosen])
 
   const handleClick = useCallback(event => {
     const newValue = event.target.dataset.value

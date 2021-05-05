@@ -1,17 +1,21 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 import classes from './Repeater.module.css'
 
 function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style, onChange, prependNewItems }) {
-  if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
-    defaultValue = [addDefaultValue()]
-  }
-
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
   }
 
   const [rows, setRows] = useState(defaultValue)
+
+  useEffect(() => {
+    let tmp_defaultValue = defaultValue
+    if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
+      tmp_defaultValue = [addDefaultValue()]
+    }
+    setRows(tmp_defaultValue)
+  }, [defaultValue, addDefaultValue, setRows])
 
   const handleRemoveRow = useCallback(event => {
     const index = event.target.dataset.index
