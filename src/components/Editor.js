@@ -179,6 +179,15 @@ function Editor() {
   const [internal_contact, setInternalContact] = useState('')
   const handleChange_InternalContact = useCallback(event => setInternalContact(event.target.value), [setInternalContact])
 
+  const [coverphoto, setCoverphoto] = useState('')
+  const handleChange_Coverphoto = useCallback(event => setCoverphoto(event.target.value), [setCoverphoto])
+
+  const [imprintOverwrite, setImprintOverwrite] = useState('')
+  const handleChange_ImprintOverwrite = useCallback(event => setImprintOverwrite(event.target.value), [setImprintOverwrite])
+
+  const [privacyPolicyOverwrite, setPrivacyPolicyOverwrite] = useState('')
+  const handleChange_PrivacyPolicyOverwrite = useCallback(event => setPrivacyPolicyOverwrite(event.target.value), [setPrivacyPolicyOverwrite])
+
   const [redirect, setRedirect] = useState('')
   const handleChange_Redirect = useCallback(event => setRedirect(event.target.value), [setRedirect])
 
@@ -204,7 +213,20 @@ function Editor() {
   const handleChange_Items = useCallback(rows => setItems(rows), [setItems])
 
   const handleSave = useCallback(() => {
-    const data = { useAs, redirect, title, description, internal_contact, items, last_modified: new Date() }
+    const data = {
+      useAs,
+      redirect,
+      title,
+      description,
+      internal_contact,
+      items,
+      style: { coverphoto },
+      overwrites: {
+        imprint: imprintOverwrite,
+        privacy_policy: privacyPolicyOverwrite
+      },
+      last_modified: new Date()
+    }
 
     fetch('http://0.0.0.0:4000/save/path', {
       mode: 'cors',
@@ -218,7 +240,7 @@ function Editor() {
       .then(r => r.json())
       .then(console.log)
       .catch(console.error)
-  }, [useAs, redirect, title, description, internal_contact, items])
+  }, [useAs, redirect, title, description, internal_contact, items, coverphoto, imprintOverwrite, privacyPolicyOverwrite])
 
   return <>
     <div className={`${classes.editor}`}>
@@ -326,6 +348,60 @@ function Editor() {
       {
         useAs === 'linklist'
           ? <>
+            <p style={{ marginBottom: 'var(--basis)' }}>Coverphoto:</p>
+            <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
+              A url to use for the coverphoto. The photo needs to be uploaded somewhere else. For example the Volt Europa website.
+            </em>
+            <input
+              onChange={handleChange_Coverphoto}
+              defaultValue={coverphoto}
+              type="text"
+              placeholder="https://"
+              style={{
+                marginRight: '0',
+                marginLeft: '0',
+                width: 'calc(100% - var(--basis_x2))'
+              }}
+            />
+
+            <br />
+            <br />
+            <p style={{ marginBottom: 'var(--basis)' }}>Custom imprint link:</p>
+            <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
+              (Leave empty for Volt Europa imprint.)
+            </em>
+            <input
+              onChange={handleChange_ImprintOverwrite}
+              defaultValue={imprintOverwrite}
+              type="text"
+              placeholder="https://"
+              style={{
+                marginRight: '0',
+                marginLeft: '0',
+                width: 'calc(100% - var(--basis_x2))'
+              }}
+            />
+
+            <br />
+            <br />
+            <p style={{ marginBottom: 'var(--basis)' }}>Custom privacy policy link:</p>
+            <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
+              (Leave empty for Volt Europa privacy policy.)
+            </em>
+            <input
+              onChange={handleChange_PrivacyPolicyOverwrite}
+              defaultValue={privacyPolicyOverwrite}
+              type="text"
+              placeholder="https://"
+              style={{
+                marginRight: '0',
+                marginLeft: '0',
+                width: 'calc(100% - var(--basis_x2))'
+              }}
+            />
+
+            <br />
+            <br />
             <Items
               onChange={handleChange_Items}
               defaultValue={items}
