@@ -316,7 +316,18 @@ function Editor() {
       .then(r => r.json())
       .then(console.log)
       .catch(console.error)
-  }, [useAs, redirect, title, description, internal_contact, items, coverphoto, imprintOverwrite, privacyPolicyOverwrite])
+  }, [
+    code,
+    useAs,
+    redirect,
+    title,
+    description,
+    internal_contact,
+    items,
+    coverphoto,
+    imprintOverwrite,
+    privacyPolicyOverwrite
+  ])
 
   return <>
     <div className={`${classes.editor}`}>
