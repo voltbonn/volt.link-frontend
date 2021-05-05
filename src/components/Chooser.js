@@ -13,10 +13,23 @@ function Chooser() {
 
     if (newValue === '') {
       setAlreadyExists(null)
-    } else if (newValue === 'bonn') {
-      setAlreadyExists(true)
     } else {
-      setAlreadyExists(false)
+      fetch(`https://volt.link/exists/${newValue}`, {
+        mode: 'cors',
+        credentials: 'include',
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.exists === true) {
+            setAlreadyExists(true)
+          } else {
+            setAlreadyExists(false)
+          }
+        })
+        .catch(error => {
+          console.error(error)
+          setAlreadyExists(false)
+        })
     }
   }, [setValue, setAlreadyExists])
 
