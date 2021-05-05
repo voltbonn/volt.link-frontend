@@ -304,7 +304,7 @@ function Editor() {
       last_modified: new Date()
     }
 
-    fetch('http://0.0.0.0:4000/save/path', {
+    fetch(`https://volt.link/set/${code}`, {
       mode: 'cors',
       credentials: 'include',
       method: 'POST',
