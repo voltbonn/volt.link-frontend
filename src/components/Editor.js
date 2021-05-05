@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -159,6 +159,18 @@ function Items({ defaultValue, onChange }){
   />
 }
 
+function addIds(array){
+  if (Array.isArray(array)) {
+    return array.map(item => {
+      if (!item.hasOwnProperty('_id')) {
+        item._id = uuidv4()
+      }
+      return item
+    })
+  }
+  return array
+}
+
 function Editor() {
   const { code } = useParams()
 
@@ -192,39 +204,103 @@ function Editor() {
   const handleChange_Redirect = useCallback(event => setRedirect(event.target.value), [setRedirect])
 
   const [items, setItems] = useState([
-    {
-      _id: uuidv4(),
-      type: 'headline',
-      title: [
-        { _id: uuidv4(), locale: 'en', value: 'Headline' },
-        { _id: uuidv4(), locale: 'de', value: 'Titel' }
-      ]
-    },
-    {
-      _id: uuidv4(),
-      type: 'link',
-      title: [
-        { _id: uuidv4(), locale: 'en', value: 'Website' },
-        { _id: uuidv4(), locale: 'de', value: 'Webseite' }
-      ],
-      link: 'https://volt-bonn.de',
-    }
+    // {
+    //   _id: uuidv4(),
+    //   type: 'headline',
+    //   title: [
+    //     { _id: uuidv4(), locale: 'en', value: 'Headline' },
+    //     { _id: uuidv4(), locale: 'de', value: 'Titel' }
+    //   ]
+    // },
+    // {
+    //   _id: uuidv4(),
+    //   type: 'link',
+    //   title: [
+    //     { _id: uuidv4(), locale: 'en', value: 'Website' },
+    //     { _id: uuidv4(), locale: 'de', value: 'Webseite' }
+    //   ],
+    //   link: 'https://volt-bonn.de',
+    // }
   ])
   const handleChange_Items = useCallback(rows => setItems(rows), [setItems])
 
+  useEffect(() => {
+    fetch(`https://volt.link/get/${code}`, {
+      mode: 'cors',
+      credentials: 'include',
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('data', data)
+
+        let {
+          use_as: useAs = '',
+          title = [],
+          description = [],
+          internal_contact = '',
+          redirect = '',
+          coverphoto = '',
+          overwrites = {},
+          items = [],
+        } = data
+
+        const {
+          imprint = '',
+          privacy_policy = ''
+        } = overwrites
+
+        title = addIds(title)
+        description = addIds(description)
+        items = items.map(item => {
+          if (!item.hasOwnProperty('_id')) {
+            item._id = uuidv4()
+          }
+          if (item.hasOwnProperty('title')) {
+            item.title = addIds(item.title)
+          }
+          if (item.hasOwnProperty('description')) {
+            item.description = addIds(item.description)
+          }
+          return item
+        })
+
+        setUseAs(useAs)
+        setTitle(title)
+        setDescription(description)
+        setInternalContact(internal_contact)
+        setRedirect(redirect)
+        setCoverphoto(coverphoto)
+        setImprintOverwrite(imprint)
+        setPrivacyPolicyOverwrite(privacy_policy)
+        setItems(items)
+      })
+      .catch(error => console.error(error))
+  }, [
+    code,
+    setUseAs,
+    setTitle,
+    setDescription,
+    setInternalContact,
+    setRedirect,
+    setCoverphoto,
+    setImprintOverwrite,
+    setPrivacyPolicyOverwrite,
+    setItems
+  ])
+
   const handleSave = useCallback(() => {
     const data = {
-      useAs,
-      redirect,
+      use_as: useAs,
       title,
       description,
       internal_contact,
-      items,
-      style: { coverphoto },
+      coverphoto,
+      redirect,
       overwrites: {
         imprint: imprintOverwrite,
         privacy_policy: privacyPolicyOverwrite
       },
+      items,
       last_modified: new Date()
     }
 
