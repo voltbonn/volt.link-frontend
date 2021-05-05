@@ -182,7 +182,7 @@ function Editor() {
   const [redirect, setRedirect] = useState('')
   const handleChange_Redirect = useCallback(event => setRedirect(event.target.value), [setRedirect])
 
-  const [linklist, setLinklist] = useState([
+  const [items, setItems] = useState([
     {
       _id: uuidv4(),
       type: 'headline',
@@ -201,10 +201,10 @@ function Editor() {
       link: 'https://volt-bonn.de',
     }
   ])
-  const handleChange_Linklist = useCallback(rows => setLinklist(rows), [setLinklist])
+  const handleChange_Items = useCallback(rows => setItems(rows), [setItems])
 
   const handleSave = useCallback(() => {
-    const data = { useAs, redirect, title, description, internal_contact, linklist, last_modified: new Date() }
+    const data = { useAs, redirect, title, description, internal_contact, items, last_modified: new Date() }
 
     fetch('http://0.0.0.0:4000/save/path', {
       mode: 'cors',
@@ -218,7 +218,7 @@ function Editor() {
       .then(r => r.json())
       .then(console.log)
       .catch(console.error)
-  }, [useAs, redirect, title, description, internal_contact, linklist])
+  }, [useAs, redirect, title, description, internal_contact, items])
 
   return <>
     <div className={`${classes.editor}`}>
@@ -327,8 +327,8 @@ function Editor() {
         useAs === 'linklist'
           ? <>
             <Items
-              onChange={handleChange_Linklist}
-              defaultValue={linklist}
+              onChange={handleChange_Items}
+              defaultValue={items}
             />
             <hr />
           </>
