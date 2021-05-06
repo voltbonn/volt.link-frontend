@@ -35,7 +35,6 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style,
       _id,
       ...newValue
     }
-    console.log('new_rows', new_rows)
     setRows(new_rows)
     onChange(new_rows)
   }, [rows, setRows, onChange])
