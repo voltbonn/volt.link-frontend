@@ -135,6 +135,8 @@ input[type="text"]:focus{
 
 textarea {
   resize: vertical;
+  padding-bottom: var(--basis_x2);
+  min-height: 20px; /* TODO: Find out why this is value works. */
 }
 
 button,
