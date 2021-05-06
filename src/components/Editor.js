@@ -292,8 +292,7 @@ function Editor() {
         imprint: imprintOverwrite,
         privacy_policy: privacyPolicyOverwrite
       },
-      items,
-      last_modified: new Date()
+      items
     }
 
     fetch(`https://volt.link/set/${code}`, {
