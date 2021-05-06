@@ -186,15 +186,10 @@ function Editor() {
   const [useAs, setUseAs] = useState('')
   const handleUseAsChange = useCallback(newValue => setUseAs(newValue), [setUseAs])
 
-  const [title, setTitle] = useState([
-    { _id: uuidv4(), locale: 'de', value: 'Volt Bonn' },
-  ])
+  const [title, setTitle] = useState([])
   const handleChange_Title = useCallback(rows => setTitle(rows), [setTitle])
 
-  const [description, setDescription] = useState([
-    { _id: uuidv4(), locale: 'en', value: 'hello' },
-    { _id: uuidv4(), locale: 'de', value: 'hallo' }
-  ])
+  const [description, setDescription] = useState([])
   const handleChange_Description = useCallback(rows => setDescription(rows), [setDescription])
 
   const [internal_contact, setInternalContact] = useState('')
@@ -212,25 +207,7 @@ function Editor() {
   const [redirect, setRedirect] = useState('')
   const handleChange_Redirect = useCallback(event => setRedirect(event.target.value), [setRedirect])
 
-  const [items, setItems] = useState([
-    // {
-    //   _id: uuidv4(),
-    //   type: 'headline',
-    //   title: [
-    //     { _id: uuidv4(), locale: 'en', value: 'Headline' },
-    //     { _id: uuidv4(), locale: 'de', value: 'Titel' }
-    //   ]
-    // },
-    // {
-    //   _id: uuidv4(),
-    //   type: 'link',
-    //   title: [
-    //     { _id: uuidv4(), locale: 'en', value: 'Website' },
-    //     { _id: uuidv4(), locale: 'de', value: 'Webseite' }
-    //   ],
-    //   link: 'https://volt-bonn.de',
-    // }
-  ])
+  const [items, setItems] = useState([])
   const handleChange_Items = useCallback(rows => setItems(rows), [setItems])
 
   useEffect(() => {
