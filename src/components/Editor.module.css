@@ -1,3 +1,11 @@
+.editor {
+  transition: opacity .2s ease;
+}
+.editor.loadingContent {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .editor .item {
   background: var(--background-contrast);
   color: var(--on-background);

@@ -174,6 +174,8 @@ function addIds(array){
 function Editor() {
   const { code } = useParams()
 
+  const [loadingContent, setLoadingContent] = useState(true)
+
   const [useAs, setUseAs] = useState('')
   const handleUseAsChange = useCallback(newValue => setUseAs(newValue), [setUseAs])
 
@@ -225,6 +227,8 @@ function Editor() {
   const handleChange_Items = useCallback(rows => setItems(rows), [setItems])
 
   useEffect(() => {
+    setLoadingContent(true)
+
     fetch(`https://volt.link/get/${code}`, {
       mode: 'cors',
       credentials: 'include',
@@ -273,9 +277,11 @@ function Editor() {
         setImprintOverwrite(imprint)
         setPrivacyPolicyOverwrite(privacy_policy)
         setItems(items)
+        setLoadingContent(false)
       })
       .catch(error => console.error(error))
   }, [
+    setLoadingContent,
     code,
     setUseAs,
     setTitle,
@@ -330,7 +336,7 @@ function Editor() {
   ])
 
   return <>
-    <div className={`${classes.editor}`}>
+    <div className={`${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}>
 
       <h2>volt.link/{code}</h2>
 
