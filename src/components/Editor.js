@@ -171,10 +171,17 @@ function addIds(array){
   return array
 }
 
+function delay(time) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, time)
+  })
+}
+
 function Editor() {
   const { code } = useParams()
 
   const [loadingContent, setLoadingContent] = useState(true)
+  const [savingMessage, setSavingMessage] = useState(null)
 
   const [useAs, setUseAs] = useState('')
   const handleUseAsChange = useCallback(newValue => setUseAs(newValue), [setUseAs])
@@ -295,6 +302,8 @@ function Editor() {
   ])
 
   const handleSave = useCallback(() => {
+    setSavingMessage('Started saving…')
+
     const data = {
       use_as: useAs,
       title,
@@ -320,8 +329,17 @@ function Editor() {
       body: JSON.stringify(data)
     })
       .then(r => r.json())
-      .then(console.log)
-      .catch(console.error)
+      .then(async data => {
+        await delay(500)
+        setSavingMessage('Saved!')
+        await delay(500)
+        setSavingMessage(null)
+      })
+      .catch(async error => {
+        console.error(error)
+        await delay(500)
+        setSavingMessage(`Error while saving! Please try again later. (The error: "${error}")`)
+      })
   }, [
     code,
     useAs,
@@ -530,6 +548,12 @@ function Editor() {
         <button className="green" onClick={handleSave}>Save</button>
         {/* <button>Share</button> */}
       </div>
+
+      {
+        savingMessage === null
+        ? null
+        : <p>{savingMessage}</p>
+      }
 
     </div>
   </>
