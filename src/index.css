@@ -198,20 +198,20 @@ button:hover{
 button.choosen:after {
     content: "";
     position: absolute;
-    top: calc(-1 * var(--basis_x0_2));
-    right: calc(-1 * var(--basis_x0_2));
-    bottom: calc(-1 * var(--basis_x0_2));
-    left: calc(-1 * var(--basis_x0_2));
-    box-shadow: 0 0 0 var(--basis_x0_2) var(--on-background);
+    top: calc(-1 * var(--basis_x0_5));
+    right: calc(-1 * var(--basis_x0_5));
+    bottom: calc(-1 * var(--basis_x0_5));
+    left: calc(-1 * var(--basis_x0_5));
+    box-shadow: 0 0 0 var(--basis_x0_5) var(--on-background);
 }
 button:focus.choosen:after {
-    box-shadow: 0 0 0 var(--basis_x0_2) var(--on-background-contrast);
+    box-shadow: 0 0 0 var(--basis_x0_5) var(--on-background-contrast);
 }
 
 .buttonRow button{
-  margin: var(--basis) var(--basis) 0 0;
+  margin: var(--basis) calc(var(--basis) * 1.5) 0 0;
 }
-.buttonRow button:laft-of-type{
+.buttonRow button:last-of-type{
   margin-right: 0;
 }
 
