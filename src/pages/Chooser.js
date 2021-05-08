@@ -3,7 +3,7 @@ import classes from './Chooser.module.css'
 
 import { Link, useHistory } from 'react-router-dom'
 import useKeyPress from '../hooks/useKeyPress.js'
-import Header, { parentStyles } from '../components/Header.js'
+import Header from '../components/Header.js'
 
 function Chooser({ rightHeaderActions }) {
   const history = useHistory()
@@ -40,26 +40,25 @@ function Chooser({ rightHeaderActions }) {
     }
   }, [setValue, setAlreadyExists])
 
-  return <div
-    className={`${classes.chooser} ${alreadyExists === null ? classes.hideSubmitButton : ''}`}
-    style={parentStyles}
-  >
+  return <div>
     <Header
       title="edit.volt.link"
       rightActions={rightHeaderActions || null}
     />
 
-    <p className={classes.domainPrefix}>volt.link/</p>
-    <input type="text" placeholder="Type a path…" onChange={handleCheckIfPathExists}/>
-    {
-      alreadyExists === null
-        ? null
-        : <Link to={`/edit/${value}`}>
-            <button>
-              {alreadyExists ? 'Edit' : 'Create'}
-            </button>
-          </Link>
-    }
+    <div className={`${classes.chooserInput} ${alreadyExists === null ? classes.hideSubmitButton : ''}`}>
+      <p className={classes.domainPrefix}>volt.link/</p>
+      <input type="text" placeholder="Type a path…" onChange={handleCheckIfPathExists}/>
+      {
+        alreadyExists === null
+          ? null
+          : <Link to={`/edit/${value}`}>
+              <button>
+                {alreadyExists ? 'Edit' : 'Create'}
+              </button>
+            </Link>
+      }
+    </div>
   </div>
 }
 

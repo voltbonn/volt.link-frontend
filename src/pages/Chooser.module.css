@@ -1,26 +1,26 @@
-.chooser {
+.chooserInput {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.chooser input[type=text] {
+.chooserInput input[type=text] {
   flex-grow: 1;
   min-width: 0;
 }
-.chooser.hideSubmitButton input[type=text] {
+.chooserInput.hideSubmitButton input[type=text] {
   margin-right: 0;
 }
 
-.chooser button {
+.chooserInput button {
   margin-right: 0;
 }
 
 @media (max-width: 600px) {
-  .chooser .domainPrefix{
+  .chooserInput .domainPrefix{
     display: none;
   }
-  .chooser input[type=text] {
+  .chooserInput input[type=text] {
     margin-left: 0;
   }
 }

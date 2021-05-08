@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import classes from './Editor.module.css'
-import Header, { parentStyles } from '../components/Header.js'
+import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
 import InputWithLocal from '../components/InputWithLocal.js'
 import Repeater from '../components/Repeater.js'
@@ -328,14 +328,13 @@ function Editor() {
     privacyPolicyOverwrite
   ])
 
-  const rightHeaderActions = <div className="buttonRow">
+  const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     {/* <button className="text">Share</button> */}
     <button className="green" onClick={handleSave}>Save</button>
   </div>
 
   return <div
     className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
-    style={parentStyles}
   >
     <Header
       title={<><span className="hideOnSmallScreen">volt.link</span>/{code}</>}

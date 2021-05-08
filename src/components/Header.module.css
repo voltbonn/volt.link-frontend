@@ -1,9 +1,11 @@
 .header {
   z-index: 9999;
-  position: fixed;
+  position: sticky;
+
+  --minus_basis_x4: calc(-1 * var(--basis_x4));
+  margin: var(--minus_basis_x4) var(--minus_basis_x4) var(--basis_x4) var(--minus_basis_x4);
   top: 0;
-  right: 0;
-  left: 0;
+
   background: var(--background-contrast);
   color: var(--on-background);
 }
@@ -17,11 +19,17 @@
 
 .header .headerBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
   padding: var(--basis_x2);
+  gap: var(--basis_x4);
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .header .headerBar h2{
+  flex-grow: 1;
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 0;
