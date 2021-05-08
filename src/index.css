@@ -187,6 +187,10 @@ button.red {
   background: var(--red);
   color: var(--on-red);
 }
+button.text {
+  background: transparent;
+  color: var(--on-background);
+}
 button:focus {
   background: var(--on-background-contrast);
   color: var(--background-contrast);

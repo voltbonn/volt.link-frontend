@@ -329,8 +329,8 @@ function Editor() {
   ])
 
   const rightHeaderActions = <div className="buttonRow">
+    {/* <button className="text">Share</button> */}
     <button className="green" onClick={handleSave}>Save</button>
-    {/* <button>Share</button> */}
   </div>
 
   return <div
