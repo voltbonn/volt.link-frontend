@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom'
 
+import Header, { parentStyles } from './Header.js'
 import Chooser from './Chooser.js'
 import Editor from './Editor.js'
 
@@ -36,30 +37,34 @@ function App() {
       .catch(error => console.error(error))
   }, [setLoggedIn])
 
+  const loginLogoutButton = (
+    loggedIn
+    ? <a href = {`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+      <button className="red">Logout</button>
+    </a >
+    : <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+      <button>Login</button>
+    </a>
+  )
+
   return (<>
-    <header>
-      <h2>edit.volt.link</h2>
-      {
-        loggedIn
-          ? <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-            <button className="red">Logout</button>
-          </a>
-          : <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-            <button>Login</button>
-          </a>
-      }
-    </header>
     <div className={classes.app}>
       {
         !loggedIn
-          ? <p>Login in the upper right corner, to edit volt.link urls.</p>
+          ? <div style={{parentStyles}}>
+            <Header
+              title="edit.volt.link"
+              rightActions={loginLogoutButton}
+            />
+            <p>Login in the upper right corner, to edit volt.link urls.</p>
+          </div>
           : <>
               <Switch>
                 <Route path="/edit/:code">
                   <Editor />
                 </Route>
                 <Route path="/">
-                  <Chooser />
+                  <Chooser rightHeaderActions={loginLogoutButton}/>
                 </Route>
               </Switch>
             </>

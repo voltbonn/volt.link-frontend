@@ -1,0 +1,36 @@
+.header {
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: var(--background-contrast);
+  color: var(--on-background);
+}
+@supports(display: grid) {
+  .header {
+    background: rgba(var(--background-contrast-rgb), var(--alpha-more));
+    backdrop-filter: blur(var(--blur));
+  }
+}
+
+
+.header .headerBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--basis_x2);
+}
+.header .headerBar h2{
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+.header .headerBar button{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.notificationBanner {
+  padding: var(--basis_x2);
+}

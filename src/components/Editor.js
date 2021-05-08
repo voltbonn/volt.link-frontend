@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import classes from './Editor.module.css'
+import Header, { parentStyles } from './Header.js'
 import MultiButton from './MultiButton.js'
 import InputWithLocal from './InputWithLocal.js'
 import Repeater from './Repeater.js'
@@ -327,13 +328,25 @@ function Editor() {
     privacyPolicyOverwrite
   ])
 
+  const rightHeaderActions = <div className="buttonRow">
+    <button className="green" onClick={handleSave}>Save</button>
+    {/* <button>Share</button> */}
+  </div>
+
   return <>
-    <div className={`${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}>
-
-      <h2>volt.link/{code}</h2>
-
-      <br />
-      <br />
+    <div
+      className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
+      style={parentStyles}
+    >
+      <Header
+        title={`volt.link/${code}`}
+        rightActions={rightHeaderActions}
+        notificationBanner={
+          savingMessage === null
+            ? null
+            : <p style={{ textAlign: 'center' }}>{savingMessage}</p>
+        }
+      />
 
       <p style={{marginBottom: 'var(--basis)'}}>Title:</p>
       <Repeater
@@ -516,17 +529,6 @@ function Editor() {
               </>
               : null
           )
-      }
-
-      <div className="buttonRow" style={{ textAlign: 'left' }}>
-        <button className="green" onClick={handleSave}>Save</button>
-        {/* <button>Share</button> */}
-      </div>
-
-      {
-        savingMessage === null
-        ? null
-        : <p>{savingMessage}</p>
       }
 
     </div>
