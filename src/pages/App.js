@@ -40,10 +40,10 @@ function App() {
   const loginLogoutButton = (
     loggedIn
     ? <a href = {`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-      <button className="red">Logout</button>
+      <button className="red" style={{marginRight: '0'}}>Logout</button>
     </a >
     : <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-      <button>Login</button>
+      <button style={{marginRight: '0'}}>Login</button>
     </a>
   )
 
