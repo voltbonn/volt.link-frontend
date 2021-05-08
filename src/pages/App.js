@@ -6,7 +6,7 @@ import {
   Route,
 } from 'react-router-dom'
 
-import Header, { parentStyles } from './Header.js'
+import Header, { parentStyles } from '../components/Header.js'
 import Chooser from './Chooser.js'
 import Editor from './Editor.js'
 

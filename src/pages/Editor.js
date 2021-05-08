@@ -7,10 +7,10 @@ import {
 } from 'react-router-dom'
 
 import classes from './Editor.module.css'
-import Header, { parentStyles } from './Header.js'
-import MultiButton from './MultiButton.js'
-import InputWithLocal from './InputWithLocal.js'
-import Repeater from './Repeater.js'
+import Header, { parentStyles } from '../components/Header.js'
+import MultiButton from '../components/MultiButton.js'
+import InputWithLocal from '../components/InputWithLocal.js'
+import Repeater from '../components/Repeater.js'
 
 function Item({ item, className, onChange, ...props }) {
   const wrapperDiv = useRef(null)

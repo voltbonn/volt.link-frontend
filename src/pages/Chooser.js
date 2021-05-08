@@ -3,7 +3,7 @@ import classes from './Chooser.module.css'
 
 import { Link, useHistory } from 'react-router-dom'
 import useKeyPress from '../hooks/useKeyPress.js'
-import Header, { parentStyles } from './Header.js'
+import Header, { parentStyles } from '../components/Header.js'
 
 function Chooser({ rightHeaderActions }) {
   const history = useHistory()
