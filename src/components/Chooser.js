@@ -40,29 +40,27 @@ function Chooser({ rightHeaderActions }) {
     }
   }, [setValue, setAlreadyExists])
 
-  return <>
-    <div
-      className={`${classes.chooser} ${alreadyExists === null ? classes.hideSubmitButton : ''}`}
-      style={parentStyles}
-    >
-      <Header
-        title="edit.volt.link"
-        rightActions={rightHeaderActions || null}
-      />
+  return <div
+    className={`${classes.chooser} ${alreadyExists === null ? classes.hideSubmitButton : ''}`}
+    style={parentStyles}
+  >
+    <Header
+      title="edit.volt.link"
+      rightActions={rightHeaderActions || null}
+    />
 
-      <p className={classes.domainPrefix}>volt.link/</p>
-      <input type="text" placeholder="Type a path…" onChange={handleCheckIfPathExists}/>
-      {
-        alreadyExists === null
-          ? null
-          : <Link to={`/edit/${value}`}>
-              <button>
-                {alreadyExists ? 'Edit' : 'Create'}
-              </button>
-            </Link>
-      }
-    </div>
-  </>
+    <p className={classes.domainPrefix}>volt.link/</p>
+    <input type="text" placeholder="Type a path…" onChange={handleCheckIfPathExists}/>
+    {
+      alreadyExists === null
+        ? null
+        : <Link to={`/edit/${value}`}>
+            <button>
+              {alreadyExists ? 'Edit' : 'Create'}
+            </button>
+          </Link>
+    }
+  </div>
 }
 
 export default Chooser

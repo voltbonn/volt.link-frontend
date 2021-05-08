@@ -333,206 +333,203 @@ function Editor() {
     {/* <button>Share</button> */}
   </div>
 
-  return <>
-    <div
-      className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
-      style={parentStyles}
-    >
-      <Header
-        title={`volt.link/${code}`}
-        rightActions={rightHeaderActions}
-        notificationBanner={
-          savingMessage === null
-            ? null
-            : <p style={{ textAlign: 'center' }}>{savingMessage}</p>
-        }
-      />
-
-      <p style={{marginBottom: 'var(--basis)'}}>Title:</p>
-      <Repeater
-        onChange={handleChange_Title}
-        defaultValue={title}
-        addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
-        addButtonText="Add Translation"
-        render={
-          ({ defaultValue, ...repeater_props }) => {
-            const locale = defaultValue.locale
-            const value = defaultValue.value
-            return <InputWithLocal
-              locale={locale}
-              defaultValue={value}
-              style={{
-                maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-              }}
-              {...repeater_props}
-            >
-              {InputWithLocal_props => <input
-                aria-label="Title"
-                type="text"
-                placeholder="Volt Bonn"
-                {...InputWithLocal_props}
-                style={{
-                  ...InputWithLocal_props.style,
-                  margin: '0',
-                }}
-              />}
-            </InputWithLocal>
-          }
-        }
-      />
-      <br />
-      <p style={{ marginBottom: 'var(--basis)' }}>Short description:</p>
-      <Repeater
-        onChange={handleChange_Description}
-        defaultValue={description}
-        addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
-        addButtonText="Add Translation"
-        render={
-          ({ defaultValue, ...repeater_props }) => {
-            const locale = defaultValue.locale
-            const value = defaultValue.value
-            return <InputWithLocal
-              locale={locale}
-              defaultValue={value}
-              style={{
-                maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-              }}
-              {...repeater_props}
-            >
-              {InputWithLocal_props => <textarea
-                aria-label="Short description"
-                placeholder="Future Made in Europa"
-                {...InputWithLocal_props}
-                style={{
-                  ...InputWithLocal_props.style,
-                  margin: '0',
-                }}
-              />}
-            </InputWithLocal>
-          }
-        }
-      />
-
-      <br />
-      <p style={{ marginBottom: 'var(--basis)' }}>Main contact for this link:</p>
-      <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>(Only used internally. This won't be published.)</em>
-      <input
-        onChange={handleChange_InternalContact}
-        defaultValue={internal_contact}
-        type="text"
-        placeholder="thomas.rosen@volteuropa.org"
-        style={{
-          marginRight: '0',
-          marginLeft: '0',
-          width: 'calc(100% - var(--basis_x2))'
-        }}
-      />
-
-      <br />
-      <br />
-      <p>Use as:</p>
-      <MultiButton
-        onChange={handleUseAsChange}
-        ariaLabel="Use as"
-        defaultValue={useAs}
-        items={[
-          { value: 'redirect', title: 'Redirect' },
-          { value: 'linklist', title: 'Linklist' },
-          { value: '', title: 'Nothing / Deactivated' }
-        ]}
-      />
-
-      <br />
-      <br />
-
-      {
-        useAs === 'linklist'
-          ? <>
-            <p style={{ marginBottom: 'var(--basis)' }}>Coverphoto:</p>
-            <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-              A url to use for the coverphoto. The photo needs to be uploaded somewhere else. For example the Volt Europa website.
-            </em>
-            <input
-              onChange={handleChange_Coverphoto}
-              defaultValue={coverphoto}
-              type="text"
-              placeholder="https://"
-              style={{
-                marginRight: '0',
-                marginLeft: '0',
-                width: 'calc(100% - var(--basis_x2))'
-              }}
-            />
-
-            <br />
-            <br />
-            <p style={{ marginBottom: 'var(--basis)' }}>Custom imprint link:</p>
-            <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-              (Leave empty for Volt Europa imprint.)
-            </em>
-            <input
-              onChange={handleChange_ImprintOverwrite}
-              defaultValue={imprintOverwrite}
-              type="text"
-              placeholder="https://"
-              style={{
-                marginRight: '0',
-                marginLeft: '0',
-                width: 'calc(100% - var(--basis_x2))'
-              }}
-            />
-
-            <br />
-            <br />
-            <p style={{ marginBottom: 'var(--basis)' }}>Custom privacy policy link:</p>
-            <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-              (Leave empty for Volt Europa privacy policy.)
-            </em>
-            <input
-              onChange={handleChange_PrivacyPolicyOverwrite}
-              defaultValue={privacyPolicyOverwrite}
-              type="text"
-              placeholder="https://"
-              style={{
-                marginRight: '0',
-                marginLeft: '0',
-                width: 'calc(100% - var(--basis_x2))'
-              }}
-            />
-
-            <br />
-            <br />
-            <Items
-              onChange={handleChange_Items}
-              defaultValue={items}
-            />
-            <br />
-            <br />
-          </>
-          : (
-            useAs === 'redirect'
-              ? <>
-                <p>Url to redirect to:</p>
-                <input
-                  onChange={handleChange_Redirect}
-                  type="text"
-                  placeholder="https://volt-bonn.de"
-                  defaultValue={redirect}
-                  style={{
-                    marginRight: '0',
-                    marginLeft: '0',
-                    width: 'calc(100% - var(--basis_x2))'
-                  }}
-                />
-                <br />
-                <br />
-              </>
-              : null
-          )
+  return <div
+    className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
+    style={parentStyles}
+  >
+    <Header
+      title={`volt.link/${code}`}
+      rightActions={rightHeaderActions}
+      notificationBanner={
+        savingMessage === null
+          ? null
+          : <p style={{ textAlign: 'center' }}>{savingMessage}</p>
       }
+    />
 
-    </div>
-  </>
+    <p style={{marginBottom: 'var(--basis)'}}>Title:</p>
+    <Repeater
+      onChange={handleChange_Title}
+      defaultValue={title}
+      addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
+      addButtonText="Add Translation"
+      render={
+        ({ defaultValue, ...repeater_props }) => {
+          const locale = defaultValue.locale
+          const value = defaultValue.value
+          return <InputWithLocal
+            locale={locale}
+            defaultValue={value}
+            style={{
+              maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
+            }}
+            {...repeater_props}
+          >
+            {InputWithLocal_props => <input
+              aria-label="Title"
+              type="text"
+              placeholder="Volt Bonn"
+              {...InputWithLocal_props}
+              style={{
+                ...InputWithLocal_props.style,
+                margin: '0',
+              }}
+            />}
+          </InputWithLocal>
+        }
+      }
+    />
+    <br />
+    <p style={{ marginBottom: 'var(--basis)' }}>Short description:</p>
+    <Repeater
+      onChange={handleChange_Description}
+      defaultValue={description}
+      addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
+      addButtonText="Add Translation"
+      render={
+        ({ defaultValue, ...repeater_props }) => {
+          const locale = defaultValue.locale
+          const value = defaultValue.value
+          return <InputWithLocal
+            locale={locale}
+            defaultValue={value}
+            style={{
+              maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
+            }}
+            {...repeater_props}
+          >
+            {InputWithLocal_props => <textarea
+              aria-label="Short description"
+              placeholder="Future Made in Europa"
+              {...InputWithLocal_props}
+              style={{
+                ...InputWithLocal_props.style,
+                margin: '0',
+              }}
+            />}
+          </InputWithLocal>
+        }
+      }
+    />
+
+    <br />
+    <p style={{ marginBottom: 'var(--basis)' }}>Main contact for this link:</p>
+    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>(Only used internally. This won't be published.)</em>
+    <input
+      onChange={handleChange_InternalContact}
+      defaultValue={internal_contact}
+      type="text"
+      placeholder="thomas.rosen@volteuropa.org"
+      style={{
+        marginRight: '0',
+        marginLeft: '0',
+        width: 'calc(100% - var(--basis_x2))'
+      }}
+    />
+
+    <br />
+    <br />
+    <p>Use as:</p>
+    <MultiButton
+      onChange={handleUseAsChange}
+      ariaLabel="Use as"
+      defaultValue={useAs}
+      items={[
+        { value: 'redirect', title: 'Redirect' },
+        { value: 'linklist', title: 'Linklist' },
+        { value: '', title: 'Nothing / Deactivated' }
+      ]}
+    />
+
+    <br />
+    <br />
+
+    {
+      useAs === 'linklist'
+        ? <>
+          <p style={{ marginBottom: 'var(--basis)' }}>Coverphoto:</p>
+          <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
+            A url to use for the coverphoto. The photo needs to be uploaded somewhere else. For example the Volt Europa website.
+          </em>
+          <input
+            onChange={handleChange_Coverphoto}
+            defaultValue={coverphoto}
+            type="text"
+            placeholder="https://"
+            style={{
+              marginRight: '0',
+              marginLeft: '0',
+              width: 'calc(100% - var(--basis_x2))'
+            }}
+          />
+
+          <br />
+          <br />
+          <p style={{ marginBottom: 'var(--basis)' }}>Custom imprint link:</p>
+          <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
+            (Leave empty for Volt Europa imprint.)
+          </em>
+          <input
+            onChange={handleChange_ImprintOverwrite}
+            defaultValue={imprintOverwrite}
+            type="text"
+            placeholder="https://"
+            style={{
+              marginRight: '0',
+              marginLeft: '0',
+              width: 'calc(100% - var(--basis_x2))'
+            }}
+          />
+
+          <br />
+          <br />
+          <p style={{ marginBottom: 'var(--basis)' }}>Custom privacy policy link:</p>
+          <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
+            (Leave empty for Volt Europa privacy policy.)
+          </em>
+          <input
+            onChange={handleChange_PrivacyPolicyOverwrite}
+            defaultValue={privacyPolicyOverwrite}
+            type="text"
+            placeholder="https://"
+            style={{
+              marginRight: '0',
+              marginLeft: '0',
+              width: 'calc(100% - var(--basis_x2))'
+            }}
+          />
+
+          <br />
+          <br />
+          <Items
+            onChange={handleChange_Items}
+            defaultValue={items}
+          />
+          <br />
+          <br />
+        </>
+        : (
+          useAs === 'redirect'
+            ? <>
+              <p>Url to redirect to:</p>
+              <input
+                onChange={handleChange_Redirect}
+                type="text"
+                placeholder="https://volt-bonn.de"
+                defaultValue={redirect}
+                style={{
+                  marginRight: '0',
+                  marginLeft: '0',
+                  width: 'calc(100% - var(--basis_x2))'
+                }}
+              />
+              <br />
+              <br />
+            </>
+            : null
+        )
+    }
+  </div>
 }
 
 export default Editor
