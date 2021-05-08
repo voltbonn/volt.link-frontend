@@ -22,7 +22,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  padding: var(--basis_x2);
+  padding: var(--basis_x2) var(--basis_x4);
   gap: var(--basis_x4);
 
   overflow: auto;
