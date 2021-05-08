@@ -219,8 +219,6 @@ function Editor() {
     })
       .then(response => response.json())
       .then(data => {
-        console.log('data', data)
-
         let {
           use_as: useAs = '',
           title = [],
