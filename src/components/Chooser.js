@@ -1,11 +1,17 @@
 import { useState, useCallback } from 'react'
 import classes from './Chooser.module.css'
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import useKeyPress from '../hooks/useKeyPress.js'
 
 function Chooser() {
+  const history = useHistory()
   const [value, setValue] = useState('')
   const [alreadyExists, setAlreadyExists] = useState(null)
+
+  useKeyPress(['Enter'], event => {
+    history.push(`/edit/${value}`)
+  })
 
   const handleCheckIfPathExists = useCallback(event => {
     const newValue = event.target.value
