@@ -338,7 +338,7 @@ function Editor() {
     style={parentStyles}
   >
     <Header
-      title={`volt.link/${code}`}
+      title={<><span className="hideOnSmallScreen">volt.link</span>/{code}</>}
       rightActions={rightHeaderActions}
       notificationBanner={
         savingMessage === null
