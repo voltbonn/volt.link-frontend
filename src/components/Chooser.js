@@ -9,7 +9,7 @@ function Chooser() {
   const [value, setValue] = useState('')
   const [alreadyExists, setAlreadyExists] = useState(null)
 
-  useKeyPress(['Enter'], event => {
+  useKeyPress(['Enter'], () => {
     history.push(`/edit/${value}`)
   })
 
