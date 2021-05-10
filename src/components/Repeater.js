@@ -1,8 +1,18 @@
 import { useState, useCallback, useEffect } from 'react'
 
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+
 import classes from './Repeater.module.css'
 
-function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style, onChange, prependNewItems }) {
+function reorder(list, startIndex, endIndex) {
+  const result = Array.from(list)
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
+
+  return result
+}
+
+function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style, onChange, prependNewItems, isReorderable }) {
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
   }
@@ -53,6 +63,24 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style,
     onChange(new_rows)
   }, [rows, addDefaultValue, setRows, onChange, prependNewItems])
 
+  function onDragEnd(result) {
+    if (!result.destination) {
+      return
+    }
+
+    if (result.destination.index === result.source.index) {
+      return
+    }
+
+    const new_rows = reorder(
+      rows,
+      result.source.index,
+      result.destination.index
+    )
+    setRows(new_rows)
+    onChange(new_rows)
+  }
+
   const hasOnlyOneRow = rows.length === 1
 
   const addButton = <div style={{ textAlign: 'right' }}>
@@ -62,30 +90,62 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style,
   return <div style={style}>
     { !hasOnlyOneRow && prependNewItems ? addButton : null }
 
-    {
-      rows.map(
-        (subDefaultValue, index) => (
-          !!subDefaultValue._id
-            ? <div key={subDefaultValue._id} className={classes.row}>
-              {render({
-                key: subDefaultValue._id,
-                defaultValue: subDefaultValue,
-                className: classes.item,
-                'data-index': index,
-                'data-id': subDefaultValue._id,
-                onChange: handleRowChange
-              })}
-              {
-                hasOnlyOneRow
-                  ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
-                  : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
-              }
-            </div>
-            : null
-        )
-      )
-      .filter(Boolean)
-    }
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable
+        droppableId="list"
+        isDropDisabled={isReorderable === true ? false : true}
+      >
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {
+              rows
+              .filter(subDefaultValue => subDefaultValue._id)
+              .map(
+                (subDefaultValue, index) => <Draggable
+                  key={subDefaultValue._id}
+                  draggableId={subDefaultValue._id}
+                  index={index}
+                  isDragDisabled={isReorderable === true ? false : true}
+                  disableInteractiveElementBlocking={true}
+                >
+                  {provided => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+
+                      key={subDefaultValue._id}
+                      className={classes.row}
+                    >
+                      {
+                        isReorderable === true
+                          ? <button className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
+                          : null
+                      }
+                      {
+                        render({
+                          key: subDefaultValue._id,
+                          defaultValue: subDefaultValue,
+                          className: classes.item,
+                          'data-index': index,
+                          'data-id': subDefaultValue._id,
+                          onChange: handleRowChange
+                        })
+                      }
+                      {
+                        hasOnlyOneRow
+                          ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
+                          : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
+                      }
+                    </div>
+                  )}
+                </Draggable>
+              )
+            }
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
 
     {!hasOnlyOneRow && !prependNewItems ? addButton : null}
   </div>

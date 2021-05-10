@@ -146,6 +146,7 @@ function Items({ defaultValue, onChange }){
     addDefaultValue={() => ({ _id: uuidv4(), type: null, title: [], link: '', active: true })}
     // addButtonText="Add Row"
     prependNewItems={true}
+    isReorderable={true}
     render={
       ({ defaultValue, ...repeater_props }) => {
         return <Item
