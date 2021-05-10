@@ -118,7 +118,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style,
                     >
                       {
                         isReorderable === true
-                          ? <button className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
+                          ? <button aria-label="Reorder" className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
                           : null
                       }
                       {
