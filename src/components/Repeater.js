@@ -88,7 +88,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style,
   </div>
 
   return <div style={style}>
-    { !hasOnlyOneRow && prependNewItems ? addButton : null }
+    {!hasOnlyOneRow && prependNewItems ? <div style={{ marginBottom: 'var(--basis)' }}>{addButton}</div> : null}
 
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable
