@@ -5,7 +5,7 @@ import {
 } from '@fluent/react'
 import { negotiateLanguages } from '@fluent/langneg'
 
-import { FluentContext } from '../node_modules/@fluent/react/esm/context.js'
+import { FluentContext } from '../../node_modules/@fluent/react/esm/context.js'
 
 const Localized = props => (
   <LocalizedOriginal
