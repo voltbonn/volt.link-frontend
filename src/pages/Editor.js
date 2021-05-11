@@ -79,12 +79,6 @@ function Item({ item, className, onChange, ...props }) {
     {
       !!type
         ? <>
-          {/*
-            type === 'headline'
-            ? <p style={{marginBottom: 'var(--basis)'}}>Headline</p>
-            : <p style={{marginBottom: 'var(--basis)'}}>Link</p>
-          */}
-
           {
             type === 'link' || type === 'headline'
               ? <Repeater
