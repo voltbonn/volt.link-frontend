@@ -16,7 +16,7 @@ function Item({ item, className, onChange, ...props }) {
   const wrapperDiv = useRef(null)
 
   const [type, setType] = useState(item.type || null)
-  const [title, setTitle] = useState(item.title || [{ locale: 'de', value: 'Website' }])
+  const [title, setTitle] = useState(item.title || [])
   const [link, setLink] = useState(item.link || '')
 
   const handleTypeChange = useCallback(newValue => {
