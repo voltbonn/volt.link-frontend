@@ -17,7 +17,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
     addButtonText = 'Add Row'
   }
 
-  const [rows, setRows] = useState(defaultValue)
+  const [rows, setRows] = useState([])
 
   useEffect(() => {
     let tmp_defaultValue = defaultValue
