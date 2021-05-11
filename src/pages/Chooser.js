@@ -2,10 +2,12 @@ import { useState, useCallback } from 'react'
 import classes from './Chooser.module.css'
 
 import { Link, useHistory } from 'react-router-dom'
+
+import { withLocalization } from '../fluent/Localized.js'
 import useKeyPress from '../hooks/useKeyPress.js'
 import Header from '../components/Header.js'
 
-function Chooser({ rightHeaderActions }) {
+function Chooser({ getString, rightHeaderActions }) {
   const history = useHistory()
   const [value, setValue] = useState('')
   const [alreadyExists, setAlreadyExists] = useState(null)
@@ -48,13 +50,13 @@ function Chooser({ rightHeaderActions }) {
 
     <div className={`${classes.chooserInput} ${alreadyExists === null ? classes.hideSubmitButton : ''}`}>
       <p className={classes.domainPrefix}>volt.link/</p>
-      <input type="text" placeholder="Type a path…" onChange={handleCheckIfPathExists}/>
+      <input type="text" placeholder={getString('type_a_path')} onChange={handleCheckIfPathExists}/>
       {
         alreadyExists === null
           ? null
           : <Link to={`/edit/${value}`}>
               <button>
-                {alreadyExists ? 'Edit' : 'Create'}
+              {alreadyExists ? getString('edit_path_button') : getString('create_path_button')}
               </button>
             </Link>
       }
@@ -62,7 +64,7 @@ function Chooser({ rightHeaderActions }) {
   </div>
 }
 
-export default Chooser
+export default withLocalization(Chooser)
 
 /*
 

@@ -7,12 +7,13 @@ import {
 } from 'react-router-dom'
 
 import classes from './Editor.module.css'
+import { Localized, withLocalization } from '../fluent/Localized.js'
 import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
 import InputWithLocal from '../components/InputWithLocal.js'
 import Repeater from '../components/Repeater.js'
 
-function Item({ item, className, onChange, ...props }) {
+function ItemRaw({ getString, item, className, onChange, ...props }) {
   const wrapperDiv = useRef(null)
 
   const [type, setType] = useState(item.type || null)
@@ -60,7 +61,7 @@ function Item({ item, className, onChange, ...props }) {
         ? null
         : <p style={{
             marginBottom: 'var(--basis)'
-          }}>Choose an item type:</p>
+          }}><Localized id="path_editor_item_choose_type_label" /></p>
     }
 
     <MultiButton
@@ -68,8 +69,8 @@ function Item({ item, className, onChange, ...props }) {
       ariaLabel="Use as"
       defaultValue={type}
       items={[
-        { value: 'link', title: 'Link' },
-        { value: 'headline', title: 'Headline' }
+        { value: 'link', title: getString('path_editor_item_choose_type_value_link') },
+        { value: 'headline', title: getString('path_editor_item_choose_type_value_headline') }
       ]}
       style={{
         marginTop: 'calc(-1 * var(--basis))'
@@ -78,14 +79,14 @@ function Item({ item, className, onChange, ...props }) {
 
     {
       !!type
-        ? <>
+        ? <> 
           {
             type === 'link' || type === 'headline'
               ? <Repeater
                 onChange={handleChange_Title}
                 defaultValue={title}
                 addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
-                addButtonText="Add Translation"
+                addButtonText={getString('path_editor_add_translation')}
                 style={{
                   marginTop: 'var(--basis_x4)'
                 }}
@@ -101,7 +102,7 @@ function Item({ item, className, onChange, ...props }) {
                       }}
                       {...repeater_props}
                     >
-                      {InputWithLocal_props => <input type="text" placeholder="Title" {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
+                      {InputWithLocal_props => <input type="text" placeholder={getString('path_editor_item_title_label')} {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
                     </InputWithLocal>
                   }
                 }
@@ -115,7 +116,7 @@ function Item({ item, className, onChange, ...props }) {
                 onChange={handleChange_Link}
                 type="text"
                 defaultValue={link}
-                placeholder="Link"
+                placeholder={getString('path_editor_item_link_label')}
                 style={{
                   marginRight: '0',
                   marginBottom: '0',
@@ -130,15 +131,17 @@ function Item({ item, className, onChange, ...props }) {
     }
   </div>
 }
+const Item = withLocalization(ItemRaw)
 
-function Items({ defaultValue, onChange }){
+function ItemsRaw({ getString, defaultValue, onChange }){
   const items = defaultValue
 
   return <Repeater
     onChange={onChange}
     defaultValue={items}
     addDefaultValue={() => ({ _id: uuidv4(), type: null, title: [], link: '', active: true })}
-    // addButtonText="Add Row"
+    addButtonText={getString('path_editor_add_row')}
+    reorderLabel={getString('path_editor_reorder')}
     prependNewItems={true}
     isReorderable={true}
     render={
@@ -154,6 +157,7 @@ function Items({ defaultValue, onChange }){
     }
   />
 }
+const Items = withLocalization(ItemsRaw)
 
 function addIds(array){
   if (Array.isArray(array)) {
@@ -173,7 +177,7 @@ function delay(time) {
   })
 }
 
-function Editor() {
+function Editor({ getString }) {
   const { code } = useParams()
 
   const [loadingContent, setLoadingContent] = useState(true)
@@ -273,7 +277,7 @@ function Editor() {
   ])
 
   const handleSave = useCallback(() => {
-    setSavingMessage('Started saving…')
+    setSavingMessage(getString('path_editor_status_started_saving'))
 
     const data = {
       use_as: useAs,
@@ -301,16 +305,19 @@ function Editor() {
       .then(r => r.json())
       .then(async data => {
         await delay(500)
-        setSavingMessage('Saved!')
+        setSavingMessage(getString('path_editor_status_saved'))
         await delay(500)
         setSavingMessage(null)
       })
       .catch(async error => {
         console.error(error)
         await delay(500)
-        setSavingMessage(`Error while saving! Please try again later. (The error: "${error}")`)
+        setSavingMessage(getString('path_editor_status_error_while_saving', {
+          error: error.message
+        }))
       })
   }, [
+    getString,
     code,
     useAs,
     redirect,
@@ -324,8 +331,8 @@ function Editor() {
   ])
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
-    {/* <button className="text">Share</button> */}
-    <button className="green" onClick={handleSave}>Save</button>
+    {/* <button className="text"><Localized id="path_editor_share"/></button> */}
+    <button className="green" onClick={handleSave}><Localized id="path_editor_save"/></button>
   </div>
 
   return <div
@@ -341,12 +348,12 @@ function Editor() {
       }
     />
 
-    <p style={{marginBottom: 'var(--basis)'}}>Title:</p>
+    <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_title_label" /></p>
     <Repeater
       onChange={handleChange_Title}
       defaultValue={title}
       addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
-      addButtonText="Add Translation"
+      addButtonText={getString('path_editor_add_translation')}
       render={
         ({ defaultValue, ...repeater_props }) => {
           const locale = defaultValue.locale
@@ -360,9 +367,9 @@ function Editor() {
             {...repeater_props}
           >
             {InputWithLocal_props => <input
-              aria-label="Title"
+              aria-label={getString('path_editor_title_label')}
               type="text"
-              placeholder="Volt Bonn"
+              placeholder={getString('path_editor_title_placeholder')}
               {...InputWithLocal_props}
               style={{
                 ...InputWithLocal_props.style,
@@ -374,12 +381,12 @@ function Editor() {
       }
     />
     <br />
-    <p style={{ marginBottom: 'var(--basis)' }}>Short description:</p>
+    <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_description_label" /></p>
     <Repeater
       onChange={handleChange_Description}
       defaultValue={description}
       addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
-      addButtonText="Add Translation"
+      addButtonText={getString('path_editor_add_translation')}
       render={
         ({ defaultValue, ...repeater_props }) => {
           const locale = defaultValue.locale
@@ -393,8 +400,8 @@ function Editor() {
             {...repeater_props}
           >
             {InputWithLocal_props => <textarea
-              aria-label="Short description"
-              placeholder="Future Made in Europa"
+              aria-label={getString('path_editor_description_label')}
+              placeholder={getString('path_editor_description_placeholder')}
               {...InputWithLocal_props}
               style={{
                 ...InputWithLocal_props.style,
@@ -407,13 +414,13 @@ function Editor() {
     />
 
     <br />
-    <p style={{ marginBottom: 'var(--basis)' }}>Main contact for this link:</p>
-    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>(Only used internally. This won't be published.)</em>
+    <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_main_contact_label" /></p>
+    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_main_contact_info" /></em>
     <input
       onChange={handleChange_InternalContact}
       defaultValue={internal_contact}
       type="text"
-      placeholder="thomas.rosen@volteuropa.org"
+      placeholder={getString('path_editor_main_contact_placeholder')}
       style={{
         marginRight: '0',
         marginLeft: '0',
@@ -423,15 +430,15 @@ function Editor() {
 
     <br />
     <br />
-    <p>Use as:</p>
+    <p><Localized id="path_editor_use_as_label" /></p>
     <MultiButton
       onChange={handleUseAsChange}
-      ariaLabel="Use as"
+      ariaLabel={getString('path_editor_use_as_label')}
       defaultValue={useAs}
       items={[
-        { value: 'redirect', title: 'Redirect' },
-        { value: 'linklist', title: 'Linklist' },
-        { value: '', title: 'Nothing / Deactivated' }
+        { value: 'redirect', title: getString('path_editor_use_as_value_redirect') },
+        { value: 'linklist', title: getString('path_editor_use_as_value_linklist') },
+        { value: '', title: getString('path_editor_use_as_value_nothing') }
       ]}
     />
 
@@ -441,15 +448,16 @@ function Editor() {
     {
       useAs === 'linklist'
         ? <>
-          <p style={{ marginBottom: 'var(--basis)' }}>Coverphoto:</p>
+          <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_coverphoto_label" /></p>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            A url to use for the coverphoto. The photo needs to be uploaded somewhere else. For example the Volt Europa website.
+            <Localized id="path_editor_coverphoto_info" />
           </em>
           <input
             onChange={handleChange_Coverphoto}
             defaultValue={coverphoto}
             type="text"
-            placeholder="https://"
+            placeholder={getString('path_editor_coverphoto_placeholder')}
+            aria-label={getString('path_editor_coverphoto_label')}
             style={{
               marginRight: '0',
               marginLeft: '0',
@@ -459,15 +467,16 @@ function Editor() {
 
           <br />
           <br />
-          <p style={{ marginBottom: 'var(--basis)' }}>Custom imprint link:</p>
+          <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_imprint_overwrite_label" /></p>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            (Leave empty for Volt Europa imprint.)
+            <Localized id="path_editor_imprint_overwrite_info" />
           </em>
           <input
             onChange={handleChange_ImprintOverwrite}
             defaultValue={imprintOverwrite}
             type="text"
-            placeholder="https://"
+            placeholder={getString('path_editor_imprint_overwrite_placeholder')}
+            aria-label={getString('path_editor_imprint_overwrite_label')}
             style={{
               marginRight: '0',
               marginLeft: '0',
@@ -477,15 +486,16 @@ function Editor() {
 
           <br />
           <br />
-          <p style={{ marginBottom: 'var(--basis)' }}>Custom privacy policy link:</p>
+          <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_privacy_policy_overwrite_label" /></p>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            (Leave empty for Volt Europa privacy policy.)
+            <Localized id="path_editor_privacy_policy_overwrite_info" />
           </em>
           <input
             onChange={handleChange_PrivacyPolicyOverwrite}
             defaultValue={privacyPolicyOverwrite}
             type="text"
-            placeholder="https://"
+            placeholder={getString('path_editor_privacy_policy_overwrite_placeholder')}
+            aria-label={getString('path_editor_privacy_policy_overwrite_label')}
             style={{
               marginRight: '0',
               marginLeft: '0',
@@ -505,11 +515,12 @@ function Editor() {
         : (
           useAs === 'redirect'
             ? <>
-              <p>Url to redirect to:</p>
+              <p><Localized id="path_editor_redirect_label" /></p>
               <input
                 onChange={handleChange_Redirect}
                 type="text"
-                placeholder="https://volt-bonn.de"
+                placeholder={getString('path_editor_redirect_placeholder')}
+                aria-label={getString('path_editor_redirect_label')}
                 defaultValue={redirect}
                 style={{
                   marginRight: '0',
@@ -526,4 +537,4 @@ function Editor() {
   </div>
 }
 
-export default Editor
+export default withLocalization(Editor)

@@ -9,8 +9,8 @@ import { negotiateLanguages } from '@fluent/langneg'
 
 
 export const locales = {
-  de: 'Deutsch',
-  // en: 'English',
+  // de: 'Deutsch',
+  en: 'English',
   // es: 'Español',
   // pt: 'Português',
   // fr: 'Français',

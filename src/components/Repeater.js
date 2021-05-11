@@ -12,7 +12,7 @@ function reorder(list, startIndex, endIndex) {
   return result
 }
 
-function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style, onChange, prependNewItems, isReorderable }) {
+function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel = 'Reorder', render, style, onChange, prependNewItems, isReorderable }) {
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
   }
@@ -118,7 +118,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, render, style,
                     >
                       {
                         isReorderable === true
-                          ? <button aria-label="Reorder" className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
+                          ? <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
                           : null
                       }
                       {

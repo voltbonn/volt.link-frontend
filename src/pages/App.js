@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom'
 
+import Localized from '../fluent/Localized.js'
 import Header from '../components/Header.js'
 import Chooser from './Chooser.js'
 import Editor from './Editor.js'
@@ -40,11 +41,11 @@ function App() {
   const loginLogoutButton = (
     loggedIn
     ? <a href = {`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-      <button className="red" style={{marginRight: '0'}}>Logout</button>
-    </a >
+        <button className="red" style={{ marginRight: '0' }}><Localized id="logout"/></button>
+      </a>
     : <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-      <button style={{marginRight: '0'}}>Login</button>
-    </a>
+        <button style={{ marginRight: '0' }}><Localized id="login"/></button>
+      </a>
   )
 
   return (<>
@@ -56,7 +57,7 @@ function App() {
               title="edit.volt.link"
               rightActions={loginLogoutButton}
             />
-            <p>Login in the upper right corner, to edit volt.link urls.</p>
+            <p><Localized id="login_prompt"/></p>
           </div>
           : <>
               <Switch>
@@ -71,9 +72,9 @@ function App() {
       }
     </div>
     <footer>
-      <a href="mailto:thomas.rosen@volteuropa.org">Contact</a>
+      <a href="mailto:thomas.rosen@volteuropa.org"><Localized id="contact" /></a>
       &nbsp; • &nbsp;
-      <a href="https://github.com/voltbonn/edit.volt.link">Source Code</a>
+      <a href="https://github.com/voltbonn/edit.volt.link"><Localized id="source_code" /></a>
     </footer>
   </>)
 }
