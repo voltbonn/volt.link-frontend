@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import classes from './App.module.css'
 
 import {
@@ -7,36 +6,13 @@ import {
 } from 'react-router-dom'
 
 import Localized from '../fluent/Localized.js'
+import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import Chooser from './Chooser.js'
 import Editor from './Editor.js'
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false)
-  // const [user, setUser] = useState({})
-
-  useEffect(()=>{
-    fetch('https://volt.link/user.json', {
-      mode: 'cors',
-      credentials: 'include',
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (
-          !!data
-          && !!data.user
-          && !!data.user.id
-          && !!data.user.status
-        ) {
-          // setUser(data.user)
-          setLoggedIn(true)
-        } else {
-          // setUser({})
-          setLoggedIn(false)
-        }
-      })
-      .catch(error => console.error(error))
-  }, [setLoggedIn])
+  const [, loggedIn] = useUser()
 
   const loginLogoutButton = (
     loggedIn
