@@ -29,10 +29,13 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
 
   const handleRemoveRow = useCallback(event => {
     const index = event.target.dataset.index
-    const new_rows = [...rows]
+    let new_rows = [...rows]
     new_rows.splice(index, 1)
+    const rows_from_onChange = onChange(new_rows)
+    if (Array.isArray(rows_from_onChange)) {
+      new_rows = rows_from_onChange
+    }
     setRows(new_rows)
-    onChange(new_rows)
   }, [rows, setRows, onChange])
 
   const handleRowChange = useCallback(event => {
