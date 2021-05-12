@@ -22,7 +22,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
   useEffect(() => {
     let tmp_defaultValue = defaultValue
     if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
-      tmp_defaultValue = [addDefaultValue()]
+      tmp_defaultValue = [addDefaultValue(rows)]
     }
     setRows(tmp_defaultValue)
   }, [defaultValue, addDefaultValue, setRows])
@@ -50,7 +50,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
   }, [rows, setRows, onChange])
 
   const handleAddRow = useCallback(() => {
-    const newValue = addDefaultValue() || null
+    const newValue = addDefaultValue(rows) || null
 
     let new_rows = null
     if (prependNewItems === true) {
