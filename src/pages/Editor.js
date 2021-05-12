@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -8,6 +8,7 @@ import {
 
 import classes from './Editor.module.css'
 import { Localized, withLocalization } from '../fluent/Localized.js'
+import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
 import InputWithLocal from '../components/InputWithLocal.js'
@@ -179,6 +180,7 @@ function delay(time) {
 
 function Editor({ getString }) {
   const { code } = useParams()
+  const [{email = ''} = {}] = useUser() || []
 
   const [loadingContent, setLoadingContent] = useState(true)
   const [savingMessage, setSavingMessage] = useState(null)
@@ -192,8 +194,22 @@ function Editor({ getString }) {
   const [description, setDescription] = useState([])
   const handleChange_Description = useCallback(rows => setDescription(rows), [setDescription])
 
-  const [internal_contact, setInternalContact] = useState('')
-  const handleChange_InternalContact = useCallback(event => setInternalContact(event.target.value), [setInternalContact])
+  const permissionsDefault = useMemo(() => (
+      typeof email === 'string' && email.length > 0
+      ? [{ _id: uuidv4(), email }, { _id: uuidv4(), email: '' }]
+      : []
+  ), [email])
+  const [permissions, setPermissions] = useState(permissionsDefault)
+  const handleChange_Permissions = useCallback(rows => {
+    const filled_rows_length = rows.filter(r => r.email !== '').length
+
+    if (filled_rows_length === 0) {
+      rows.unshift({ _id: uuidv4(), email: email })
+    }
+
+    setPermissions(rows)
+    return rows
+  }, [setPermissions, email])
 
   const [coverphoto, setCoverphoto] = useState('')
   const handleChange_Coverphoto = useCallback(event => setCoverphoto(event.target.value), [setCoverphoto])
@@ -223,7 +239,7 @@ function Editor({ getString }) {
           use_as: useAs = '',
           title = [],
           description = [],
-          internal_contact = '',
+          permissions = permissionsDefault,
           redirect = '',
           coverphoto = '',
           overwrites = {},
@@ -253,7 +269,7 @@ function Editor({ getString }) {
         setUseAs(useAs)
         setTitle(title)
         setDescription(description)
-        setInternalContact(internal_contact)
+        setPermissions(permissions)
         setRedirect(redirect)
         setCoverphoto(coverphoto)
         setImprintOverwrite(imprint)
@@ -265,10 +281,11 @@ function Editor({ getString }) {
   }, [
     setLoadingContent,
     code,
+    permissionsDefault,
     setUseAs,
     setTitle,
     setDescription,
-    setInternalContact,
+    setPermissions,
     setRedirect,
     setCoverphoto,
     setImprintOverwrite,
@@ -283,7 +300,7 @@ function Editor({ getString }) {
       use_as: useAs,
       title,
       description,
-      internal_contact,
+      permissions,
       coverphoto,
       redirect,
       overwrites: {
@@ -323,7 +340,7 @@ function Editor({ getString }) {
     redirect,
     title,
     description,
-    internal_contact,
+    permissions,
     items,
     coverphoto,
     imprintOverwrite,
@@ -414,21 +431,31 @@ function Editor({ getString }) {
     />
 
     <br />
-    <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_main_contact_label" /></p>
-    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_main_contact_info" /></em>
-    <input
-      onChange={handleChange_InternalContact}
-      defaultValue={internal_contact}
-      type="text"
-      placeholder={getString('path_editor_main_contact_placeholder')}
-      style={{
-        marginRight: '0',
-        marginLeft: '0',
-        width: 'calc(100% - var(--basis_x2))'
-      }}
+    <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_edit_label" /></p>
+    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_edit_info" /></em>
+    <Repeater
+      onChange={handleChange_Permissions}
+      defaultValue={permissions}
+      addDefaultValue={() => ({ _id: uuidv4(), email: '' })}
+      addButtonText={getString('path_editor_permissions_edit_add_button_label')}
+      render={
+        ({ defaultValue, ...repeater_props }) => {
+          const email = defaultValue.email
+          return <input
+            defaultValue={email}
+            type="text"
+            aria-label={getString('path_editor_permissions_edit_label')}
+            placeholder={getString('path_editor_permissions_edit_placeholder')}
+            style={{
+              maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
+              margin: '0',
+            }}
+            {...repeater_props}
+          />
+        }
+      }
     />
 
-    <br />
     <br />
     <p><Localized id="path_editor_use_as_label" /></p>
     <MultiButton

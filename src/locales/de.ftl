@@ -25,9 +25,10 @@ path_editor_title_placeholder = Volt Bonn
 path_editor_description_label = Kurze Beschreibung:
 path_editor_description_placeholder = Zukunft Made in Europe
 
-path_editor_main_contact_label = Hauptansprechperson für diesen Link:
-path_editor_main_contact_info = (Wird nur intern verwendet und nicht veröffentlicht.)
-path_editor_main_contact_placeholder = thomas.rosen@volteuropa.org
+path_editor_permissions_edit_label = Wer darf diesen Link bearbeiten?
+path_editor_permissions_edit_info = Geb die Volt Europa Email-Adressen an, die diesen Link bearbeiten dürfen. Verwende eine eigene Zeile pro Adresse.
+path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
+path_editor_permissions_edit_add_button_label = Person hinzufügen
 
 path_editor_use_as_label = Verwenden als:
 path_editor_use_as_value_redirect = Weiterleitung
