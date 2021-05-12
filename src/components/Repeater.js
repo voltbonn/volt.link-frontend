@@ -25,7 +25,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
       tmp_defaultValue = [addDefaultValue(rows)]
     }
     setRows(tmp_defaultValue)
-  }, [defaultValue, addDefaultValue, setRows])
+  }, [defaultValue, addDefaultValue, rows, setRows])
 
   const handleRemoveRow = useCallback(event => {
     const index = event.target.dataset.index
