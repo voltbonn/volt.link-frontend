@@ -34,7 +34,7 @@ export default function useUser(forceRefetch = false) {
         })
         .catch(error => console.error(error))
     }
-  }, [forceRefetch])
+  }, [forceRefetch, setUser, setLoggedIn])
 
   return [user, loggedIn]
 }
