@@ -46,7 +46,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
     const new_rows = [...rows]
     new_rows[index] = {
       _id,
-      ...newValue
+      value: newValue
     }
     setRows(new_rows)
     onChange(new_rows)

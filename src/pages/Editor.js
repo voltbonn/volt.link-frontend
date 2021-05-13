@@ -196,15 +196,15 @@ function Editor({ getString }) {
 
   const permissionsDefault = useMemo(() => (
       typeof email === 'string' && email.length > 0
-      ? [{ _id: uuidv4(), email }, { _id: uuidv4(), email: '' }]
+      ? [{ _id: uuidv4(), value: email }, { _id: uuidv4(), value: '' }]
       : []
   ), [email])
   const [permissions, setPermissions] = useState(permissionsDefault)
   const handleChange_Permissions = useCallback(rows => {
-    const filled_rows_length = rows.filter(r => r.email !== '').length
+    const filled_rows_length = rows.filter(r => r.value !== '').length
 
     if (filled_rows_length === 0) {
-      rows.unshift({ _id: uuidv4(), email: email })
+      rows.unshift({ _id: uuidv4(), value: email })
     }
 
     setPermissions(rows)
@@ -445,13 +445,13 @@ function Editor({ getString }) {
     <Repeater
       onChange={handleChange_Permissions}
       defaultValue={permissions}
-      addDefaultValue={() => ({ _id: uuidv4(), email: '' })}
+      addDefaultValue={() => ({ _id: uuidv4(), value: '' })}
       addButtonText={getString('path_editor_permissions_edit_add_button_label')}
       render={
         ({ defaultValue, ...repeater_props }) => {
-          const email = defaultValue.email
+          const value = defaultValue.value
           return <input
-            defaultValue={email}
+            defaultValue={value}
             type="text"
             aria-label={getString('path_editor_permissions_edit_label')}
             placeholder={getString('path_editor_permissions_edit_placeholder')}
