@@ -50,7 +50,7 @@ function App() {
     <footer>
       <a href="mailto:thomas.rosen@volteuropa.org"><Localized id="contact" /></a>
       &nbsp; • &nbsp;
-      <a href="https://github.com/voltbonn/edit.volt.link"><Localized id="source_code" /></a>
+      <a href="https://github.com/voltbonn/edit.volt.link" target="_blank" rel="noreferrer"><Localized id="source_code" /></a>
     </footer>
   </>)
 }
