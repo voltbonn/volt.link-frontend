@@ -347,8 +347,17 @@ function Editor({ getString }) {
     privacyPolicyOverwrite
   ])
 
+  const viewStatistics = useCallback(()=>{
+    const a = document.createElement('a')
+    a.href = `https://umami.qiekub.org/share/s0ZHBZbb/volt.link?url=%2F${code}`
+    a.target = '_blank'
+    a.rel = 'noreferrer'
+    a.click()
+  }, [code])
+
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     {/* <button className="text"><Localized id="path_editor_share"/></button> */}
+    <button className="text" onClick={viewStatistics}><Localized id="path_editor_statistics" /></button>
     <button className="green" onClick={handleSave}><Localized id="path_editor_save"/></button>
   </div>
 

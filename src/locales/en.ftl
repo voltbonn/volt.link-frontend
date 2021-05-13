@@ -18,6 +18,7 @@ path_editor_status_saved = Saved!
 path_editor_status_error_while_saving = Error while saving! Please try again later. (The error: "{$error}")
 
 path_editor_share = Share
+path_editor_statistics = Statistics
 
 path_editor_title_label = Title:
 path_editor_title_placeholder = Volt Bonn

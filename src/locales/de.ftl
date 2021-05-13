@@ -18,6 +18,7 @@ path_editor_status_saved = Gespeichert!
 path_editor_status_error_while_saving = Fehler beim Speichern! Bitte versuch es später noch einmal. (Der Fehler: "{$error}")
 
 path_editor_share = Teilen
+path_editor_statistics = Statistik
 
 path_editor_title_label = Titel:
 path_editor_title_placeholder = Volt Bonn
