@@ -232,6 +232,7 @@ function Editor({ getString }) {
     setLoadingContent(true)
 
     fetch(`https://volt.link/get/${code}`, {
+    // fetch(`http://0.0.0.0:4000/get/${code}`, {
       mode: 'cors',
       credentials: 'include',
     })
@@ -321,6 +322,7 @@ function Editor({ getString }) {
     }
 
     fetch(`https://volt.link/set/${code}`, {
+    // fetch(`http://0.0.0.0:4000/set/${code}`, {
       mode: 'cors',
       credentials: 'include',
       method: 'POST',
