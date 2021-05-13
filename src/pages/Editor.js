@@ -183,6 +183,7 @@ function Editor({ getString }) {
   const [{email = ''} = {}] = useUser() || []
 
   const [loadingContent, setLoadingContent] = useState(true)
+  const [canEdit, setCanEdit] = useState(true)
   const [savingMessage, setSavingMessage] = useState(null)
 
   const [useAs, setUseAs] = useState('')
@@ -227,6 +228,7 @@ function Editor({ getString }) {
   const handleChange_Items = useCallback(rows => setItems(rows), [setItems])
 
   useEffect(() => {
+    setCanEdit(true)
     setLoadingContent(true)
 
     fetch(`https://volt.link/get/${code}`, {
@@ -235,51 +237,59 @@ function Editor({ getString }) {
     })
       .then(response => response.json())
       .then(data => {
-        let {
-          use_as: useAs = '',
-          title = [],
-          description = [],
-          permissions = permissionsDefault,
-          redirect = '',
-          coverphoto = '',
-          overwrites = {},
-          items = [],
-        } = data
-
-        const {
-          imprint = '',
-          privacy_policy = ''
-        } = overwrites
-
-        title = addIds(title)
-        description = addIds(description)
-        items = items.map(item => {
-          if (!item.hasOwnProperty('_id')) {
-            item._id = uuidv4()
+        if (typeof data.error === 'string') {
+          if (data.error === 'no_edit_permission') {
+            setLoadingContent(false)
+            setCanEdit(false)
           }
-          if (item.hasOwnProperty('title')) {
-            item.title = addIds(item.title)
-          }
-          if (item.hasOwnProperty('description')) {
-            item.description = addIds(item.description)
-          }
-          return item
-        })
+        }else{
+          let {
+            use_as: useAs = '',
+            title = [],
+            description = [],
+            permissions = permissionsDefault,
+            redirect = '',
+            coverphoto = '',
+            overwrites = {},
+            items = [],
+          } = data
 
-        setUseAs(useAs)
-        setTitle(title)
-        setDescription(description)
-        setPermissions(permissions)
-        setRedirect(redirect)
-        setCoverphoto(coverphoto)
-        setImprintOverwrite(imprint)
-        setPrivacyPolicyOverwrite(privacy_policy)
-        setItems(items)
-        setLoadingContent(false)
+          const {
+            imprint = '',
+            privacy_policy = ''
+          } = overwrites
+
+          title = addIds(title)
+          description = addIds(description)
+          items = items.map(item => {
+            if (!item.hasOwnProperty('_id')) {
+              item._id = uuidv4()
+            }
+            if (item.hasOwnProperty('title')) {
+              item.title = addIds(item.title)
+            }
+            if (item.hasOwnProperty('description')) {
+              item.description = addIds(item.description)
+            }
+            return item
+          })
+
+          setUseAs(useAs)
+          setTitle(title)
+          setDescription(description)
+          setPermissions(permissions)
+          setRedirect(redirect)
+          setCoverphoto(coverphoto)
+          setImprintOverwrite(imprint)
+          setPrivacyPolicyOverwrite(privacy_policy)
+          setItems(items)
+          setLoadingContent(false)
+        }
       })
       .catch(error => console.error(error))
   }, [
     setLoadingContent,
+    setCanEdit,
     code,
     permissionsDefault,
     setUseAs,
@@ -322,9 +332,17 @@ function Editor({ getString }) {
       .then(r => r.json())
       .then(async data => {
         await delay(500)
-        setSavingMessage(getString('path_editor_status_saved'))
-        await delay(500)
-        setSavingMessage(null)
+        if (typeof data.error === 'string') {
+          if (data.error === 'no_edit_permission') {
+            setSavingMessage(getString('path_editor_edit_permission_error'))
+            await delay(2000)
+            setSavingMessage(null)
+          }
+        } else {
+          setSavingMessage(getString('path_editor_status_saved'))
+          await delay(2000)
+          setSavingMessage(null)
+        }
       })
       .catch(async error => {
         console.error(error)
@@ -361,19 +379,7 @@ function Editor({ getString }) {
     <button className="green" onClick={handleSave}><Localized id="path_editor_save"/></button>
   </div>
 
-  return <div
-    className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
-  >
-    <Header
-      title={<><span className="hideOnSmallScreen">volt.link</span>/{code}</>}
-      rightActions={rightHeaderActions}
-      notificationBanner={
-        savingMessage === null
-          ? null
-          : <p style={{ textAlign: 'center' }}>{savingMessage}</p>
-      }
-    />
-
+  const editor_form = <>
     <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_title_label" /></p>
     <Repeater
       onChange={handleChange_Title}
@@ -569,6 +575,26 @@ function Editor({ getString }) {
             </>
             : null
         )
+    }
+    </>
+
+  return <div
+    className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
+  >
+    <Header
+      title={<><span className="hideOnSmallScreen">volt.link</span>/{code}</>}
+      rightActions={canEdit ? rightHeaderActions : null}
+      notificationBanner={
+        savingMessage === null
+          ? null
+          : <p style={{ textAlign: 'center' }}>{savingMessage}</p>
+      }
+    />
+
+    {
+      canEdit
+        ? editor_form
+        : <p style={{ marginTop: 'var(--basis)' }}><Localized id="path_editor_edit_permission_error" /></p>
     }
   </div>
 }

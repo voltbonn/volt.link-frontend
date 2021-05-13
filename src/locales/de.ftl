@@ -12,6 +12,8 @@ create_path_button = Erstellen
 
 path_editor_add_translation = Übersetzung hinzufügen
 
+path_editor_edit_permission_error = Du darfst diesen Link nicht bearbeiten.
+
 path_editor_save = Speichern
 path_editor_status_started_saving = Es wird gespeichert…
 path_editor_status_saved = Gespeichert!

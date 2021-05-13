@@ -12,6 +12,8 @@ create_path_button = Create
 
 path_editor_add_translation = Add Translation
 
+path_editor_edit_permission_error = You're not allowed to edit this link.
+
 path_editor_save = Save
 path_editor_status_started_saving = Started saving…
 path_editor_status_saved = Saved!
