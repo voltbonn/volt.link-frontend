@@ -44,9 +44,16 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
     const newValue = event.target.value
 
     const new_rows = [...rows]
-    new_rows[index] = {
-      _id,
-      value: newValue
+    if (typeof newValue !== 'object' || Array.isArray(newValue)) {
+      new_rows[index] = {
+        _id,
+        value: newValue
+      }
+    } else if (typeof newValue === 'object') {
+      new_rows[index] = {
+        _id,
+        ...newValue
+      }
     }
     setRows(new_rows)
     onChange(new_rows)
