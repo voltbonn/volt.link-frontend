@@ -192,9 +192,6 @@ function ItemsRaw({ getString, defaultValue, onChange }){
       ({ defaultValue, ...repeater_props }) => {
         return <Item
           item={defaultValue}
-          style={{
-            maxWidth: 'calc(100% - calc(var(--basis_x8) + var(--basis_x2)))',
-          }}
           {...repeater_props}
         />
       }

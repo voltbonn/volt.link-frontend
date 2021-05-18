@@ -10,6 +10,7 @@
   background: var(--background-contrast);
   color: var(--on-background);
   padding: var(--basis_x2);
+  max-width: calc(100% - calc(var(--basis_x16) + calc(var(--basis_x2) + var(--basis))));
 }
 
 .editor .item.chooseTypeScreen{
