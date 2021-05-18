@@ -93,7 +93,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
 
     {
       !!type
-        ? <> 
+        ? <>
           {
             type === 'link' || type === 'headline' || type === 'headline3'
               ? <Repeater
