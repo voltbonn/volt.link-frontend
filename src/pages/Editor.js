@@ -22,7 +22,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
   const [text, setText] = useState(item.text || [])
   const [link, setLink] = useState(item.link || '')
 
-  const handleTypeChange = useCallback(newValue => {
+  const handleChange_Type = useCallback(newValue => {
     setType(newValue)
     if (onChange) {
       const target = wrapperDiv.current
@@ -77,7 +77,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
     }
 
     <MultiButton
-      onChange={handleTypeChange}
+      onChange={handleChange_Type}
       ariaLabel="Use as"
       defaultValue={type}
       items={[
