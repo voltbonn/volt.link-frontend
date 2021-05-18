@@ -67,6 +67,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
   return <div
     ref={wrapperDiv}
     className={`${classes.item} ${!!type ? '' : classes.chooseTypeScreen} ${className}`}
+    {...props }
   >
     {
       !!type
