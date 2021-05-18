@@ -59,5 +59,7 @@ path_editor_reorder = Umordnen
 path_editor_item_choose_type_label = Wähl einen Elementtyp aus:
 path_editor_item_choose_type_value_link = Link
 path_editor_item_choose_type_value_headline = Überschrift
+path_editor_item_choose_type_value_text = Text
 path_editor_item_title_label = Titel
+path_editor_item_text_label = Text
 path_editor_item_link_label = Link

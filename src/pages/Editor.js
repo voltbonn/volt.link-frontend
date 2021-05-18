@@ -19,16 +19,17 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
 
   const [type, setType] = useState(item.type || null)
   const [title, setTitle] = useState(item.title || [])
+  const [text, setText] = useState(item.text || [])
   const [link, setLink] = useState(item.link || '')
 
   const handleTypeChange = useCallback(newValue => {
     setType(newValue)
     if (onChange) {
       const target = wrapperDiv.current
-      target.value = { type: newValue, title, link }
+      target.value = { type: newValue, title, text, link }
       onChange({ target })
     }
-  }, [setType, onChange, title, link])
+  }, [setType, onChange, title, text, link])
 
   const handleChange_Title = useCallback(rows => {
     const newValue = rows
@@ -36,10 +37,21 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
 
     if (onChange) {
       const target = wrapperDiv.current
-      target.value = { type, title: newValue, link }
+      target.value = { type, title: newValue, text, link }
       onChange({ target })
     }
-  }, [setTitle, onChange, type, link])
+  }, [setTitle, onChange, type, text, link])
+
+  const handleChange_Text = useCallback(rows => {
+    const newValue = rows
+    setText(newValue)
+
+    if (onChange) {
+      const target = wrapperDiv.current
+      target.value = { type, title, text: newValue, link }
+      onChange({ target })
+    }
+  }, [setText, onChange, type, title, link])
 
   const handleChange_Link = useCallback(event => {
     const newValue = event.target.value
@@ -47,10 +59,10 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
 
     if (onChange) {
       const target = wrapperDiv.current
-      target.value = { type, title, link: newValue }
+      target.value = { type, title, text, link: newValue }
       onChange({ target })
     }
-  }, [setLink, onChange, type, title])
+  }, [setLink, onChange, type, title, text])
 
   return <div
     ref={wrapperDiv}
@@ -72,6 +84,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
       items={[
         { value: 'link', title: getString('path_editor_item_choose_type_value_link') },
         { value: 'headline', title: getString('path_editor_item_choose_type_value_headline') }
+        { value: 'text', title: getString('path_editor_item_choose_type_value_text') }
       ]}
       style={{
         marginTop: 'calc(-1 * var(--basis))'
@@ -104,6 +117,35 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
                       {...repeater_props}
                     >
                       {InputWithLocal_props => <input type="text" placeholder={getString('path_editor_item_title_label')} {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
+                    </InputWithLocal>
+                  }
+                }
+              />
+              : null
+          }
+          {
+            type === 'text'
+              ? <Repeater
+                onChange={handleChange_Text}
+                defaultValue={text}
+                addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
+                addButtonText={getString('path_editor_add_translation')}
+                style={{
+                  marginTop: 'var(--basis_x4)'
+                }}
+                render={
+                  ({ defaultValue, ...repeater_props }) => {
+                    const locale = defaultValue.locale
+                    const value = defaultValue.value
+                    return <InputWithLocal
+                      locale={locale}
+                      defaultValue={value}
+                      style={{
+                        maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
+                      }}
+                      {...repeater_props}
+                    >
+                      {InputWithLocal_props => <textarea placeholder={getString('path_editor_item_text_label')} {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
                     </InputWithLocal>
                   }
                 }
