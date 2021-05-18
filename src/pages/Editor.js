@@ -83,7 +83,8 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
       defaultValue={type}
       items={[
         { value: 'link', title: getString('path_editor_item_choose_type_value_link') },
-        { value: 'headline', title: getString('path_editor_item_choose_type_value_headline') }
+        { value: 'headline', title: getString('path_editor_item_choose_type_value_headline') },
+        { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
         { value: 'text', title: getString('path_editor_item_choose_type_value_text') }
       ]}
       style={{
@@ -95,7 +96,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
       !!type
         ? <> 
           {
-            type === 'link' || type === 'headline'
+            type === 'link' || type === 'headline' || type === 'headline3'
               ? <Repeater
                 onChange={handleChange_Title}
                 defaultValue={title}
