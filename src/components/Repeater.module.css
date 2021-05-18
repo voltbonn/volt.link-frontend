@@ -1,11 +1,44 @@
 .row {
   margin-top: var(--basis);
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column;
+  position: relative;
 }
 .row:first-of-type {
   margin-top: 0;
+}
+
+.row .middleActions{
+  position: absolute;
+  display: block;
+  top: -6px;
+  right: 0;
+  left: 0;
+  height: 6px;
+}
+.row .middleActions .trigger{
+  height: 6px;
+}
+.row .middleActions .content{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, calc(-50% - 3px));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  opacity: 0;
+  pointer-events: none;
+}
+.row .middleActions:hover .content{
+  opacity: 1;
+  pointer-events: all;
+}
+.row .form{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 .row .item {
