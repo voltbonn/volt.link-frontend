@@ -17,7 +17,7 @@ function Chooser({ getString, rightHeaderActions }) {
   })
 
   const handleCheckIfPathExists = useCallback(event => {
-    const newValue = event.target.value
+    const newValue = (event.target.value || '').toLowerCase()
     setValue(newValue)
 
     if (newValue === '') {
