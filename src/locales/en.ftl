@@ -1,3 +1,5 @@
+default_locale = en
+
 login = Login
 logout = Logout
 

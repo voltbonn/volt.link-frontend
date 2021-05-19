@@ -15,6 +15,8 @@ import InputWithLocal from '../components/InputWithLocal.js'
 import Repeater from '../components/Repeater.js'
 
 function ItemRaw({ getString, item, className, onChange, ...props }) {
+  const defaultLocale = getString('default_locale')
+
   const wrapperDiv = useRef(null)
 
   const [type, setType] = useState(item.type || null)
@@ -100,7 +102,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
               ? <Repeater
                 onChange={handleChange_Title}
                 defaultValue={title}
-                addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
+                addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
                 addButtonText={getString('path_editor_add_translation')}
                 style={{
                   marginTop: 'var(--basis_x4)'
@@ -129,7 +131,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
               ? <Repeater
                 onChange={handleChange_Text}
                 defaultValue={text}
-                addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
+                addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
                 addButtonText={getString('path_editor_add_translation')}
                 style={{
                   marginTop: 'var(--basis_x4)'
@@ -219,6 +221,8 @@ function delay(time) {
 }
 
 function Editor({ getString }) {
+  const defaultLocale = getString('default_locale')
+
   const { code } = useParams()
   const [{email = ''} = {}] = useUser() || []
 
@@ -426,7 +430,7 @@ function Editor({ getString }) {
     <Repeater
       onChange={handleChange_Title}
       defaultValue={title}
-      addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
+      addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
       addButtonText={getString('path_editor_add_translation')}
       render={
         ({ defaultValue, ...repeater_props }) => {
@@ -459,7 +463,7 @@ function Editor({ getString }) {
     <Repeater
       onChange={handleChange_Description}
       defaultValue={description}
-      addDefaultValue={() => ({ _id: uuidv4(), locale: 'en', value: '' })}
+      addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
       addButtonText={getString('path_editor_add_translation')}
       render={
         ({ defaultValue, ...repeater_props }) => {

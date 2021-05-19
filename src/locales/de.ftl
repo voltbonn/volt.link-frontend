@@ -1,3 +1,5 @@
+default_locale = de
+
 login = Anmelden
 logout = Abmelden
 
