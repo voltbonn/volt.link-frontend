@@ -134,6 +134,11 @@ p {
   max-width: 100%;
 }
 
+ul {
+  margin-inline-start: var(--basis_x4);
+  max-width: calc(100% - var(--basis_x4));
+}
+
 .body2{
   font-size: var(--body2-font-size);
 }
