@@ -108,6 +108,70 @@ function Chooser({ getString, rightHeaderActions }) {
         </>
         : null
     }
+
+    <h2>Restrictions</h2>
+    <ul>
+      <li>These letters are not allowed: <code>{forbidden.letters || ''}</code> (And of course: Don't use whitespace!)</li>
+      <li>
+        These paths are not allowed: {
+          (forbidden.codes || [])
+          .filter(code => !code.includes('/') && !code.includes('.'))
+          .flatMap(code => [<code>{code}</code>, ', '])
+          .slice(0, -1)
+        }
+      </li>
+      <li>The dot (<code>.</code>) is used for Volt Accounts. Please contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas Rosen</a> to get your personal link.</li>
+    </ul>
+
+    <h2>Best Practices</h2>
+
+    <h3>General</h3>
+    <ul>
+      <li>Keep it short!</li>
+      <li>Use hyphens (<code>-</code>) over underscores (<code>_</code>).</li>
+      <li>It is not important if you use upper or lower case letters.</li>
+      <li>Use letters people can type. The less international characters the better.</li>
+      <li>
+        🇪🇺 Emojis are possible. But like before. Use them sparingly and check if others can type and see them on their device.<br/>
+        <a href="https://emojipedia.org/emoji-11.0/" target="_blank" rel="noreferrer">Emoji 11</a> and earlier should be okay.<br/>
+        And better don't mix emojis and normals letters.
+      </li>
+    </ul>
+
+    <h3>City Teams</h3>
+    <p>Use the name of your city team without the Volt prefix or a common international name.</p>
+    <p>
+      Example:<br/>
+      Volt Bonn → <code>bonn</code><br />
+      Volt Köln → <code>köln</code> or <code>cologne</code>
+    </p>
+    <p>If two cities have the same name, add your country's <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank" rel="noreferrer">two letter shortcode</a> before it (eg: <code>de-bonn</code>).</p>
+
+    <h3>Redirects</h3>
+    <p>There are three options of naming redirects:</p>
+    <ul>
+      <li>random letters or words (<code>123abc</code>),</li>
+      <li>words describing the redirect content (<code>de-events</code>) and</li>
+      <li>words describing where the redirect content is used (<code>flyer-bonn</code>).</li>
+    </ul>
+    <p>Use a random text or describe where the redirect is used if you'll change the link in the future.</p>
+
+    <h3>Translation</h3>
+    <p>You can provide translations for text for these langues:</p>
+    <ul>
+      <li>English</li>
+      <li>Deutsch</li>
+      <li>Español</li>
+      <li>Francais</li>
+      <li>Italiano</li>
+      <li>Nederlands</li>
+      <li>Portugues</li>
+    </ul>
+    <p>Contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas</a> for more languages. We'll add more as needed. (We're aspecially interested in people speaking Arabic.)</p>
+
+    <h3>Legal</h3>
+    <p>The default imprint is the one from Volt Europa. You can change it to the correct link of your chapter.</p>
+
   </div>
 }
 
