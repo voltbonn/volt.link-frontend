@@ -129,7 +129,7 @@ h3{
   margin: var(--basis_x2) 0 var(--basis) 0;
 }
 
-p{
+p {
   /* width: calc(var(--basis_x16) + var(--basis_x8)); */
   max-width: 100%;
 }
