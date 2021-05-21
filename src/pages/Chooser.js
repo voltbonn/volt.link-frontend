@@ -121,7 +121,7 @@ function Chooser({ getString, rightHeaderActions }) {
         These paths are not allowed: {
           (forbidden.codes || [])
           .filter(code => !code.includes('/') && !code.includes('.'))
-          .flatMap(code => [<code>{code}</code>, ', '])
+          .flatMap(code => [<code key={code}>{code}</code>, <React.Fragment key={code+'separator'}>, </React.Fragment>])
           .slice(0, -1)
         }
       </li>
