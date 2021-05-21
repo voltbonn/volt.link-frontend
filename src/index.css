@@ -98,6 +98,11 @@ body{
   --body2-font-size: calc(var(--font-add) + var(--basis_x0_5));
   font-size: var(--body-font-size);
 }
+
+code {
+  font-family: 'Ubuntu Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
 a,
 a:visited{
   color: var(--on-background);
