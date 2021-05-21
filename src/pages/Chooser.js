@@ -128,7 +128,7 @@ function Chooser({ getString, rightHeaderActions }) {
     <h3>General</h3>
     <ul>
       <li>Keep it short!</li>
-      <li>Use hyphens (<code>-</code>) over underscores (<code>_</code>).</li>
+      <li>Use hyphens (<code>-</code>) over underscores (<code>_</code>). (Your favorite search provider will thank you :D)</li>
       <li>It is not important if you use upper or lower case letters.</li>
       <li>Use letters people can type. The less international characters the better.</li>
       <li>
