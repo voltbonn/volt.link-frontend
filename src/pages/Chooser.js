@@ -172,6 +172,9 @@ function Chooser({ getString, rightHeaderActions }) {
     <h3>Legal</h3>
     <p>The default imprint is the one from Volt Europa. You can change it to the correct link of your chapter.</p>
 
+    <h3>Statistics</h3>
+    <p>As with the whole volt.link project, the statistics are currently in beta.</p>
+
   </div>
 }
 
