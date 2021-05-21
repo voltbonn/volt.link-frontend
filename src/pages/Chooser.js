@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import classes from './Chooser.module.css'
 
 import { Link, useHistory } from 'react-router-dom'
@@ -40,21 +40,26 @@ function Chooser({ getString, rightHeaderActions }) {
       setError('')
     } else {
       setError('')
-      fetch(`https://volt.link/exists/${newValue}`, {
+      fetch(`https://volt.link/quickcheck/${newValue}`, {
         mode: 'cors',
         credentials: 'include',
       })
         .then(response => response.json())
         .then(data => {
-          if (data.exists === true) {
-            setAlreadyExists(true)
-            setError('')
-          } else if (newValue_split.includes('.')) {
+          if (data.allowed === false) {
             setAlreadyExists(null)
-            setError('Codes with a dot are restricted to people. Please contact thomas.rosen@volteuropa.org to use volt.link for your Volt Account.')
+            setError('You are not allowed to edit this code.')
           } else {
-            setAlreadyExists(false)
-            setError('')
+            if (data.exists === true) {
+              setAlreadyExists(true)
+              setError('')
+            } else if (newValue_split.includes('.')) {
+              setAlreadyExists(null)
+              setError('Codes with a dot are restricted to people. Please contact thomas.rosen@volteuropa.org to use volt.link for your Volt Account.')
+            } else {
+              setAlreadyExists(false)
+              setError('')
+            }
           }
         })
         .catch(error => {
