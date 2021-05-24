@@ -86,7 +86,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
       items={[
         { value: 'link', title: getString('path_editor_item_choose_type_value_link') },
         { value: 'headline', title: getString('path_editor_item_choose_type_value_headline') },
-        { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+        // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
         { value: 'text', title: getString('path_editor_item_choose_type_value_text') }
       ]}
       style={{
