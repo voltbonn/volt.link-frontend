@@ -60,7 +60,7 @@ path_editor_reorder = Reorder
 
 path_editor_item_choose_type_label = Choose an item type:
 path_editor_item_choose_type_value_link = Link
-path_editor_item_choose_type_value_headline = Headline 2
+path_editor_item_choose_type_value_headline = Headline
 path_editor_item_choose_type_value_headline3 = Headline 3
 path_editor_item_choose_type_value_text = Text
 path_editor_item_title_label = Title
