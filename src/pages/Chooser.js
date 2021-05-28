@@ -35,6 +35,9 @@ function Chooser({ getString, rightHeaderActions }) {
     } else if (forbidden_letters_filtered.length < forbidden_letters.length) {
       setAlreadyExists(null)
       setError('This code contains forbidden characters.')
+    } else if (newValue.startsWith('volt')) {
+      setAlreadyExists(null)
+      setError('A path can\'t start with "volt".')
     } else if (newValue === '') {
       setAlreadyExists(null)
       setError('')
