@@ -31,10 +31,10 @@ function Chooser({ getString, rightHeaderActions }) {
 
     if (value_is_a_forbidden_code) {
       setAlreadyExists(null)
-      setError('This code is not allowed.')
+      setError('This path is not allowed.')
     } else if (forbidden_letters_filtered.length < forbidden_letters.length) {
       setAlreadyExists(null)
-      setError('This code contains forbidden characters.')
+      setError('This path contains forbidden characters.')
     } else if (newValue.startsWith('volt')) {
       setAlreadyExists(null)
       setError('A path can\'t start with "volt".')
