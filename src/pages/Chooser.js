@@ -137,6 +137,7 @@ function Chooser({ getString, rightHeaderActions }) {
     <ul>
       <li>Keep it short!</li>
       <li>Use hyphens (<code>-</code>) over underscores (<code>_</code>). (Your favorite search provider will thank you :D)</li>
+      <li>Seperate words with hyphens. This makes it readable by humans and parsable by search engines.</li>
       <li>It is not important if you use upper or lower case letters.</li>
       <li>Use letters people can type. The less international characters the better.</li>
       <li>
