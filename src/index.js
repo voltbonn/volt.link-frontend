@@ -20,7 +20,10 @@ function AppLanguageWrapper() {
         for (let locale of systemLocales) {
           locale = locale.toLowerCase() // Not really correct but the system locales sadly don't conform to the standard.
 
-          window.umami.trackEvent('L: ' + locale.split('-')[0]) // Log just the language.
+          const language = locale.split('-')[0]
+          if (language !== locale) {
+            window.umami.trackEvent('L: ' + language) // Log just the language.
+          }
           window.umami.trackEvent('L: ' + locale) // Log the full locale.
         }
       }
