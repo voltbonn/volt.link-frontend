@@ -426,7 +426,7 @@ function Editor({ getString }) {
   </div>
 
   const editor_form = <>
-    <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_title_label" /></p>
+    <h3><Localized id="path_editor_title_label" /></h3>
     <Repeater
       onChange={handleChange_Title}
       defaultValue={title}
@@ -459,7 +459,7 @@ function Editor({ getString }) {
       }
     />
     <br />
-    <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_description_label" /></p>
+    <h3><Localized id="path_editor_description_label" /></h3>
     <Repeater
       onChange={handleChange_Description}
       defaultValue={description}
@@ -518,7 +518,7 @@ function Editor({ getString }) {
     />
 
     <br />
-    <p><Localized id="path_editor_use_as_label" /></p>
+    <h3><Localized id="path_editor_use_as_label" /></h3>
     <MultiButton
       onChange={handleUseAsChange}
       ariaLabel={getString('path_editor_use_as_label')}
@@ -536,7 +536,7 @@ function Editor({ getString }) {
     {
       useAs === 'linklist'
         ? <>
-          <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_coverphoto_label" /></p>
+          <h3><Localized id="path_editor_coverphoto_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_coverphoto_info" />
           </em>
@@ -555,7 +555,7 @@ function Editor({ getString }) {
 
           <br />
           <br />
-          <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_imprint_overwrite_label" /></p>
+          <h3><Localized id="path_editor_imprint_overwrite_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_imprint_overwrite_info" />
           </em>
@@ -574,7 +574,7 @@ function Editor({ getString }) {
 
           <br />
           <br />
-          <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_privacy_policy_overwrite_label" /></p>
+          <h3><Localized id="path_editor_privacy_policy_overwrite_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_privacy_policy_overwrite_info" />
           </em>
@@ -603,7 +603,7 @@ function Editor({ getString }) {
         : (
           useAs === 'redirect'
             ? <>
-              <p><Localized id="path_editor_redirect_label" /></p>
+              <h3><Localized id="path_editor_redirect_label" /></h3>
               <input
                 onChange={handleChange_Redirect}
                 type="text"
