@@ -12,6 +12,7 @@ import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
 import InputWithLocal from '../components/InputWithLocal.js'
+import PermissionInput from '../components/PermissionInput.js'
 import Repeater from '../components/Repeater.js'
 
 function ItemRaw({ getString, item, className, onChange, ...props }) {
@@ -241,20 +242,28 @@ function Editor({ getString }) {
 
   const permissionsDefault = useMemo(() => (
       typeof email === 'string' && email.length > 0
-      ? [{ _id: uuidv4(), value: email }, { _id: uuidv4(), value: '' }]
+      ? [{ _id: uuidv4(), value: email, role: 'editor' }, { _id: uuidv4(), value: '', role: 'editor' }]
       : []
   ), [email])
   const [permissions, setPermissions] = useState(permissionsDefault)
   const handleChange_Permissions = useCallback(rows => {
-    const filled_rows_length = rows.filter(r => r.value !== '').length
+    const filled_rows_length = rows
+      .filter(p =>
+        p.value !== ''
+        && p.value !== '@volteuropa.org'
+        && (!p.role || p.role === 'editor')
+      )
+      .length
 
     if (filled_rows_length === 0) {
-      rows.unshift({ _id: uuidv4(), value: email })
+      rows.unshift({ _id: uuidv4(), value: email, role: 'editor' })
     }
 
     setPermissions(rows)
     return rows
   }, [setPermissions, email])
+
+  const [viewPermission, setViewPermission] = useState(permissionsDefault)
 
   const [coverphoto, setCoverphoto] = useState('')
   const handleChange_Coverphoto = useCallback(event => setCoverphoto(event.target.value), [setCoverphoto])
@@ -319,10 +328,14 @@ function Editor({ getString }) {
             return item
           })
 
+          let viewPermissionTmp = permissions.filter(p => p.role === 'viewer')
+          viewPermissionTmp = viewPermissionTmp.length > 0 ? viewPermissionTmp[0].value : ''
+
           setUseAs(useAs)
           setTitle(title)
           setDescription(description)
-          setPermissions(permissions)
+          setPermissions(permissions.filter(p => p.value !== '' && p.value !== '@volteuropa.org'))
+          setViewPermission(viewPermissionTmp)
           setRedirect(redirect)
           setCoverphoto(coverphoto)
           setImprintOverwrite(imprint)
@@ -351,11 +364,16 @@ function Editor({ getString }) {
   const handleSave = useCallback(() => {
     setSavingMessage(getString('path_editor_status_started_saving'))
 
+    const permissionsTmp = [
+      ...permissions,
+      ...(viewPermission !== '' ? [{ _id: uuidv4(), value: viewPermission, role: 'viewer'}] : [])
+    ]
+
     const data = {
       use_as: useAs,
       title,
       description,
-      permissions,
+      permissions: permissionsTmp,
       coverphoto,
       redirect,
       overwrites: {
@@ -405,6 +423,7 @@ function Editor({ getString }) {
     title,
     description,
     permissions,
+    viewPermission,
     items,
     coverphoto,
     imprintOverwrite,
@@ -492,27 +511,48 @@ function Editor({ getString }) {
     />
 
     <br />
-    <p style={{ marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_edit_label" /></p>
+    <h3><Localized id="path_editor_permissions_view_label" /></h3>
+    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_view_info" /></em>
+    <MultiButton
+      onChange={setViewPermission}
+      ariaLabel={getString('path_editor_permissions_view_label')}
+      defaultValue={viewPermission}
+      items={[
+        { value: '', title: getString('path_editor_permissions_view_public') },
+        { value: '@volteuropa.org', title: getString('path_editor_permissions_view_volteuropa') },
+      ]}
+    />
+
+    <br />
+    <br />
+    <h3><Localized id="path_editor_permissions_edit_label" /></h3>
     <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_edit_info" /></em>
     <Repeater
       onChange={handleChange_Permissions}
       defaultValue={permissions}
-      addDefaultValue={() => ({ _id: uuidv4(), value: '' })}
+      addDefaultValue={() => ({ _id: uuidv4(), value: '', role: 'editor' })}
       addButtonText={getString('path_editor_permissions_edit_add_button_label')}
       render={
         ({ defaultValue, ...repeater_props }) => {
+          const role = defaultValue.role
           const value = defaultValue.value
-          return <input
-            defaultValue={value}
-            type="text"
-            aria-label={getString('path_editor_permissions_edit_label')}
-            placeholder={getString('path_editor_permissions_edit_placeholder')}
-            style={{
-              maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-              margin: '0',
-            }}
-            {...repeater_props}
-          />
+          return <PermissionInput
+              role={role}
+              defaultValue={value}
+              style={{
+                maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
+                margin: '0',
+              }}
+              {...repeater_props}
+            >
+              {InputWithLocal_props => <input
+                type="text"
+                aria-label={getString('path_editor_permissions_edit_label')}
+                placeholder={getString('path_editor_permissions_edit_placeholder')}
+                {...InputWithLocal_props}
+                style={{ ...InputWithLocal_props.style, margin: '0' }}
+              />}
+            </PermissionInput>
         }
       }
     />

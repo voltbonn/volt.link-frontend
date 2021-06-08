@@ -35,6 +35,11 @@ path_editor_permissions_edit_info = Geb die Volt Europa Email-Adressen an, die d
 path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
 path_editor_permissions_edit_add_button_label = Person hinzufügen
 
+path_editor_permissions_view_label = Wer darf diesen Link anschauen?
+path_editor_permissions_view_info = Hier kannst du entscheiden, ob die Weiterleitung / Linkliste öffentlich oder nur mit einem Volt Europa Account einsehbar sein soll.
+path_editor_permissions_view_public = Öffentlich
+path_editor_permissions_view_volteuropa = Nur Volt Europa
+
 path_editor_use_as_label = Verwenden als:
 path_editor_use_as_info = Wählen Sie "Nichts / Deaktiviert", um den Link nicht mehr zu verwenden.
 path_editor_use_as_value_redirect = Weiterleitung
