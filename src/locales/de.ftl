@@ -36,6 +36,7 @@ path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
 path_editor_permissions_edit_add_button_label = Person hinzufügen
 
 path_editor_use_as_label = Verwenden als:
+path_editor_use_as_info = Wählen Sie "Nichts / Deaktiviert", um den Link nicht mehr zu verwenden.
 path_editor_use_as_value_redirect = Weiterleitung
 path_editor_use_as_value_linklist = Linkliste
 path_editor_use_as_value_nothing = Nichts / Deaktiviert

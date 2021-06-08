@@ -519,6 +519,7 @@ function Editor({ getString }) {
 
     <br />
     <h3><Localized id="path_editor_use_as_label" /></h3>
+    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_use_as_info" /></em>
     <MultiButton
       onChange={handleUseAsChange}
       ariaLabel={getString('path_editor_use_as_label')}
