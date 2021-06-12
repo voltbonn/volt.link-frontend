@@ -16,10 +16,10 @@ function App() {
 
   const loginLogoutButton = (
     loggedIn
-    ? <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+      ? <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
         <button className="red" style={{ marginRight: '0' }}><Localized id="logout"/></button>
       </a>
-    : <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+      : <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
         <button style={{ marginRight: '0' }}><Localized id="login"/></button>
       </a>
   )
