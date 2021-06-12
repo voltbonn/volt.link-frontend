@@ -258,10 +258,17 @@ button:focus.choosen:after {
     box-shadow: 0 0 0 var(--basis_x0_5) var(--on-background-contrast);
 }
 
-  margin: var(--basis) calc(var(--basis) * 1.5) calc(var(--basis) * .5) 0;
 .buttonRow button {
+  --margin-right: calc(var(--basis) * 1.5);
+  margin: var(--basis) var(--margin-right) calc(var(--basis) * .5) 0;
 }
 .buttonRow button:last-of-type {
+  margin-right: 0;
+}
+.buttonRow.usesLinks button:last-of-type {
+  margin-right: var(--margin-right);
+}
+.buttonRow.usesLinks a:last-of-type button {
   margin-right: 0;
 }
 
