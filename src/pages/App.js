@@ -13,13 +13,14 @@ import Editor from './Editor.js'
 
 function App() {
   const [, loggedIn] = useUser()
+  // const loggedIn = true
 
   const loginLogoutButton = (
     loggedIn
-      ? <a href={`https://volt.link/logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+      ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
         <button className="red" style={{ marginRight: '0' }}><Localized id="logout"/></button>
       </a>
-      : <a href={`https://volt.link/login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+      : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
         <button style={{ marginRight: '0' }}><Localized id="login"/></button>
       </a>
   )

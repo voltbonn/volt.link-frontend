@@ -9,7 +9,7 @@ export default function useUser(forceRefetch = false) {
       setUser(window.useUser_user)
       setLoggedIn(window.useUser_loggedIn)
     }else{
-      fetch('https://volt.link/user.json', {
+      fetch(`${window.domains.backend}user.json`, {
         mode: 'cors',
         credentials: 'include',
       })

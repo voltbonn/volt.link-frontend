@@ -284,8 +284,7 @@ function Editor({ getString }) {
     setCanEdit(true)
     setLoadingContent(true)
 
-    fetch(`https://volt.link/get/${code}`, {
-    // fetch(`http://0.0.0.0:4000/get/${code}`, {
+    fetch(`${window.domains.backend}get/${code}`, {
       mode: 'cors',
       credentials: 'include',
     })
@@ -383,8 +382,7 @@ function Editor({ getString }) {
       items
     }
 
-    fetch(`https://volt.link/set/${code}`, {
-    // fetch(`http://0.0.0.0:4000/set/${code}`, {
+    fetch(`${window.domains.backend}set/${code}`, {
       mode: 'cors',
       credentials: 'include',
       method: 'POST',

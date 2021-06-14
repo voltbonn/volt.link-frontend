@@ -8,6 +8,13 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import 'intl-pluralrules'
 import { AppLocalizationProvider, locales } from './fluent/l10n.js'
 
+window.domains = {
+  // frontend: 'https://edit.volt.link',
+  frontend: 'http://localhost:3000/',
+  // backend: 'https://volt.link/',
+  backend: 'http://localhost:4000/',
+}
+
 function AppLanguageWrapper() {
   // const [userLocales, setUserLocales] = useState(['de'])
   const [userLocales, setUserLocales] = useState(navigator.languages)

@@ -43,7 +43,7 @@ function Chooser({ getString, rightHeaderActions }) {
       setError('')
     } else {
       setError('')
-      fetch(`https://volt.link/quickcheck/${newValue}`, {
+      fetch(`${window.domains.backend}quickcheck/${newValue}`, {
         mode: 'cors',
         credentials: 'include',
       })
@@ -73,7 +73,7 @@ function Chooser({ getString, rightHeaderActions }) {
   }, [setValue, setAlreadyExists, forbidden.letters, forbidden.codes])
 
   useEffect(() => {
-    fetch(`https://volt.link/forbidden_codes/`, {
+    fetch(`${window.domains.backend}forbidden_codes/`, {
       mode: 'cors',
       credentials: 'include',
     })
