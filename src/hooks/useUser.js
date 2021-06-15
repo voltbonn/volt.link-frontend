@@ -21,6 +21,8 @@ export default function useUser(forceRefetch = false) {
             && !!data.user.id
             && !!data.user.status
           ) {
+            data.user.username = (!!data.user.email ? data.user.email || '' : '').split('@')[0]
+
             window.useUser_user = data.user
             window.useUser_loggedIn = true
             setUser(data.user)
