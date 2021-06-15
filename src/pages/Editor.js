@@ -17,7 +17,7 @@ import InputWithLocal from '../components/InputWithLocal.js'
 import PermissionInput from '../components/PermissionInput.js'
 import Repeater from '../components/Repeater.js'
 
-function ItemRaw({ getString, item, className, onChange, ...props }) {
+function ItemRaw({ fluentByObject, getString, item, className, onChange, ...props }) {
   const defaultLocale = getString('default_locale')
 
   const wrapperDiv = useRef(null)
