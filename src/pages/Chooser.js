@@ -95,26 +95,30 @@ function Chooser({ getString, rightHeaderActions }) {
   useEffect(() => {
     const newValue = (username || '').toLowerCase()
 
-    fetch(`${window.domains.backend}quickcheck/${newValue}`, {
-      mode: 'cors',
-      credentials: 'include',
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.allowed === false) {
-          setUserPageAlreadyExists(null)
-        } else {
-          if (data.exists === true) {
-            setUserPageAlreadyExists(true)
+    if (newValue !== '') {
+      fetch(`${window.domains.backend}quickcheck/${newValue}`, {
+        mode: 'cors',
+        credentials: 'include',
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.allowed === false) {
+            setUserPageAlreadyExists(null)
           } else {
-            setUserPageAlreadyExists(false)
+            if (data.exists === true) {
+              setUserPageAlreadyExists(true)
+            } else {
+              setUserPageAlreadyExists(false)
+            }
           }
-        }
-      })
-      .catch(error => {
-        console.error(error)
-        setUserPageAlreadyExists(false)
-      })
+        })
+        .catch(error => {
+          console.error(error)
+          setUserPageAlreadyExists(false)
+        })
+    } else {
+      setUserPageAlreadyExists(null)
+    }
   }, [username, setUserPageAlreadyExists])
 
   return <div>
