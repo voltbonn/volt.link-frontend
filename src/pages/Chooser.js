@@ -139,6 +139,9 @@ function Chooser({ getString, rightHeaderActions }) {
         </>
         : null
     }
+    <h2><Localized id="chooser_any_link_headline" /></h2>
+    <p><Localized id="chooser_any_link_info" /></p>
+
     <div className={`${classes.chooserInput} ${alreadyExists === null ? classes.hideSubmitButton : ''}`}>
       <p className={classes.domainPrefix}>volt.link/</p>
       <input type="text" placeholder={getString('type_a_path')} onChange={handleCheckIfPathExists}/>

@@ -19,6 +19,10 @@ create_user_page_button = Create volt.link/{$username}
 edit_user_page_headline = Edit your volt.link micropage
 edit_user_page_info = The link of that page is the same as your Volt Europa email address.
 edit_user_page_button = Edit volt.link/{$username}
+
+chooser_any_link_headline = Create a team/campain micropage or redirect
+chooser_any_link_info = Please read the guidlines below before creating a link.
+
 path_editor_add_translation = Add Translation
 
 path_editor_edit_permission_error = You're not allowed to edit this link.
