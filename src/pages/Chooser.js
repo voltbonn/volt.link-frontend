@@ -153,7 +153,7 @@ function Chooser({ getString, rightHeaderActions }) {
         alreadyExists === null
           ? null
           : <Link to={`/edit/${value}`}>
-              <button>
+              <button className="green">
               {alreadyExists ? getString('edit_path_button') : getString('create_path_button')}
               </button>
             </Link>
