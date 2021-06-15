@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 
-function MultiButton({ ariaLabel, items, defaultValue, onChange, style }) {
+function MultiButton({ ariaLabel, items, defaultValue, onChange, style, className }) {
   const [choosen, setChoosen] = useState()
 
   useEffect(() => setChoosen(defaultValue), [defaultValue, setChoosen])
@@ -15,7 +15,7 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange, style }) {
 
   return <div
     aria-label={ariaLabel}
-    className="buttonRow"
+    className={'buttonRow ' + className}
     style={{
       display: 'inline-block',
       ...style
