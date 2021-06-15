@@ -11,6 +11,7 @@ import Header from '../components/Header.js'
 function Chooser({ getString, rightHeaderActions }) {
   const [user, ] = useUser()
   const username = user.username || ''
+  const user_editable_links = (user.editable || [])
   const [userPageAlreadyExists, setUserPageAlreadyExists] = useState(null)
 
   const history = useHistory()
@@ -164,6 +165,17 @@ function Chooser({ getString, rightHeaderActions }) {
         ? <>
           <h3 className="red">Errors</h3>
           <p>{error}</p>
+        </>
+        : null
+    }
+
+    {
+      user_editable_links.length > 0
+        ? <>
+          <br />
+          <div className="buttonRow usesLinks">
+            {user_editable_links.map(content => <a key={content.slug} href={`/edit/${content.slug}`}><button>{content.slug}</button></a>)}
+          </div>
         </>
         : null
     }
