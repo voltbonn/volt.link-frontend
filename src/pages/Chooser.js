@@ -206,6 +206,16 @@ function Chooser({ getString, rightHeaderActions }) {
       <li>Volt Köln → <code className="filled">köln</code> or <code className="filled">cologne</code></li>
     </ul>
 
+    <h3>Personal Pages</h3>
+    <p>The link of your personal page should match your Volt Europa account.</p>
+    <p>We want to look professional, so please don't use your socialmedia handle.</p>
+    <p>We are a lot of people in Volt. People with the same first or lastname exist. To prevent name collisions, use your Volt Account username. (The part before the @ sign.)</p>
+    <p>Examples for "Thomas Rosen":</p>
+    <ul>
+      <li>Do → <code className="filled">thomas.rosen</code></li>
+      <li>Don't → <code className="filled">thomas_rosen_official_123</code>, <code className="filled">thomas</code> or <code className="filled">rosen</code></li>
+    </ul>
+
     <h3>Redirects</h3>
     <p>There are three options of naming redirects:</p>
     <ul>
