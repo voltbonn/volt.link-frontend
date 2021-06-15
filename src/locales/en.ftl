@@ -12,6 +12,13 @@ type_a_path = Type a path…
 edit_path_button = Edit
 create_path_button = Create
 
+create_user_page_headline = Create a micropage for yourself
+create_user_page_info = You can create your own volt.link micropage. The link of that page is the same as your Volt Europa email address.
+create_user_page_button = Create volt.link/{$username}
+
+edit_user_page_headline = Edit your volt.link micropage
+edit_user_page_info = The link of that page is the same as your Volt Europa email address.
+edit_user_page_button = Edit volt.link/{$username}
 path_editor_add_translation = Add Translation
 
 path_editor_edit_permission_error = You're not allowed to edit this link.

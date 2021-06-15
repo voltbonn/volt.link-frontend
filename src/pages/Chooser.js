@@ -3,11 +3,16 @@ import classes from './Chooser.module.css'
 
 import { Link, useHistory } from 'react-router-dom'
 
-import { withLocalization } from '../fluent/Localized.js'
+import { withLocalization, Localized } from '../fluent/Localized.js'
 import useKeyPress from '../hooks/useKeyPress.js'
+import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 
 function Chooser({ getString, rightHeaderActions }) {
+  const [user, ] = useUser()
+  const username = user.username || ''
+  const [userPageAlreadyExists, setUserPageAlreadyExists] = useState(null)
+
   const history = useHistory()
   const [forbidden, setForbidden] = useState({})
   const [value, setValue] = useState('')
@@ -87,12 +92,53 @@ function Chooser({ getString, rightHeaderActions }) {
       })
   }, [setForbidden])
 
+  useEffect(() => {
+    const newValue = (username || '').toLowerCase()
+
+    fetch(`${window.domains.backend}quickcheck/${newValue}`, {
+      mode: 'cors',
+      credentials: 'include',
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.allowed === false) {
+          setUserPageAlreadyExists(null)
+        } else {
+          if (data.exists === true) {
+            setUserPageAlreadyExists(true)
+          } else {
+            setUserPageAlreadyExists(false)
+          }
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        setUserPageAlreadyExists(false)
+      })
+  }, [username, setUserPageAlreadyExists])
+
   return <div>
     <Header
       title="edit.volt.link"
       rightActions={rightHeaderActions || null}
     />
 
+    {
+      username !== ''
+        ? <>
+          <h2><Localized id={userPageAlreadyExists === true ? 'edit_user_page_headline' : 'create_user_page_headline'} /></h2>
+          <p><Localized id={userPageAlreadyExists === true ? 'edit_user_page_info' : 'create_user_page_info'} /></p>
+          <Link to={`/edit/${username}`}>
+            <button style={{ marginLeft: '0', marginRight: '0' }}>
+              <Localized
+                id={userPageAlreadyExists === true ? 'edit_user_page_button' : 'create_user_page_button'}
+                vars={{ username }}
+              />
+            </button>
+          </Link>
+        </>
+        : null
+    }
     <div className={`${classes.chooserInput} ${alreadyExists === null ? classes.hideSubmitButton : ''}`}>
       <p className={classes.domainPrefix}>volt.link/</p>
       <input type="text" placeholder={getString('type_a_path')} onChange={handleCheckIfPathExists}/>
