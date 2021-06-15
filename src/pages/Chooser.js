@@ -130,7 +130,7 @@ function Chooser({ getString, rightHeaderActions }) {
           .slice(0, -1)
         }
       </li>
-      <li>The dot (<code>.</code>) is used for Volt Accounts. Please contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas Rosen</a> to get your personal link.</li>
+      <li>The dot (<code>.</code>) is used for Volt Accounts.</li>
     </ul>
 
     <h2>Best Practices</h2>
@@ -151,19 +151,19 @@ function Chooser({ getString, rightHeaderActions }) {
 
     <h3>City Teams</h3>
     <p>Use the name of your city team without the Volt prefix or a common international name.</p>
-    <p>
-      Example:<br/>
-      Volt Bonn → <code>bonn</code><br />
-      Volt Köln → <code>köln</code> or <code>cologne</code>
-    </p>
-    <p>If two cities have the same name, add your country's <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank" rel="noreferrer">two letter shortcode</a> before it (eg: <code>de-bonn</code>).</p>
+    <p>If two cities have the same name, add your country's <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank" rel="noreferrer">two letter shortcode</a> before it (eg: <code className="filled">de-bonn</code>).</p>
+    <p>Example:</p>
+    <ul>
+      <li>Volt Bonn → <code className="filled">bonn</code></li>
+      <li>Volt Köln → <code className="filled">köln</code> or <code className="filled">cologne</code></li>
+    </ul>
 
     <h3>Redirects</h3>
     <p>There are three options of naming redirects:</p>
     <ul>
-      <li>random letters or words (<code>123abc</code>),</li>
-      <li>words describing the redirect content (<code>de-events</code>) and</li>
-      <li>words describing where the redirect content is used (<code>flyer-bonn</code>).</li>
+      <li>random letters or words (<code className="filled">123abc</code>),</li>
+      <li>words describing the redirect content (<code className="filled">de-events</code>) and</li>
+      <li>words describing where the redirect content is used (<code className="filled">flyer-bonn</code>).</li>
     </ul>
     <p>Use a random text or describe where the redirect is used if you'll change the link in the future.</p>
 
@@ -178,7 +178,7 @@ function Chooser({ getString, rightHeaderActions }) {
       <li>Nederlands</li>
       <li>Portugues</li>
     </ul>
-    <p>Contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas</a> for more languages. We'll add more as needed. (We're aspecially interested in people speaking Arabic.)</p>
+    <p>Contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas</a> for more languages. We'll add more as needed. {/*(We're aspecially interested in people speaking Arabic.)*/}</p>
 
     <h3>Legal</h3>
     <p>The default imprint is the one from Volt Europa. You can change it to the correct link of your chapter.</p>
@@ -186,6 +186,9 @@ function Chooser({ getString, rightHeaderActions }) {
     <h3>Statistics</h3>
     <p>As with the whole volt.link project, the statistics are currently in beta.</p>
 
+    <h3>Deletion</h3>
+    <p>Links can't be deleted as nobody likes to scan a QR-Code, just to receive an <a href="https://volt.link/error">error page</a>.</p>
+    <p>But links can of course be reused. Contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas</a> if you need get access to a link.</p>
   </div>
 }
 
