@@ -117,7 +117,6 @@ function Chooser({ getString, rightHeaderActions }) {
 
     <br />
     <hr />
-    <br />
 
     <h2>Restrictions</h2>
     <ul>
