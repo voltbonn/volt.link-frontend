@@ -17,7 +17,7 @@ create_user_page_info = You can create your own volt.link micropage. The link of
 create_user_page_button = Create volt.link/{$username}
 
 edit_user_page_headline = Edit your volt.link micropage
-edit_user_page_info = The link of that page is the same as your Volt Europa email address.
+edit_user_page_info = The link of that micropage is the same as your Volt Europa email address.
 edit_user_page_button = Edit volt.link/{$username}
 
 chooser_any_link_headline = Create a team/campain micropage or redirect
