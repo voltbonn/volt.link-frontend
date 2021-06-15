@@ -6,6 +6,8 @@ import {
   useParams
 } from 'react-router-dom'
 
+import { Visibility, VisibilityOff } from '@material-ui/icons'
+
 import classes from './Editor.module.css'
 import { Localized, withLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
@@ -24,15 +26,16 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
   const [title, setTitle] = useState(item.title || [])
   const [text, setText] = useState(item.text || [])
   const [link, setLink] = useState(item.link || '')
+  const [active, setActive] = useState(item.active || true)
 
   const handleChange_Type = useCallback(newValue => {
     setType(newValue)
     if (onChange) {
       const target = wrapperDiv.current
-      target.value = { type: newValue, title, text, link }
+      target.value = { type: newValue, title, text, link, active }
       onChange({ target })
     }
-  }, [setType, onChange, title, text, link])
+  }, [setType, onChange, title, text, link, active])
 
   const handleChange_Title = useCallback(rows => {
     const newValue = rows
@@ -40,10 +43,10 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
 
     if (onChange) {
       const target = wrapperDiv.current
-      target.value = { type, title: newValue, text, link }
+      target.value = { type, title: newValue, text, link, active }
       onChange({ target })
     }
-  }, [setTitle, onChange, type, text, link])
+  }, [setTitle, onChange, type, text, link, active])
 
   const handleChange_Text = useCallback(rows => {
     const newValue = rows
@@ -51,10 +54,10 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
 
     if (onChange) {
       const target = wrapperDiv.current
-      target.value = { type, title, text: newValue, link }
+      target.value = { type, title, text: newValue, link, active }
       onChange({ target })
     }
-  }, [setText, onChange, type, title, link])
+  }, [setText, onChange, type, title, link, active])
 
   const handleChange_Link = useCallback(event => {
     const newValue = event.target.value
@@ -62,10 +65,21 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
 
     if (onChange) {
       const target = wrapperDiv.current
-      target.value = { type, title, text, link: newValue }
+      target.value = { type, title, text, link: newValue, active }
       onChange({ target })
     }
-  }, [setLink, onChange, type, title, text])
+  }, [setLink, onChange, type, title, text, active])
+
+  const toggle_Active = useCallback(() => {
+    const newValue = !active
+    setActive(newValue)
+
+    if (onChange) {
+      const target = wrapperDiv.current
+      target.value = { type, title, text, link, active: newValue }
+      onChange({ target })
+    }
+  }, [setActive, onChange, type, title, text, link, active])
 
   return <div
     ref={wrapperDiv}
@@ -80,21 +94,37 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
           }}><Localized id="path_editor_item_choose_type_label" /></p>
     }
 
-    <MultiButton
-      onChange={handleChange_Type}
-      ariaLabel="Use as"
-      defaultValue={type}
-      items={[
-        { value: 'link', title: getString('path_editor_item_choose_type_value_link') },
-        { value: 'headline', title: getString('path_editor_item_choose_type_value_headline') },
-        // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
-        { value: 'text', title: getString('path_editor_item_choose_type_value_text') }
-      ]}
-      style={{
-        marginTop: 'calc(-1 * var(--basis))'
-      }}
-    />
+    <div className={classes.itemSettingsRow}>
+      {
+        !!type
+        ? <label className={classes.active_toggle_wrapper}>
+            <button onClick={toggle_Active} className={active ? 'text' : 'red'}>{
+              active
+                ? <><Visibility className={`${classes.active_toggle_icon} ${classes.active}`} /> <span><Localized id="path_editor_item_active" /></span></>
+                : <><VisibilityOff className={classes.active_toggle_icon} /> <span><Localized id="path_editor_item_not_active" /></span></>
+            }</button>
+          </label>
+        : null
+      }
 
+      <MultiButton
+        className={active ? classes.form_active : classes.form_deactivated}
+        onChange={handleChange_Type}
+        ariaLabel="Use as"
+        defaultValue={type}
+        items={[
+          { value: 'link', title: getString('path_editor_item_choose_type_value_link') },
+          { value: 'headline', title: getString('path_editor_item_choose_type_value_headline') },
+          // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+          { value: 'text', title: getString('path_editor_item_choose_type_value_text') }
+        ]}
+        style={{
+          marginTop: 'calc(-1 * var(--basis))'
+        }}
+      />
+    </div>
+
+    <span className={active ? classes.form_active : classes.form_deactivated}>
     {
       !!type
         ? <>
@@ -176,6 +206,7 @@ function ItemRaw({ getString, item, className, onChange, ...props }) {
         </>
         : null
     }
+    </span>
   </div>
 }
 const Item = withLocalization(ItemRaw)

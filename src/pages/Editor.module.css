@@ -17,3 +17,66 @@
   text-align: center;
   padding: var(--basis_x4) var(--basis_x2);
 }
+
+.editor .itemSettingsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.editor .chooseTypeScreen .itemSettingsRow {
+  justify-content: center;
+}
+
+.editor .active_toggle_wrapper {
+  display: flex;
+  align-items: center;
+}
+.editor .ion_toggle {
+  --background: var(--red);
+  --background-checked: var(--green);
+
+  --handle-background: var(--on-red);
+  --handle-background-checked: var(--on-green);
+
+  --border-radius: 0;
+  width: 40px;
+  height: 40px;
+  --handle-spacing: 4px;
+  --handle-height: 32px;
+  --handle-width: 16px;
+  --handle-border-radius: 0 0 0 0;
+  --handle-box-shadow: 0 0 0 0 transparent;
+}
+
+.editor .active_label{
+  user-select: none;
+  cursor: pointer;
+}
+
+.editor .form_deactivated {
+  opacity: 0.5;
+}
+.editor .form_active {
+  opacity: 1;
+}
+
+.editor .active_toggle_wrapper button {
+  margin: 0;
+}
+.editor .active_toggle_wrapper button span {
+  vertical-align: middle;
+}
+.editor .active_toggle_icon {
+  background: var(--red);
+  color: var(--on-red);
+  padding: 8px;
+  margin: -8px 8px -6px -8px;
+  border-radius: 100px;
+  vertical-align: middle;
+}
+.editor .active_toggle_icon.active {
+  background: var(--green);
+  color: var(--on-green);
+}

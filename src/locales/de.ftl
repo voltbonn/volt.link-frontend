@@ -72,3 +72,6 @@ path_editor_item_choose_type_value_text = Text
 path_editor_item_title_label = Titel
 path_editor_item_text_label = Text
 path_editor_item_link_label = Link
+
+path_editor_item_active = Sichtbar
+path_editor_item_not_active = Nicht Angezeigt
