@@ -106,7 +106,6 @@ function Chooser({ getString, rightHeaderActions }) {
             </Link>
       }
     </div>
-    <br/>
     {
       error !== ''
         ? <>
@@ -115,6 +114,10 @@ function Chooser({ getString, rightHeaderActions }) {
         </>
         : null
     }
+
+    <br />
+    <hr />
+    <br />
 
     <h2>Restrictions</h2>
     <ul>
