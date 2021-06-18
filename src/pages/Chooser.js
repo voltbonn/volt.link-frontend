@@ -254,6 +254,10 @@ function Chooser({ getString, rightHeaderActions }) {
     </ul>
     <p>Contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas</a> for more languages. We'll add more as needed. {/*(We're aspecially interested in people speaking Arabic.)*/}</p>
 
+    <h3>Email Addresses</h3>
+    <p>You can of course link to email addresses.</p>
+    <p>But like you write <code className="filled">https://</code> before normal links, you need to write <code className="filled">mailto:</code> before email addresses.</p>
+
     <h3>Legal</h3>
     <p>The default imprint is the one from Volt Europa. You can change it to the correct link of your chapter.</p>
 
