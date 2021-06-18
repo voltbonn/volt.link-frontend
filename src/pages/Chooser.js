@@ -257,6 +257,10 @@ function Chooser({ getString, rightHeaderActions }) {
     <h3>Email Addresses</h3>
     <p>You can of course link to email addresses.</p>
     <p>But like you write <code className="filled">https://</code> before normal links, you need to write <code className="filled">mailto:</code> before email addresses.</p>
+    <p>Examples:</p>
+    <ul>
+      <li>bonn@voltdeutschland.org</li> → <code className="filled">mailto:bonn@voltdeutschland.org</code></li>
+    </ul>
 
     <h3>Legal</h3>
     <p>The default imprint is the one from Volt Europa. You can change it to the correct link of your chapter.</p>
