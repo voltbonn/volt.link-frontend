@@ -259,7 +259,7 @@ function Chooser({ getString, rightHeaderActions }) {
     <p>But like you write <code className="filled">https://</code> before normal links, you need to write <code className="filled">mailto:</code> before email addresses.</p>
     <p>Examples:</p>
     <ul>
-      <li>bonn@voltdeutschland.org</li> → <code className="filled">mailto:bonn@voltdeutschland.org</code></li>
+      <li>bonn@voltdeutschland.org → <code className="filled">mailto:bonn@voltdeutschland.org</code></li>
     </ul>
 
     <h3>Legal</h3>
