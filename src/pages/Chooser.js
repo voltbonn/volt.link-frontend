@@ -141,6 +141,8 @@ function Chooser({ getString, rightHeaderActions }) {
               />
             </button>
           </Link>
+          <br />
+          <br />
         </>
         : null
     }
