@@ -265,6 +265,9 @@ function Editor({ getString }) {
   const [useAs, setUseAs] = useState('')
   const handleUseAsChange = useCallback(newValue => setUseAs(newValue), [setUseAs])
 
+  const [layout, setLayout] = useState('')
+  const handleLayoutChange = useCallback(newValue => setLayout(newValue), [setLayout])
+
   const [title, setTitle] = useState([])
   const handleChange_Title = useCallback(rows => setTitle(rows), [setTitle])
 
@@ -329,6 +332,7 @@ function Editor({ getString }) {
         }else{
           let {
             use_as: useAs = '',
+            layout = (code.includes('.') ? 'person' : 'default'),
             title = [],
             description = [],
             permissions = permissionsDefault,
@@ -362,6 +366,7 @@ function Editor({ getString }) {
           viewPermissionTmp = viewPermissionTmp.length > 0 ? viewPermissionTmp[0].value : ''
 
           setUseAs(useAs)
+          setLayout(layout)
           setTitle(title)
           setDescription(description)
           setPermissions(permissions.filter(p => p.value !== '' && p.value !== '@volteuropa.org'))
@@ -381,6 +386,7 @@ function Editor({ getString }) {
     code,
     permissionsDefault,
     setUseAs,
+    setLayout,
     setTitle,
     setDescription,
     setPermissions,
@@ -401,6 +407,7 @@ function Editor({ getString }) {
 
     const data = {
       use_as: useAs,
+      layout,
       title,
       description,
       permissions: permissionsTmp,
@@ -448,6 +455,7 @@ function Editor({ getString }) {
     getString,
     code,
     useAs,
+    layout,
     redirect,
     title,
     description,
@@ -606,6 +614,19 @@ function Editor({ getString }) {
     {
       useAs === 'linklist'
         ? <>
+          <h3><Localized id="path_editor_layout_label" /></h3>
+          <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_layout_info" /></em>
+          <MultiButton
+            onChange={handleLayoutChange}
+            ariaLabel={getString('path_editor_layout_label')}
+            defaultValue={layout}
+            items={[
+              { value: 'default', title: getString('path_editor_layout_value_default') },
+              { value: 'person', title: getString('path_editor_layout_value_person') },
+            ]}
+          />
+          <br />
+
           <h3><Localized id="path_editor_coverphoto_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_coverphoto_info" />
