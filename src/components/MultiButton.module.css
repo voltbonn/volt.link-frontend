@@ -1,3 +1,4 @@
+/* THIS IS NOT IN USE. THE STYLES ARE IN index.css */
 
 .buttonRow{
   margin-top: var(--basis);
@@ -7,4 +8,14 @@
 }
 .buttonRow button:laft-of-type{
   margin-right: 0;
+}
+.buttonRow button span {
+  vertical-align: middle;
+}
+
+.buttonRow button.hasIcon{
+  padding-left: var(--basis);
+}
+.buttonRow button.hasIcon span {
+  margin-left: var(--basis_x2);
 }

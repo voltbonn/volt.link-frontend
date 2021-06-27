@@ -15,7 +15,7 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange, style, classNam
 
   return <div
     aria-label={ariaLabel}
-    className={'buttonRow ' + className}
+    className={'buttonRow ' + (className || '')}
     style={{
       display: 'inline-block',
       ...style
@@ -25,13 +25,17 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange, style, classNam
       items.map(item => {
         const value = item.value
         const title = item.title
+        const icon = item.icon || null
         return <button
           key={value}
-          className={choosen === value ? 'choosen' : ''}
+          className={`${choosen === value ? 'choosen' : ''} ${!!icon ? 'hasIcon' : ''}`}
           onClick={handleClick}
           data-value={value}
         >
-          {title}
+          <span style={{pointerEvents: 'none'}}>
+            {!!icon ? icon : null}
+            <span style={{verticalAlign: 'middle'}}>{title}</span>
+          </span>
         </button>
       })
     }
