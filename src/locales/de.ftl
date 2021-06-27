@@ -55,7 +55,7 @@ path_editor_redirect_label = Url zum weiterleiten:
 path_editor_redirect_placeholder = https://voltdeutschland.org/bonn
 
 path_editor_coverphoto_label = Titelbild:
-path_editor_coverphoto_info = Eine Url, die für das Coverfoto verwendet werden soll. Das Foto muss an anderer Stelle hochgeladen werden. Zum Beispiel auf der Volt Europa Website. Es sollte mindestens 1200px breit und 400px hoch sein.
+path_editor_coverphoto_info = Eine Url, die für das Coverfoto verwendet werden soll. Das Foto muss an anderer Stelle hochgeladen werden. Zum Beispiel auf der Volt Europa Website. Es sollte mindestens {$width} breit und {$height} hoch sein.
 path_editor_coverphoto_placeholder = https://
 
 path_editor_imprint_overwrite_label = Eigener Impressum Link:

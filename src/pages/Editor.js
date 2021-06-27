@@ -641,7 +641,11 @@ function Editor({ getString }) {
 
           <h3><Localized id="path_editor_coverphoto_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            <Localized id="path_editor_coverphoto_info" />
+            <Localized id="path_editor_coverphoto_info" vars={{
+              width: layout === 'person' ? '400px' : '1200px',
+              height: layout === 'person' ? '400px' : '400px',
+              ratio: layout === 'person' ? '1/1' : '3/1',
+            }}/>
           </em>
           <input
             onChange={handleChange_Coverphoto}

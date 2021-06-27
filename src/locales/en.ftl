@@ -66,7 +66,7 @@ path_editor_redirect_label = Url to redirect to:
 path_editor_redirect_placeholder = https://voltdeutschland.org/bonn
 
 path_editor_coverphoto_label = Coverphoto:
-path_editor_coverphoto_info = A url to use for the coverphoto. The photo needs to be uploaded somewhere else. For example on the Volt Europa website. It should be at least 1200px wide and 400px height.
+path_editor_coverphoto_info = A url to use for the coverphoto. The photo needs to be uploaded somewhere else. For example on the Volt Europa website. It should be at least {$width} wide and {$height} height.
 path_editor_coverphoto_placeholder = https://
 
 path_editor_imprint_overwrite_label = Custom imprint link:
