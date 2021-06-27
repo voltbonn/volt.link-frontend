@@ -47,7 +47,7 @@ path_editor_use_as_value_linklist = Miniseite
 path_editor_use_as_value_nothing = Nichts / Deaktiviert
 
 path_editor_layout_label = Layout:
-path_editor_layout_info = Hier kannst du das Layout der Micropage ändern. Die Layouts unterscheiden sich nur im Titelbild. Das für Personen ist rund und hat einen Profil Rahmen.
+path_editor_layout_info = Hier kannst du das Layout der Miniseite ändern. Die Layouts unterscheiden sich nur im Titelbild. Das für Personen ist rund und hat einen Profil Rahmen.
 path_editor_layout_value_default = Normal
 path_editor_layout_value_person = Person
 
