@@ -87,7 +87,7 @@ path_editor_item_choose_type_value_headline3 = Headline 3
 path_editor_item_choose_type_value_text = Text
 path_editor_item_title_label = Title
 path_editor_item_text_label = Text
-path_editor_item_link_label = Link
+path_editor_item_link_label = Link (https://… or mailto:…)
 
 path_editor_item_active = Visible
 path_editor_item_not_active = Not Displayed
