@@ -54,7 +54,7 @@ path_editor_permissions_view_volteuropa = Only for Volt Europa
 path_editor_use_as_label = Use as:
 path_editor_use_as_info = Select "Nothing / Deactivated" to stop using the link.
 path_editor_use_as_value_redirect = Redirect
-path_editor_use_as_value_linklist = Linklist
+path_editor_use_as_value_linklist = Micropage
 path_editor_use_as_value_nothing = Nothing / Deactivated
 
 path_editor_layout_label = Layout:
