@@ -80,3 +80,11 @@
   background: var(--green);
   color: var(--on-green);
 }
+
+.editor .buttonIcon {
+  --bg-color: var(--button-color);
+  --fg-color: var(--button-background);
+  vertical-align: middle;
+  height: var(--basis_x8);
+  width: auto;
+}

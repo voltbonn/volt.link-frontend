@@ -8,6 +8,10 @@ import {
 
 import { Visibility, VisibilityOff } from '@material-ui/icons'
 
+import SVG from 'react-inlinesvg'
+import layoutDefault from '../images/layout-default.svg'
+import layoutPerson from '../images/layout-person.svg'
+
 import classes from './Editor.module.css'
 import { Localized, withLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
@@ -621,8 +625,16 @@ function Editor({ getString }) {
             ariaLabel={getString('path_editor_layout_label')}
             defaultValue={layout}
             items={[
-              { value: 'default', title: getString('path_editor_layout_value_default') },
-              { value: 'person', title: getString('path_editor_layout_value_person') },
+              {
+                value: 'default',
+                title: getString('path_editor_layout_value_default'),
+                icon: <SVG src={layoutDefault} className={classes.buttonIcon} />
+              },
+              {
+                value: 'person',
+                title: getString('path_editor_layout_value_person'),
+                icon: <SVG src={layoutPerson} className={classes.buttonIcon} />
+              },
             ]}
           />
           <br />

@@ -1,0 +1,7 @@
+<svg width="1120" height="850" viewBox="0 0 1120 850" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1120" height="850" fill="var(--bg-color, white)"/>
+<rect x="80" y="80" width="960" height="320" fill="var(--fg-color, black)"/>
+<rect x="240" y="480" width="640" height="80" fill="var(--fg-color, black)"/>
+<rect x="240" y="570" width="480" height="40" fill="var(--fg-color, black)"/>
+<rect x="240" y="690" width="420" height="80" fill="var(--fg-color, black)"/>
+</svg>
