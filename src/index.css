@@ -304,6 +304,13 @@ button:focus.choosen:after {
   margin-right: 0;
 }
 
+.buttonRow button.hasIcon{
+  padding-left: var(--basis);
+}
+.buttonRow button.hasIcon span {
+  margin-left: var(--basis_x2);
+}
+
 hr {
   margin: var(--basis_x4) 0;
   border: none;
