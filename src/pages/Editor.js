@@ -479,8 +479,17 @@ function Editor({ getString }) {
     a.click()
   }, [code])
 
+  const gotoQrcodePage = () => {
+    const a = document.createElement('a')
+    a.href = `https://qrcode.volt.link/?c=https://volt.link/${code}`
+    a.target = '_blank'
+    a.rel = 'noreferrer'
+    a.click()
+  }
+
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     {/* <button className="text"><Localized id="path_editor_share"/></button> */}
+    <button className="text" onClick={gotoQrcodePage}><Localized id="path_editor_qrcode" /></button>
     <button className="text" onClick={viewStatistics}><Localized id="path_editor_statistics" /></button>
     <button className="green" onClick={handleSave}><Localized id="path_editor_save"/></button>
   </div>
