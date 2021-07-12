@@ -304,12 +304,22 @@ button:focus.choosen:after {
   margin-right: 0;
 }
 
-.buttonRow button.hasIcon{
-  padding-left: var(--basis);
+button.hasIcon .icon {
+  height: var(--basis_x4);
+  width: auto;
+  vertical-align: middle;
+
+  margin-right: var(--basis);
+  margin-left: calc(-1 * var(--basis));
+
+  --bg-color: var(--button-color);
+  --fg-color: var(--button-background);
 }
-.buttonRow button.hasIcon span {
-  margin-left: var(--basis_x2);
+button.hasIcon .icon.big {
+  height: var(--basis_x8);
+  width: auto;
 }
+
 
 hr {
   margin: var(--basis_x4) 0;

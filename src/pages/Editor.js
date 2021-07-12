@@ -637,12 +637,12 @@ function Editor({ getString }) {
               {
                 value: 'default',
                 title: getString('path_editor_layout_value_default'),
-                icon: <SVG src={layoutDefault} className={classes.buttonIcon} />
+                icon: <SVG src={layoutDefault} className="icon big" />
               },
               {
                 value: 'person',
                 title: getString('path_editor_layout_value_person'),
-                icon: <SVG src={layoutPerson} className={classes.buttonIcon} />
+                icon: <SVG src={layoutPerson} className="icon big" />
               },
             ]}
           />
