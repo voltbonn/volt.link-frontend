@@ -11,6 +11,9 @@ import { Visibility, VisibilityOff } from '@material-ui/icons'
 import SVG from 'react-inlinesvg'
 import layoutDefault from '../images/layout-default.svg'
 import layoutPerson from '../images/layout-person.svg'
+import icon_qr_code from '../images/qr_code_24pd.svg'
+import icon_assessment from '../images/assessment_24dp.svg'
+import icon_publish from '../images/publish_24dp.svg'
 
 import classes from './Editor.module.css'
 import { Localized, withLocalization } from '../fluent/Localized.js'
@@ -489,9 +492,24 @@ function Editor({ getString }) {
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     {/* <button className="text"><Localized id="path_editor_share"/></button> */}
-    <button className="text" onClick={gotoQrcodePage}><Localized id="path_editor_qrcode" /></button>
-    <button className="text" onClick={viewStatistics}><Localized id="path_editor_statistics" /></button>
-    <button className="green" onClick={handleSave}><Localized id="path_editor_save"/></button>
+    <button className="text hasIcon" onClick={gotoQrcodePage}>
+      <span style={{pointerEvents: 'none'}}>
+        <SVG src={icon_qr_code} className="icon" />
+        <span style={{verticalAlign: 'middle'}}><Localized id="path_editor_qrcode" /></span>
+      </span>
+    </button>
+    <button className="text hasIcon" onClick={viewStatistics}>
+      <span style={{pointerEvents: 'none'}}>
+        <SVG src={icon_assessment} className="icon" />
+        <span style={{verticalAlign: 'middle'}}><Localized id="path_editor_statistics" /></span>
+      </span>
+    </button>
+    <button className="green hasIcon" onClick={handleSave}>
+      <span style={{pointerEvents: 'none'}}>
+        <SVG src={icon_publish} className="icon" />
+        <span style={{verticalAlign: 'middle'}}><Localized id="path_editor_save" /></span>
+      </span>
+    </button>
   </div>
 
   const editor_form = <>
