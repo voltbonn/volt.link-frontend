@@ -1,8 +1,32 @@
 import { useState, useCallback, useRef } from 'react'
 
-import ISO6391 from 'iso-639-1'
-
-const locales = ISO6391.getLanguages('en de es fr it nl pt'.split(' '))
+let locales = {
+  en: 'English',
+  de: 'Deutsch',
+  es: 'Español',
+  pt: 'Português',
+  fr: 'Français',
+  it: 'Italiano',
+  nl: 'Nederlands', // Dutch
+  da: 'Dansk', // Danish
+  sv: 'Svenska', // Swedish
+  nb: 'Norsk bokmål', // Norwegian
+  fi: 'Suomi', // Finish
+  mt: 'Malti', // Maltese
+  // pl: 'Język polski', // Polish
+  ru: 'русский язык', // Russian
+  // bg: 'български език', // Bulgarian
+  tr: 'Türkçe',
+  ar: 'اَلْعَرَبِيَّة', // Arabic
+  // el: 'ελληνικά', // Greek
+  // ro: 'limba română', // Romanian
+  // sl: 'slovenščina', // Slovenian
+  // uk: 'украї́нська мо́ва', // Ukrainian
+  // cy: 'Cymraeg', // Welsh
+}
+locales = Object.entries(locales)
+.map(([code, nativeName]) => ({code, nativeName}))
+console.log('locales', locales)
 
 function InputWithLocal({ locale, defaultValue, children, style, onChange, ...props }) {
   const wrapperDiv = useRef(null)
