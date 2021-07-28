@@ -1,5 +1,9 @@
 default_locale = en
 
+main_menu = Menu
+menu_micropages = Edit Micropages
+menu_list = All Links
+
 login = Login
 logout = Logout
 
