@@ -8,6 +8,7 @@ login_prompt = Login in the upper right corner, to edit volt.link urls.
 contact = Contact
 source_code = Source Code
 
+chooser_header_title = Edit Micropages
 headline_errors = Errors
 
 type_a_path = Type a path…

@@ -124,7 +124,7 @@ function Chooser({ getString, rightHeaderActions }) {
 
   return <div>
     <Header
-      title="edit.volt.link"
+      title={<Localized id="chooser_header_title" />}
       rightActions={rightHeaderActions || null}
     />
 
