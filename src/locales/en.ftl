@@ -1,5 +1,10 @@
 default_locale = en
 
+main_menu = Menu
+menu_micropages = Edit Micropages
+menu_url_shortener = URL Shortener
+menu_list = All Links
+
 login = Login
 logout = Logout
 
@@ -7,6 +12,9 @@ login_prompt = Login in the upper right corner, to edit volt.link urls.
 
 contact = Contact
 source_code = Source Code
+
+chooser_header_title = Edit Micropages
+headline_errors = Errors
 
 type_a_path = Type a path…
 edit_path_button = Edit
@@ -19,6 +27,11 @@ create_user_page_button = Create volt.link/{$username}
 edit_user_page_headline = Edit your volt.link micropage
 edit_user_page_info = The link of that micropage is the same as your Volt Europa email address.
 edit_user_page_button = Edit volt.link/{$username}
+
+create_shortcode_headline = URL Shortener
+create_shortcode_info = Enter a url to get a automatic short url. You can edit the url afterwards.
+create_shortcode_url_placeholder = https://
+create_shortcode_url_submit = Generate
 
 chooser_any_link_headline = Create a team/campain micropage or redirect
 chooser_any_link_info = Please read the guidlines below before creating a link.
@@ -92,3 +105,7 @@ path_editor_item_link_label = Link (https://… or mailto:…)
 
 path_editor_item_active = Visible
 path_editor_item_not_active = Not Displayed
+
+error_invalid_url = Please enter a valid url. Maybe start the url with "https://" or use "mailto:" for emails.
+error_invalid_mailto_url = The email address is invalid. Maybe start the address with "mailto:".
+error_invalid_email = The email address is invalid.

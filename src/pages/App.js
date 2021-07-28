@@ -3,23 +3,58 @@ import classes from './App.module.css'
 import {
   Switch,
   Route,
+  useRouteMatch,
 } from 'react-router-dom'
+
+import { withLocalization } from '../fluent/Localized.js'
+import { useHistory } from 'react-router-dom'
 
 import Localized from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import Chooser from './Chooser.js'
+import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
 
-function App() {
+import MultiButton from '../components/MultiButton.js'
+
+function App({ getString }) {
   const [, loggedIn] = useUser()
-  // const loggedIn = true
+
+  const history = useHistory()
+  const menuRouteMatch = useRouteMatch("/:slug")
+  const selected_route = menuRouteMatch ? menuRouteMatch.params.slug : ''
+
+  const handleMenu = new_selected => {
+    switch (new_selected) {
+      case 'shortcode':
+        history.push('/shortcode')
+        break
+      case 'list':
+        window.open(`${window.domains.backend}list`,'_blank')
+        break
+      default:
+        history.push('/')
+    }
+  }
 
   const loginLogoutButton = (
     loggedIn
-      ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-        <button className="red" style={{ marginRight: '0' }}><Localized id="logout"/></button>
-      </a>
+      ? <>
+        <MultiButton
+          onChange={handleMenu}
+          ariaLabel={getString('main_menu')}
+          defaultValue={selected_route}
+          items={[
+            { value: '', title: getString('menu_micropages') },
+            { value: 'shortcode', title: getString('menu_url_shortener') },
+            { value: 'list', title: getString('menu_list') },
+          ]}
+        />
+        <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+          <button className="red" style={{ marginRight: '0' }}><Localized id="logout"/></button>
+        </a>
+      </>
       : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
         <button style={{ marginRight: '0' }}><Localized id="login"/></button>
       </a>
@@ -41,8 +76,11 @@ function App() {
                 <Route path="/edit/:code">
                   <Editor />
                 </Route>
+                <Route path="/shortcode">
+                  <Shortcode rightHeaderActions={loginLogoutButton} />
+                </Route>
                 <Route path="/">
-                  <Chooser rightHeaderActions={loginLogoutButton}/>
+                  <Chooser rightHeaderActions={loginLogoutButton} />
                 </Route>
               </Switch>
             </>
@@ -56,4 +94,4 @@ function App() {
   </>)
 }
 
-export default App
+export default withLocalization(App)
