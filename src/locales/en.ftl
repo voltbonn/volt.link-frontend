@@ -8,6 +8,8 @@ login_prompt = Login in the upper right corner, to edit volt.link urls.
 contact = Contact
 source_code = Source Code
 
+headline_errors = Errors
+
 type_a_path = Type a path…
 edit_path_button = Edit
 create_path_button = Create

@@ -165,7 +165,7 @@ function Chooser({ getString, rightHeaderActions }) {
     {
       error !== ''
         ? <>
-          <h3 className="red">Errors</h3>
+          <h3 className="red"><Localized id="headline_errors" /></h3>
           <p>{error}</p>
         </>
         : null
