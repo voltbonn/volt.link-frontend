@@ -2,6 +2,7 @@ default_locale = en
 
 main_menu = Menu
 menu_micropages = Edit Micropages
+menu_url_shortener = URL Shortener
 menu_list = All Links
 
 login = Login
@@ -26,6 +27,11 @@ create_user_page_button = Create volt.link/{$username}
 edit_user_page_headline = Edit your volt.link micropage
 edit_user_page_info = The link of that micropage is the same as your Volt Europa email address.
 edit_user_page_button = Edit volt.link/{$username}
+
+create_shortcode_headline = URL Shortener
+create_shortcode_info = Enter a url to get a automatic short url. You can edit the url afterwards.
+create_shortcode_url_placeholder = https://
+create_shortcode_url_submit = Generate
 
 chooser_any_link_headline = Create a team/campain micropage or redirect
 chooser_any_link_info = Please read the guidlines below before creating a link.

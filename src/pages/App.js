@@ -13,6 +13,7 @@ import Localized from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import Chooser from './Chooser.js'
+import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
 
 import MultiButton from '../components/MultiButton.js'
@@ -26,6 +27,9 @@ function App({ getString }) {
 
   const handleMenu = new_selected => {
     switch (new_selected) {
+      case 'shortcode':
+        history.push('/shortcode')
+        break
       case 'list':
         window.open(`${window.domains.backend}list`,'_blank')
         break
@@ -43,6 +47,7 @@ function App({ getString }) {
           defaultValue={selected_route}
           items={[
             { value: '', title: getString('menu_micropages') },
+            { value: 'shortcode', title: getString('menu_url_shortener') },
             { value: 'list', title: getString('menu_list') },
           ]}
         />
@@ -70,6 +75,9 @@ function App({ getString }) {
               <Switch>
                 <Route path="/edit/:code">
                   <Editor />
+                </Route>
+                <Route path="/shortcode">
+                  <Shortcode rightHeaderActions={loginLogoutButton} />
                 </Route>
                 <Route path="/">
                   <Chooser rightHeaderActions={loginLogoutButton} />
