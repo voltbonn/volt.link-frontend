@@ -72,7 +72,7 @@ function App({ getString }) {
                   <Editor />
                 </Route>
                 <Route path="/">
-                  <Chooser rightHeaderActions={loginLogoutButton}/>
+                  <Chooser rightHeaderActions={loginLogoutButton} />
                 </Route>
               </Switch>
             </>
