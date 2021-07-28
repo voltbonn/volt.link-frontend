@@ -92,3 +92,7 @@ path_editor_item_link_label = Link (https://… or mailto:…)
 
 path_editor_item_active = Visible
 path_editor_item_not_active = Not Displayed
+
+error_invalid_url = Please enter a valid url. Maybe start the url with "https://" or use "mailto:" for emails.
+error_invalid_mailto_url = The email address is invalid. Maybe start the address with "mailto:".
+error_invalid_email = The email address is invalid.

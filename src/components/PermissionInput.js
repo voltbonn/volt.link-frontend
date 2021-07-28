@@ -18,13 +18,13 @@ function PermissionInput({ role, defaultValue, children, style, onChange, ariaLa
     }
   }, [setChangedRole, onChange, changedValue])
 
-  const handleTextChange = useCallback((event) => {
-    setChangedValue(event.target.value)
+  const handleTextChange = useCallback(value => {
+    setChangedValue(value)
     if (onChange) {
       const target = wrapperDiv.current
       target.value = {
         role: changedRole,
-        value: event.target.value,
+        value,
       }
       onChange({ target })
     }

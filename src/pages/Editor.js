@@ -22,6 +22,9 @@ import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
 import InputWithLocal from '../components/InputWithLocal.js'
 import PermissionInput from '../components/PermissionInput.js'
+import UrlInput from '../components/UrlInput.js'
+import EmailInput from '../components/EmailInput.js'
+import FancyInput from '../components/FancyInput.js'
 import Repeater from '../components/Repeater.js'
 
 function ItemRaw({ fluentByObject, getString, item, className, onChange, ...props }) {
@@ -66,8 +69,7 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, ...prop
     }
   }, [setText, onChange, type, title, link, active])
 
-  const handleChange_Link = useCallback(event => {
-    const newValue = event.target.value
+  const handleChange_Link = useCallback(newValue => {
     setLink(newValue)
 
     if (onChange) {
@@ -196,18 +198,23 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, ...prop
 
           {
             type === 'link'
-              ? <input
-                onChange={handleChange_Link}
-                type="text"
-                defaultValue={link}
-                placeholder={getString('path_editor_item_link_label')}
-                style={{
-                  marginRight: '0',
-                  marginBottom: '0',
-                  marginLeft: '0',
-                  width: 'calc(100% - var(--basis_x2))',
-                }}
-              />
+              ? <FancyInput>
+                {({ setError }) => (
+                  <UrlInput
+                    onError={setError}
+                    onChange={handleChange_Link}
+                    type="text"
+                    defaultValue={link}
+                    placeholder={getString('path_editor_item_link_label')}
+                    style={{
+                      marginRight: '0',
+                      marginBottom: '0',
+                      marginLeft: '0',
+                      width: 'calc(100% - var(--basis_x2))',
+                    }}
+                  />
+                )}
+              </FancyInput>
               : null
           }
         </>
@@ -307,16 +314,9 @@ function Editor({ getString }) {
   const [viewPermission, setViewPermission] = useState(permissionsDefault)
 
   const [coverphoto, setCoverphoto] = useState('')
-  const handleChange_Coverphoto = useCallback(event => setCoverphoto(event.target.value), [setCoverphoto])
-
   const [imprintOverwrite, setImprintOverwrite] = useState('')
-  const handleChange_ImprintOverwrite = useCallback(event => setImprintOverwrite(event.target.value), [setImprintOverwrite])
-
   const [privacyPolicyOverwrite, setPrivacyPolicyOverwrite] = useState('')
-  const handleChange_PrivacyPolicyOverwrite = useCallback(event => setPrivacyPolicyOverwrite(event.target.value), [setPrivacyPolicyOverwrite])
-
   const [redirect, setRedirect] = useState('')
-  const handleChange_Redirect = useCallback(event => setRedirect(event.target.value), [setRedirect])
 
   const [items, setItems] = useState([])
   const handleChange_Items = useCallback(rows => setItems(rows), [setItems])
@@ -613,13 +613,19 @@ function Editor({ getString }) {
               }}
               {...repeater_props}
             >
-              {InputWithLocal_props => <input
-                type="text"
-                aria-label={getString('path_editor_permissions_edit_label')}
-                placeholder={getString('path_editor_permissions_edit_placeholder')}
-                {...InputWithLocal_props}
-                style={{ ...InputWithLocal_props.style, margin: '0' }}
-              />}
+              {InputWithLocal_props => <FancyInput 
+                    style={{ ...InputWithLocal_props.style, display: 'flex', flexDirection: 'column' }}
+                >
+                {({ setError }) => (
+                  <EmailInput
+                    onError={setError}
+                    aria-label={getString('path_editor_permissions_edit_label')}
+                    placeholder={getString('path_editor_permissions_edit_placeholder')}
+                    {...InputWithLocal_props}
+                    style={{ flexGrow: '1', margin: '0' }}
+                  />
+                )}
+              </FancyInput>}
             </PermissionInput>
         }
       }
@@ -674,18 +680,23 @@ function Editor({ getString }) {
               ratio: layout === 'person' ? '1/1' : '3/1',
             }}/>
           </em>
-          <input
-            onChange={handleChange_Coverphoto}
-            defaultValue={coverphoto}
-            type="text"
-            placeholder={getString('path_editor_coverphoto_placeholder')}
-            aria-label={getString('path_editor_coverphoto_label')}
-            style={{
-              marginRight: '0',
-              marginLeft: '0',
-              width: 'calc(100% - var(--basis_x2))'
-            }}
-          />
+          <FancyInput>
+            {({ setError }) => (
+              <UrlInput
+                onError={setError}
+                onChange={setCoverphoto}
+                defaultValue={coverphoto}
+                type="text"
+                placeholder={getString('path_editor_coverphoto_placeholder')}
+                aria-label={getString('path_editor_coverphoto_label')}
+                style={{
+                  marginRight: '0',
+                  marginLeft: '0',
+                  width: 'calc(100% - var(--basis_x2))'
+                }}
+              />
+            )}
+          </FancyInput>
 
           <br />
           <br />
@@ -693,18 +704,23 @@ function Editor({ getString }) {
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_imprint_overwrite_info" />
           </em>
-          <input
-            onChange={handleChange_ImprintOverwrite}
-            defaultValue={imprintOverwrite}
-            type="text"
-            placeholder={getString('path_editor_imprint_overwrite_placeholder')}
-            aria-label={getString('path_editor_imprint_overwrite_label')}
-            style={{
-              marginRight: '0',
-              marginLeft: '0',
-              width: 'calc(100% - var(--basis_x2))'
-            }}
-          />
+          <FancyInput>
+            {({ setError }) => (
+              <UrlInput
+                onError={setError}
+                onChange={setImprintOverwrite}
+                defaultValue={imprintOverwrite}
+                type="text"
+                placeholder={getString('path_editor_imprint_overwrite_placeholder')}
+                aria-label={getString('path_editor_imprint_overwrite_label')}
+                style={{
+                  marginRight: '0',
+                  marginLeft: '0',
+                  width: 'calc(100% - var(--basis_x2))'
+                }}
+              />
+            )}
+          </FancyInput>
 
           <br />
           <br />
@@ -712,18 +728,23 @@ function Editor({ getString }) {
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_privacy_policy_overwrite_info" />
           </em>
-          <input
-            onChange={handleChange_PrivacyPolicyOverwrite}
-            defaultValue={privacyPolicyOverwrite}
-            type="text"
-            placeholder={getString('path_editor_privacy_policy_overwrite_placeholder')}
-            aria-label={getString('path_editor_privacy_policy_overwrite_label')}
-            style={{
-              marginRight: '0',
-              marginLeft: '0',
-              width: 'calc(100% - var(--basis_x2))'
-            }}
-          />
+          <FancyInput>
+            {({ setError }) => (
+              <UrlInput
+                onError={setError}
+                onChange={setPrivacyPolicyOverwrite}
+                defaultValue={privacyPolicyOverwrite}
+                type="text"
+                placeholder={getString('path_editor_privacy_policy_overwrite_placeholder')}
+                aria-label={getString('path_editor_privacy_policy_overwrite_label')}
+                style={{
+                  marginRight: '0',
+                  marginLeft: '0',
+                  width: 'calc(100% - var(--basis_x2))'
+                }}
+              />
+            )}
+          </FancyInput>
 
           <br />
           <br />
@@ -738,18 +759,23 @@ function Editor({ getString }) {
           useAs === 'redirect'
             ? <>
               <h3><Localized id="path_editor_redirect_label" /></h3>
-              <input
-                onChange={handleChange_Redirect}
-                type="text"
-                placeholder={getString('path_editor_redirect_placeholder')}
-                aria-label={getString('path_editor_redirect_label')}
-                defaultValue={redirect}
-                style={{
-                  marginRight: '0',
-                  marginLeft: '0',
-                  width: 'calc(100% - var(--basis_x2))'
-                }}
-              />
+              <FancyInput>
+                {({ setError }) => (
+                  <UrlInput
+                    onError={setError}
+                    onChange={setRedirect}
+                    type="text"
+                    placeholder={getString('path_editor_redirect_placeholder')}
+                    aria-label={getString('path_editor_redirect_label')}
+                    defaultValue={redirect}
+                    style={{
+                      marginRight: '0',
+                      marginLeft: '0',
+                      width: 'calc(100% - var(--basis_x2))'
+                    }}
+                  />
+                )}
+              </FancyInput>
               <br />
               <br />
             </>
