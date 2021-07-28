@@ -444,6 +444,10 @@ function Editor({ getString }) {
             setSavingMessage(getString('path_editor_edit_permission_error'))
             await delay(2000)
             setSavingMessage(null)
+          } else {
+            setSavingMessage(data.error)
+            await delay(2000)
+            setSavingMessage(null)
           }
         } else {
           setSavingMessage(getString('path_editor_status_saved'))
