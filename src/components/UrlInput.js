@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 const url_regex = /^([A-Z0-9+-.]+:(?:\/\/)?)?[\w\u00C0-\u00FF_.-]+(?:\.[\w\u00C0-\u00FF_.-]+)+[\w\u00C0-\u00FF_~:/?#[\]!%$&'()@*+,;=.-]+$/gui
 const email_regex = /^(?:(?:[^<>()[\]\\.,;:\s@"]+(?:\.[^<>()[\]\\.,;:\s@"]+)*)|(?:".+"))@(?:(?:\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(?:(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})\.?)$/gui
-const is_email_not_url_regex = /^[^:\/]+@.+$/gui
+const is_email_not_url_regex = /^[^:/]+@.+$/gui
 
 function UrlInput({ defaultValue, onChange, onError, ...props }) {
   const handleTextChange = useCallback((event) => {
