@@ -209,14 +209,14 @@ function Chooser({ getString, rightHeaderActions }) {
       <li>Use letters people can type. The less international characters the better.</li>
       <li>
         🇪🇺 Emojis are possible. But like before. Use them sparingly and check if others can type and see them on their device.<br/>
-        <a href="https://emojipedia.org/emoji-11.0/" target="_blank" rel="noreferrer">Emoji 11</a> and earlier should be okay.<br/>
+        <a href="https://emojipedia.org/emoji-11.0/" target="_blank" rel="noopener noreferrer">Emoji 11</a> and earlier should be okay.<br/>
         And better don't mix emojis and normals letters.
       </li>
     </ul>
 
     <h3>City Teams</h3>
     <p>Use the name of your city team without the Volt prefix or a common international name.</p>
-    <p>If two cities have the same name, add your country's <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank" rel="noreferrer">two letter shortcode</a> before it (eg: <code className="filled">de-bonn</code>).</p>
+    <p>If two cities have the same name, add your country's <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank" rel="noopener noreferrer">two letter shortcode</a> before it (eg: <code className="filled">de-bonn</code>).</p>
     <p>Use the full city/state/team name if possible. Not everybody knows the abbreviation. But keep it short.</p>
     <p>Example:</p>
     <ul>
