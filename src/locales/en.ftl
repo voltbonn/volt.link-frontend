@@ -103,6 +103,8 @@ path_editor_item_title_label = Title
 path_editor_item_text_label = Text
 path_editor_item_link_label = Link (https://… or mailto:…)
 
+path_editor_item_text_info = You can use Markdown and HTML in the text-field.
+
 path_editor_item_active = Visible
 path_editor_item_not_active = Not Displayed
 

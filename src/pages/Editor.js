@@ -168,7 +168,9 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, ...prop
           }
           {
             type === 'text'
-              ? <Repeater
+              ? <>
+              <p><Localized id="path_editor_item_text_info" /></p>
+              <Repeater
                 onChange={handleChange_Text}
                 defaultValue={text}
                 addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
@@ -193,6 +195,7 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, ...prop
                   }
                 }
               />
+              </>
               : null
           }
 
