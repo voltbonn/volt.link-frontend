@@ -122,7 +122,7 @@ function Chooser({ getString, rightHeaderActions }) {
     }
   }, [username, setUserPageAlreadyExists])
 
-  const not = <div>
+  return <div>
     <Header
       title={<Localized id="chooser_header_title" />}
       rightActions={rightHeaderActions || null}
@@ -273,13 +273,6 @@ function Chooser({ getString, rightHeaderActions }) {
     <h3>Deletion</h3>
     <p>Links can't be deleted as nobody likes to scan a QR-Code, just to receive an <a href="https://volt.link/error">error page</a>.</p>
     <p>But links can of course be reused. Contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas</a> if you need get access to a link.</p>
-  </div>
-  console.log(not)
-
-  return <div>
-    <h1>The editor will be back shortly.</h1>
-    <p>Contact <a href="mailto:thomas.rosen@volteuropa.org" rel="noopener noreferrer">thomas.rosen@volteuropa.org</a> for any questions.</p>
-    <p>More infos on the incident can be found here: <a href="https://www.githubstatus.com/" rel="noopener noreferrer">githubstatus.com</a></p>
   </div>
 }
 
