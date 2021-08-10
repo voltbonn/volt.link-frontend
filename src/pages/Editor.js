@@ -792,7 +792,7 @@ function Editor({ getString }) {
     className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
   >
     <Header
-      title={<a href={`https://volt.link/${code}`} target="_blank" rel="noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{code}</a>}
+      title={<a href={`https://volt.link/${code}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{code}</a>}
       rightActions={canEdit ? rightHeaderActions : null}
       notificationBanner={
         savingMessage === null
