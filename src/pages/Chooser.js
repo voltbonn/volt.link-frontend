@@ -122,7 +122,7 @@ function Chooser({ getString, rightHeaderActions }) {
     }
   }, [username, setUserPageAlreadyExists])
 
-  return <div>
+  const not = <div>
     <Header
       title={<Localized id="chooser_header_title" />}
       rightActions={rightHeaderActions || null}
@@ -273,6 +273,11 @@ function Chooser({ getString, rightHeaderActions }) {
     <h3>Deletion</h3>
     <p>Links can't be deleted as nobody likes to scan a QR-Code, just to receive an <a href="https://volt.link/error">error page</a>.</p>
     <p>But links can of course be reused. Contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas</a> if you need get access to a link.</p>
+  </div>
+  console.log(not)
+
+  return <div>
+    <h1>The editor will be back shortly. Contact thomas.rosen@volteuropa.org for any questions.</h1>
   </div>
 }
 
