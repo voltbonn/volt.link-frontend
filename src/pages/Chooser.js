@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import classes from './Chooser.module.css'
 
 import { Link, useHistory } from 'react-router-dom'
