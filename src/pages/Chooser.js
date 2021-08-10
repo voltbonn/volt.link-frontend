@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { Fragment, useState, useCallback, useEffect } from 'react'
 import classes from './Chooser.module.css'
 
 import { Link, useHistory } from 'react-router-dom'
@@ -192,7 +192,7 @@ function Chooser({ getString, rightHeaderActions }) {
         These paths are not allowed: {
           (forbidden.codes || [])
           .filter(code => !code.includes('/') && !code.includes('.'))
-          .flatMap(code => [<code key={code}>{code}</code>, <React.Fragment key={code+'separator'}>, </React.Fragment>])
+          .flatMap(code => [<code key={code}>{code}</code>, <Fragment key={code+'separator'}>, </Fragment>])
           .slice(0, -1)
         }
       </li>
