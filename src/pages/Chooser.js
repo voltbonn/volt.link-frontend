@@ -277,7 +277,9 @@ function Chooser({ getString, rightHeaderActions }) {
   console.log(not)
 
   return <div>
-    <h1>The editor will be back shortly. Contact thomas.rosen@volteuropa.org for any questions.</h1>
+    <h1>The editor will be back shortly.</h1>
+    <p>Contact <a href="mailto:thomas.rosen@volteuropa.org" rel="noopener noreferrer">thomas.rosen@volteuropa.org</a> for any questions.</p>
+    <p>More infos on the incident can be found here: <a href="https://www.githubstatus.com/" rel="noopener noreferrer">githubstatus.com</a></p>
   </div>
 }
 
