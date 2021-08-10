@@ -208,7 +208,7 @@ function Chooser({ getString, rightHeaderActions }) {
       <li>It is not important if you use upper- or lower-case letters.</li>
       <li>Use letters people can type. The less international characters the better.</li>
       <li>
-        🇪🇺 Emojis are possible. But like before. Use them sparingly and check if others can type and see them on their device.<br/>
+        <span role="img" aria-label="EU-flag-emoji">🇪🇺</span> Emojis are possible. But like before. Use them sparingly and check if others can type and see them on their device.<br/>
         <a href="https://emojipedia.org/emoji-11.0/" target="_blank" rel="noopener noreferrer">Emoji 11</a> and earlier should be okay.<br/>
         And better don't mix emojis and normals letters.
       </li>
