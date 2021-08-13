@@ -193,6 +193,7 @@ ul {
 
 button,
 textarea,
+div[contentEditable=true],
 input[type="text"],
 input[type="email"],
 input[type="url"],
@@ -204,6 +205,7 @@ select {
   font-size: var(--body-font-size);
 }
 textarea,
+div[contentEditable=true],
 input[type="text"],
 input[type="email"],
 input[type="url"] {
@@ -213,6 +215,7 @@ input[type="url"] {
   box-shadow: inset 0 0 0 calc(0.2 * var(--basis)) var(--on-background);
 }
 textarea.inverted,
+div[contentEditable=true].inverted,
 input[type="text"].inverted,
 input[type="email"].inverted,
 input[type="url"].inverted {
@@ -222,6 +225,7 @@ input[type="url"].inverted {
 }
 
 textarea:focus,
+div[contentEditable=true]:focus,
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="url"]:focus {
@@ -230,7 +234,8 @@ input[type="url"]:focus {
   box-shadow: inset 0 0 0 calc(0.2 * var(--basis)) var(--on-background-contrast);
 }
 
-textarea {
+textarea,
+div[contentEditable=true] {
   resize: vertical;
   padding-bottom: var(--basis_x2);
   min-height: 20px; /* TODO: Find out why this is value works. */
