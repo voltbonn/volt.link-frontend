@@ -24,6 +24,7 @@ import InputWithLocal from '../components/InputWithLocal.js'
 import PermissionInput from '../components/PermissionInput.js'
 import UrlInput from '../components/UrlInput.js'
 import EmailInput from '../components/EmailInput.js'
+import HtmlInput from '../components/HtmlInput.js'
 import FancyInput from '../components/FancyInput.js'
 import Repeater from '../components/Repeater.js'
 
@@ -190,7 +191,7 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, ...prop
                       }}
                       {...repeater_props}
                     >
-                      {InputWithLocal_props => <textarea placeholder={getString('path_editor_item_text_label')} {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
+                      {InputWithLocal_props => <HtmlInput placeholder={getString('path_editor_item_text_label')} {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
                     </InputWithLocal>
                   }
                 }
