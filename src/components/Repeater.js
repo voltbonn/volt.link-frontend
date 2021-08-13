@@ -12,7 +12,7 @@ function reorder(list, startIndex, endIndex) {
   return result
 }
 
-function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel = 'Reorder', render, style, onChange, prependNewItems, isReorderable }) {
+function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel = 'Reorder', render, style, onChange, prependNewItems, showReorderControls = true, isReorderable = false }) {
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
   }
@@ -152,7 +152,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
 
                       <div className={classes.form}>
                         {
-                          isReorderable === true
+                          isReorderable === true && showReorderControls === true
                             ? <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
                             : null
                         }
@@ -163,7 +163,8 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
                             className: classes.item,
                             'data-index': index,
                             'data-id': subDefaultValue._id,
-                            onChange: handleRowChange
+                            onChange: handleRowChange,
+                            reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
                           })
                         }
                         {

@@ -28,7 +28,7 @@ import HtmlInput from '../components/HtmlInput.js'
 import FancyInput from '../components/FancyInput.js'
 import Repeater from '../components/Repeater.js'
 
-function ItemRaw({ fluentByObject, getString, item, className, onChange, ...props }) {
+function ItemRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, ...props }) {
   const defaultLocale = getString('default_locale')
 
   const wrapperDiv = useRef(null)
@@ -105,6 +105,9 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, ...prop
     }
 
     <div className={classes.itemSettingsRow}>
+      <div className={classes.itemSettingsRowLeft}>
+      {reorderHandle}
+
       {
         !!type
         ? <label className={classes.active_toggle_wrapper}>
@@ -116,6 +119,7 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, ...prop
           </label>
         : null
       }
+      </div>
 
       <MultiButton
         className={active ? classes.form_active : classes.form_deactivated}
@@ -246,6 +250,7 @@ function ItemsRaw({ getString, defaultValue, onChange }){
     reorderLabel={getString('path_editor_reorder')}
     prependNewItems={true}
     isReorderable={true}
+    showReorderControls={false}
     render={
       ({ defaultValue, ...repeater_props }) => {
         return <Item

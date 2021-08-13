@@ -10,7 +10,8 @@
   background: var(--background-contrast);
   color: var(--on-background);
   padding: var(--basis_x2);
-  max-width: calc(100% - calc(var(--basis_x16) + calc(var(--basis_x2) + var(--basis))));
+  /* max-width: calc(100% - calc(var(--basis_x16) + calc(var(--basis_x2) + var(--basis)))); */
+  max-width: calc(100% - calc(10.8 * var(--basis)));
 }
 
 .editor .item.chooseTypeScreen{
@@ -27,6 +28,13 @@
 }
 .editor .chooseTypeScreen .itemSettingsRow {
   justify-content: center;
+}
+.itemSettingsRowLeft {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: left;
+  flex-wrap: wrap;
+  gap: 0;
 }
 
 .editor .active_toggle_wrapper {
