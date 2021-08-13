@@ -1,7 +1,6 @@
 import React, { useCallback, useRef } from 'react'
 
 function HtmlInput({ defaultValue, children, style, onChange, onError, ...props }) {
-  defaultValue = `hello\two\nrld`
   const fake_defaultValue = useRef({__html:
     defaultValue
     // .replace(/\t/g, '&emsp;')
