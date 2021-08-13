@@ -46,13 +46,22 @@ function InputWithLocal({ locale, defaultValue, children, style, onChange, ...pr
     }
   }, [setChangedLocale, onChange, changedValue])
 
-  const handleTextChange = useCallback((event) => {
-    setChangedValue(event.target.value)
+  const handleTextChange = useCallback((event_or_value) => {
+    let value = event_or_value
+    if (
+      !!event_or_value
+      && !!event_or_value.target
+      && !!event_or_value.target.value
+    ) {
+      value = event_or_value.target.value
+    }
+
+    setChangedValue(value)
     if (onChange) {
       const target = wrapperDiv.current
       target.value = {
         locale: changedLocale,
-        value: event.target.value,
+        value,
       }
       onChange({ target })
     }
