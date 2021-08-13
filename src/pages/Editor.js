@@ -191,7 +191,13 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, ...prop
                       }}
                       {...repeater_props}
                     >
-                      {InputWithLocal_props => <HtmlInput placeholder={getString('path_editor_item_text_label')} {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
+                      {
+                        InputWithLocal_props => <HtmlInput
+                          placeholder={getString('path_editor_item_text_label')}
+                          {...InputWithLocal_props}
+                          style={{ ...InputWithLocal_props.style, margin: '0' }}
+                        />
+                      }
                     </InputWithLocal>
                   }
                 }
