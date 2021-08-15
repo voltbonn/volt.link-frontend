@@ -514,13 +514,13 @@ function Editor({ getString }) {
     <button className="text hasIcon" onClick={gotoQrcodePage}>
       <span style={{pointerEvents: 'none'}}>
         <SVG src={icon_qr_code} className="icon" />
-        <span style={{verticalAlign: 'middle'}}><Localized id="path_editor_qrcode" /></span>
+        <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_qrcode" /></span>
       </span>
     </button>
     <button className="text hasIcon" onClick={viewStatistics}>
       <span style={{pointerEvents: 'none'}}>
         <SVG src={icon_assessment} className="icon" />
-        <span style={{verticalAlign: 'middle'}}><Localized id="path_editor_statistics" /></span>
+        <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_statistics" /></span>
       </span>
     </button>
     <button className="green hasIcon" onClick={handleSave}>
