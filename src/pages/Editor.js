@@ -690,6 +690,7 @@ function Editor({ getString }) {
             ]}
           />
           <br />
+          <br />
 
           <h3><Localized id="path_editor_coverphoto_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
@@ -718,7 +719,6 @@ function Editor({ getString }) {
           </FancyInput>
 
           <br />
-          <br />
           <h3><Localized id="path_editor_imprint_overwrite_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_imprint_overwrite_info" />
@@ -741,7 +741,6 @@ function Editor({ getString }) {
             )}
           </FancyInput>
 
-          <br />
           <br />
           <h3><Localized id="path_editor_privacy_policy_overwrite_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
