@@ -34,7 +34,7 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange, style, classNam
         >
           <span style={{pointerEvents: 'none'}}>
             {!!icon ? icon : null}
-            <span style={{verticalAlign: 'middle'}}>{title}</span>
+            {!!title ? <span style={{verticalAlign: 'middle'}}>{title}</span> : null}
           </span>
         </button>
       })
