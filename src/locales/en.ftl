@@ -101,13 +101,13 @@ path_editor_item_choose_type_value_headline3 = Headline 3
 path_editor_item_choose_type_value_text = Text
 path_editor_item_title_label = Title
 path_editor_item_text_label = Text
-path_editor_item_link_label = Link (https://… or mailto:…)
+path_editor_item_link_label = Link (https://… or mailto:… or tel:…)
 
 path_editor_item_text_info = You can use Markdown and HTML in the text-field.
 
 path_editor_item_active = Visible
 path_editor_item_not_active = Not Displayed
 
-error_invalid_url = Please enter a valid url. Maybe start the url with "https://" or use "mailto:" for emails.
+error_invalid_url = Please enter a valid url. Maybe start the url with "https://", use "mailto:" for emails and "tel:" for phonenumbers.
 error_invalid_mailto_url = The email address is invalid. Maybe start the address with "mailto:".
 error_invalid_email = The email address is invalid.
