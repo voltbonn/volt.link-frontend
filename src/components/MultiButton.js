@@ -27,7 +27,7 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange, style, classNam
         const title = item.title
         const icon = item.icon || null
         return <button
-          key={value}
+          key={value+'_'+title}
           className={`${choosen === value ? 'choosen' : ''} ${!!icon ? 'hasIcon' : ''}`}
           onClick={handleClick}
           data-value={value}
