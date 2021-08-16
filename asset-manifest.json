@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.85620824.chunk.css",
-    "main.js": "/static/js/main.ee95dda1.chunk.js",
-    "main.js.map": "/static/js/main.ee95dda1.chunk.js.map",
+    "main.js": "/static/js/main.dc1ccce1.chunk.js",
+    "main.js.map": "/static/js/main.dc1ccce1.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.2eb0c063.js",
     "runtime-main.js.map": "/static/js/runtime-main.2eb0c063.js.map",
     "static/js/2.7054e9a7.chunk.js": "/static/js/2.7054e9a7.chunk.js",
@@ -14,9 +14,9 @@
     "index.html": "/index.html",
     "static/css/main.85620824.chunk.css.map": "/static/css/main.85620824.chunk.css.map",
     "static/js/2.7054e9a7.chunk.js.LICENSE.txt": "/static/js/2.7054e9a7.chunk.js.LICENSE.txt",
-    "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.07770f27.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.07770f27.png",
-    "static/media/Aktion.fee0c2ca.png": "/static/media/Aktion.fee0c2ca.png",
-    "static/media/Welcome-to-Volt.51cfd082.png": "/static/media/Welcome-to-Volt.51cfd082.png",
+    "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png",
+    "static/media/Aktion.89c1bcdf.png": "/static/media/Aktion.89c1bcdf.png",
+    "static/media/Welcome-to-Volt.39e04eca.png": "/static/media/Welcome-to-Volt.39e04eca.png",
     "static/media/assessment_24dp.7a4e5a03.svg": "/static/media/assessment_24dp.7a4e5a03.svg",
     "static/media/de.ftl": "/static/media/de.dcfaf46b.ftl",
     "static/media/en.ftl": "/static/media/en.2e68c78d.ftl",
@@ -24,12 +24,12 @@
     "static/media/layout-person.3608bb84.svg": "/static/media/layout-person.3608bb84.svg",
     "static/media/publish_24dp.ae37f206.svg": "/static/media/publish_24dp.ae37f206.svg",
     "static/media/qr_code_24pd.b620c9c2.svg": "/static/media/qr_code_24pd.b620c9c2.svg",
-    "static/media/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.743bd424.png": "/static/media/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.743bd424.png"
+    "static/media/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.6824f6ef.png": "/static/media/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.6824f6ef.png"
   },
   "entrypoints": [
     "static/js/runtime-main.2eb0c063.js",
     "static/js/2.7054e9a7.chunk.js",
     "static/css/main.85620824.chunk.css",
-    "static/js/main.ee95dda1.chunk.js"
+    "static/js/main.dc1ccce1.chunk.js"
   ]
 }
