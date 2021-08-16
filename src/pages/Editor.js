@@ -15,6 +15,11 @@ import icon_qr_code from '../images/qr_code_24pd.svg'
 import icon_assessment from '../images/assessment_24dp.svg'
 import icon_publish from '../images/publish_24dp.svg'
 
+import plakatschlange_thumb from '../images/coverphotos/thumbs/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.png'
+import aktion_thumb from '../images/coverphotos/thumbs/Aktion.png'
+import volt_bonn_thumb from '../images/coverphotos/thumbs/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.png'
+import welcome_to_volt_thumb from '../images/coverphotos/thumbs/Welcome-to-Volt.png'
+
 import classes from './Editor.module.css'
 import { Localized, withLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
@@ -705,7 +710,7 @@ function Editor({ getString }) {
               <UrlInput
                 onError={setError}
                 onChange={setCoverphoto}
-                defaultValue={coverphoto}
+                value={coverphoto}
                 type="text"
                 placeholder={getString('path_editor_coverphoto_placeholder')}
                 aria-label={getString('path_editor_coverphoto_label')}
@@ -717,8 +722,59 @@ function Editor({ getString }) {
               />
             )}
           </FancyInput>
-
+          {
+            layout !== 'person'
+              ? <>
+                <MultiButton
+                  onChange={setCoverphoto}
+                  ariaLabel={getString('path_editor_coverphoto_label')}
+                  defaultValue={coverphoto}
+                  items={[
+                    {
+                      value: '',
+                      title: 'No Coverphoto', // getString('path_editor_layout_value_default'),
+                    },
+                    ...[
+                      {
+                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-07/20200912_Plakatschlange_Ko%CC%88ln_Matteo%20Sant_Unione_011.jpeg',
+                        icon: plakatschlange_thumb,
+                      },
+                      {
+                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-05/Aktion.jpeg',
+                        icon: aktion_thumb,
+                      },
+                      {
+                        value: 'https://assets.volteuropa.org/styles/scale_2880x/public/inline-images/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.jpg',
+                        icon: volt_bonn_thumb,
+                      },
+                      {
+                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2020-11/Welcome-to-Volt.jpg',
+                        icon: welcome_to_volt_thumb,
+                      },
+                      // 'https://www.volteuropa.org/stripes/hero-desktop-green.jpg',
+                      // 'https://www.volteuropa.org/stripes/hero-desktop-red.jpg',
+                      // 'https://www.volteuropa.org/stripes/hero-desktop-blue.jpg',
+                      // 'https://www.volteuropa.org/stripes/hero-desktop-yellow.jpg',
+                      // 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-05/Colours-Background-Big.jpeg',
+                      // 'https://www.volteuropa.org/stripes/intermediate-green.jpg',
+                      // 'https://www.volteuropa.org/stripes/intermediate-red.jpg',
+                      // 'https://www.volteuropa.org/stripes/intermediate-blue.jpg',
+                      // 'https://www.volteuropa.org/stripes/intermediate-yellow.jpg',
+                      // 'https://www.volteuropa.org/og-default.png',
+                      // 'https://www.volteuropa.org/hero-default.jpg',
+                    ]
+                    .map(({value = '', icon = ''}) => ({
+                      value,
+                      icon: <img alt="" src={icon} className="icon image" />
+                    }))
+                  ]}
+                />
+                <br />
+              </>
+              : null
+          }
           <br />
+
           <h3><Localized id="path_editor_imprint_overwrite_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_imprint_overwrite_info" />

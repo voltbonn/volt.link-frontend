@@ -343,6 +343,10 @@ button.hasIcon .icon.big {
   width: auto;
 }
 
+button.hasIcon .icon.image {
+  height: var(--basis_x16);
+  margin: calc(-1 * var(--basis)) calc(-2 * var(--basis));
+}
 
 hr {
   margin: var(--basis_x4) 0;
