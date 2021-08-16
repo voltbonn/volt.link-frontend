@@ -17,7 +17,9 @@ function UrlInput({ defaultValue, onChange, onError, ...props }) {
         const schema = schema_parts.shift()
         const after_schema = schema_parts.join(':')
 
-        if (schema === 'mailto' || value.match(is_email_not_url_regex)) {
+        if (schema === 'tel') {
+          isSubmittable = true
+        } else if (schema === 'mailto' || value.match(is_email_not_url_regex)) {
           if (after_schema.match(email_regex)) {
             isSubmittable = true
           } else {
