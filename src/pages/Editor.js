@@ -736,20 +736,20 @@ function Editor({ getString }) {
                     },
                     ...[
                       {
-                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-07/20200912_Plakatschlange_Ko%CC%88ln_Matteo%20Sant_Unione_011.jpeg',
-                        icon: plakatschlange_thumb,
-                      },
-                      {
-                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-05/Aktion.jpeg',
-                        icon: aktion_thumb,
-                      },
-                      {
                         value: 'https://assets.volteuropa.org/styles/scale_2880x/public/inline-images/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.jpg',
                         icon: volt_bonn_thumb,
                       },
                       {
                         value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2020-11/Welcome-to-Volt.jpg',
                         icon: welcome_to_volt_thumb,
+                      },
+                      {
+                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-07/20200912_Plakatschlange_Ko%CC%88ln_Matteo%20Sant_Unione_011.jpeg',
+                        icon: plakatschlange_thumb,
+                      },
+                      {
+                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-05/Aktion.jpeg',
+                        icon: aktion_thumb,
                       },
                       // 'https://www.volteuropa.org/stripes/hero-desktop-green.jpg',
                       // 'https://www.volteuropa.org/stripes/hero-desktop-red.jpg',
