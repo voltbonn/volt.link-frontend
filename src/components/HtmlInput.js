@@ -43,6 +43,7 @@ function HtmlInput({ defaultValue, children, style, onChange, onError, ...props 
       flexGrow: '1',
       whiteSpace: 'pre-wrap',
       display: 'inline-block',
+      paddingBottom: 'var(--basis)',
       ...style,
     }}
     contentEditable={true}
