@@ -587,7 +587,7 @@ function Editor({ getString }) {
             }}
             {...repeater_props}
           >
-            {InputWithLocal_props => <textarea
+            {InputWithLocal_props => <HtmlInput
               aria-label={getString('path_editor_description_label')}
               placeholder={getString('path_editor_description_placeholder')}
               {...InputWithLocal_props}
