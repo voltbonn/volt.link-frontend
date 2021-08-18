@@ -306,7 +306,6 @@ function Editor({ getString }) {
   const handleChange_Title = useCallback(rows => setTitle(rows), [setTitle])
 
   const [description, setDescription] = useState([])
-  const handleChange_Description = useCallback(rows => setDescription(rows), [setDescription])
 
   const permissionsDefault = useMemo(() => (
       typeof email === 'string' && email.length > 0
@@ -572,7 +571,7 @@ function Editor({ getString }) {
     <br />
     <h3><Localized id="path_editor_description_label" /></h3>
     <Repeater
-      onChange={handleChange_Description}
+      onChange={setDescription}
       defaultValue={description}
       addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
       addButtonText={getString('path_editor_add_translation')}
