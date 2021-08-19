@@ -77,15 +77,21 @@ function InputWithLocal({ reorderHandle, locale, defaultValue, children, style, 
     }}
     {...props}
   >
-    <select
-      onChange={handleLocaleChange}
-      defaultValue={locale}
+    <div
+      class="wrapped_select"
+      placeholder={changedLocale.toUpperCase()}
       style={{
-        margin: '0 var(--basis) 0 0'
+        margin: '0 var(--basis) 0 0',
+        flexShrink: 0,
       }}
     >
-      {locales.map(({ code, nativeName }) => <option key={code} value={code}>{nativeName}</option>) }
-    </select>
+      <select
+        onChange={handleLocaleChange}
+        defaultValue={locale}
+      >
+        {locales.map(({ code, nativeName }) => <option key={code} value={code}>{nativeName}</option>)}
+      </select>
+    </div>
     {
       !!children
         ? children({

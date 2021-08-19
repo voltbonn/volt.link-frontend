@@ -207,7 +207,8 @@ div[contentEditable=true],
 input[type="text"],
 input[type="email"],
 input[type="url"],
-select {
+select,
+.wrapped_select {
   min-width: 0px;
   outline: none;
   border: none;
@@ -252,7 +253,8 @@ div[contentEditable=true] {
 }
 
 button,
-select {
+select,
+.wrapped_select {
   font-weight: bold;
   transition: transform 0.2s ease;
   position: relative;
@@ -370,3 +372,72 @@ hr {
     display: none;
   }
 }
+
+
+
+
+
+
+/* reset/remove select styles */
+.wrapped_select select {
+  /* A reset of styles, including removing the default dropdown arrow */
+  appearance: none;
+  /* Additional resets for further consistency */
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  outline: none;
+
+  padding: var(--basis) var(--basis_x2);
+}
+.wrapped_select select::-ms-expand {
+  display: none;
+}
+
+/* wrap select in new styles */
+.wrapped_select {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+.wrapped_select,
+.wrapped_select select{
+  width: calc(12 * var(--basis));
+  height: calc(6 * var(--basis));
+  max-height: calc(6 * var(--basis));
+}
+.wrapped_select select {
+  padding: var(--basis) var(--basis_x2);
+}
+.wrapped_select:before {
+  z-index: 1;
+  content: attr(placeholder);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: inherit;
+  padding: var(--basis) var(--basis_x2);
+  pointer-events: none;
+}
+.wrapped_select:after {
+  content: '';
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  right: var(--basis_x2);
+  height: var(--basis);
+  width: var(--basis_x2);
+  margin-top: calc(-1 * var(--basis_x0_5));
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  background-color: currentColor;
+  pointer-events: none;
+}
+
