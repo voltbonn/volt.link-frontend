@@ -6,7 +6,6 @@ const is_email_not_url_regex = /^[^:/]+@.+$/gui
 
 function UrlInput({ defaultValue, onChange, onError, ...props }) {
   const handleTextChange = useCallback((event) => {
-        console.log('-----')
     if (onChange || onError) {
       const value = event.target.value || ''
       let isSubmittable = false
