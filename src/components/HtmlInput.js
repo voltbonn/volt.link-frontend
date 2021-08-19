@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 
 import classes from './HtmlInput.module.css'
 
@@ -10,6 +10,7 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, ...pr
     .replace(/>/g, '&gt;')
     // .replace(/\n/g, '<br />')
   })
+  const [text, setText] = useState(defaultValue)
 
   const handleTextChange = useCallback((event) => {
     try {
@@ -22,13 +23,14 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, ...pr
         .trim()
 
         onChange(value)
+        setText(value)
       }
     } catch (error) {
       if (onError) {
         onError(error)
       }
     }
-  }, [onChange, onError])
+  }, [onChange, onError, setText])
 
   const addLineBreaks = useCallback(event => {
     if (event.key === 'Enter') {
@@ -58,7 +60,7 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, ...pr
     onKeyDown={addLineBreaks}
     onInput={handleTextChange}
     onPaste={handlePaste}
-    className={`${classes.rebuild_textarea} ${className}`}
+    className={`${classes.rebuild_textarea} ${text.length === 0 ? classes.show_placeholder : ''} ${className}`}
     contentEditable={true}
     dangerouslySetInnerHTML={fake_defaultValue.current}
     {...props}
