@@ -31,7 +31,7 @@ function HtmlInput({ defaultValue, children, style, onChange, onError, ...props 
   const addLineBreaks = useCallback(event => {
     if (event.key === 'Enter') {
       // source: StackOverflow (https://stackoverflow.com/a/61237402)
-      document.execCommand ('insertLineBreak')
+      document.execCommand('insertLineBreak')
       event.preventDefault()
     }
   }, [])
