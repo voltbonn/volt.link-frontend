@@ -13,14 +13,14 @@ let locales = {
   nb: 'Norsk bokmål', // Norwegian
   fi: 'Suomi', // Finish
   mt: 'Malti', // Maltese
-  // pl: 'Język polski', // Polish
+  pl: 'Język polski', // Polish
   ru: 'русский язык', // Russian
-  // bg: 'български език', // Bulgarian
+  bg: 'български език', // Bulgarian
   tr: 'Türkçe',
   ar: 'اَلْعَرَبِيَّة', // Arabic
-  // el: 'ελληνικά', // Greek
-  // ro: 'limba română', // Romanian
-  // sl: 'slovenščina', // Slovenian
+  el: 'ελληνικά', // Greek
+  ro: 'limba română', // Romanian
+  sl: 'slovenščina', // Slovenian
   // uk: 'украї́нська мо́ва', // Ukrainian
   // cy: 'Cymraeg', // Welsh
 }
