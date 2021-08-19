@@ -36,9 +36,23 @@ function HtmlInput({ defaultValue, children, style, onChange, onError, ...props 
     }
   }, [])
 
+  const handlePaste = useCallback(event => {
+    // only accept plain text
+
+    // cancel paste
+    event.preventDefault()
+
+    // get text representation of clipboard
+    const text = (event.originalEvent || event).clipboardData.getData('text/plain')
+
+    // insert text manually
+    document.execCommand('insertText', false, text)
+  }, [])
+
   return <div
     onKeyDown={addLineBreaks}
     onInput={handleTextChange}
+    onPaste={handlePaste}
     style={{
       flexGrow: '1',
       whiteSpace: 'pre-wrap',
