@@ -33,6 +33,9 @@ function HtmlInput({ defaultValue, children, style, onChange, onError, ...props 
       // source: StackOverflow (https://stackoverflow.com/a/61237402)
       document.execCommand('insertLineBreak')
       event.preventDefault()
+    } else if (event.key === 'Tab') {
+      document.execCommand('insertText', false, '\t')
+      event.preventDefault()
     }
   }, [])
 
