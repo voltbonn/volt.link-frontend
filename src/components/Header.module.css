@@ -15,6 +15,14 @@
     backdrop-filter: blur(var(--blur));
   }
 }
+@media (max-width: 1000px) {
+  .header {
+    --minus_basis_x2: calc(-1 * var(--basis_x2));
+    --minus_basis_x4: calc(-1 * var(--basis_x4));
+    margin: var(--minus_basis_x4) var(--minus_basis_x2) var(--basis_x4) var(--minus_basis_x2);
+  }
+}
+
 
 
 .header .headerBar {
@@ -27,6 +35,12 @@
 
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1000px) {
+  .header .headerBar {
+    padding: var(--basis_x2);
+  }
 }
 .header .headerBar h2{
   flex-grow: 1;
