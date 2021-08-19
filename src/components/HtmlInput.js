@@ -1,6 +1,8 @@
 import React, { useCallback, useRef } from 'react'
 
-function HtmlInput({ defaultValue, children, style, onChange, onError, ...props }) {
+import classes from './HtmlInput.module.css'
+
+function HtmlInput({ defaultValue, children, className, onChange, onError, ...props }) {
   const fake_defaultValue = useRef({__html:
     defaultValue
     // .replace(/\t/g, '&emsp;')
@@ -56,13 +58,7 @@ function HtmlInput({ defaultValue, children, style, onChange, onError, ...props 
     onKeyDown={addLineBreaks}
     onInput={handleTextChange}
     onPaste={handlePaste}
-    style={{
-      flexGrow: '1',
-      whiteSpace: 'pre-wrap',
-      display: 'inline-block',
-      paddingBottom: 'var(--basis)',
-      ...style,
-    }}
+    className={`${classes.rebuild_textarea} ${className}`}
     contentEditable={true}
     dangerouslySetInnerHTML={fake_defaultValue.current}
     {...props}

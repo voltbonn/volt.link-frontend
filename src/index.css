@@ -237,7 +237,7 @@ input[type="url"]:focus {
 textarea,
 div[contentEditable=true] {
   resize: vertical;
-  padding-bottom: var(--basis_x2);
+  padding-bottom: var(--basis);
   min-height: 20px; /* TODO: Find out why this is value works. */
 }
 
