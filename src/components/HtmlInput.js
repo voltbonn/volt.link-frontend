@@ -17,7 +17,7 @@ function HtmlInput({ defaultValue, children, style, onChange, onError, ...props 
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
         .replace(/<\/? ?br ?\/?>/g, '\n')
-        .trim('\n')
+        .trim()
 
         onChange(value)
       }
