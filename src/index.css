@@ -191,6 +191,16 @@ ul {
   font-size: var(--body2-font-size);
 }
 
+
+textarea,
+div[contentEditable=true],
+input[type="text"],
+input[type="email"],
+input[type="url"] {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
 button,
 textarea,
 div[contentEditable=true],
