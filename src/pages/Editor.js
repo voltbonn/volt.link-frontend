@@ -108,7 +108,7 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
       type_classname = 'type_h3'
       break
     case 'link':
-      type_classname = 'type_button'
+      type_classname = 'type_text' // 'type_button'
       break
     default:
       type_classname = 'type_text'
