@@ -12,6 +12,83 @@ function reorder(list, startIndex, endIndex) {
   return result
 }
 
+function Row({
+  subDefaultValue,
+  index,
+  render,
+  handleRowChange,
+  isReorderable,
+  handleAddRow,
+  handleRemoveRow,
+  showReorderControls,
+  reorderLabel,
+  showActionButton,
+  hasOnlyOneRow,
+}) {
+  return <Draggable
+      key={subDefaultValue._id}
+      draggableId={subDefaultValue._id}
+      index={index}
+      isDragDisabled={isReorderable === true ? false : true}
+      disableInteractiveElementBlocking={true}
+      shouldRespectForcePress={true}
+    >
+      {provided => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+
+          key={subDefaultValue._id}
+          className={classes.row}
+        >
+          {
+            index !== 0
+            ? <div className={classes.middleActions}>
+              <div className={classes.trigger}></div>
+              <div className={classes.content}>
+                <button className={`green ${classes.inlineRowButton}`} data-index={index} onClick={handleAddRow}>+</button>
+              </div>
+            </div>
+            : null
+          }
+
+        <div className={classes.form}>
+          {
+            isReorderable === true && showReorderControls === true
+              ? <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
+              : null
+          }
+          {
+            render({
+              key: subDefaultValue._id,
+              defaultValue: subDefaultValue,
+              className: classes.item,
+              'data-index': index,
+              'data-id': subDefaultValue._id,
+              onChange: handleRowChange,
+              reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
+              actionButton: (
+            hasOnlyOneRow
+              ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
+              : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
+              )
+            })
+          }
+          {
+            showActionButton === true
+            ? (
+            hasOnlyOneRow
+              ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
+              : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
+            )
+            : null
+          }
+        </div>
+      </div>
+    )}
+  </Draggable>
+}
+
 function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel = 'Reorder', render, style, onChange, prependNewItems, showReorderControls = true, showActionButton = true, isReorderable = false }) {
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
@@ -124,67 +201,22 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
               rows
               .filter(subDefaultValue => subDefaultValue._id)
               .map(
-                (subDefaultValue, index) => <Draggable
+                (subDefaultValue, index) => <Row
                   key={subDefaultValue._id}
-                  draggableId={subDefaultValue._id}
-                  index={index}
-                  isDragDisabled={isReorderable === true ? false : true}
-                  disableInteractiveElementBlocking={true}
-                >
-                  {provided => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-
-                      key={subDefaultValue._id}
-                      className={classes.row}
-                    >
-                      {
-                        index !== 0
-                        ? <div className={classes.middleActions}>
-                          <div className={classes.trigger}></div>
-                          <div className={classes.content}>
-                            <button className={`green ${classes.inlineRowButton}`} data-index={index} onClick={handleAddRow}>+</button>
-                          </div>
-                        </div>
-                        : null
-                      }
-
-                      <div className={classes.form}>
-                        {
-                          isReorderable === true && showReorderControls === true
-                            ? <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
-                            : null
-                        }
-                        {
-                          render({
-                            key: subDefaultValue._id,
-                            defaultValue: subDefaultValue,
-                            className: classes.item,
-                            'data-index': index,
-                            'data-id': subDefaultValue._id,
-                            onChange: handleRowChange,
-                            reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
-                            actionButton: (
-                          hasOnlyOneRow
-                            ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
-                            : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
-                            )
-                          })
-                        }
-                        {
-                          showActionButton === true
-                          ? (
-                          hasOnlyOneRow
-                            ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
-                            : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
-                          )
-                          : null
-                        }
-                      </div>
-                    </div>
-                  )}
-                </Draggable>
+                  {...{
+                    subDefaultValue,
+                    index,
+                    render,
+                    handleRowChange,
+                    isReorderable,
+                    handleAddRow,
+                    handleRemoveRow,
+                    showReorderControls,
+                    reorderLabel,
+                    showActionButton,
+                    hasOnlyOneRow,
+                  }}
+                />
               )
             }
             {provided.placeholder}
