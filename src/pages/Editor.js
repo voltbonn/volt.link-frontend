@@ -186,7 +186,7 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
                 addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
                 addButtonText={getString('path_editor_add_translation')}
                 style={{
-                  marginTop: 'var(--basis_x4)'
+                  marginTop: 'var(--basis_x2)'
                 }}
                 render={
                   ({ defaultValue, ...repeater_props }) => {
