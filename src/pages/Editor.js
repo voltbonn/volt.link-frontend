@@ -53,27 +53,24 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
     }
   }, [setType, onChange, title, text, link, active])
 
-  const handleChange_Title = useCallback(rows => {
-    const newValue = rows
-    setTitle(newValue)
-
-    if (onChange) {
-      const target = wrapperDiv.current
-      target.value = { type, title: newValue, text, link, active }
-      onChange({ target })
-    }
-  }, [setTitle, onChange, type, text, link, active])
-
   const handleChange_Text = useCallback(rows => {
     const newValue = rows
+      if (type === 'text') {
     setText(newValue)
+      } else {
+        setTitle(newValue)
+      }
 
     if (onChange) {
       const target = wrapperDiv.current
-      target.value = { type, title, text: newValue, link, active }
+      if (type === 'text') {
+        target.value = { type, title, text: newValue, link, active }
+      } else {
+        target.value = { type, title: newValue, text, link, active }
+      }
       onChange({ target })
     }
-  }, [setText, onChange, type, title, link, active])
+  }, [setText, setTitle, onChange, type, title, text, link, active])
 
   const handleChange_Link = useCallback(newValue => {
     setLink(newValue)
@@ -95,6 +92,24 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
       onChange({ target })
     }
   }, [setActive, onChange, type, title, text, link, active])
+
+  let type_classname = ''
+  switch (type) {
+    case 'text':
+      type_classname = 'type_text'
+      break
+    case 'headline':
+      type_classname = 'type_h2'
+      break
+    case 'headline3':
+      type_classname = 'type_h3'
+      break
+    case 'link':
+      type_classname = 'type_button'
+      break
+    default:
+      type_classname = 'type_text'
+  }
 
   return <div
     ref={wrapperDiv}
@@ -148,41 +163,14 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
       !!type
         ? <>
           {
-            type === 'link' || type === 'headline' || type === 'headline3'
-              ? <Repeater
-                onChange={handleChange_Title}
-                defaultValue={title}
-                addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
-                addButtonText={getString('path_editor_add_translation')}
-                style={{
-                  marginTop: 'var(--basis_x4)'
-                }}
-                render={
-                  ({ defaultValue, ...repeater_props }) => {
-                    const locale = defaultValue.locale
-                    const value = defaultValue.value
-                    return <InputWithLocal
-                      locale={locale}
-                      defaultValue={value}
-                      style={{
-                        maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-                      }}
-                      {...repeater_props}
-                    >
-                      {InputWithLocal_props => <input type="text" placeholder={getString('path_editor_item_title_label')} {...InputWithLocal_props} style={{ ...InputWithLocal_props.style, margin: '0' }} />}
-                    </InputWithLocal>
-                  }
-                }
-              />
-              : null
-          }
-          {
             type === 'text'
-              ? <>
-              <p><Localized id="path_editor_item_text_info" /></p>
+            ? <p><Localized id="path_editor_item_text_info" /></p>
+            : null
+          }
+
               <Repeater
                 onChange={handleChange_Text}
-                defaultValue={text}
+                defaultValue={type === 'text' ? text : title}
                 addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
                 addButtonText={getString('path_editor_add_translation')}
                 style={{
@@ -202,18 +190,21 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
                     >
                       {
                         InputWithLocal_props => <HtmlInput
-                          placeholder={getString('path_editor_item_text_label')}
+                          placeholder={
+                            type === 'text'
+                            ? getString('path_editor_item_text_label')
+                            : getString('path_editor_item_title_label')
+                          }
                           {...InputWithLocal_props}
                           style={{ ...InputWithLocal_props.style, margin: '0' }}
+                          linebreaks={ type === 'text' }
+                          className={type_classname}
                         />
                       }
                     </InputWithLocal>
                   }
                 }
               />
-              </>
-              : null
-          }
 
           {
             type === 'link'
