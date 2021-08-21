@@ -40,6 +40,7 @@
 .editor .active_toggle_wrapper {
   display: flex;
   align-items: center;
+  margin-right: var(--basis_x4);
 }
 .editor .ion_toggle {
   --background: var(--red);
