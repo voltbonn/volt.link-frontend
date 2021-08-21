@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 
-function PermissionInput({ reorderHandle, role, defaultValue, children, style, onChange, ariaLabel, placeholder, ...props }) {
+function PermissionInput({ reorderHandle, actionButton, role, defaultValue, children, style, onChange, ariaLabel, placeholder, ...props }) {
   const wrapperDiv = useRef(null)
 
   const [changedRole, setChangedRole] = useState(role || 'editor')

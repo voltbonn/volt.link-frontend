@@ -29,7 +29,7 @@ let locales = {
 locales = Object.entries(locales)
 .map(([code, nativeName]) => ({code, nativeName}))
 
-function InputWithLocal({ reorderHandle, locale, defaultValue, children, style, onChange, className, ...props }) {
+function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, children, style, onChange, className, ...props }) {
   const wrapperDiv = useRef(null)
 
   const [changedLocale, setChangedLocale] = useState(locale)
