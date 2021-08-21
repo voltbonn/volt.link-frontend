@@ -58,9 +58,13 @@
 .basis_0_4 {
   --basis: 0.4rem;
 }
+.basis_0_3 {
+  --basis: 0.3rem;
+}
 :root,
 .basis_0_8,
-.basis_0_4 {
+.basis_0_4,
+.basis_0_3 {
   --basis_x0_2: calc(0.2 * var(--basis));
   --basis_x0_5: calc(0.5 * var(--basis));
   --basis_x2: calc(2 * var(--basis));
