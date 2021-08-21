@@ -371,7 +371,7 @@ button:focus.choosen:after {
 }
 
 button.hasIcon .icon {
-  height: var(--basis_x4);
+  height: calc(1.25 * var(--body-font-size));
   width: auto;
   vertical-align: middle;
 
