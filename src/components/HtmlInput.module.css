@@ -1,5 +1,6 @@
 .rebuild_textarea {
   white-space: pre-wrap;
+  word-break: break-word;
   display: inline-block;
 }
 
