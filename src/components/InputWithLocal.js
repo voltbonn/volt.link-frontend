@@ -1,5 +1,7 @@
 import { useState, useCallback, useRef } from 'react'
 
+import classes from './InputWithLocal.module.css'
+
 let locales = {
   en: 'English',
   de: 'Deutsch',
@@ -27,7 +29,7 @@ let locales = {
 locales = Object.entries(locales)
 .map(([code, nativeName]) => ({code, nativeName}))
 
-function InputWithLocal({ reorderHandle, locale, defaultValue, children, style, onChange, ...props }) {
+function InputWithLocal({ reorderHandle, locale, defaultValue, children, style, onChange, className, ...props }) {
   const wrapperDiv = useRef(null)
 
   const [changedLocale, setChangedLocale] = useState(locale)
@@ -67,14 +69,8 @@ function InputWithLocal({ reorderHandle, locale, defaultValue, children, style, 
   }, [setChangedValue, onChange, changedLocale])
 
   return <div
+    className={classes.input_with_local+' '+className}
     ref={wrapperDiv}
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'flex-start',
-      maxWidth: '100%',
-      ...style
-    }}
     {...props}
   >
     <div
