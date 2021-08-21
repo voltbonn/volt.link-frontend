@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from 'react'
 
 import classes from './HtmlInput.module.css'
 
-function HtmlInput({ defaultValue, children, className, onChange, onError, ...props }) {
+function HtmlInput({ defaultValue, children, className, onChange, onError, linebreaks, ...props }) {
   const fake_defaultValue = useRef({__html:
     defaultValue
     // .replace(/\t/g, '&emsp;')
@@ -15,12 +15,18 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, ...pr
   const handleTextChange = useCallback((event) => {
     try {
       if (onChange) {
-        const value = (event.target.innerHTML || '')
+        let value = (event.target.innerHTML || '')
         // .replace(/&emsp;/g, '\t')
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
-        .replace(/<\/? ?br ?\/?>/g, '\n')
-        .trim()
+
+        if (linebreaks === false) {
+          value = value.replace(/<\/? ?br ?\/?>/g, ' ')
+        } else {
+          value = value.replace(/<\/? ?br ?\/?>/g, '\n')
+        }
+
+        value = value.trim()
 
         onChange(value)
         setText(value)
@@ -30,18 +36,20 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, ...pr
         onError(error)
       }
     }
-  }, [onChange, onError, setText])
+  }, [onChange, onError, setText, linebreaks])
 
   const addLineBreaks = useCallback(event => {
     if (event.key === 'Enter') {
       // source: StackOverflow (https://stackoverflow.com/a/61237402)
-      document.execCommand('insertLineBreak')
+      if (linebreaks !== false) {
+        document.execCommand('insertLineBreak')
+      }
       event.preventDefault()
     } else if (event.key === 'Tab') {
       document.execCommand('insertText', false, '\t')
       event.preventDefault()
     }
-  }, [])
+  }, [linebreaks])
 
   const handlePaste = useCallback(event => {
     // only accept plain text
@@ -50,11 +58,17 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, ...pr
     event.preventDefault()
 
     // get text representation of clipboard
-    const text = (event.originalEvent || event).clipboardData.getData('text/plain')
+    let text = (event.originalEvent || event).clipboardData.getData('text/plain')
+
+    if (linebreaks === false) {
+      text = text.replace(/\n/g, ' ')
+    }
+
+    text = text.trim()
 
     // insert text manually
     document.execCommand('insertText', false, text)
-  }, [])
+  }, [linebreaks])
 
   return <div
     onKeyDown={addLineBreaks}
