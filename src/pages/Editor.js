@@ -152,9 +152,6 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
           // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
           { value: 'text', title: getString('path_editor_item_choose_type_value_text') }
         ]}
-        style={{
-          marginTop: 'calc(-1 * var(--basis))'
-        }}
       />
     </div>
 
