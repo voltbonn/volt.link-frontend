@@ -321,16 +321,16 @@ button:hover{
   transform: scale(1.05);
 }
 button.choosen:after {
-    content: "";
-    position: absolute;
-    top: calc(-1 * var(--basis_x0_5));
-    right: calc(-1 * var(--basis_x0_5));
-    bottom: calc(-1 * var(--basis_x0_5));
-    left: calc(-1 * var(--basis_x0_5));
-    box-shadow: 0 0 0 var(--basis_x0_5) var(--on-background);
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--basis_x0_5));
+  right: calc(-1 * var(--basis_x0_5));
+  bottom: calc(-1 * var(--basis_x0_5));
+  left: calc(-1 * var(--basis_x0_5));
+  box-shadow: 0 0 0 var(--basis_x0_5) var(--on-background);
 }
 button:focus.choosen:after {
-    box-shadow: 0 0 0 var(--basis_x0_5) var(--on-background-contrast);
+  box-shadow: 0 0 0 var(--basis_x0_5) var(--on-background-contrast);
 }
 
 .buttonRow button {
