@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.2340c8f4.chunk.css",
-    "main.js": "/static/js/main.964d95ab.chunk.js",
-    "main.js.map": "/static/js/main.964d95ab.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.8806f125.js",
-    "runtime-main.js.map": "/static/js/runtime-main.8806f125.js.map",
-    "static/js/2.a5d69129.chunk.js": "/static/js/2.a5d69129.chunk.js",
-    "static/js/2.a5d69129.chunk.js.map": "/static/js/2.a5d69129.chunk.js.map",
-    "static/js/3.6fb35c33.chunk.js": "/static/js/3.6fb35c33.chunk.js",
-    "static/js/3.6fb35c33.chunk.js.map": "/static/js/3.6fb35c33.chunk.js.map",
-    "static/js/4.6bb07620.chunk.js": "/static/js/4.6bb07620.chunk.js",
-    "static/js/4.6bb07620.chunk.js.map": "/static/js/4.6bb07620.chunk.js.map",
+    "main.css": "/static/css/main.17452b22.chunk.css",
+    "main.js": "/static/js/main.3edee69e.chunk.js",
+    "main.js.map": "/static/js/main.3edee69e.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.d29c3b84.js",
+    "runtime-main.js.map": "/static/js/runtime-main.d29c3b84.js.map",
+    "static/js/2.78335550.chunk.js": "/static/js/2.78335550.chunk.js",
+    "static/js/2.78335550.chunk.js.map": "/static/js/2.78335550.chunk.js.map",
+    "static/js/3.4638476c.chunk.js": "/static/js/3.4638476c.chunk.js",
+    "static/js/3.4638476c.chunk.js.map": "/static/js/3.4638476c.chunk.js.map",
+    "static/js/4.6bbbc2c3.chunk.js": "/static/js/4.6bbbc2c3.chunk.js",
+    "static/js/4.6bbbc2c3.chunk.js.map": "/static/js/4.6bbbc2c3.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.2340c8f4.chunk.css.map": "/static/css/main.2340c8f4.chunk.css.map",
-    "static/js/2.a5d69129.chunk.js.LICENSE.txt": "/static/js/2.a5d69129.chunk.js.LICENSE.txt",
+    "static/css/main.17452b22.chunk.css.map": "/static/css/main.17452b22.chunk.css.map",
+    "static/js/2.78335550.chunk.js.LICENSE.txt": "/static/js/2.78335550.chunk.js.LICENSE.txt",
     "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png",
     "static/media/Aktion.89c1bcdf.png": "/static/media/Aktion.89c1bcdf.png",
     "static/media/Welcome-to-Volt.39e04eca.png": "/static/media/Welcome-to-Volt.39e04eca.png",
@@ -30,9 +30,9 @@
     "static/media/title_24dp.316937bc.svg": "/static/media/title_24dp.316937bc.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.8806f125.js",
-    "static/js/2.a5d69129.chunk.js",
-    "static/css/main.2340c8f4.chunk.css",
-    "static/js/main.964d95ab.chunk.js"
+    "static/js/runtime-main.d29c3b84.js",
+    "static/js/2.78335550.chunk.js",
+    "static/css/main.17452b22.chunk.css",
+    "static/js/main.3edee69e.chunk.js"
   ]
 }
