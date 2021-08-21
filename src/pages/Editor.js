@@ -136,26 +136,43 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
         ? <label className={classes.active_toggle_wrapper}>
             <button onClick={toggle_Active} className={active ? 'text' : 'red'}>{
               active
-                ? <><Visibility className={`${classes.active_toggle_icon} ${classes.active}`} /> <span><Localized id="path_editor_item_active" /></span></>
-                : <><VisibilityOff className={classes.active_toggle_icon} /> <span><Localized id="path_editor_item_not_active" /></span></>
+                ? <><Visibility className={`${classes.active_toggle_icon} ${classes.active}`} /> <span className="hideOnSmallScreen"><Localized id="path_editor_item_active" /></span></>
+                : <><VisibilityOff className={classes.active_toggle_icon} /> <span className="hideOnSmallScreen"><Localized id="path_editor_item_not_active" /></span></>
             }</button>
           </label>
         : null
       }
+
+      <span className="hideOnSmallScreen">
+        <MultiButton
+          className={active ? classes.form_active : classes.form_deactivated}
+          onChange={handleChange_Type}
+          ariaLabel="Use as"
+          defaultValue={type}
+          items={[
+            { value: 'link', icon: <SVG src={icon_link} className="icon" />, title: getString('path_editor_item_choose_type_value_link') },
+            { value: 'headline', icon: <SVG src={icon_title} className="icon" />, title: getString('path_editor_item_choose_type_value_headline') },
+            // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+            { value: 'text', icon: <SVG src={icon_notes} className="icon" />, title: getString('path_editor_item_choose_type_value_text') }
+          ]}
+        />
+      </span>
+      <span className="hideOnBigScreen">
+        <MultiButton
+          className={active ? classes.form_active : classes.form_deactivated}
+          onChange={handleChange_Type}
+          ariaLabel="Use as"
+          defaultValue={type}
+          items={[
+            { value: 'link', icon: <SVG src={icon_link} className="icon" /> },
+            { value: 'headline', icon: <SVG src={icon_title} className="icon" /> },
+            // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+            { value: 'text', icon: <SVG src={icon_notes} className="icon" /> }
+          ]}
+        />
+      </span>
       </div>
 
-      <MultiButton
-        className={active ? classes.form_active : classes.form_deactivated}
-        onChange={handleChange_Type}
-        ariaLabel="Use as"
-        defaultValue={type}
-        items={[
-          { value: 'link', icon: <SVG src={icon_link} className="icon" />, title: getString('path_editor_item_choose_type_value_link') },
-          { value: 'headline', icon: <SVG src={icon_title} className="icon" />, title: getString('path_editor_item_choose_type_value_headline') },
-          // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
-          { value: 'text', icon: <SVG src={icon_notes} className="icon" />, title: getString('path_editor_item_choose_type_value_text') }
-        ]}
-      />
     </div>
 
     <span className={active ? classes.form_active : classes.form_deactivated}>

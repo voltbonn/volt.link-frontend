@@ -377,6 +377,10 @@ button.hasIcon .icon {
   --bg-color: var(--button-color);
   --fg-color: var(--button-background);
 }
+button.hasIcon .icon:first-child:last-child {
+  margin-right: 0;
+  margin-left: 0;
+}
 button.hasIcon .icon.big {
   height: var(--basis_x8);
   width: auto;
@@ -422,6 +426,11 @@ img.emoji {
 
 @media (max-width: 1000px) {
   .hideOnSmallScreen {
+    display: none;
+  }
+}
+@media (min-width: 1001px) {
+  .hideOnBigScreen {
     display: none;
   }
 }
