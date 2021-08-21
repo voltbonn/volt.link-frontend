@@ -14,6 +14,9 @@ import layoutPerson from '../images/layout-person.svg'
 import icon_qr_code from '../images/qr_code_24pd.svg'
 import icon_assessment from '../images/assessment_24dp.svg'
 import icon_publish from '../images/publish_24dp.svg'
+import icon_link from '../images/link_24dp.svg'
+import icon_title from '../images/title_24dp.svg'
+import icon_notes from '../images/notes_24dp.svg'
 
 import plakatschlange_thumb from '../images/coverphotos/thumbs/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.png'
 import aktion_thumb from '../images/coverphotos/thumbs/Aktion.png'
@@ -147,10 +150,10 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
         ariaLabel="Use as"
         defaultValue={type}
         items={[
-          { value: 'link', title: getString('path_editor_item_choose_type_value_link') },
-          { value: 'headline', title: getString('path_editor_item_choose_type_value_headline') },
+          { value: 'link', icon: <SVG src={icon_link} className="icon" />, title: getString('path_editor_item_choose_type_value_link') },
+          { value: 'headline', icon: <SVG src={icon_title} className="icon" />, title: getString('path_editor_item_choose_type_value_headline') },
           // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
-          { value: 'text', title: getString('path_editor_item_choose_type_value_text') }
+          { value: 'text', icon: <SVG src={icon_notes} className="icon" />, title: getString('path_editor_item_choose_type_value_text') }
         ]}
       />
     </div>
