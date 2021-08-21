@@ -475,11 +475,10 @@ img.emoji {
 .wrapped_select,
 .wrapped_select select{
   width: calc(12 * var(--basis));
-  height: calc(6 * var(--basis));
-  max-height: calc(6 * var(--basis));
+  padding: var(--basis) var(--basis_x2);
 }
 .wrapped_select select {
-  padding: var(--basis) var(--basis_x2);
+  margin: calc(-1 * var(--basis)) calc(-1 * var(--basis_x2));
 }
 .wrapped_select:before {
   z-index: 1;
