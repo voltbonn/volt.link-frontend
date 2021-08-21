@@ -389,9 +389,9 @@ button.hasIcon .icon.big {
 button.hasIcon .icon.image {
   height: var(--basis_x16);
   margin-top: calc(-1 * var(--basis));
-  margin-right: calc(-2 * var(--basis));
+  margin-right: calc(-2 * var(--basis)) !important;
   margin-bottom: calc(-1 * var(--basis));
-  margin-left: calc(-2 * var(--basis));
+  margin-left: calc(-2 * var(--basis)) !important;
 }
 
 hr {
