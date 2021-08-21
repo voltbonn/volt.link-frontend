@@ -64,8 +64,6 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, lineb
       text = text.replace(/\n/g, ' ')
     }
 
-    text = text.trim()
-
     // insert text manually
     document.execCommand('insertText', false, text)
   }, [linebreaks])
