@@ -1,0 +1,67 @@
+.block {
+  background: var(--background-contrast);
+  color: var(--on-background);
+  padding: var(--basis_x2);
+  /* max-width: calc(100% - calc(var(--basis_x16) + calc(var(--basis_x2) + var(--basis)))); */
+  /* max-width: calc(100% - calc(10.8 * var(--basis))); */
+}
+
+.block.chooseTypeScreen{
+  text-align: center;
+  padding: var(--basis_x4) var(--basis_x2);
+}
+
+.block .itemSettingsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.block .chooseTypeScreen .itemSettingsRow {
+  justify-content: center;
+}
+.block .itemSettingsRowLeft {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: left;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.block .active_toggle_wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: var(--basis_x2);
+}
+
+.block .active_label{
+  user-select: none;
+  cursor: pointer;
+}
+
+.block .form_deactivated {
+  opacity: 0.5;
+}
+.block .form_active {
+  opacity: 1;
+}
+
+.block .active_toggle_wrapper button {
+  margin: 0;
+}
+.block .active_toggle_wrapper button span {
+  vertical-align: middle;
+}
+.block .active_toggle_icon {
+  background: var(--red);
+  color: var(--on-red);
+  padding: 8px;
+  margin: -8px 8px -6px -8px;
+  border-radius: 100px;
+  vertical-align: middle;
+}
+.block .active_toggle_icon.active {
+  background: var(--green);
+  color: var(--on-green);
+}
