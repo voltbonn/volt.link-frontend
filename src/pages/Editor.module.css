@@ -11,7 +11,7 @@
   color: var(--on-background);
   padding: var(--basis_x2);
   /* max-width: calc(100% - calc(var(--basis_x16) + calc(var(--basis_x2) + var(--basis)))); */
-  max-width: calc(100% - calc(10.8 * var(--basis)));
+  /* max-width: calc(100% - calc(10.8 * var(--basis))); */
 }
 
 .editor .item.chooseTypeScreen{

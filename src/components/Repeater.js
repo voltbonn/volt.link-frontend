@@ -12,7 +12,7 @@ function reorder(list, startIndex, endIndex) {
   return result
 }
 
-function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel = 'Reorder', render, style, onChange, prependNewItems, showReorderControls = true, isReorderable = false }) {
+function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel = 'Reorder', render, style, onChange, prependNewItems, showReorderControls = true, showActionButton = true, isReorderable = false }) {
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
   }
@@ -165,12 +165,21 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
                             'data-id': subDefaultValue._id,
                             onChange: handleRowChange,
                             reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
-                          })
-                        }
-                        {
+                            actionButton: (
                           hasOnlyOneRow
                             ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
                             : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
+                            )
+                          })
+                        }
+                        {
+                          showActionButton === true
+                          ? (
+                          hasOnlyOneRow
+                            ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
+                            : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
+                          )
+                          : null
                         }
                       </div>
                     </div>

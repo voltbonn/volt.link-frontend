@@ -36,7 +36,7 @@ import HtmlInput from '../components/HtmlInput.js'
 import FancyInput from '../components/FancyInput.js'
 import Repeater from '../components/Repeater.js'
 
-function ItemRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, ...props }) {
+function ItemRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, actionButton, ...props }) {
   const defaultLocale = getString('default_locale')
 
   const wrapperDiv = useRef(null)
@@ -173,6 +173,7 @@ function ItemRaw({ fluentByObject, getString, item, className, onChange, reorder
       </span>
       </div>
 
+      {actionButton}
     </div>
 
     <span className={active ? classes.form_active : classes.form_deactivated}>
@@ -264,6 +265,7 @@ function ItemsRaw({ getString, defaultValue, onChange }){
     prependNewItems={true}
     isReorderable={true}
     showReorderControls={false}
+    showActionButton={false}
     render={
       ({ defaultValue, ...repeater_props }) => {
         return <Item
