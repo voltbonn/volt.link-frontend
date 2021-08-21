@@ -78,7 +78,7 @@ function InputWithLocal({ reorderHandle, locale, defaultValue, children, style, 
     {...props}
   >
     <div
-      class="wrapped_select"
+      className="wrapped_select"
       placeholder={changedLocale.toUpperCase()}
       style={{
         margin: '0 var(--basis) 0 0',
