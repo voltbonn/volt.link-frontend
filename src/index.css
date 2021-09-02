@@ -441,6 +441,16 @@ img.emoji {
     display: none;
   }
 }
+@media (max-width: 1200px) {
+  .hideOnScreenSmallerThan1200px {
+    display: none;
+  }
+}
+@media (min-width: 1201px) {
+  .hideOnScreenBiggerThan1200px {
+    display: none;
+  }
+}
 
 
 

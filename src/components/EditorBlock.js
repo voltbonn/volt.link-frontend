@@ -126,7 +126,7 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
         : null
       }
 
-      <span className="hideOnSmallScreen">
+      <span className="hideOnScreenSmallerThan1200px">
         <MultiButton
           className={active ? classes.form_active : classes.form_deactivated}
           onChange={handleChange_Type}
@@ -140,7 +140,7 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
           ]}
         />
       </span>
-      <span className="hideOnBigScreen">
+      <span className="hideOnScreenBiggerThan1200px">
         <MultiButton
           className={active ? classes.form_active : classes.form_deactivated}
           onChange={handleChange_Type}
