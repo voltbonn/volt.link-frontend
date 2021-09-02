@@ -178,7 +178,7 @@ function Chooser({ getString, rightHeaderActions }) {
           <div className="buttonRow usesLinks">
             {
               user_editable_links
-              .filter(content => content.slug.startsWith(value))
+              .filter(content => content.slug.startsWith(value) || (content.slug.replace(/!/, '')).startsWith(value))
               .map(content => <a key={content.slug} href={`/edit/${content.slug}`}><button>{content.slug}</button></a>)
             }
           </div>
