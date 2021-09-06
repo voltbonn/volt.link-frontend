@@ -325,8 +325,6 @@ function Editor({ getString }) {
   </div>
 
   const editor_form = <>
-          <div className={classes.columns}>
-          <div className={classes.column}>
     <h3><Localized id="path_editor_title_label" /></h3>
     <Repeater
       onChange={handleChange_Title}
@@ -640,19 +638,15 @@ function Editor({ getString }) {
             : null
         )
     }
-    </div>
 
     {
       useAs === 'linklist'
-        ? <div className={classes.column}>
-          <Items
+        ? <Items
             onChange={handleChange_Items}
             defaultValue={items}
           />
-        </div>
         : null
     }
-    </div>
     </>
 
   return <div
