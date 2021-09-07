@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.6a3bb6b0.chunk.css",
-    "main.js": "/static/js/main.01a98546.chunk.js",
-    "main.js.map": "/static/js/main.01a98546.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.89824e44.js",
-    "runtime-main.js.map": "/static/js/runtime-main.89824e44.js.map",
-    "static/js/2.e6db99fb.chunk.js": "/static/js/2.e6db99fb.chunk.js",
-    "static/js/2.e6db99fb.chunk.js.map": "/static/js/2.e6db99fb.chunk.js.map",
-    "static/js/3.bff002e7.chunk.js": "/static/js/3.bff002e7.chunk.js",
-    "static/js/3.bff002e7.chunk.js.map": "/static/js/3.bff002e7.chunk.js.map",
-    "static/js/4.adac40d5.chunk.js": "/static/js/4.adac40d5.chunk.js",
-    "static/js/4.adac40d5.chunk.js.map": "/static/js/4.adac40d5.chunk.js.map",
+    "main.js": "/static/js/main.cc1be017.chunk.js",
+    "main.js.map": "/static/js/main.cc1be017.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.b2398d25.js",
+    "runtime-main.js.map": "/static/js/runtime-main.b2398d25.js.map",
+    "static/js/2.78335550.chunk.js": "/static/js/2.78335550.chunk.js",
+    "static/js/2.78335550.chunk.js.map": "/static/js/2.78335550.chunk.js.map",
+    "static/js/3.22978191.chunk.js": "/static/js/3.22978191.chunk.js",
+    "static/js/3.22978191.chunk.js.map": "/static/js/3.22978191.chunk.js.map",
+    "static/js/4.537ae307.chunk.js": "/static/js/4.537ae307.chunk.js",
+    "static/js/4.537ae307.chunk.js.map": "/static/js/4.537ae307.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.6a3bb6b0.chunk.css.map": "/static/css/main.6a3bb6b0.chunk.css.map",
-    "static/js/2.e6db99fb.chunk.js.LICENSE.txt": "/static/js/2.e6db99fb.chunk.js.LICENSE.txt",
+    "static/js/2.78335550.chunk.js.LICENSE.txt": "/static/js/2.78335550.chunk.js.LICENSE.txt",
     "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png",
     "static/media/Aktion.89c1bcdf.png": "/static/media/Aktion.89c1bcdf.png",
     "static/media/Welcome-to-Volt.39e04eca.png": "/static/media/Welcome-to-Volt.39e04eca.png",
@@ -30,9 +30,9 @@
     "static/media/title_24dp.316937bc.svg": "/static/media/title_24dp.316937bc.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.89824e44.js",
-    "static/js/2.e6db99fb.chunk.js",
+    "static/js/runtime-main.b2398d25.js",
+    "static/js/2.78335550.chunk.js",
     "static/css/main.6a3bb6b0.chunk.css",
-    "static/js/main.01a98546.chunk.js"
+    "static/js/main.cc1be017.chunk.js"
   ]
 }
