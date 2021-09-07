@@ -49,10 +49,10 @@ path_editor_share = Share
 path_editor_qrcode = QR-Code
 path_editor_statistics = Statistics
 
-path_editor_title_label = Title:
+path_editor_title_label = Title
 path_editor_title_placeholder = Volt Bonn
 
-path_editor_description_label = Short description:
+path_editor_description_label = Short description
 path_editor_description_placeholder = Future Made in Europe
 
 path_editor_permissions_edit_label = Who is allowed to edit this link?
@@ -65,36 +65,36 @@ path_editor_permissions_view_info = Here you can decide if the redirect / linkli
 path_editor_permissions_view_public = Public
 path_editor_permissions_view_volteuropa = Only for Volt Europa
 
-path_editor_use_as_label = Use as:
+path_editor_use_as_label = Use as
 path_editor_use_as_info = Select "Nothing / Deactivated" to stop using the link.
 path_editor_use_as_value_redirect = Redirect
 path_editor_use_as_value_linklist = Micropage
 path_editor_use_as_value_nothing = Nothing / Deactivated
 
-path_editor_layout_label = Layout:
+path_editor_layout_label = Layout
 path_editor_layout_info = Here you can change the layout of the micropage. The main difference is the coverphoto: It's round and has a profile frame in the person layout.
 path_editor_layout_value_default = Normal
 path_editor_layout_value_person = Person
 
-path_editor_redirect_label = Url to redirect to:
+path_editor_redirect_label = Url to redirect to
 path_editor_redirect_placeholder = https://voltdeutschland.org/bonn
 
-path_editor_coverphoto_label = Coverphoto:
+path_editor_coverphoto_label = Coverphoto
 path_editor_coverphoto_info = A url to use for the coverphoto. The photo needs to be uploaded somewhere else. For example on the Volt Europa website. It should be at least {$width} wide and {$height} height.
 path_editor_coverphoto_placeholder = https://
 
-path_editor_imprint_overwrite_label = Custom imprint link:
+path_editor_imprint_overwrite_label = Custom imprint link
 path_editor_imprint_overwrite_info = (Leave empty for Volt Europa imprint.)
 path_editor_imprint_overwrite_placeholder = https://
 
-path_editor_privacy_policy_overwrite_label = Custom privacy policy link:
+path_editor_privacy_policy_overwrite_label = Custom privacy policy link
 path_editor_privacy_policy_overwrite_info = (Leave empty for Volt Europa privacy policy.)
 path_editor_privacy_policy_overwrite_placeholder = https://
 
 path_editor_add_row = Add Row
 path_editor_reorder = Reorder
 
-path_editor_item_choose_type_label = Choose an item type:
+path_editor_item_choose_type_label = Choose an item type
 path_editor_item_choose_type_value_link = Link
 path_editor_item_choose_type_value_headline = Headline
 path_editor_item_choose_type_value_headline3 = Headline 3
