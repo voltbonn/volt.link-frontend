@@ -296,7 +296,7 @@ function Editor({ getString }) {
 
   const gotoQrcodePage = () => {
     const a = document.createElement('a')
-    a.href = `https://qrcode.volt.link/?c=https://volt.link/${code}`
+    a.href = `https://qrcode.volt.link/?c=volt.link/${code}`
     a.target = '_blank'
     a.rel = 'noreferrer'
     a.click()
