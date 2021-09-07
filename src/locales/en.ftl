@@ -71,6 +71,10 @@ path_editor_use_as_value_redirect = Redirect
 path_editor_use_as_value_linklist = Micropage
 path_editor_use_as_value_nothing = Nothing / Deactivated
 
+path_editor_belongs_to_team_label = Team
+path_editor_belongs_to_team_info = To which team does this page belong to? You can choose from the teams in the volt.team databse.
+path_editor_belongs_to_team_search_placeholder = Search by Team Name
+
 path_editor_layout_label = Layout
 path_editor_layout_info = Here you can change the layout of the micropage. The main difference is the coverphoto: It's round and has a profile frame in the person layout.
 path_editor_layout_value_default = Normal

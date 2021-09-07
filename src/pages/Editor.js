@@ -6,6 +6,8 @@ import {
   useParams
 } from 'react-router-dom'
 
+import Select from 'react-select'
+
 import SVG from 'react-inlinesvg'
 import layoutDefault from '../images/layout-default.svg'
 import layoutPerson from '../images/layout-person.svg'
@@ -75,6 +77,23 @@ function delay(time) {
   })
 }
 
+const custom_react_select_styles = {
+  menu: (provided, state) => ({
+    ...provided,
+    background: 'var(--purple)',
+  }),
+}
+const custom_react_select_theme = theme => ({
+  ...theme,
+  borderRadius: 0,
+  colors: {
+    ...theme.colors,
+    primary: 'var(--green)',
+    primary25: 'var(--purple-dark)',
+  },
+})
+
+
 function Editor({ getString }) {
   const defaultLocale = getString('default_locale')
 
@@ -89,6 +108,20 @@ function Editor({ getString }) {
   const [layout, setLayout] = useState('')
   const [title, setTitle] = useState([])
   const [description, setDescription] = useState([])
+
+  let [voltTeams, setVoltTeams] = useState([])
+  voltTeams = voltTeams.map(({ id, name }) => ({ value: id, label: name }))
+
+  const [voltTeamInfos, setVoltTeamInfos] = useState({
+    id: null,
+    name: ''
+  })
+  const setVoltTeamInfosFromSelect = useCallback((data) => {
+    setVoltTeamInfos({
+      id: data.value,
+      name: data.label,
+    })
+  }, [setVoltTeamInfos])
 
   const permissionsDefault = useMemo(() => (
       typeof email === 'string' && email.length > 0
@@ -145,6 +178,7 @@ function Editor({ getString }) {
             title = [],
             description = [],
             permissions = permissionsDefault,
+            volt_team = null,
             redirect = '',
             coverphoto = '',
             overwrites = {},
@@ -175,6 +209,7 @@ function Editor({ getString }) {
           viewPermissionTmp = viewPermissionTmp.length > 0 ? viewPermissionTmp[0].value : ''
 
           setUseAs(useAs)
+          setVoltTeamInfos(volt_team)
           setLayout(layout)
           setTitle(title)
           setDescription(description)
@@ -195,6 +230,7 @@ function Editor({ getString }) {
     code,
     permissionsDefault,
     setUseAs,
+    setVoltTeamInfos,
     setLayout,
     setTitle,
     setDescription,
@@ -206,6 +242,25 @@ function Editor({ getString }) {
     setItems
   ])
 
+  useEffect(() => {
+    fetch(`${window.domains.backend}teams_simple.json`, {
+      mode: 'cors',
+      credentials: 'include',
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (typeof data.error === 'string') {
+          setVoltTeams([])
+        } else {
+          setVoltTeams(data)
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        setVoltTeams([])
+      })
+  }, [ setVoltTeams ])
+
   const handleSave = useCallback(() => {
     setSavingMessage(getString('path_editor_status_started_saving'))
 
@@ -216,6 +271,7 @@ function Editor({ getString }) {
 
     const data = {
       use_as: useAs,
+      volt_team: voltTeamInfos,
       layout,
       title,
       description,
@@ -268,6 +324,7 @@ function Editor({ getString }) {
     getString,
     code,
     useAs,
+    voltTeamInfos,
     layout,
     redirect,
     title,
@@ -451,7 +508,31 @@ function Editor({ getString }) {
       ]}
     />
 
-    <br />
+    {
+      voltTeams && voltTeams.length > 0
+      ? <>
+        <br />
+        <br />
+        <h3><Localized id="path_editor_belongs_to_team_label" /></h3>
+        <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_belongs_to_team_info" /></em>
+        <Select
+          defaultValue={{
+            value: voltTeamInfos.id || null,
+            label: voltTeamInfos.name || '',
+          }}
+          defaultInputValue={voltTeamInfos.name || ''}
+          onChange={setVoltTeamInfosFromSelect}
+          ariaLabel={getString('path_editor_belongs_to_team_search_placeholder')}
+          label={getString('path_editor_belongs_to_team_search_placeholder')}
+          placeholder={getString('path_editor_belongs_to_team_search_placeholder')}
+          options={voltTeams}
+          styles={custom_react_select_styles}
+          theme={custom_react_select_theme}
+        />
+      </>
+      : null
+    }
+
     <br />
 
     {
