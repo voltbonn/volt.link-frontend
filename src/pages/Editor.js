@@ -86,14 +86,8 @@ function Editor({ getString }) {
   const [savingMessage, setSavingMessage] = useState(null)
 
   const [useAs, setUseAs] = useState('')
-  const handleUseAsChange = useCallback(newValue => setUseAs(newValue), [setUseAs])
-
   const [layout, setLayout] = useState('')
-  const handleLayoutChange = useCallback(newValue => setLayout(newValue), [setLayout])
-
   const [title, setTitle] = useState([])
-  const handleChange_Title = useCallback(rows => setTitle(rows), [setTitle])
-
   const [description, setDescription] = useState([])
 
   const permissionsDefault = useMemo(() => (
@@ -327,7 +321,7 @@ function Editor({ getString }) {
   const editor_form = <>
     <h3><Localized id="path_editor_title_label" /></h3>
     <Repeater
-      onChange={handleChange_Title}
+      onChange={setTitle}
       defaultValue={title}
       addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
       addButtonText={getString('path_editor_add_translation')}
@@ -447,7 +441,7 @@ function Editor({ getString }) {
     <h3><Localized id="path_editor_use_as_label" /></h3>
     <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_use_as_info" /></em>
     <MultiButton
-      onChange={handleUseAsChange}
+      onChange={setUseAs}
       ariaLabel={getString('path_editor_use_as_label')}
       defaultValue={useAs}
       items={[
@@ -466,7 +460,7 @@ function Editor({ getString }) {
           <h3><Localized id="path_editor_layout_label" /></h3>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_layout_info" /></em>
           <MultiButton
-            onChange={handleLayoutChange}
+            onChange={setLayout}
             ariaLabel={getString('path_editor_layout_label')}
             defaultValue={layout}
             items={[
