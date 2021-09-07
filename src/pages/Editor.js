@@ -517,10 +517,10 @@ function Editor({ getString }) {
         <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_belongs_to_team_info" /></em>
         <Select
           defaultValue={{
-            value: voltTeamInfos.id || null,
-            label: voltTeamInfos.name || '',
+            value: voltTeamInfos !== null ? voltTeamInfos.id || null : null,
+            label: voltTeamInfos !== null ? voltTeamInfos.name || '' : '',
           }}
-          defaultInputValue={voltTeamInfos.name || ''}
+          defaultInputValue={voltTeamInfos !== null ? voltTeamInfos.name || '' : ''}
           onChange={setVoltTeamInfosFromSelect}
           ariaLabel={getString('path_editor_belongs_to_team_search_placeholder')}
           label={getString('path_editor_belongs_to_team_search_placeholder')}
