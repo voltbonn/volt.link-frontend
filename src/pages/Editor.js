@@ -6,7 +6,7 @@ import {
   useParams
 } from 'react-router-dom'
 
-import Select from 'react-select'
+// import Select from 'react-select'
 
 import SVG from 'react-inlinesvg'
 import layoutDefault from '../images/layout-default.svg'
@@ -77,21 +77,21 @@ function delay(time) {
   })
 }
 
-const custom_react_select_styles = {
-  menu: (provided, state) => ({
-    ...provided,
-    background: 'var(--purple)',
-  }),
-}
-const custom_react_select_theme = theme => ({
-  ...theme,
-  borderRadius: 0,
-  colors: {
-    ...theme.colors,
-    primary: 'var(--green)',
-    primary25: 'var(--purple-dark)',
-  },
-})
+// const custom_react_select_styles = {
+//   menu: (provided, state) => ({
+//     ...provided,
+//     background: 'var(--purple)',
+//   }),
+// }
+// const custom_react_select_theme = theme => ({
+//   ...theme,
+//   borderRadius: 0,
+//   colors: {
+//     ...theme.colors,
+//     primary: 'var(--green)',
+//     primary25: 'var(--purple-dark)',
+//   },
+// })
 
 
 function Editor({ getString }) {
@@ -109,19 +109,19 @@ function Editor({ getString }) {
   const [title, setTitle] = useState([])
   const [description, setDescription] = useState([])
 
-  let [voltTeams, setVoltTeams] = useState([])
-  voltTeams = voltTeams.map(({ id, name }) => ({ value: id, label: name }))
+  // let [voltTeams, setVoltTeams] = useState([])
+  // voltTeams = voltTeams.map(({ id, name }) => ({ value: id, label: name }))
 
   const [voltTeamInfos, setVoltTeamInfos] = useState({
     id: null,
     name: ''
   })
-  const setVoltTeamInfosFromSelect = useCallback((data) => {
-    setVoltTeamInfos({
-      id: data.value,
-      name: data.label,
-    })
-  }, [setVoltTeamInfos])
+  // const setVoltTeamInfosFromSelect = useCallback((data) => {
+  //   setVoltTeamInfos({
+  //     id: data.value,
+  //     name: data.label,
+  //   })
+  // }, [setVoltTeamInfos])
 
   const permissionsDefault = useMemo(() => (
       typeof email === 'string' && email.length > 0
@@ -242,24 +242,24 @@ function Editor({ getString }) {
     setItems
   ])
 
-  useEffect(() => {
-    fetch(`${window.domains.backend}teams_simple.json`, {
-      mode: 'cors',
-      credentials: 'include',
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (typeof data.error === 'string') {
-          setVoltTeams([])
-        } else {
-          setVoltTeams(data)
-        }
-      })
-      .catch(error => {
-        console.error(error)
-        setVoltTeams([])
-      })
-  }, [ setVoltTeams ])
+  // useEffect(() => {
+  //   fetch(`${window.domains.backend}teams_simple.json`, {
+  //     mode: 'cors',
+  //     credentials: 'include',
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       if (typeof data.error === 'string') {
+  //         setVoltTeams([])
+  //       } else {
+  //         setVoltTeams(data)
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error(error)
+  //       setVoltTeams([])
+  //     })
+  // }, [ setVoltTeams ])
 
   const handleSave = useCallback(() => {
     setSavingMessage(getString('path_editor_status_started_saving'))
@@ -508,7 +508,7 @@ function Editor({ getString }) {
       ]}
     />
 
-    {
+    {/*
       voltTeams && voltTeams.length > 0
       ? <>
         <br />
@@ -531,8 +531,9 @@ function Editor({ getString }) {
         />
       </>
       : null
-    }
+    */}
 
+    <br />
     <br />
 
     {
