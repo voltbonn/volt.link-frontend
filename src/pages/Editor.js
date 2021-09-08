@@ -376,6 +376,8 @@ function Editor({ getString }) {
   </div>
 
   const editor_form = <>
+
+    <div className={classes.editor_form_row}>
     <h3><Localized id="path_editor_title_label" /></h3>
     <Repeater
       onChange={setTitle}
@@ -408,7 +410,9 @@ function Editor({ getString }) {
         }
       }
     />
-    <br />
+    </div>
+
+    <div className={classes.editor_form_row}>
     <h3><Localized id="path_editor_description_label" /></h3>
     <Repeater
       onChange={setDescription}
@@ -440,23 +444,11 @@ function Editor({ getString }) {
         }
       }
     />
+    </div>
 
-    <br />
-    <h3><Localized id="path_editor_permissions_view_label" /></h3>
-    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_view_info" /></em>
-    <MultiButton
-      onChange={setViewPermission}
-      ariaLabel={getString('path_editor_permissions_view_label')}
-      defaultValue={viewPermission}
-      items={[
-        { value: '', title: getString('path_editor_permissions_view_public') },
-        { value: '@volteuropa.org', title: getString('path_editor_permissions_view_volteuropa') },
-      ]}
-    />
-
-    <br />
-    <br />
-    <h3><Localized id="path_editor_permissions_edit_label" /></h3>
+    <div className={classes.editor_form_row}>
+      <h3><Localized id="path_editor_permissions_edit_label" /></h3>
+      <div>
     <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_edit_info" /></em>
     <Repeater
       onChange={handleChange_Permissions}
@@ -493,9 +485,28 @@ function Editor({ getString }) {
         }
       }
     />
+    </div>
+    </div>
 
-    <br />
+    <div className={classes.editor_form_row}>
+    <h3><Localized id="path_editor_permissions_view_label" /></h3>
+    <div>
+    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_view_info" /></em>
+    <MultiButton
+      onChange={setViewPermission}
+      ariaLabel={getString('path_editor_permissions_view_label')}
+      defaultValue={viewPermission}
+      items={[
+        { value: '', title: getString('path_editor_permissions_view_public') },
+        { value: '@volteuropa.org', title: getString('path_editor_permissions_view_volteuropa') },
+      ]}
+    />
+    </div>
+    </div>
+
+    <div className={classes.editor_form_row}>
     <h3><Localized id="path_editor_use_as_label" /></h3>
+    <div>
     <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_use_as_info" /></em>
     <MultiButton
       onChange={setUseAs}
@@ -507,12 +518,12 @@ function Editor({ getString }) {
         { value: '', title: getString('path_editor_use_as_value_nothing') }
       ]}
     />
+    </div>
+    </div>
 
     {/*
       voltTeams && voltTeams.length > 0
       ? <>
-        <br />
-        <br />
         <h3><Localized id="path_editor_belongs_to_team_label" /></h3>
         <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_belongs_to_team_info" /></em>
         <Select
@@ -533,13 +544,12 @@ function Editor({ getString }) {
       : null
     */}
 
-    <br />
-    <br />
-
     {
       useAs === 'linklist'
         ? <>
+        <div className={classes.editor_form_row}>
           <h3><Localized id="path_editor_layout_label" /></h3>
+          <div>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_layout_info" /></em>
           <MultiButton
             onChange={setLayout}
@@ -558,10 +568,12 @@ function Editor({ getString }) {
               },
             ]}
           />
-          <br />
-          <br />
+          </div>
+          </div>
 
+          <div className={classes.editor_form_row}>
           <h3><Localized id="path_editor_coverphoto_label" /></h3>
+          <div>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_coverphoto_info" vars={{
               width: layout === 'person' ? '400px' : '1200px',
@@ -633,13 +645,58 @@ function Editor({ getString }) {
                     }))
                   ]}
                 />
-                <br />
               </>
               : null
           }
+          </div>
+          </div>
+        </>
+        : (
+          useAs === 'redirect'
+            ? <>
+              <div className={classes.editor_form_row}>
+              <h3><Localized id="path_editor_redirect_label" /></h3>
+              <FancyInput>
+                {({ setError }) => (
+                  <UrlInput
+                    onError={setError}
+                    onChange={setRedirect}
+                    type="text"
+                    placeholder={getString('path_editor_redirect_placeholder')}
+                    aria-label={getString('path_editor_redirect_label')}
+                    defaultValue={redirect}
+                    style={{
+                      marginRight: '0',
+                      marginLeft: '0',
+                      width: 'calc(100% - var(--basis_x2))'
+                    }}
+                  />
+                )}
+              </FancyInput>
+              </div>
+            </>
+            : null
+        )
+    }
+
+    {
+      useAs === 'linklist'
+        ? <Items
+            onChange={handleChange_Items}
+            defaultValue={items}
+          />
+        : null
+    }
+
+    {
+      useAs === 'linklist'
+      ? <>
+          <br />
           <br />
 
+          <div className={classes.editor_form_row}>
           <h3><Localized id="path_editor_imprint_overwrite_label" /></h3>
+          <div>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_imprint_overwrite_info" />
           </em>
@@ -660,9 +717,12 @@ function Editor({ getString }) {
               />
             )}
           </FancyInput>
+          </div>
+          </div>
 
-          <br />
+          <div className={classes.editor_form_row}>
           <h3><Localized id="path_editor_privacy_policy_overwrite_label" /></h3>
+          <div>
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_privacy_policy_overwrite_info" />
           </em>
@@ -683,45 +743,10 @@ function Editor({ getString }) {
               />
             )}
           </FancyInput>
-
-          <br />
-          <br />
-        </>
-        : (
-          useAs === 'redirect'
-            ? <>
-              <h3><Localized id="path_editor_redirect_label" /></h3>
-              <FancyInput>
-                {({ setError }) => (
-                  <UrlInput
-                    onError={setError}
-                    onChange={setRedirect}
-                    type="text"
-                    placeholder={getString('path_editor_redirect_placeholder')}
-                    aria-label={getString('path_editor_redirect_label')}
-                    defaultValue={redirect}
-                    style={{
-                      marginRight: '0',
-                      marginLeft: '0',
-                      width: 'calc(100% - var(--basis_x2))'
-                    }}
-                  />
-                )}
-              </FancyInput>
-              <br />
-              <br />
-            </>
-            : null
-        )
-    }
-
-    {
-      useAs === 'linklist'
-        ? <Items
-            onChange={handleChange_Items}
-            defaultValue={items}
-          />
-        : null
+          </div>
+          </div>
+      </>
+      : null
     }
     </>
 
