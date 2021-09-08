@@ -151,6 +151,7 @@ h1 {
   /* margin: 0 0 var(--basis) 0; */
   margin: var(--basis_x4) 0 var(--basis) 0;
   text-decoration: inherit;
+  font-weight: bold;
 }
 
 h2,
@@ -158,12 +159,14 @@ h2,
   font-size: calc(var(--font-add) + var(--basis_x2));
   margin: var(--basis_x4) 0 var(--basis) 0;
   text-decoration: inherit;
+  font-weight: bold;
 }
 
 h3 {
   font-size: calc(var(--font-add) + var(--basis));
   margin: var(--basis_x4) 0 var(--basis) 0;
   text-decoration: inherit;
+  font-weight: bold;
 }
 
 h1.yellow,
