@@ -4,7 +4,7 @@
   align-items: flex-start;
   max-width: 100%;
 }
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
   .input_with_local {
     flex-direction: column;
     align-items: stretch;
