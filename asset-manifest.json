@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.e64f318a.chunk.css",
-    "main.js": "/static/js/main.dc5bcdb8.chunk.js",
-    "main.js.map": "/static/js/main.dc5bcdb8.chunk.js.map",
+    "main.css": "/static/css/main.e41e67d2.chunk.css",
+    "main.js": "/static/js/main.a69d33a1.chunk.js",
+    "main.js.map": "/static/js/main.a69d33a1.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.b2398d25.js",
     "runtime-main.js.map": "/static/js/runtime-main.b2398d25.js.map",
     "static/js/2.46c220b6.chunk.js": "/static/js/2.46c220b6.chunk.js",
@@ -12,7 +12,7 @@
     "static/js/4.537ae307.chunk.js": "/static/js/4.537ae307.chunk.js",
     "static/js/4.537ae307.chunk.js.map": "/static/js/4.537ae307.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.e64f318a.chunk.css.map": "/static/css/main.e64f318a.chunk.css.map",
+    "static/css/main.e41e67d2.chunk.css.map": "/static/css/main.e41e67d2.chunk.css.map",
     "static/js/2.46c220b6.chunk.js.LICENSE.txt": "/static/js/2.46c220b6.chunk.js.LICENSE.txt",
     "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png",
     "static/media/Aktion.89c1bcdf.png": "/static/media/Aktion.89c1bcdf.png",
@@ -32,7 +32,7 @@
   "entrypoints": [
     "static/js/runtime-main.b2398d25.js",
     "static/js/2.46c220b6.chunk.js",
-    "static/css/main.e64f318a.chunk.css",
-    "static/js/main.dc5bcdb8.chunk.js"
+    "static/css/main.e41e67d2.chunk.css",
+    "static/js/main.a69d33a1.chunk.js"
   ]
 }
