@@ -25,7 +25,6 @@ import { Localized, withLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
-import InputWithLocal from '../components/InputWithLocal.js'
 import PermissionInput from '../components/PermissionInput.js'
 import UrlInput from '../components/UrlInput.js'
 import EmailInput from '../components/EmailInput.js'
@@ -33,6 +32,7 @@ import HtmlInput from '../components/HtmlInput.js'
 import FancyInput from '../components/FancyInput.js'
 import Repeater from '../components/Repeater.js'
 import EditorBlock from '../components/EditorBlock.js'
+import TranslationRepeater from '../components/TranslationRepeater.js'
 
 function ItemsRaw({ getString, defaultValue, onChange }){
   const items = defaultValue
@@ -379,70 +379,40 @@ function Editor({ getString }) {
 
     <div className={classes.editor_form_row}>
     <h3><Localized id="path_editor_title_label" /></h3>
-    <Repeater
+    <TranslationRepeater
       onChange={setTitle}
       defaultValue={title}
       addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
       addButtonText={getString('path_editor_add_translation')}
-      render={
-        ({ defaultValue, ...repeater_props }) => {
-          const locale = defaultValue.locale
-          const value = defaultValue.value
-          return <InputWithLocal
-            locale={locale}
-            defaultValue={value}
-            style={{
-              maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-            }}
-            {...repeater_props}
-          >
-            {InputWithLocal_props => <input
-              aria-label={getString('path_editor_title_label')}
-              type="text"
-              placeholder={getString('path_editor_title_placeholder')}
-              {...InputWithLocal_props}
-              style={{
-                ...InputWithLocal_props.style,
-                margin: '0',
-              }}
-            />}
-          </InputWithLocal>
-        }
-      }
+      input={InputWithLocal_props => <input
+        aria-label={getString('path_editor_title_label')}
+        type="text"
+        placeholder={getString('path_editor_title_placeholder')}
+        {...InputWithLocal_props}
+        style={{
+          ...InputWithLocal_props.style,
+          margin: '0',
+        }}
+      />}
     />
     </div>
 
     <div className={classes.editor_form_row}>
     <h3><Localized id="path_editor_description_label" /></h3>
-    <Repeater
+    <TranslationRepeater
       onChange={setDescription}
       defaultValue={description}
       addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
       addButtonText={getString('path_editor_add_translation')}
-      render={
-        ({ defaultValue, ...repeater_props }) => {
-          const locale = defaultValue.locale
-          const value = defaultValue.value
-          return <InputWithLocal
-            locale={locale}
-            defaultValue={value}
-            style={{
-              maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-            }}
-            {...repeater_props}
-          >
-            {InputWithLocal_props => <HtmlInput
-              aria-label={getString('path_editor_description_label')}
-              placeholder={getString('path_editor_description_placeholder')}
-              {...InputWithLocal_props}
-              style={{
-                ...InputWithLocal_props.style,
-                margin: '0',
-              }}
-            />}
-          </InputWithLocal>
-        }
-      }
+      input={InputWithLocal_props => <HtmlInput
+        aria-label={getString('path_editor_description_label')}
+        placeholder={getString('path_editor_description_placeholder')}
+        {...InputWithLocal_props}
+        style={{
+          ...InputWithLocal_props.style,
+          margin: '0',
+        }}
+      />}
     />
     </div>
 

@@ -5,11 +5,10 @@ import { v4 as uuidv4 } from 'uuid'
 import { Localized, withLocalization } from '../fluent/Localized.js'
 import MultiButton from '../components/MultiButton.js'
 import SVG from 'react-inlinesvg'
-import Repeater from '../components/Repeater.js'
-import InputWithLocal from '../components/InputWithLocal.js'
 import UrlInput from '../components/UrlInput.js'
 import HtmlInput from '../components/HtmlInput.js'
 import FancyInput from '../components/FancyInput.js'
+import TranslationRepeater from '../components/TranslationRepeater.js'
 
 import classes from './EditorBlock.module.css'
 
@@ -169,43 +168,26 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
             : null
           }
 
-              <Repeater
-                onChange={handleChange_Text}
-                defaultValue={type === 'text' ? text : title}
-                addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
-                addButtonText={getString('path_editor_add_translation')}
-                style={{
-                  marginTop: 'var(--basis_x2)'
-                }}
-                render={
-                  ({ defaultValue, ...repeater_props }) => {
-                    const locale = defaultValue.locale
-                    const value = defaultValue.value
-                    return <InputWithLocal
-                      locale={locale}
-                      defaultValue={value}
-                      style={{
-                        maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-                      }}
-                      {...repeater_props}
-                    >
-                      {
-                        InputWithLocal_props => <HtmlInput
-                          placeholder={
-                            type === 'text'
-                            ? getString('path_editor_item_text_label')
-                            : getString('path_editor_item_title_label')
-                          }
-                          {...InputWithLocal_props}
-                          style={{ ...InputWithLocal_props.style, margin: '0' }}
-                          linebreaks={ type === 'text' }
-                          className={type_classname}
-                        />
-                      }
-                    </InputWithLocal>
-                  }
-                }
-              />
+          <TranslationRepeater
+            onChange={handleChange_Text}
+            defaultValue={type === 'text' ? text : title}
+            addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
+            addButtonText={getString('path_editor_add_translation')}
+            style={{
+              marginTop: 'var(--basis_x2)'
+            }}
+            input={InputWithLocal_props => <HtmlInput
+              placeholder={
+                type === 'text'
+                ? getString('path_editor_item_text_label')
+                : getString('path_editor_item_title_label')
+              }
+              {...InputWithLocal_props}
+              style={{ ...InputWithLocal_props.style, margin: '0' }}
+              linebreaks={ type === 'text' }
+              className={type_classname}
+            />}
+          />
 
           {
             type === 'link'
