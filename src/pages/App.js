@@ -1,4 +1,9 @@
+import React from 'react'
+
 import classes from './App.module.css'
+
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 import {
   Switch,
@@ -19,6 +24,19 @@ import Editor from './Editor.js'
 import MultiButton from '../components/MultiButton.js'
 
 function App({ getString }) {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  )
+
+
   const [, loggedIn] = useUser()
 
   const history = useHistory()
@@ -61,6 +79,7 @@ function App({ getString }) {
   )
 
   return (<>
+  <ThemeProvider theme={theme}>
     <div className={classes.app}>
       {
         !loggedIn
@@ -91,6 +110,7 @@ function App({ getString }) {
       &nbsp; • &nbsp;
       <a href="https://github.com/voltbonn/edit.volt.link" target="_blank" rel="noopener noreferrer"><Localized id="source_code" /></a>
     </footer>
+    </ThemeProvider>
   </>)
 }
 

@@ -1,10 +1,23 @@
-import { useState, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 
 import { v4 as uuidv4 } from 'uuid'
 
+import { Menu, MenuItem, Divider, ListItemIcon, ListItemText, List, ListSubheader } from '@mui/material'
+import {
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon,
+  Delete as DeleteIcon,
+  Close as CloseIcon,
+  Link as LinkIcon,
+  Title as TitleIcon,
+  Notes as NotesIcon,
+  KeyboardArrowDown as KeyboardArrowDownIcon,
+} from '@mui/icons-material'
+
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+
 import { Localized, withLocalization } from '../fluent/Localized.js'
 import MultiButton from '../components/MultiButton.js'
-import SVG from 'react-inlinesvg'
 import UrlInput from '../components/UrlInput.js'
 import HtmlInput from '../components/HtmlInput.js'
 import FancyInput from '../components/FancyInput.js'
@@ -12,13 +25,7 @@ import TranslationRepeater from '../components/TranslationRepeater.js'
 
 import classes from './EditorBlock.module.css'
 
-import { Visibility, VisibilityOff } from '@material-ui/icons'
-
-import icon_link from '../images/link_24dp.svg'
-import icon_title from '../images/title_24dp.svg'
-import icon_notes from '../images/notes_24dp.svg'
-
-function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, actionButton, ...props }) {
+function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, onRemoveRow, actionButton }) {
   const defaultLocale = getString('default_locale')
 
   const wrapperDiv = useRef(null)
@@ -99,60 +106,162 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
   return <div
     ref={wrapperDiv}
     className={`${classes.block} ${!!type ? '' : classes.chooseTypeScreen} ${className}`}
-    {...props }
   >
     {
       !!type
         ? null
-        : <p style={{
-            marginBottom: 'var(--basis)'
-          }}><Localized id="path_editor_item_choose_type_label" /></p>
+        : <>
+            <p style={{
+              marginBottom: 'var(--basis)'
+            }}>
+              <Localized id="path_editor_item_choose_type_label" />
+            </p>
+            <span className="hideOnScreenSmallerThan1200px">
+              <MultiButton
+                className={active ? classes.form_active : classes.form_deactivated}
+                onChange={handleChange_Type}
+                ariaLabel="Use as"
+                defaultValue={type}
+                items={[
+                  { value: 'link', icon: <LinkIcon className="icon" />, title: getString('path_editor_item_choose_type_value_link') },
+                  { value: 'headline', icon: <TitleIcon className="icon" />, title: getString('path_editor_item_choose_type_value_headline') },
+                  // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+                  { value: 'text', icon: <NotesIcon className="icon" />, title: getString('path_editor_item_choose_type_value_text') }
+                  // { value: 'link', icon: <SVG src={icon_link} className="icon" />, title: getString('path_editor_item_choose_type_value_link') },
+                  // { value: 'headline', icon: <SVG src={icon_title} className="icon" />, title: getString('path_editor_item_choose_type_value_headline') },
+                  // // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+                  // { value: 'text', icon: <SVG src={icon_notes} className="icon" />, title: getString('path_editor_item_choose_type_value_text') }
+                ]}
+              />
+            </span>
+            <span className="hideOnScreenBiggerThan1200px">
+              <MultiButton
+                className={active ? classes.form_active : classes.form_deactivated}
+                onChange={handleChange_Type}
+                ariaLabel="Use as"
+                defaultValue={type}
+                items={[
+                  { value: 'link', icon: <LinkIcon className="icon" /> },
+                  { value: 'headline', icon: <TitleIcon className="icon" /> },
+                  // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+                  { value: 'text', icon: <NotesIcon className="icon" /> }
+                ]}
+              />
+            </span>
+          </>
     }
 
     <div className={classes.itemSettingsRow}>
       <div className={classes.itemSettingsRowLeft}>
-      {reorderHandle}
+        <PopupState variant="popover" popupId="demo-popup-menu">
+          {(popupState) => (
+            <>
+              <div {...bindTrigger(popupState)} style={{ cursor: 'pointer' }}>
+                {reorderHandle}
 
-      {
-        !!type
-        ? <label className={classes.active_toggle_wrapper}>
-            <button onClick={toggle_Active} className={active ? 'text' : 'red'}>{
-              active
-                ? <><Visibility className={`${classes.active_toggle_icon} ${classes.active}`} /> <span className="hideOnSmallScreen"><Localized id="path_editor_item_active" /></span></>
-                : <><VisibilityOff className={classes.active_toggle_icon} /> <span className="hideOnSmallScreen"><Localized id="path_editor_item_not_active" /></span></>
-            }</button>
-          </label>
-        : null
-      }
+                <button className="text" style={{
+                  marginLeft: 'calc(-1 * var(--basis_x2))',
+                  marginBottom: 'var(--basis_x0_5)',
+                  verticalAlign: 'middle',
+                }}>
+                  {getString('path_editor_item_choose_type_value_'+type)}
+                  <KeyboardArrowDownIcon
+                    style={{
+                      verticalAlign: 'middle',
+                      marginBottom: 'var(--basis)',
+                    }}
+                  />
+                </button>
+              </div>
+              <Menu
+                {...bindMenu(popupState)}
+                MenuListProps={{
+                  style:{
+                    width: '100%',
+                    maxWidth: '100%',
+                  }
+                }}
+              >
+                <MenuItem onClick={toggle_Active}>
+                  <ListItemIcon>
+                    {
+                      active
+                      ? <VisibilityIcon className={`${classes.active_toggle_icon} ${classes.active}`} />
+                      : <VisibilityOffIcon className={classes.active_toggle_icon} />
+                    }
+                  </ListItemIcon>
+                  <ListItemText>
+                    {
+                      active
+                      ? <Localized id="path_editor_item_active" />
+                      : <Localized id="path_editor_item_not_active" />
+                    }
+                  </ListItemText>
+                </MenuItem>
 
-      <span className="hideOnScreenSmallerThan1200px">
-        <MultiButton
-          className={active ? classes.form_active : classes.form_deactivated}
-          onChange={handleChange_Type}
-          ariaLabel="Use as"
-          defaultValue={type}
-          items={[
-            { value: 'link', icon: <SVG src={icon_link} className="icon" />, title: getString('path_editor_item_choose_type_value_link') },
-            { value: 'headline', icon: <SVG src={icon_title} className="icon" />, title: getString('path_editor_item_choose_type_value_headline') },
-            // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
-            { value: 'text', icon: <SVG src={icon_notes} className="icon" />, title: getString('path_editor_item_choose_type_value_text') }
-          ]}
-        />
-      </span>
-      <span className="hideOnScreenBiggerThan1200px">
-        <MultiButton
-          className={active ? classes.form_active : classes.form_deactivated}
-          onChange={handleChange_Type}
-          ariaLabel="Use as"
-          defaultValue={type}
-          items={[
-            { value: 'link', icon: <SVG src={icon_link} className="icon" /> },
-            { value: 'headline', icon: <SVG src={icon_title} className="icon" /> },
-            // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
-            { value: 'text', icon: <SVG src={icon_notes} className="icon" /> }
-          ]}
-        />
-      </span>
+                <List
+                  style={{
+                    width: '100%',
+                    maxWidth: '100%',
+                  }}
+                >
+                  <ListSubheader style={{
+                    whiteSpace:'nowrap',
+                    background:'transparent',
+                    lineHeight: '1',
+                    margin: '0',
+                    padding: '8px 16px 12px 16px',
+                  }}>
+                    <Localized id="path_editor_item_choose_type_label" />
+                  </ListSubheader>
+                  {
+                    [
+                      { value: 'link', icon: <LinkIcon />, title: getString('path_editor_item_choose_type_value_link') },
+                      { value: 'headline', icon: <TitleIcon />, title: getString('path_editor_item_choose_type_value_headline') },
+                      // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+                      { value: 'text', icon: <NotesIcon />, title: getString('path_editor_item_choose_type_value_text') }
+                    ]
+                    .map((option, index) => (
+                      <MenuItem
+                        key={option.value}
+                        selected={option.value === type}
+                        onClick={() => handleChange_Type(option.value)}
+                      >
+                        <ListItemIcon>
+                          {option.icon}
+                        </ListItemIcon>
+                        <ListItemText>
+                          {option.title}
+                        </ListItemText>
+                      </MenuItem>
+                  ))}
+                </List>
+
+                <Divider style={{opacity: 0.2}} />
+
+                <MenuItem style={{marginTop:'8px'}} onClick={onRemoveRow}>
+                  <ListItemIcon>
+                    <DeleteIcon />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Localized id="path_editor_item_delete" />
+                  </ListItemText>
+                </MenuItem>
+
+                <Divider style={{opacity: 0.2}} />
+
+                <MenuItem style={{marginTop:'8px'}} onClick={popupState.close}>
+                  <ListItemIcon>
+                    <CloseIcon />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Localized id="path_editor_item_close_menu" />
+                  </ListItemText>
+                </MenuItem>
+              </Menu>
+            </>
+          )}
+        </PopupState>
       </div>
 
       {actionButton}

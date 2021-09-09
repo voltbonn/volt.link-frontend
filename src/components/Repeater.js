@@ -66,6 +66,7 @@ function Row({
               'data-index': index,
               'data-id': subDefaultValue._id,
               onChange: handleRowChange,
+              onRemoveRow: () => handleRemoveRow(index),
               reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
               actionButton: (
             hasOnlyOneRow
@@ -89,6 +90,21 @@ function Row({
   </Draggable>
 }
 
+function getIndex(eventOrIndex) {
+  let index = eventOrIndex
+
+  if (typeof eventOrIndex !== 'number') {
+    index = eventOrIndex.target.dataset.index
+  } else if (!!eventOrIndex.target.dataset.index) {
+    index = parseInt(eventOrIndex.target.dataset.index)
+    if (isNaN(index)) {
+      index = null
+    }
+  }
+
+  return index
+}
+
 function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel = 'Reorder', render, style, onChange, prependNewItems, showReorderControls = true, showActionButton = true, isReorderable = false }) {
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
@@ -104,8 +120,9 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
     setRows(tmp_defaultValue)
   }, [defaultValue, addDefaultValue, setRows])
 
-  const handleRemoveRow = useCallback(event => {
-    const index = event.target.dataset.index
+  const handleRemoveRow = useCallback(eventOrIndex => {
+    const index = getIndex(eventOrIndex)
+
     let new_rows = [...rows]
     new_rows.splice(index, 1)
     const rows_from_onChange = onChange(new_rows)
@@ -136,16 +153,10 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
     onChange(new_rows)
   }, [rows, setRows, onChange])
 
-  const handleAddRow = useCallback(event => {
+  const handleAddRow = useCallback(eventOrIndex => {
     const newValue = addDefaultValue()
 
-    let index = null
-    if (!!event.target.dataset.index) {
-      index = parseInt(event.target.dataset.index)
-      if (isNaN(index)) {
-        index = null
-      }
-    }
+    const index = getIndex(eventOrIndex)
 
     let new_rows = null
     if (index !== null && index >= 0) {
