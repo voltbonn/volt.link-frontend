@@ -25,6 +25,108 @@ import TranslationRepeater from '../components/TranslationRepeater.js'
 
 import classes from './EditorBlock.module.css'
 
+function RowMenu (props) {
+
+  const {
+    type,
+    getString,
+    handleChange_Type,
+    toggle_Active,
+    active,
+    onRemoveRow,
+    closeMenu,
+    ...rest
+  } = props
+
+  return <Menu
+                {...rest}
+                MenuListProps={{
+                  style:{
+                    width: '100%',
+                    maxWidth: '100%',
+                  }
+                }}
+              >
+                <List
+                  style={{
+                    width: '100%',
+                    maxWidth: '100%',
+                    marginTop: '-8px',
+                  }}
+                >
+                  <ListSubheader style={{
+                    whiteSpace:'nowrap',
+                    background:'transparent',
+                    lineHeight: '1',
+                    margin: '0',
+                    padding: '8px 16px 12px 16px',
+                  }}>
+                    <Localized id="path_editor_item_choose_type_label" />
+                  </ListSubheader>
+                  {
+                    [
+                      { value: 'link', icon: <LinkIcon />, title: getString('path_editor_item_choose_type_value_link') },
+                      { value: 'headline', icon: <TitleIcon />, title: getString('path_editor_item_choose_type_value_headline') },
+                      // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
+                      { value: 'text', icon: <NotesIcon />, title: getString('path_editor_item_choose_type_value_text') }
+                    ]
+                    .map((option, index) => (
+                      <MenuItem
+                        key={option.value}
+                        selected={option.value === type}
+                        onClick={() => handleChange_Type(option.value)}
+                      >
+                        <ListItemIcon>
+                          {option.icon}
+                        </ListItemIcon>
+                        <ListItemText>
+                          {option.title}
+                        </ListItemText>
+                      </MenuItem>
+                  ))}
+                </List>
+
+                <Divider style={{opacity: 0.2}} />
+
+                <MenuItem style={{marginTop:'8px'}} onClick={toggle_Active}>
+                  <ListItemIcon>
+                    {
+                      active
+                      ? <VisibilityOffIcon />
+                      : <VisibilityIcon />
+                    }
+                  </ListItemIcon>
+                  <ListItemText>
+                    {
+                      active
+                      ? <Localized id="path_editor_item_hide_row" />
+                      : <Localized id="path_editor_item_show_row" />
+                    }
+                  </ListItemText>
+                </MenuItem>
+
+                <MenuItem style={{marginTop:'8px'}} onClick={onRemoveRow}>
+                  <ListItemIcon>
+                    <DeleteIcon />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Localized id="path_editor_item_delete" />
+                  </ListItemText>
+                </MenuItem>
+
+                <Divider style={{opacity: 0.2}} />
+
+                <MenuItem style={{marginTop:'8px'}} onClick={closeMenu}>
+                  <ListItemIcon>
+                    <CloseIcon />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Localized id="path_editor_item_close_menu" />
+                  </ListItemText>
+                </MenuItem>
+              </Menu>
+}
+
 function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, onRemoveRow, actionButton }) {
   const defaultLocale = getString('default_locale')
 
@@ -173,92 +275,18 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
                   />
                 </button>
               </div>
-              <Menu
+              <RowMenu
                 {...bindMenu(popupState)}
-                MenuListProps={{
-                  style:{
-                    width: '100%',
-                    maxWidth: '100%',
-                  }
+                {...{
+                  type,
+                  getString,
+                  handleChange_Type,
+                  toggle_Active,
+                  active,
+                  onRemoveRow,
+                  closeMenu: popupState.close,
                 }}
-              >
-                <MenuItem onClick={toggle_Active}>
-                  <ListItemIcon>
-                    {
-                      active
-                      ? <VisibilityIcon className={`${classes.active_toggle_icon} ${classes.active}`} />
-                      : <VisibilityOffIcon className={classes.active_toggle_icon} />
-                    }
-                  </ListItemIcon>
-                  <ListItemText>
-                    {
-                      active
-                      ? <Localized id="path_editor_item_active" />
-                      : <Localized id="path_editor_item_not_active" />
-                    }
-                  </ListItemText>
-                </MenuItem>
-
-                <List
-                  style={{
-                    width: '100%',
-                    maxWidth: '100%',
-                  }}
-                >
-                  <ListSubheader style={{
-                    whiteSpace:'nowrap',
-                    background:'transparent',
-                    lineHeight: '1',
-                    margin: '0',
-                    padding: '8px 16px 12px 16px',
-                  }}>
-                    <Localized id="path_editor_item_choose_type_label" />
-                  </ListSubheader>
-                  {
-                    [
-                      { value: 'link', icon: <LinkIcon />, title: getString('path_editor_item_choose_type_value_link') },
-                      { value: 'headline', icon: <TitleIcon />, title: getString('path_editor_item_choose_type_value_headline') },
-                      // { value: 'headline3', title: getString('path_editor_item_choose_type_value_headline3') },
-                      { value: 'text', icon: <NotesIcon />, title: getString('path_editor_item_choose_type_value_text') }
-                    ]
-                    .map((option, index) => (
-                      <MenuItem
-                        key={option.value}
-                        selected={option.value === type}
-                        onClick={() => handleChange_Type(option.value)}
-                      >
-                        <ListItemIcon>
-                          {option.icon}
-                        </ListItemIcon>
-                        <ListItemText>
-                          {option.title}
-                        </ListItemText>
-                      </MenuItem>
-                  ))}
-                </List>
-
-                <Divider style={{opacity: 0.2}} />
-
-                <MenuItem style={{marginTop:'8px'}} onClick={onRemoveRow}>
-                  <ListItemIcon>
-                    <DeleteIcon />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Localized id="path_editor_item_delete" />
-                  </ListItemText>
-                </MenuItem>
-
-                <Divider style={{opacity: 0.2}} />
-
-                <MenuItem style={{marginTop:'8px'}} onClick={popupState.close}>
-                  <ListItemIcon>
-                    <CloseIcon />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Localized id="path_editor_item_close_menu" />
-                  </ListItemText>
-                </MenuItem>
-              </Menu>
+              />
             </>
           )}
         </PopupState>

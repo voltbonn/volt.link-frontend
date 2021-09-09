@@ -111,8 +111,8 @@ path_editor_item_delete = Delete Row
 
 path_editor_item_text_info = You can use Markdown and HTML in the text-field.
 
-path_editor_item_active = Visible
-path_editor_item_not_active = Not Displayed
+path_editor_item_hide_row = Hide Row
+path_editor_item_show_row = Show Row
 
 error_invalid_url = Please enter a valid url. Maybe start the url with "https://", use "mailto:" for emails and "tel:" for phonenumbers.
 error_invalid_mailto_url = The email address is invalid. Maybe start the address with "mailto:".
