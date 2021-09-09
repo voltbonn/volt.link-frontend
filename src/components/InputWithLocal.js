@@ -71,7 +71,7 @@ function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, chi
   return <div
     className={classes.input_with_local+' '+className}
     ref={wrapperDiv}
-    {...props}
+    style={style}
   >
     <div
       className="wrapped_select"
