@@ -93,7 +93,6 @@ function delay(time) {
 //   },
 // })
 
-
 function Editor({ getString }) {
   const defaultLocale = getString('default_locale')
 
