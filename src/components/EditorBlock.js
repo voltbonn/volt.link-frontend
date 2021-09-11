@@ -31,7 +31,7 @@ function RowMenu (props) {
     type,
     getString,
     handleChange_Type,
-    toggle_Active,
+    toggle_active,
     active,
     onRemoveRow,
     closeMenu,
@@ -88,7 +88,7 @@ function RowMenu (props) {
 
                 <Divider style={{opacity: 0.2}} />
 
-                <MenuItem style={{marginTop:'8px'}} onClick={toggle_Active}>
+                <MenuItem style={{marginTop:'8px'}} onClick={toggle_active}>
                   <ListItemIcon>
                     {
                       active
@@ -176,7 +176,7 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
     }
   }, [setLink, onChange, type, title, text, active])
 
-  const toggle_Active = useCallback(() => {
+  const toggle_active = useCallback(() => {
     const newValue = !active
     setActive(newValue)
 
@@ -282,7 +282,7 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
                   type,
                   getString,
                   handleChange_Type,
-                  toggle_Active,
+                  toggle_active,
                   active,
                   onRemoveRow,
                   closeMenu: popupState.close,
