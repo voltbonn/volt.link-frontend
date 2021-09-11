@@ -127,7 +127,17 @@ function RowMenu (props) {
               </Menu>
 }
 
-function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, onRemoveRow, actionButton, dataset = {} }) {
+function EditorBlockRaw({
+  fluentByObject,
+  getString,
+  item,
+  className,
+  onChange,
+  reorderHandle,
+  onRemoveRow,
+  actionButton,
+  dataset = {},
+}) {
   const defaultLocale = getString('default_locale')
 
   const wrapperDiv = useRef(null)
