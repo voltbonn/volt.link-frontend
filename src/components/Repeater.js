@@ -63,8 +63,10 @@ function Row({
               key: subDefaultValue._id,
               defaultValue: subDefaultValue,
               className: classes.item,
-              'data-index': index,
-              'data-id': subDefaultValue._id,
+              dataset: {
+                'data-index': index,
+                'data-id': subDefaultValue._id,
+              },
               onChange: handleRowChange,
               onRemoveRow: () => handleRemoveRow(index),
               reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
