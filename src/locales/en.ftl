@@ -108,6 +108,8 @@ path_editor_item_text_label = Text
 path_editor_item_link_label = Link (https://… or mailto:… or tel:…)
 path_editor_item_close_menu = Close Menu
 path_editor_item_delete = Delete Row
+path_editor_item_add_row_before = Add Row Before
+path_editor_item_add_row_after = Add Row After
 
 path_editor_item_text_info = You can use Markdown and HTML in the text-field.
 

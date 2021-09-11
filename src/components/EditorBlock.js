@@ -12,6 +12,8 @@ import {
   Title as TitleIcon,
   Notes as NotesIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon,
+  VerticalAlignTop as VerticalAlignTopIcon,
+  VerticalAlignBottom as VerticalAlignBottomIcon,
 } from '@mui/icons-material'
 
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
@@ -35,6 +37,8 @@ function RowMenu (props) {
     active,
     onRemoveRow,
     closeMenu,
+    addRowBefore,
+    addRowAfter,
     ...rest
   } = props
 
@@ -88,6 +92,24 @@ function RowMenu (props) {
 
                 <Divider style={{opacity: 0.2}} />
 
+                <MenuItem style={{marginTop:'8px'}} onClick={addRowBefore}>
+                  <ListItemIcon>
+                    <VerticalAlignTopIcon />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Localized id="path_editor_item_add_row_before" />
+                  </ListItemText>
+                </MenuItem>
+
+                <MenuItem style={{marginTop:'8px'}} onClick={addRowAfter}>
+                  <ListItemIcon>
+                    <VerticalAlignBottomIcon />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Localized id="path_editor_item_add_row_after" />
+                  </ListItemText>
+                </MenuItem>
+
                 <MenuItem style={{marginTop:'8px'}} onClick={toggle_active}>
                   <ListItemIcon>
                     {
@@ -137,6 +159,8 @@ function EditorBlockRaw({
   onRemoveRow,
   actionButton,
   dataset = {},
+  addRowBefore,
+  addRowAfter,
 }) {
   const defaultLocale = getString('default_locale')
 
@@ -296,6 +320,9 @@ function EditorBlockRaw({
                   active,
                   onRemoveRow,
                   closeMenu: popupState.close,
+
+                  addRowBefore,
+                  addRowAfter,
                 }}
               />
             </>

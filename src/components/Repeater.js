@@ -24,6 +24,7 @@ function Row({
   reorderLabel,
   showActionButton,
   hasOnlyOneRow,
+  addEmptyRowByIndex,
 }) {
   return <Draggable
       key={subDefaultValue._id}
@@ -69,6 +70,8 @@ function Row({
               },
               onChange: handleRowChange,
               onRemoveRow: () => handleRemoveRow(index),
+              addRowBefore: () => addEmptyRowByIndex(index, 0),
+              addRowAfter: () => addEmptyRowByIndex(index, 1),
               reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
               actionButton: (
             hasOnlyOneRow
@@ -155,6 +158,19 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
     onChange(new_rows)
   }, [rows, setRows, onChange])
 
+  const addEmptyRowByIndex = useCallback((index, offset = 0) => {
+    const newValue = addDefaultValue()
+
+    let new_rows = null
+    if (index !== null && index >= 0) {
+      new_rows = [...rows]
+      new_rows.splice(index + offset, 0, newValue)
+    }
+
+    setRows(new_rows)
+    onChange(new_rows)
+  }, [rows, addDefaultValue, setRows, onChange])
+
   const handleAddRow = useCallback(eventOrIndex => {
     const newValue = addDefaultValue()
 
@@ -228,6 +244,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
                     reorderLabel,
                     showActionButton,
                     hasOnlyOneRow,
+                    addEmptyRowByIndex,
                   }}
                 />
               )
