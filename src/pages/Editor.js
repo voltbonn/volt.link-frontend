@@ -35,7 +35,7 @@ import EditorBlock from '../components/EditorBlock.js'
 import TranslationRepeater from '../components/TranslationRepeater.js'
 
 function ItemsRaw({ getString, defaultValue, onChange }){
-  const items = defaultValue
+  const items = defaultValue || []
 
   return <Repeater
     onChange={onChange}
