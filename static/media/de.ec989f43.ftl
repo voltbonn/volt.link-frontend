@@ -84,6 +84,8 @@ path_editor_item_text_label = Text
 path_editor_item_link_label = Link (https://… oder mailto: oder tel:)
 path_editor_item_close_menu = Menü schließen
 path_editor_item_delete = Zeile löschen
+path_editor_item_add_row_before = Zeile vorher hinzufügen
+path_editor_item_add_row_after = Zeile danach hinzufügen
 
 path_editor_item_hide_row = Zeile verbergen
 path_editor_item_show_row = Zeile anzeigen
