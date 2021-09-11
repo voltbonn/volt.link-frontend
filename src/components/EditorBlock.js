@@ -136,7 +136,7 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
   const [title, setTitle] = useState(item.title || [])
   const [text, setText] = useState(item.text || [])
   const [link, setLink] = useState(item.link || '')
-  const [active, setActive] = useState(item.active || true)
+  const [active, setActive] = useState(typeof item.active === 'boolean' ? item.active : true)
 
   const handleChange_Type = useCallback(newValue => {
     setType(newValue)
