@@ -74,10 +74,10 @@ function Row({
               addRowAfter: () => addEmptyRowByIndex(index, 1),
               reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
               actionButton: (
-            hasOnlyOneRow
-              ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
-              : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
-              )
+                hasOnlyOneRow
+                  ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
+                  : <button className={`red ${classes.inlineRowButton}`} data-index={index} onClick={handleRemoveRow}>–</button>
+              ),
             })
           }
           {
