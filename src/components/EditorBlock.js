@@ -127,7 +127,7 @@ function RowMenu (props) {
               </Menu>
 }
 
-function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, onRemoveRow, actionButton }) {
+function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, reorderHandle, onRemoveRow, actionButton, dataset = {} }) {
   const defaultLocale = getString('default_locale')
 
   const wrapperDiv = useRef(null)
@@ -208,6 +208,7 @@ function EditorBlockRaw({ fluentByObject, getString, item, className, onChange, 
   return <div
     ref={wrapperDiv}
     className={`${classes.block} ${!!type ? '' : classes.chooseTypeScreen} ${className}`}
+    {...dataset}
   >
     {
       !!type
