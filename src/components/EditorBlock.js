@@ -320,7 +320,6 @@ function EditorBlockRaw({
                   active,
                   onRemoveRow,
                   closeMenu: popupState.close,
-
                   addRowBefore,
                   addRowAfter,
                 }}
