@@ -11,6 +11,8 @@ import { AppLocalizationProvider, locales } from './fluent/l10n.js'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
+import { SnackbarProvider } from 'notistack'
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -76,14 +78,29 @@ function AppLanguageWrapper() {
     [prefersDarkMode],
   )
 
-  return <AppLocalizationProvider
+  return <>
+  <div
+    id="react-notification"
+    key="react-notification"
+    style={{zIndex: '10000'}}
+  ></div>
+
+  <AppLocalizationProvider
     key="AppLocalizationProvider"
     userLocales={userLocales}
     onLocaleChange={handleCurrentLocalesChange}
   >
-    <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          domRoot={document.getElementById('react-notification')}
+        >
+          <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
+        </SnackbarProvider>
       </ThemeProvider>
     </ApolloProvider>
   </AppLocalizationProvider>
