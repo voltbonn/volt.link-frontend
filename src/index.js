@@ -8,6 +8,9 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import 'intl-pluralrules'
 import { AppLocalizationProvider, locales } from './fluent/l10n.js'
 
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+
 window.domains = {
   frontend: 'https://edit.volt.link',
   // frontend: 'http://localhost:3000/',
@@ -45,12 +48,27 @@ function AppLanguageWrapper() {
     setCurrentLocale(currentLocales.length > 0 ? currentLocales[0] : '')
   }, [setCurrentLocale])
 
+
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  )
+
   return <AppLocalizationProvider
     key="AppLocalizationProvider"
     userLocales={userLocales}
     onLocaleChange={handleCurrentLocalesChange}
   >
     <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
+      <ThemeProvider theme={theme}>
+      </ThemeProvider>
   </AppLocalizationProvider>
 }
 
