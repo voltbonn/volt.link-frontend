@@ -11,6 +11,21 @@ import { AppLocalizationProvider, locales } from './fluent/l10n.js'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+} from '@apollo/client'
+
+const client = new ApolloClient({
+  uri: 'http://0.0.0.0:4000/graphql/v1/',
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
+})
 window.domains = {
   frontend: 'https://edit.volt.link',
   // frontend: 'http://localhost:3000/',
@@ -67,8 +82,10 @@ function AppLanguageWrapper() {
     onLocaleChange={handleCurrentLocalesChange}
   >
     <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
+    <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
       </ThemeProvider>
+    </ApolloProvider>
   </AppLocalizationProvider>
 }
 
