@@ -15,7 +15,7 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, lineb
   const handleTextChange = useCallback((event) => {
     try {
       if (onChange) {
-        let value = (event.target.innerHTML || '')
+        let value = event.target.innerHTML || ''
         // .replace(/&emsp;/g, '\t')
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
