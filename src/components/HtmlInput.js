@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from 'react'
 
 import classes from './HtmlInput.module.css'
 
-function HtmlInput({ defaultValue, children, className, onChange, onError, linebreaks, style, placeholder = '', ...props }) {
+function HtmlInput({ defaultValue, children, className, onChange, onBlur, onError, linebreaks, style, placeholder = '', ...props }) {
   const fake_defaultValue = useRef({__html:
     defaultValue
     // .replace(/\t/g, '&emsp;')
@@ -38,6 +38,12 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, lineb
     }
   }, [onChange, onError, setText, linebreaks])
 
+  const handleTextBlur = useCallback(() => {
+    if (onBlur) {
+      onBlur(text)
+    }
+  }, [onBlur, text])
+
   const addLineBreaks = useCallback(event => {
     if (event.key === 'Enter') {
       // source: StackOverflow (https://stackoverflow.com/a/61237402)
@@ -71,6 +77,7 @@ function HtmlInput({ defaultValue, children, className, onChange, onError, lineb
   return <div
     onKeyDown={addLineBreaks}
     onInput={handleTextChange}
+    onBlur={handleTextBlur}
     onPaste={handlePaste}
     className={`${classes.rebuild_textarea} ${text.length === 0 ? classes.show_placeholder : ''} ${className}`}
     contentEditable={true}
