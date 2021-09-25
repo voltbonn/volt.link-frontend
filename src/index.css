@@ -145,7 +145,8 @@ footer {
   text-align: center;
 }
 
-h1 {
+h1,
+.type_h1 {
   font-size: calc(var(--font-add) + var(--basis_x4));
   line-height: 0.9;
   /* margin: 0 0 var(--basis) 0; */
