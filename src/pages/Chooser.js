@@ -277,6 +277,12 @@ function Chooser({ getString, rightHeaderActions }) {
     <h3>Deletion</h3>
     <p>Links can't be deleted as nobody likes to scan a QR-Code, just to receive an <a href="https://volt.link/error">error page</a>.</p>
     <p>But links can of course be reused. Contact <a href="mailto:thomas.rosen@volteuropa.org">Thomas</a> if you need get access to a link.</p>
+
+    <footer>
+      <a href="mailto:thomas.rosen@volteuropa.org"><Localized id="contact" /></a>
+      &nbsp; • &nbsp;
+      <a href="https://github.com/voltbonn/edit.volt.link" target="_blank" rel="noopener noreferrer"><Localized id="source_code" /></a>
+    </footer>
   </div>
 }
 

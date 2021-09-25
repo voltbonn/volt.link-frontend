@@ -44,7 +44,8 @@ path_editor_permissions_view_volteuropa = Nur Volt Europa
 path_editor_use_as_label = Verwenden als
 path_editor_use_as_info = Wählen Sie "Nichts / Deaktiviert", um den Link nicht mehr zu verwenden.
 path_editor_use_as_value_redirect = Weiterleitung
-path_editor_use_as_value_linklist = Miniseite
+path_editor_use_as_value_page = Miniseite
+path_editor_use_as_value_person = Person
 path_editor_use_as_value_nothing = Nichts / Deaktiviert
 
 path_editor_belongs_to_team_label = Team
@@ -61,21 +62,18 @@ path_editor_redirect_placeholder = https://voltdeutschland.org/bonn
 
 path_editor_coverphoto_label = Titelbild
 path_editor_coverphoto_info = Eine Url, die für das Coverfoto verwendet werden soll. Das Foto muss an anderer Stelle hochgeladen werden. Zum Beispiel auf der Volt Europa Website. Es sollte mindestens {$width} breit und {$height} hoch sein.
-path_editor_coverphoto_placeholder = https://
+path_editor_no_coverphoto = Kein Titelbild
 
-path_editor_imprint_overwrite_label = Eigener Impressum Link
-path_editor_imprint_overwrite_info = (Leer lassen für Volt Europa Impressum.)
-path_editor_imprint_overwrite_placeholder = https://
+path_editor_imprint_label = Impressum Link
+path_editor_imprint_info = Leer lassen für Volt Europa Impressum.
 
-path_editor_privacy_policy_overwrite_label = Eigener Datenschutz Link
-path_editor_privacy_policy_overwrite_info = (Leer lassen für Volt Europa Datenschutzbestimmungen.)
-path_editor_privacy_policy_overwrite_placeholder = https://
+path_editor_privacy_policy_label = Datenschutz Link
+path_editor_privacy_policy_info = Leer lassen für Volt Europa Datenschutzbestimmungen.
 
-path_editor_add_row = Zeile hinzufügen
-path_editor_reorder = Umordnen
+content_editor_reorderblock_label = Umordnen
 
 path_editor_item_choose_type_label = Wähl einen Elementtyp aus
-path_editor_item_choose_type_value_link = Link
+path_editor_item_choose_type_value_button = Button
 path_editor_item_choose_type_value_headline = Überschrift
 path_editor_item_choose_type_value_headline3 = Überschrift 3
 path_editor_item_choose_type_value_text = Text

@@ -1,81 +1,32 @@
-import { useState, useCallback, useEffect, useMemo } from 'react'
-
-import { v4 as uuidv4 } from 'uuid'
+import { useState, useCallback, useEffect } from 'react'
 
 import {
   useParams
 } from 'react-router-dom'
 
+import { useApolloClient } from '@apollo/client'
+import { getBlockBySlug_Query } from '../graphql/queries'
+import { saveBlock_Mutation } from '../graphql/mutations.js'
+
+import { useSnackbar } from 'notistack'
+
 // import Select from 'react-select'
 
-import SVG from 'react-inlinesvg'
-import layoutDefault from '../images/layout-default.svg'
-import layoutPerson from '../images/layout-person.svg'
-import icon_qr_code from '../images/qr_code_24pd.svg'
-import icon_assessment from '../images/assessment_24dp.svg'
-import icon_publish from '../images/publish_24dp.svg'
-
-import plakatschlange_thumb from '../images/coverphotos/thumbs/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.png'
-import aktion_thumb from '../images/coverphotos/thumbs/Aktion.png'
-import volt_bonn_thumb from '../images/coverphotos/thumbs/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.png'
-import welcome_to_volt_thumb from '../images/coverphotos/thumbs/Welcome-to-Volt.png'
+import {
+  QrCodeSharp as QrCodeIcon,
+  AssessmentSharp as AssessmentIcon,
+  PublishSharp as PublishIcon,
+  MenuSharp as MenuIcon,
+} from '@mui/icons-material'
 
 import classes from './Editor.module.css'
 import { Localized, withLocalization } from '../fluent/Localized.js'
-import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
-import MultiButton from '../components/MultiButton.js'
-import PermissionInput from '../components/PermissionInput.js'
-import UrlInput from '../components/UrlInput.js'
-import EmailInput from '../components/EmailInput.js'
-import HtmlInput from '../components/HtmlInput.js'
-import FancyInput from '../components/FancyInput.js'
-import Repeater from '../components/Repeater.js'
-import EditorBlock from '../components/EditorBlock.js'
-import TranslationRepeater from '../components/TranslationRepeater.js'
+import BlockMenu from '../components/BlockMenu.js'
+import PropertiesEditor from '../components/PropertiesEditor.js'
+import ContentEditor from '../components/ContentEditor.js'
 
-function ItemsRaw({ getString, defaultValue, onChange }){
-  const items = defaultValue || []
-
-  return <Repeater
-    onChange={onChange}
-    defaultValue={items}
-    addDefaultValue={() => ({ _id: uuidv4(), type: null, title: [], link: '', active: true })}
-    addButtonText={getString('path_editor_add_row')}
-    reorderLabel={getString('path_editor_reorder')}
-    prependNewItems={true}
-    isReorderable={true}
-    showReorderControls={false}
-    showActionButton={false}
-    render={
-      ({ defaultValue, ...repeater_props }) => {
-        return <EditorBlock
-          item={defaultValue}
-          {...repeater_props}
-        />
-      }
-    }
-  />
-}
-const Items = withLocalization(ItemsRaw)
-
-function addIds(array){
-  if (Array.isArray(array)) {
-    return array.map(item => {
-      if (!item.hasOwnProperty('_id')) {
-        item._id = uuidv4()
-      }
-      return item
-    })
-  }
-  return array
-}
-
-function delay(time) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time)
-  })
-}
+// import { OverflowMenu } from '../components/OverflowMenu.js'
 
 // const custom_react_select_styles = {
 //   menu: (provided, state) => ({
@@ -94,259 +45,240 @@ function delay(time) {
 // })
 
 function Editor({ getString }) {
-  const defaultLocale = getString('default_locale')
+  const apollo_client = useApolloClient()
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
-  const { code } = useParams()
-  const [{email = ''} = {}] = useUser() || []
+  const [_id, setID] = useState(null)
+
+  const { code: slug = '' } = useParams()
 
   const [loadingContent, setLoadingContent] = useState(true)
   const [canEdit, setCanEdit] = useState(true)
-  const [savingMessage, setSavingMessage] = useState(null)
 
-  const [useAs, setUseAs] = useState('')
-  const [layout, setLayout] = useState('')
-  const [title, setTitle] = useState([])
-  const [description, setDescription] = useState([])
+  const [type, setType] = useState('')
+  const [properties, setProperties] = useState({})
 
-  // let [voltTeams, setVoltTeams] = useState([])
-  // voltTeams = voltTeams.map(({ id, name }) => ({ value: id, label: name }))
+  const [content, setContent] = useState([])
+  const handleChange_Content = useCallback(newContent => { // TODO: remove this, as the set function is enough
+    console.log('handleChange_Content-newContent', newContent)
+    setContent(newContent)
+  }, [setContent])
 
-  const [voltTeamInfos, setVoltTeamInfos] = useState({
-    id: null,
-    name: ''
-  })
-  // const setVoltTeamInfosFromSelect = useCallback((data) => {
-  //   setVoltTeamInfos({
-  //     id: data.value,
-  //     name: data.label,
-  //   })
-  // }, [setVoltTeamInfos])
-
-  const permissionsDefault = useMemo(() => (
-      typeof email === 'string' && email.length > 0
-      ? [{ _id: uuidv4(), value: email, role: 'editor' }, { _id: uuidv4(), value: '', role: 'editor' }]
-      : []
-  ), [email])
-  const [permissions, setPermissions] = useState(permissionsDefault)
-  const handleChange_Permissions = useCallback(rows => {
-    const filled_rows_length = rows
-      .filter(p =>
-        p.value !== ''
-        && p.value !== '@volteuropa.org'
-        && (!p.role || p.role === 'editor')
-      )
-      .length
-
-    if (filled_rows_length === 0) {
-      rows.unshift({ _id: uuidv4(), value: email, role: 'editor' })
-    }
-
-    setPermissions(rows)
-    return rows
-  }, [setPermissions, email])
-
-  const [viewPermission, setViewPermission] = useState(permissionsDefault)
-
-  const [coverphoto, setCoverphoto] = useState('')
-  const [imprintOverwrite, setImprintOverwrite] = useState('')
-  const [privacyPolicyOverwrite, setPrivacyPolicyOverwrite] = useState('')
-  const [redirect, setRedirect] = useState('')
-
-  const [items, setItems] = useState([])
-  const handleChange_Items = useCallback(rows => setItems(rows), [setItems])
+  const handlePropertiesChange = useCallback(newProperties => { // TODO: remove this, as the set function is enou
+    console.log('handlePropertiesChange-newProperties', newProperties)
+    setProperties(newProperties)
+  }, [setProperties])
 
   useEffect(() => {
+    console.log('loading content')
+    let snackbarKey = null
+
     setCanEdit(true)
     setLoadingContent(true)
 
-    fetch(`${window.domains.backend}get/${code}`, {
-      mode: 'cors',
-      credentials: 'include',
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (typeof data.error === 'string') {
-          if (data.error === 'no_edit_permission') {
-            setLoadingContent(false)
-            setCanEdit(false)
+    const loadingDataPromise = new Promise(resolve => {
+      apollo_client.query({
+        query: getBlockBySlug_Query,
+        variables: {
+          slug,
+        },
+      })
+        .then(async ({ data }) => {
+          resolve('got-data')
+
+          if (snackbarKey !== null) {
+            closeSnackbar(snackbarKey)
           }
-        }else{
-          let {
-            use_as: useAs = '',
-            layout = (code.includes('.') ? 'person' : 'default'),
-            title = [],
-            description = [],
-            permissions = permissionsDefault,
-            volt_team = null,
-            redirect = '',
-            coverphoto = '',
-            overwrites = {},
-            items = [],
-          } = data
 
-          const {
-            imprint = '',
-            privacy_policy = ''
-          } = overwrites
+          if (typeof data.error === 'string' || !data.blockBySlug) {
+            if (data.error === 'no_edit_permission') {
+              setLoadingContent(false)
+              setCanEdit(false)
+              enqueueSnackbar(getString('path_editor_edit_permission_error'), {
+                variant: 'error',
+                preventDuplicate: true,
+                autoHideDuration: 5000,
+              })
+            } else {
+              enqueueSnackbar('' + data.error, {
+                variant: 'error',
+                preventDuplicate: true,
+                autoHideDuration: 5000,
+              })
+            }
+          }else{
+            data = data.blockBySlug
 
-          title = addIds(title)
-          description = addIds(description)
-          items = items.map(item => {
-            if (!item.hasOwnProperty('_id')) {
-              item._id = uuidv4()
+            console.log('data', data)
+            let {
+              _id = '',
+              type = '',
+              properties = {},
+              content = [],
+            } = data
+
+            if (slug !== '') {
+              properties = { ...properties, slug }
             }
-            if (item.hasOwnProperty('title')) {
-              item.title = addIds(item.title)
-            }
-            if (item.hasOwnProperty('description')) {
-              item.description = addIds(item.description)
-            }
-            return item
+
+            setID(_id)
+            setType(type)
+            setProperties(properties)
+            setContent(content)
+
+            setLoadingContent(false)
+          }
+        })
+        .catch(async error => {
+          console.error(error)
+          resolve('got-error')
+
+          if (snackbarKey !== null) {
+            closeSnackbar(snackbarKey)
+          }
+
+          enqueueSnackbar('[could not load data] '+error.message, {
+            variant: 'error',
+            preventDuplicate: true,
+            autoHideDuration: 2000,
           })
+        })
+    })
 
-          let viewPermissionTmp = permissions.filter(p => p.role === 'viewer')
-          viewPermissionTmp = viewPermissionTmp.length > 0 ? viewPermissionTmp[0].value : ''
-
-          setUseAs(useAs)
-          setVoltTeamInfos(volt_team)
-          setLayout(layout)
-          setTitle(title)
-          setDescription(description)
-          setPermissions(permissions.filter(p => p.value !== '' && p.value !== '@volteuropa.org'))
-          setViewPermission(viewPermissionTmp)
-          setRedirect(redirect)
-          setCoverphoto(coverphoto)
-          setImprintOverwrite(imprint)
-          setPrivacyPolicyOverwrite(privacy_policy)
-          setItems(items)
-          setLoadingContent(false)
+    // Show a loading-info-snackbar if loading the data takes too long.
+    Promise.race([
+      new Promise(resolve => {
+        setTimeout(() => {
+          resolve('show-loading')
+        }, 300)
+      }),
+      loadingDataPromise,
+    ])
+      .then(response => {
+        if (response === 'show-loading') {
+          snackbarKey = enqueueSnackbar(getString('path_editor_status_started_loading'), {
+            persist: true,
+            preventDuplicate: true,
+          })
         }
       })
-      .catch(error => console.error(error))
+      .catch(error => console.error)
   }, [
+    enqueueSnackbar,
+    closeSnackbar,
+    apollo_client,
+    getString,
     setLoadingContent,
     setCanEdit,
-    code,
-    permissionsDefault,
-    setUseAs,
-    setVoltTeamInfos,
-    setLayout,
-    setTitle,
-    setDescription,
-    setPermissions,
-    setRedirect,
-    setCoverphoto,
-    setImprintOverwrite,
-    setPrivacyPolicyOverwrite,
-    setItems
+    slug,
+    setType,
+    setContent
   ])
 
-  // useEffect(() => {
-  //   fetch(`${window.domains.backend}teams_simple.json`, {
-  //     mode: 'cors',
-  //     credentials: 'include',
-  //   })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       if (typeof data.error === 'string') {
-  //         setVoltTeams([])
-  //       } else {
-  //         setVoltTeams(data)
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error(error)
-  //       setVoltTeams([])
-  //     })
-  // }, [ setVoltTeams ])
-
   const handleSave = useCallback(() => {
-    setSavingMessage(getString('path_editor_status_started_saving'))
+    let snackbarKey = null
 
-    const permissionsTmp = [
-      ...permissions,
-      ...(viewPermission !== '' ? [{ _id: uuidv4(), value: viewPermission, role: 'viewer'}] : [])
-    ]
-
-    const data = {
-      use_as: useAs,
-      volt_team: voltTeamInfos,
-      layout,
-      title,
-      description,
-      permissions: permissionsTmp,
-      coverphoto,
-      redirect,
-      overwrites: {
-        imprint: imprintOverwrite,
-        privacy_policy: privacyPolicyOverwrite
-      },
-      items
+    const block = {
+      _id,
+      type,
+      properties,
+      content: content || [],
     }
 
-    fetch(`${window.domains.backend}set/${code}`, {
-      mode: 'cors',
-      credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(r => r.json())
-      .then(async data => {
-        await delay(500)
-        if (typeof data.error === 'string') {
-          if (data.error === 'no_edit_permission') {
-            setSavingMessage(getString('path_editor_edit_permission_error'))
-            await delay(2000)
-            setSavingMessage(null)
-          } else {
-            setSavingMessage(data.error)
-            await delay(2000)
-            setSavingMessage(null)
+    const loadingDataPromise = new Promise(resolve => {
+      apollo_client.mutate({
+        mutation: saveBlock_Mutation,
+        variables: {
+          block,
+        },
+      })
+        .then(async ({ data }) => {
+          resolve('got-data')
+
+          if (snackbarKey !== null) {
+            closeSnackbar(snackbarKey)
           }
-        } else {
-          setSavingMessage(getString('path_editor_status_saved'))
-          await delay(2000)
-          setSavingMessage(null)
+
+          if (typeof data.error === 'string') {
+            if (data.error === 'no_edit_permission') {
+              enqueueSnackbar(getString('path_editor_edit_permission_error'), {
+                variant: 'error',
+                preventDuplicate: true,
+                autoHideDuration: 2000,
+              })
+            } else {
+              enqueueSnackbar('' + data.error, {
+                variant: 'error',
+                preventDuplicate: true,
+                autoHideDuration: 2000,
+              })
+            }
+          } else {
+            enqueueSnackbar(getString('path_editor_status_saved'), {
+              variant: 'success',
+              preventDuplicate: false,
+              autoHideDuration: 2000,
+            })
+          }
+        })
+        .catch(async error => {
+          console.error(error)
+          resolve('got-error')
+
+          if (snackbarKey !== null) {
+            closeSnackbar(snackbarKey)
+          }
+
+          enqueueSnackbar(getString('path_editor_status_error_while_saving', {
+            error: error.message,
+          }), {
+            variant: 'error',
+            preventDuplicate: true,
+            autoHideDuration: 2000,
+          })
+        })
+    })
+
+    // Show a loading-info-snackbar if loading the data takes too long.
+    Promise.race([
+      new Promise(resolve => {
+        setTimeout(() => {
+          resolve('show-loading')
+        }, 300)
+      }),
+      loadingDataPromise,
+    ])
+      .then(response => {
+        if (response === 'show-loading') {
+          snackbarKey = enqueueSnackbar(getString('path_editor_status_started_saving'), {
+            persist: true,
+            preventDuplicate: true,
+          })
         }
       })
-      .catch(async error => {
-        console.error(error)
-        await delay(500)
-        setSavingMessage(getString('path_editor_status_error_while_saving', {
-          error: error.message
-        }))
-      })
+      .catch(error => console.error)
   }, [
+    enqueueSnackbar,
+    closeSnackbar,
+    apollo_client,
     getString,
-    code,
-    useAs,
-    voltTeamInfos,
-    layout,
-    redirect,
-    title,
-    description,
-    permissions,
-    viewPermission,
-    items,
-    coverphoto,
-    imprintOverwrite,
-    privacyPolicyOverwrite
+    _id,
+    type,
+    properties,
+    content,
   ])
 
   const viewStatistics = useCallback(()=>{
     const a = document.createElement('a')
-    a.href = `https://umami.qiekub.org/share/s0ZHBZbb/volt.link?url=%2F${code}`
+    a.href = `https://umami.qiekub.org/share/s0ZHBZbb/volt.link?url=%2F${slug}`
     a.target = '_blank'
     a.rel = 'noreferrer'
     a.click()
-  }, [code])
+  }, [slug])
 
   const gotoQrcodePage = () => {
     const a = document.createElement('a')
-    a.href = `https://qrcode.volt.link/?c=volt.link/${code}`
+    a.href = `https://qrcode.volt.link/?c=volt.link/${slug}`
     a.target = '_blank'
     a.rel = 'noreferrer'
     a.click()
@@ -356,385 +288,66 @@ function Editor({ getString }) {
     {/* <button className="text"><Localized id="path_editor_share"/></button> */}
     <button className="text hasIcon" onClick={gotoQrcodePage}>
       <span style={{pointerEvents: 'none'}}>
-        <SVG src={icon_qr_code} className="icon" />
+        <QrCodeIcon className="icon" />
         <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_qrcode" /></span>
       </span>
     </button>
     <button className="text hasIcon" onClick={viewStatistics}>
       <span style={{pointerEvents: 'none'}}>
-        <SVG src={icon_assessment} className="icon" />
+        <AssessmentIcon className="icon" />
         <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_statistics" /></span>
       </span>
     </button>
     <button className="green hasIcon" onClick={handleSave}>
       <span style={{pointerEvents: 'none'}}>
-        <SVG src={icon_publish} className="icon" />
+        <PublishIcon className="icon" />
         <span style={{verticalAlign: 'middle'}}><Localized id="path_editor_save" /></span>
       </span>
     </button>
+
+    <BlockMenu
+      {...{
+        type,
+        setType,
+      }}
+
+      trigger={props => (
+        <button
+          {...props}
+          className="white hasIcon"
+        >
+          <span style={{pointerEvents: 'none'}}>
+            <MenuIcon className="icon" />
+          </span>
+        </button>
+      )}
+    />
   </div>
-
-  const editor_form = <>
-
-    <div className={classes.editor_form_row}>
-    <h3><Localized id="path_editor_title_label" /></h3>
-    <TranslationRepeater
-      onChange={setTitle}
-      defaultValue={title}
-      addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
-      addButtonText={getString('path_editor_add_translation')}
-      input={InputWithLocal_props => <input
-        aria-label={getString('path_editor_title_label')}
-        type="text"
-        placeholder={getString('path_editor_title_placeholder')}
-        {...InputWithLocal_props}
-        style={{
-          ...InputWithLocal_props.style,
-          margin: '0',
-        }}
-      />}
-    />
-    </div>
-
-    <div className={classes.editor_form_row}>
-    <h3><Localized id="path_editor_description_label" /></h3>
-    <TranslationRepeater
-      onChange={setDescription}
-      defaultValue={description}
-      addDefaultValue={() => ({ _id: uuidv4(), locale: defaultLocale, value: '' })}
-      addButtonText={getString('path_editor_add_translation')}
-      input={InputWithLocal_props => <HtmlInput
-        aria-label={getString('path_editor_description_label')}
-        placeholder={getString('path_editor_description_placeholder')}
-        {...InputWithLocal_props}
-        style={{
-          ...InputWithLocal_props.style,
-          margin: '0',
-        }}
-      />}
-    />
-    </div>
-
-    <div className={classes.editor_form_row}>
-      <h3><Localized id="path_editor_permissions_edit_label" /></h3>
-      <div>
-    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_edit_info" /></em>
-    <Repeater
-      onChange={handleChange_Permissions}
-      defaultValue={permissions}
-      addDefaultValue={() => ({ _id: uuidv4(), value: '', role: 'editor' })}
-      addButtonText={getString('path_editor_permissions_edit_add_button_label')}
-      render={
-        ({ defaultValue, ...repeater_props }) => {
-          const role = defaultValue.role
-          const value = defaultValue.value
-          return <PermissionInput
-              role={role}
-              defaultValue={value}
-              style={{
-                maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
-                margin: '0',
-              }}
-              {...repeater_props}
-            >
-              {InputWithLocal_props => <FancyInput 
-                    style={{ ...InputWithLocal_props.style, display: 'flex', flexDirection: 'column' }}
-                >
-                {({ setError }) => (
-                  <EmailInput
-                    onError={setError}
-                    aria-label={getString('path_editor_permissions_edit_label')}
-                    placeholder={getString('path_editor_permissions_edit_placeholder')}
-                    {...InputWithLocal_props}
-                    style={{ flexGrow: '1', margin: '0' }}
-                  />
-                )}
-              </FancyInput>}
-            </PermissionInput>
-        }
-      }
-    />
-    </div>
-    </div>
-
-    <div className={classes.editor_form_row}>
-    <h3><Localized id="path_editor_permissions_view_label" /></h3>
-    <div>
-    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_permissions_view_info" /></em>
-    <MultiButton
-      onChange={setViewPermission}
-      ariaLabel={getString('path_editor_permissions_view_label')}
-      defaultValue={viewPermission}
-      items={[
-        { value: '', title: getString('path_editor_permissions_view_public') },
-        { value: '@volteuropa.org', title: getString('path_editor_permissions_view_volteuropa') },
-      ]}
-    />
-    </div>
-    </div>
-
-    <div className={classes.editor_form_row}>
-    <h3><Localized id="path_editor_use_as_label" /></h3>
-    <div>
-    <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_use_as_info" /></em>
-    <MultiButton
-      onChange={setUseAs}
-      ariaLabel={getString('path_editor_use_as_label')}
-      defaultValue={useAs}
-      items={[
-        { value: 'redirect', title: getString('path_editor_use_as_value_redirect') },
-        { value: 'linklist', title: getString('path_editor_use_as_value_linklist') },
-        { value: '', title: getString('path_editor_use_as_value_nothing') }
-      ]}
-    />
-    </div>
-    </div>
-
-    {/*
-      voltTeams && voltTeams.length > 0
-      ? <>
-        <h3><Localized id="path_editor_belongs_to_team_label" /></h3>
-        <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_belongs_to_team_info" /></em>
-        <Select
-          defaultValue={{
-            value: voltTeamInfos !== null ? voltTeamInfos.id || null : null,
-            label: voltTeamInfos !== null ? voltTeamInfos.name || '' : '',
-          }}
-          defaultInputValue={voltTeamInfos !== null ? voltTeamInfos.name || '' : ''}
-          onChange={setVoltTeamInfosFromSelect}
-          ariaLabel={getString('path_editor_belongs_to_team_search_placeholder')}
-          label={getString('path_editor_belongs_to_team_search_placeholder')}
-          placeholder={getString('path_editor_belongs_to_team_search_placeholder')}
-          options={voltTeams}
-          styles={custom_react_select_styles}
-          theme={custom_react_select_theme}
-        />
-      </>
-      : null
-    */}
-
-    {
-      useAs === 'linklist'
-        ? <>
-        <div className={classes.editor_form_row}>
-          <h3><Localized id="path_editor_layout_label" /></h3>
-          <div>
-          <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}><Localized id="path_editor_layout_info" /></em>
-          <MultiButton
-            onChange={setLayout}
-            ariaLabel={getString('path_editor_layout_label')}
-            defaultValue={layout}
-            items={[
-              {
-                value: 'default',
-                title: getString('path_editor_layout_value_default'),
-                icon: <SVG src={layoutDefault} className="icon big" />
-              },
-              {
-                value: 'person',
-                title: getString('path_editor_layout_value_person'),
-                icon: <SVG src={layoutPerson} className="icon big" />
-              },
-            ]}
-          />
-          </div>
-          </div>
-
-          <div className={classes.editor_form_row}>
-          <h3><Localized id="path_editor_coverphoto_label" /></h3>
-          <div>
-          <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            <Localized id="path_editor_coverphoto_info" vars={{
-              width: layout === 'person' ? '400px' : '1200px',
-              height: layout === 'person' ? '400px' : '400px',
-              ratio: layout === 'person' ? '1/1' : '3/1',
-            }}/>
-          </em>
-          <FancyInput>
-            {({ setError }) => (
-              <UrlInput
-                onError={setError}
-                onChange={setCoverphoto}
-                value={coverphoto}
-                type="text"
-                placeholder={getString('path_editor_coverphoto_placeholder')}
-                aria-label={getString('path_editor_coverphoto_label')}
-                style={{
-                  marginRight: '0',
-                  marginLeft: '0',
-                  width: 'calc(100% - var(--basis_x2))'
-                }}
-              />
-            )}
-          </FancyInput>
-          {
-            layout !== 'person'
-              ? <>
-                <MultiButton
-                  onChange={setCoverphoto}
-                  ariaLabel={getString('path_editor_coverphoto_label')}
-                  defaultValue={coverphoto}
-                  items={[
-                    {
-                      value: '',
-                      title: 'No Coverphoto', // getString('path_editor_layout_value_default'),
-                    },
-                    ...[
-                      {
-                        value: 'https://assets.volteuropa.org/styles/scale_2880x/public/inline-images/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.jpg',
-                        icon: volt_bonn_thumb,
-                      },
-                      {
-                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2020-11/Welcome-to-Volt.jpg',
-                        icon: welcome_to_volt_thumb,
-                      },
-                      {
-                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-07/20200912_Plakatschlange_Ko%CC%88ln_Matteo%20Sant_Unione_011.jpeg',
-                        icon: plakatschlange_thumb,
-                      },
-                      {
-                        value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-05/Aktion.jpeg',
-                        icon: aktion_thumb,
-                      },
-                      // 'https://www.volteuropa.org/stripes/hero-desktop-green.jpg',
-                      // 'https://www.volteuropa.org/stripes/hero-desktop-red.jpg',
-                      // 'https://www.volteuropa.org/stripes/hero-desktop-blue.jpg',
-                      // 'https://www.volteuropa.org/stripes/hero-desktop-yellow.jpg',
-                      // 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-05/Colours-Background-Big.jpeg',
-                      // 'https://www.volteuropa.org/stripes/intermediate-green.jpg',
-                      // 'https://www.volteuropa.org/stripes/intermediate-red.jpg',
-                      // 'https://www.volteuropa.org/stripes/intermediate-blue.jpg',
-                      // 'https://www.volteuropa.org/stripes/intermediate-yellow.jpg',
-                      // 'https://www.volteuropa.org/og-default.png',
-                      // 'https://www.volteuropa.org/hero-default.jpg',
-                    ]
-                    .map(({value = '', icon = ''}) => ({
-                      value,
-                      icon: <img alt="" src={icon} className="icon image" />
-                    }))
-                  ]}
-                />
-              </>
-              : null
-          }
-          </div>
-          </div>
-        </>
-        : (
-          useAs === 'redirect'
-            ? <>
-              <div className={classes.editor_form_row}>
-              <h3><Localized id="path_editor_redirect_label" /></h3>
-              <FancyInput>
-                {({ setError }) => (
-                  <UrlInput
-                    onError={setError}
-                    onChange={setRedirect}
-                    type="text"
-                    placeholder={getString('path_editor_redirect_placeholder')}
-                    aria-label={getString('path_editor_redirect_label')}
-                    defaultValue={redirect}
-                    style={{
-                      marginRight: '0',
-                      marginLeft: '0',
-                      width: 'calc(100% - var(--basis_x2))'
-                    }}
-                  />
-                )}
-              </FancyInput>
-              </div>
-            </>
-            : null
-        )
-    }
-
-    {
-      useAs === 'linklist'
-        ? <Items
-            onChange={handleChange_Items}
-            defaultValue={items}
-          />
-        : null
-    }
-
-    {
-      useAs === 'linklist'
-      ? <>
-          <br />
-          <br />
-
-          <div className={classes.editor_form_row}>
-          <h3><Localized id="path_editor_imprint_overwrite_label" /></h3>
-          <div>
-          <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            <Localized id="path_editor_imprint_overwrite_info" />
-          </em>
-          <FancyInput>
-            {({ setError }) => (
-              <UrlInput
-                onError={setError}
-                onChange={setImprintOverwrite}
-                defaultValue={imprintOverwrite}
-                type="text"
-                placeholder={getString('path_editor_imprint_overwrite_placeholder')}
-                aria-label={getString('path_editor_imprint_overwrite_label')}
-                style={{
-                  marginRight: '0',
-                  marginLeft: '0',
-                  width: 'calc(100% - var(--basis_x2))'
-                }}
-              />
-            )}
-          </FancyInput>
-          </div>
-          </div>
-
-          <div className={classes.editor_form_row}>
-          <h3><Localized id="path_editor_privacy_policy_overwrite_label" /></h3>
-          <div>
-          <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            <Localized id="path_editor_privacy_policy_overwrite_info" />
-          </em>
-          <FancyInput>
-            {({ setError }) => (
-              <UrlInput
-                onError={setError}
-                onChange={setPrivacyPolicyOverwrite}
-                defaultValue={privacyPolicyOverwrite}
-                type="text"
-                placeholder={getString('path_editor_privacy_policy_overwrite_placeholder')}
-                aria-label={getString('path_editor_privacy_policy_overwrite_label')}
-                style={{
-                  marginRight: '0',
-                  marginLeft: '0',
-                  width: 'calc(100% - var(--basis_x2))'
-                }}
-              />
-            )}
-          </FancyInput>
-          </div>
-          </div>
-      </>
-      : null
-    }
-    </>
 
   return <div
     className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
   >
     <Header
-      title={<a href={`https://volt.link/${code}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{code}</a>}
+      title={<a href={`https://volt.link/${slug}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{slug}</a>}
       rightActions={canEdit ? rightHeaderActions : null}
-      notificationBanner={
-        savingMessage === null
-          ? null
-          : <p style={{ textAlign: 'center' }}>{savingMessage}</p>
-      }
     />
 
     {
       canEdit
-        ? editor_form
+        ? <>
+          {/* <OverflowMenu key="OverflowMenu" /> */}
+
+          <PropertiesEditor
+            type={type}
+            defaultProperties={properties}
+            onChange={handlePropertiesChange}
+          />
+
+          <ContentEditor
+            onChange={handleChange_Content}
+            defaultValue={content}
+          />
+        </>
         : <p style={{ marginTop: 'var(--basis)' }}><Localized id="path_editor_edit_permission_error" /></p>
     }
   </div>

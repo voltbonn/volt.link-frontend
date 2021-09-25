@@ -520,3 +520,8 @@ img.emoji {
   pointer-events: none;
 }
 
+/*
+div[contenteditable].hide_border{
+  box-shadow: none;
+}
+*/

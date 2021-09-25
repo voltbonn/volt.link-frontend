@@ -28,11 +28,28 @@ const client = new ApolloClient({
     },
   },
 })
+
+// client
+//   .query({
+//     query: gql`
+//       query GetRates {
+//         rates(currency: "USD") {
+//           currency
+//         }
+//       }
+//     `
+//   })
+//   .then(result => console.log(result));
+
+
+
+
+
 window.domains = {
-  frontend: 'https://edit.volt.link',
-  // frontend: 'http://localhost:3000/',
-  backend: 'https://volt.link/',
-  // backend: 'http://localhost:4000/',
+  // frontend: 'https://edit.volt.link',
+  frontend: 'http://localhost:3000/',
+  // backend: 'https://volt.link/',
+  backend: 'http://localhost:4000/',
 }
 
 function AppLanguageWrapper() {
@@ -104,14 +121,13 @@ function AppLanguageWrapper() {
       </ThemeProvider>
     </ApolloProvider>
   </AppLocalizationProvider>
+  </>
 }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <AppLanguageWrapper />
-    </Router>
-  </React.StrictMode>,
+  <Router>
+    <AppLanguageWrapper />
+  </Router>,
   document.getElementById('root')
 )
 

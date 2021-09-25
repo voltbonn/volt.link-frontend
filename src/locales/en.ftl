@@ -40,6 +40,8 @@ path_editor_add_translation = Add Translation
 
 path_editor_edit_permission_error = You're not allowed to edit this link.
 
+path_editor_status_started_loading = Started loading…
+
 path_editor_save = Save
 path_editor_status_started_saving = Started saving…
 path_editor_status_saved = Saved!
@@ -68,7 +70,8 @@ path_editor_permissions_view_volteuropa = Only for Volt Europa
 path_editor_use_as_label = Use as
 path_editor_use_as_info = Select "Nothing / Deactivated" to stop using the link.
 path_editor_use_as_value_redirect = Redirect
-path_editor_use_as_value_linklist = Micropage
+path_editor_use_as_value_page = Micropage
+path_editor_use_as_value_person = Person
 path_editor_use_as_value_nothing = Nothing / Deactivated
 
 path_editor_belongs_to_team_label = Team
@@ -85,37 +88,38 @@ path_editor_redirect_placeholder = https://voltdeutschland.org/bonn
 
 path_editor_coverphoto_label = Coverphoto
 path_editor_coverphoto_info = A url to use for the coverphoto. The photo needs to be uploaded somewhere else. For example on the Volt Europa website. It should be at least {$width} wide and {$height} height.
-path_editor_coverphoto_placeholder = https://
+path_editor_no_coverphoto = No Coverphoto
 
-path_editor_imprint_overwrite_label = Custom imprint link
-path_editor_imprint_overwrite_info = (Leave empty for Volt Europa imprint.)
-path_editor_imprint_overwrite_placeholder = https://
+path_editor_imprint_label = Imprint Link
+path_editor_imprint_info = Leave empty for Volt Europa imprint.
 
-path_editor_privacy_policy_overwrite_label = Custom privacy policy link
-path_editor_privacy_policy_overwrite_info = (Leave empty for Volt Europa privacy policy.)
-path_editor_privacy_policy_overwrite_placeholder = https://
+path_editor_privacy_policy_label = Privacy-Policy Link
+path_editor_privacy_policy_info = Leave empty for Volt Europa privacy policy.
 
-path_editor_add_row = Add Row
-path_editor_reorder = Reorder
+content_editor_reorderblock_label = Reorder
 
-path_editor_item_choose_type_label = Choose an item type
-path_editor_item_choose_type_value_link = Link
-path_editor_item_choose_type_value_headline = Headline
-path_editor_item_choose_type_value_headline3 = Headline 3
-path_editor_item_choose_type_value_text = Text
-path_editor_item_title_label = Title
-path_editor_item_text_label = Text
-path_editor_item_link_label = Link (https://… or mailto:… or tel:…)
-path_editor_item_close_menu = Close Menu
-path_editor_item_delete = Delete Row
-path_editor_item_add_row_before = Add Row Before
-path_editor_item_add_row_after = Add Row After
+block_menu_choose_type_label = Choose Block Type
+block_menu_type_label_page = Page
+block_menu_type_label_redirect = Redirect
+block_menu_type_label_person = Person
+block_menu_type_label_button = Button
+block_menu_type_label_headline = Headline
+block_menu_type_label_headline3 = Headline 3
+block_menu_type_label_text = Text
+block_menu_close_menu = Close Menu
+block_menu_delete = Delete Block
+block_menu_add_before = Add Block Before
+block_menu_add_after = Add Block After
+block_menu_hide = Hide Block
+block_menu_show = Show Block
 
 path_editor_item_text_info = You can use Markdown and HTML in the text-field.
 
-path_editor_item_hide_row = Hide Row
-path_editor_item_show_row = Show Row
 
 error_invalid_url = Please enter a valid url. Maybe start the url with "https://", use "mailto:" for emails and "tel:" for phonenumbers.
 error_invalid_mailto_url = The email address is invalid. Maybe start the address with "mailto:".
 error_invalid_email = The email address is invalid.
+
+placeholder_headline = Headline
+placeholder_button = Button
+placeholder_text = Text

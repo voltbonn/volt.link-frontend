@@ -1,37 +1,40 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback } from 'react'
 
-function PermissionInput({ reorderHandle, actionButton, role, defaultValue, children, className, style, onChange, ariaLabel, placeholder, ...props }) {
-  const wrapperDiv = useRef(null)
+function PermissionInput({ reorderHandle, actionButton, defaultValue, children, className, style, onChange, ariaLabel, placeholder, dataset, ...props }) {
+  const [changedRole, setChangedRole] = useState(defaultValue.role || 'editor')
+  const [changedValue, setChangedValue] = useState(defaultValue.value)
 
-  const [changedRole, setChangedRole] = useState(role || 'editor')
-  const [changedValue, setChangedValue] = useState(defaultValue)
+  console.log('defaultValue', defaultValue)
 
   const handleRoleChange = useCallback((event) => {
     setChangedRole(event.target.value)
     if (onChange) {
-      const target = wrapperDiv.current
-      target.value = {
-        role: event.target.value,
-        value: changedValue,
-      }
-      onChange({ target })
+      onChange({
+        value: {
+          ...defaultValue,
+          role: event.target.value,
+          value: changedValue,
+        },
+        dataset,
+      })
     }
-  }, [setChangedRole, onChange, changedValue])
+  }, [defaultValue, dataset, setChangedRole, onChange, changedValue])
 
   const handleTextChange = useCallback(value => {
     setChangedValue(value)
     if (onChange) {
-      const target = wrapperDiv.current
-      target.value = {
-        role: changedRole,
-        value,
-      }
-      onChange({ target })
+      onChange({
+        value: {
+          ...defaultValue,
+          role: changedRole,
+          value,
+        },
+        dataset,
+      })
     }
-  }, [setChangedValue, onChange, changedRole])
+  }, [defaultValue, dataset, setChangedValue, onChange, changedRole])
 
   return <div
-    ref={wrapperDiv}
     className={className}
     style={{
       display: 'flex',
@@ -45,7 +48,7 @@ function PermissionInput({ reorderHandle, actionButton, role, defaultValue, chil
       !!children
         ? children({
           onChange: handleTextChange,
-          defaultValue: defaultValue,
+          defaultValue: defaultValue.value || '',
           style: {
             flexGrow: '1',
           }
@@ -54,7 +57,7 @@ function PermissionInput({ reorderHandle, actionButton, role, defaultValue, chil
     }
     <select
       onChange={handleRoleChange}
-      defaultValue={role}
+      defaultValue={defaultValue.role || 'editor'}
       style={{
         margin: '0 0 0 var(--basis)',
         display: 'none',

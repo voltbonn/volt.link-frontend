@@ -1,7 +1,7 @@
 .rebuild_textarea {
+  display: block;
   white-space: pre-wrap;
   word-break: break-word;
-  display: inline-block;
 }
 
 .rebuild_textarea.show_placeholder:before {

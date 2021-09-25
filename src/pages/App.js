@@ -18,6 +18,8 @@ import Chooser from './Chooser.js'
 import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
 
+import { OverflowMenuProvider } from '../components/OverflowMenu.js'
+
 import MultiButton from '../components/MultiButton.js'
 
 function App({ getString }) {
@@ -76,7 +78,9 @@ function App({ getString }) {
           : <>
               <Switch>
                 <Route path="/edit/:code">
-                  <Editor />
+                  <OverflowMenuProvider>
+                    <Editor />
+                  </OverflowMenuProvider>
                 </Route>
                 <Route path="/shortcode">
                   <Shortcode rightHeaderActions={loginLogoutButton} />
@@ -88,11 +92,6 @@ function App({ getString }) {
             </>
       }
     </div>
-    <footer>
-      <a href="mailto:thomas.rosen@volteuropa.org"><Localized id="contact" /></a>
-      &nbsp; • &nbsp;
-      <a href="https://github.com/voltbonn/edit.volt.link" target="_blank" rel="noopener noreferrer"><Localized id="source_code" /></a>
-    </footer>
   </>)
 }
 

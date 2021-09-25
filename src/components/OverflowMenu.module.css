@@ -1,0 +1,27 @@
+.overflow_menu {
+  z-index: 100;
+  position: fixed;
+
+  bottom: var(--basis_x4);
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+
+  height: auto;
+  width: auto;
+  max-width: calc(100 - var(--basis_x8));
+
+  background: var(--background-contrast);
+  color: var(--on-background-contrast);
+  box-shadow:
+    0 0 0 var(--basis_x0_5) var(--background),
+    0 0 var(--basis_x2) var(--background);
+  border-radius: var(--basis);
+
+  white-space: nowrap;
+  padding: var(--basis);
+}
+
+.overflow_menu .menuGroup {
+  display: inline-flex;
+  margin: var(--basis);
+}

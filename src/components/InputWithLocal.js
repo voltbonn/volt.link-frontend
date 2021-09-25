@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback } from 'react'
 
 import classes from './InputWithLocal.module.css'
 
@@ -30,22 +30,21 @@ locales = Object.entries(locales)
 .map(([code, nativeName]) => ({code, nativeName}))
 
 function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, children, style, onChange, className, dataset = {}, ...props }) {
-  const wrapperDiv = useRef(null)
-
   const [changedLocale, setChangedLocale] = useState(locale)
   const [changedValue, setChangedValue] = useState(defaultValue)
 
   const handleLocaleChange = useCallback((event) => {
     setChangedLocale(event.target.value)
     if (onChange) {
-      const target = wrapperDiv.current
-      target.value = {
-        locale: event.target.value,
-        value: changedValue,
-      }
-      onChange({ target })
+      onChange({
+        value: {
+          locale: event.target.value,
+          value: changedValue,
+        },
+        dataset,
+      })
     }
-  }, [setChangedLocale, onChange, changedValue])
+  }, [setChangedLocale, onChange, changedValue, dataset])
 
   const handleTextChange = useCallback((event_or_value) => {
     let value = event_or_value
@@ -59,36 +58,20 @@ function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, chi
 
     setChangedValue(value)
     if (onChange) {
-      const target = wrapperDiv.current
-      target.value = {
-        locale: changedLocale,
-        value,
-      }
-      onChange({ target })
+      onChange({
+        value: {
+          locale: changedLocale,
+          value,
+        },
+        dataset,
+      })
     }
-  }, [setChangedValue, onChange, changedLocale])
+  }, [setChangedValue, onChange, changedLocale, dataset])
 
   return <div
     className={classes.input_with_local+' '+className}
-    ref={wrapperDiv}
     style={style}
-    {...dataset}
   >
-    <div
-      className="wrapped_select"
-      placeholder={changedLocale.toUpperCase()}
-      style={{
-        margin: '0 var(--basis) 0 0',
-        flexShrink: 0,
-      }}
-    >
-      <select
-        onChange={handleLocaleChange}
-        defaultValue={locale}
-      >
-        {locales.map(({ code, nativeName }) => <option key={code} value={code}>{nativeName}</option>)}
-      </select>
-    </div>
     {
       !!children
         ? children({
@@ -100,6 +83,21 @@ function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, chi
         })
         : null
     }
+    <div
+      className="wrapped_select"
+      placeholder={changedLocale.toUpperCase()}
+      style={{
+        margin: '0 calc(-1 * var(--basis)) 0 var(--basis)',
+        flexShrink: 0,
+      }}
+    >
+      <select
+        onChange={handleLocaleChange}
+        defaultValue={locale}
+      >
+        {locales.map(({ code, nativeName }) => <option key={code} value={code}>{nativeName}</option>)}
+      </select>
+    </div>
   </div>
 }
 

@@ -1,0 +1,32 @@
+.propertiesFrame {
+  background: var(--background-contrast);
+  color: var(--on-background);
+  padding: var(--basis_x4);
+
+  width: 1000px;
+  max-width: calc(100% - var(--basis_x8));
+  margin: 0 auto;
+}
+
+.properties_row {
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .properties_row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: var(--basis_x4);
+  }
+  .properties_row:last-child {
+    margin-bottom: 0;
+  }
+  .properties_row > * {
+    flex: 1;
+  }
+  .properties_row > h3 {
+    max-width: 200px;
+    margin: 0;
+    margin-right: var(--basis_x2);
+  }
+}
