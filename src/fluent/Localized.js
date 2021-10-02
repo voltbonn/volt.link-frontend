@@ -60,10 +60,19 @@ function withLocalization(Inner) {
   return WithLocalization
 }
 
+function useLocalization() {
+  const l10n = React.useContext(FluentContext)
+
+  const getString = (id, args, fallback) => l10n.getString(id, args, fallback || ' ')
+
+  return { getString }
+}
+
 export {
   withLocalization,
   Localized,
   Localized as default,
+  useLocalization,
 }
 
 /*
