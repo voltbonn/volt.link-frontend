@@ -4,7 +4,14 @@ const url_regex = /^([A-Z0-9+-.]+:(?:\/\/)?)[\w\u00C0-\u00FF_.-]+(?:\.[\w\u00C0-
 const email_regex = /^(?:(?:[^<>()[\]\\.,;:\s@"]+(?:\.[^<>()[\]\\.,;:\s@"]+)*)|(?:".+"))@(?:(?:\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(?:(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})\.?)$/gui
 const is_email_not_url_regex = /^[^:/]+@.+$/gui
 
-function UrlInput({ defaultValue, onChange, onError, placeholder = 'https://', ...props }) {
+function UrlInput({
+  defaultValue = '',
+  onChange,
+  onError,
+  placeholder = 'https://',
+  style,
+  className
+}) {
   const handleTextChange = useCallback((event) => {
     if (onChange || onError) {
       const value = event.target.value || ''
@@ -52,7 +59,8 @@ function UrlInput({ defaultValue, onChange, onError, placeholder = 'https://', .
     onChange={handleTextChange}
     defaultValue={defaultValue}
     placeholder={placeholder}
-    {...props}
+    style={style}
+    className={className}
   />
 }
 

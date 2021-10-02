@@ -21,7 +21,7 @@ import BlockMenu from './BlockMenu.js'
 
 import InlineEditorBlockText from './InlineEditorBlockText.js'
 import InlineEditorBlockButton from './InlineEditorBlockButton.js'
-import InlineEditorBlockHeadline from './InlineEditorBlockHeadline.js'
+// import InlineEditorBlockHeadline from './InlineEditorBlockHeadline.js'
 
 import classes from './InlineEditorBlock.module.css'
 
@@ -50,17 +50,14 @@ function InlineEditorBlockInbetweenComponent({ type, ...props }){
   let component = null
 
   switch (type) {
-    case 'text':
-      component = <InlineEditorBlockText {...props} />
-    break;
     case 'button':
       component = <InlineEditorBlockButton {...props} />
     break;
-    case 'headline':
-      component = <InlineEditorBlockHeadline {...props} />
-    break;
+    // case 'headline':
+    //   component = <InlineEditorBlockHeadline {...props} />
+    // break;
     default:
-      component = null
+      component = <InlineEditorBlockText {...props} />
   }
 
   return component
@@ -79,6 +76,13 @@ function InlineEditorBlockRaw({
   addRowBefore,
   addRowAfter,
   permissions = [],
+
+  onInputRef,
+  onGoToPrevInput,
+  onGoToNextInput,
+  onSplitText,
+  onMergeToPrevInput,
+  onMergeToNextInput,
 }) {
   const apollo_client = useApolloClient()
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
@@ -95,6 +99,7 @@ function InlineEditorBlockRaw({
 
 
   const handleChange_Type = useCallback(newValue => {
+    console.log('block', block)
     setBlock({
       ...block,
       type: newValue,
@@ -111,16 +116,6 @@ function InlineEditorBlockRaw({
   //   }
   // }, [setBlock, onChange])
 
-  // const handleChange_Link = useCallback(newValue => {
-  //   setLink(newValue)
-
-  //   if (onChange) {
-  //     const target = wrapperDiv.current
-  //     target.value = { type, text, link: newValue, active }
-  //     onChange({ target })
-  //   }
-  // }, [setLink, onChange, type, text, active])
-
   const toggle_active = useCallback(() => {
     setBlock({
       ...block,
@@ -130,24 +125,6 @@ function InlineEditorBlockRaw({
       },
     })
   }, [setBlock, block, active])
-
-  // let type_classname = ''
-  // switch (type) {
-  //   case 'text':
-  //     type_classname = 'type_text'
-  //     break
-  //   case 'headline':
-  //     type_classname = 'type_h2'
-  //     break
-  //   case 'headline3':
-  //     type_classname = 'type_h3'
-  //     break
-  //   case 'button':
-  //     type_classname = 'type_button'
-  //     break
-  //   default:
-  //     type_classname = 'type_text'
-  // }
 
   useEffect(() => {
     let snackbarKey = null
@@ -235,10 +212,10 @@ function InlineEditorBlockRaw({
     _id,
   ])
 
-  const handleSaveBlock = useCallback(newBlock => {
+  const handleSaveBlock = useCallback((newBlock, callback) => {
     console.log('newBlock', newBlock)
     let snackbarKey = null
-    if (false) {
+    if (true) {
     const loadingDataPromise = new Promise(resolve => {
       apollo_client.mutate({
         mutation: saveBlock_Mutation,
@@ -269,19 +246,20 @@ function InlineEditorBlockRaw({
             }
           } else {
             console.log('save-response', data)
-            if (!block._id || block._id !== data.saveBlock) {
+
+            if (typeof callback === 'function') {
+              callback(data.saveBlock)
+            } else if (!block._id || block._id !== data.saveBlock) {
               setBlock({
                 ...block,
                 _id: data.saveBlock,
               })
               console.log('newBlock', newBlock)
               onChange({
-                target: {
-                  dataset,
-                  value: {
-                    ...newBlock,
-                    _id: data.saveBlock,
-                  }
+                dataset,
+                value: {
+                  ...newBlock,
+                  blockId: data.saveBlock,
                 }
               })
             }
@@ -429,13 +407,16 @@ function InlineEditorBlockRaw({
             type={type}
             block={block}
             onChange={handleSaveBlock}
+            onSaveBlock={handleSaveBlock}
 
-            // onInputRef,
-            // onGoToPrevInput,
-            // onGoToNextInput,
-            // onSplitText,
-            // onMergeToPrevInput,
-            // onMergeToNextInput,
+            onInputRef={onInputRef}
+            onGoToPrevInput={onGoToPrevInput}
+            onGoToNextInput={onGoToNextInput}
+            onSplitText={onSplitText}
+            onMergeToPrevInput={onMergeToPrevInput}
+            onMergeToNextInput={onMergeToNextInput}
+
+            onAddRowAfter={addRowAfter}
           />
         : null
     }

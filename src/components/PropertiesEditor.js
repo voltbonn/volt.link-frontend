@@ -82,6 +82,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       imprint: 'string',
       privacy_policy: 'string',
       permissions: 'array',
+      tags: 'string',
     }
 
     const newProperties = { ...properties }
@@ -147,7 +148,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     newProperties.text = addTmpIds(newProperties.text)
     newProperties.description = addTmpIds(newProperties.description)
     setProperties(newProperties)
-
 
     let newPermissions = addTmpIds(newProperties.permissions)
 
@@ -257,6 +257,23 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       />}
     />
     </div>
+
+
+      <div className={classes.properties_row}>
+      <h3><Localized id="path_editor_tags_label" /></h3>
+      <HtmlInput
+        onChange={(value) => updateProperty('tags', value)}
+        type="text"
+        placeholder={getString('path_editor_tags_placeholder')}
+        aria-label={getString('path_editor_tags_label')}
+        defaultValue={properties.tags}
+        style={{
+          marginRight: '0',
+          marginLeft: '0',
+          width: 'calc(100% - var(--basis_x2))'
+        }}
+      />
+      </div>
 
     <div className={classes.properties_row}>
       <h3><Localized id="path_editor_permissions_edit_label" /></h3>

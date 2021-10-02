@@ -33,6 +33,10 @@ function BlockMenu ({
   addRowBefore = null,
   addRowAfter = null,
 }) {
+  let prefersDarkMode = false
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    prefersDarkMode = true
+  }
 
   return <PopupState variant="popover" popupId="block-menu">
     {(popupState) => (
@@ -58,11 +62,11 @@ function BlockMenu ({
             }}
           >
             <ListSubheader style={{
-              whiteSpace:'nowrap',
-              background:'transparent',
+              whiteSpace: 'nowrap',
               lineHeight: '1',
-              margin: '0',
-              padding: '8px 16px 12px 16px',
+              margin: '-4px 0 0 0',
+              padding: '12px 16px 12px',
+              backgroundColor: prefersDarkMode ? '#2e2e2e' : '#fff',
             }}>
               <Localized id="block_menu_choose_type_label" />
             </ListSubheader>

@@ -9,6 +9,8 @@ import classes from './HtmlInput.module.css'
 
 
 function getRangeLengthWithLinebreaks(element){
+  element.normalize()
+
   if (!window.getSelection) {
     return 0;
   }
@@ -40,6 +42,8 @@ function getRangeLengthWithLinebreaks(element){
 }
 
 function getInLineRangeLength(element, whichLine){
+  element.normalize()
+
   if (!window.getSelection) {
     return 0;
   }
@@ -87,7 +91,6 @@ function getInLineRangeLength(element, whichLine){
 }
 
 function getCaretPosition(element){
-
   // get element height without padding and border
   const cs = getComputedStyle(element)
   const paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom)
@@ -110,7 +113,7 @@ function getCaretPosition(element){
   const caretPositionFromStart = getRangeLengthWithLinebreaks(element)
 
   // calc caret position from end of text
-  let textLength = element.innerText.length - 1 || 0
+  let textLength = element.innerText.length || 0
   if (textLength < 0) {
     textLength = 0
   }
@@ -129,7 +132,7 @@ function getCaretPosition(element){
 }
 
 function HtmlInput({
-  defaultValue,
+  defaultValue = '',
   children,
   className,
   onChange,
@@ -202,43 +205,45 @@ function HtmlInput({
       event.preventDefault()
     } else if (event.key === 'ArrowUp') {
       if (onGoToPrevInput) {
-        const caretPosition = getCaretPosition(inputRef.current)
-        if (caretPosition.inFirstLine) {
-          onGoToPrevInput({ caretPosition })
+        const caret = getCaretPosition(inputRef.current)
+        if (caret.inFirstLine) {
+          onGoToPrevInput({ caret })
           event.preventDefault()
         }
       }
     } else if (event.key === 'ArrowLeft') {
       if (onGoToPrevInput) {
-        const caretPosition = getCaretPosition(inputRef.current)
-        if (caretPosition.inFirstLine && caretPosition.positionFromStart === 0) {
-          onGoToPrevInput({ caretPosition })
+        const caret = getCaretPosition(inputRef.current)
+        if (caret.inFirstLine && caret.positionFromStart <= 0) {
+          caret.positionFromLineStart = -1
+          onGoToPrevInput({ caret })
           event.preventDefault()
         }
       }
     } else if (event.key === 'ArrowDown') {
       if (onGoToNextInput) {
-        const caretPosition = getCaretPosition(inputRef.current)
-        if (caretPosition.inLastLine) {
-          onGoToNextInput({ caretPosition })
+        const caret = getCaretPosition(inputRef.current)
+        if (caret.inLastLine) {
+          onGoToNextInput({ caret })
           event.preventDefault()
         }
       }
     } else if (event.key === 'ArrowRight') {
       if (onGoToNextInput) {
-        const caretPosition = getCaretPosition(inputRef.current)
-        if (caretPosition.inLastLine && caretPosition.positionFromEnd === 0) {
-          onGoToNextInput({ caretPosition })
+        const caret = getCaretPosition(inputRef.current)
+        if (caret.inLastLine && caret.positionFromEnd <= 1) {
+          caret.positionFromLineStart = 0
+          onGoToNextInput({ caret })
           event.preventDefault()
         }
       }
     } else if (event.key === 'Enter') {
       if (onSplitText) {
-        const caretPosition = getCaretPosition(inputRef.current)
+        const caret = getCaretPosition(inputRef.current)
 
         const innerText = inputRef.current.innerText
-        const start = innerText.slice(0, caretPosition.positionFromStart)
-        const end = innerText.slice(caretPosition.positionFromStart)
+        const start = innerText.slice(0, caret.positionFromStart)
+        const end = innerText.slice(caret.positionFromStart)
 
         onSplitText({
           texts: [start, end],
@@ -247,10 +252,10 @@ function HtmlInput({
       }
     } else if (event.key === 'Backspace') {
       if (onMergeToPrevInput) {
-        const caretPosition = getCaretPosition(inputRef.current)
-        if (caretPosition.positionFromStart === 0 && caretPosition.inFirstLine) {
+        const caret = getCaretPosition(inputRef.current)
+        if (caret.positionFromStart === 0 && caret.inFirstLine) {
           onMergeToPrevInput({
-            caretPosition,
+            caret,
             text: inputRef.current.innerText,
           })
           event.preventDefault()
@@ -258,10 +263,10 @@ function HtmlInput({
       }
     } else if (event.key === 'Delete') {
       if (onMergeToNextInput) {
-        const caretPosition = getCaretPosition(inputRef.current)
-        if (caretPosition.positionFromEnd === 0 && caretPosition.inLastLine) {
+        const caret = getCaretPosition(inputRef.current)
+        if (caret.positionFromEnd === 0 && caret.inLastLine) {
           onMergeToNextInput({
-            caretPosition,
+            caret,
             text: inputRef.current.innerText,
           })
           event.preventDefault()

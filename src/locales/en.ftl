@@ -57,6 +57,9 @@ path_editor_title_placeholder = Volt Bonn
 path_editor_description_label = Short description
 path_editor_description_placeholder = Future Made in Europe
 
+path_editor_tags_placeholder = #hashtag1 #europa #social_equality
+path_editor_tags_label = Tags
+
 path_editor_permissions_edit_label = Who is allowed to edit this link?
 path_editor_permissions_edit_info = Enter the Volt Europa email-addresses who are allowed to edit this link. Put each address in it's own row.
 path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org

@@ -28,7 +28,7 @@ function Row({
   reorderLabel,
   showActionButton,
   hasOnlyOneRow,
-  addEmptyRowByIndex,
+  addRowByIndex,
 }) {
   return <Draggable
       key={subDefaultValue.tmp_id}
@@ -80,8 +80,8 @@ function Row({
               },
               onChange: handleRowChange,
               onRemoveRow: () => handleRemoveRow(index),
-              addRowBefore: () => addEmptyRowByIndex(index, 0),
-              addRowAfter: () => addEmptyRowByIndex(index, 1),
+              addRowBefore: (newValue) => addRowByIndex(index, 0, newValue),
+              addRowAfter: (newValue) => addRowByIndex(index, 1, newValue),
               reorderHandle: <button
                   aria-label={reorderLabel}
                   className={`text ${classes.inlineRowButton} ${classes.dragHandleButton}`}
@@ -143,7 +143,7 @@ function Repeater({
   prependNewItems,
   showReorderControls = false,
   showActionButton = true,
-  isReorderable = true
+  isReorderable = false
 }) {
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
@@ -209,14 +209,23 @@ function Repeater({
     onChange(new_rows)
   }, [rows, setRows, onChange])
 
-  const addEmptyRowByIndex = useCallback((index, offset = 0) => {
-    const newValue = internalAddDefaultValue()
+  const addRowByIndex = useCallback((index, offset = 0, newValue) => {
+    if (typeof newValue === 'object') {
+      newValue = {
+        ...(internalAddDefaultValue()),
+        ...newValue,
+      }
+    } else {
+      newValue = newValue || internalAddDefaultValue()
+    }
 
     let new_rows = null
     if (index !== null && index >= 0) {
       new_rows = [...rows]
       new_rows.splice(index + offset, 0, newValue)
     }
+
+    console.log('new_rows', new_rows)
 
     setRows(new_rows)
     onChange(new_rows)
@@ -295,7 +304,7 @@ function Repeater({
                     reorderLabel,
                     showActionButton,
                     hasOnlyOneRow,
-                    addEmptyRowByIndex,
+                    addRowByIndex,
                   }}
                 />
               )
