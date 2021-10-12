@@ -20,8 +20,15 @@ import {
   ApolloProvider,
 } from '@apollo/client'
 
+window.domains = {
+  frontend: 'https://beta.volt.link',
+  // frontend: 'http://localhost:3000/',
+  backend: 'https://api.volt.link/',
+  // backend: 'http://localhost:4000/',
+}
+
 const client = new ApolloClient({
-  uri: 'http://0.0.0.0:4000/graphql/v1/',
+  uri: window.domains.backend+'graphql/v1/',
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
@@ -41,17 +48,6 @@ const client = new ApolloClient({
 //     `
 //   })
 //   .then(result => console.info(result));
-
-
-
-
-
-window.domains = {
-  frontend: 'https://beta.volt.link',
-  // frontend: 'http://localhost:3000/',
-  backend: 'https://api.volt.link/',
-  // backend: 'http://localhost:4000/',
-}
 
 function AppLanguageWrapper() {
   // const [userLocales, setUserLocales] = useState(['de'])
