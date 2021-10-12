@@ -47,10 +47,10 @@ const client = new ApolloClient({
 
 
 window.domains = {
-  // frontend: 'https://edit.volt.link',
-  frontend: 'http://localhost:3000/',
-  // backend: 'https://volt.link/',
-  backend: 'http://localhost:4000/',
+  frontend: 'https://beta.volt.link',
+  // frontend: 'http://localhost:3000/',
+  backend: 'https://api.volt.link/',
+  // backend: 'http://localhost:4000/',
 }
 
 function AppLanguageWrapper() {
