@@ -41,7 +41,6 @@ jobs:
           build_dir: build
           cname: ""
           branch: beta_deploy
-          commit_message: beta.volt.link
       - name: run deploy commands on uberspace
         uses: garygrossgarten/github-action-ssh@release
         with:
