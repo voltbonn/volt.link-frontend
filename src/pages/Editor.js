@@ -1,28 +1,33 @@
 import { useState, useCallback, useEffect } from 'react'
 
-import {
-  useParams
-} from 'react-router-dom'
+// import {
+//   useParams
+// } from 'react-router-dom'
 
-import { useApolloClient } from '@apollo/client'
-import { getBlockBySlug_Query } from '../graphql/queries'
-import { saveBlock_Mutation } from '../graphql/mutations.js'
-
-import { useSnackbar } from 'notistack'
+import useSaveBlock from '../hooks/useSaveBlock.js'
+import useLoadBlock from '../hooks/useLoadBlock.js'
 
 // import Select from 'react-select'
 
 import {
-  QrCodeSharp as QrCodeIcon,
-  AssessmentSharp as AssessmentIcon,
-  PublishSharp as PublishIcon,
-  MenuSharp as MenuIcon,
+  ArrowBackSharp as BackIcon,
+
+  TranslateSharp as TranslateIcon,
+  IosShareSharp as ShareIcon,
+  LockSharp as PermissionsIcon,
+  SaveSharp as SaveIcon,
+  MoreHorizSharp as BlockMenuIcon,
 } from '@mui/icons-material'
 
 import classes from './Editor.module.css'
-import { Localized, withLocalization } from '../fluent/Localized.js'
+
+import { Localized, useLocalization } from '../fluent/Localized.js'
+import { useTranslatedInputContext, LocalesMenu } from '../components/TranslatedInput.js'
+
 import Header from '../components/Header.js'
 import BlockMenu from '../components/BlockMenu.js'
+import SharingEditor from '../components/SharingEditor.js'
+import PermissionsEditor from '../components/PermissionsEditor.js'
 import PropertiesEditor from '../components/PropertiesEditor.js'
 import ContentEditor from '../components/ContentEditor.js'
 
@@ -44,271 +49,186 @@ import ContentEditor from '../components/ContentEditor.js'
 //   },
 // })
 
-function Editor({ getString }) {
-  const apollo_client = useApolloClient()
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+function Editor() {
+  const { getString } = useLocalization()
 
-  const [_id, setID] = useState(null)
+  const saveBlock = useSaveBlock()
+  const loadBlock = useLoadBlock()
 
-  const { code: slug = '' } = useParams()
+  const { currentLocale } = useTranslatedInputContext()
 
-  const [loadingContent, setLoadingContent] = useState(true)
-  const [canEdit, setCanEdit] = useState(true)
+  const [ isSharingEditorOpen, setIsSharingEditorOpen ] = useState(false)
+  const openSharingEditor = useCallback(() => setIsSharingEditorOpen(true), [ setIsSharingEditorOpen ])
+  const closeSharingEditor = useCallback(() => setIsSharingEditorOpen(false), [ setIsSharingEditorOpen ])
 
-  const [type, setType] = useState('')
-  const [properties, setProperties] = useState({})
+  const [ isPermissionsEditorOpen, setIsPermissionsEditorOpen ] = useState(false)
+  const openPermissionsEditor = useCallback(() => setIsPermissionsEditorOpen(true), [ setIsPermissionsEditorOpen ])
+  const closePermissionsEditor = useCallback(() => setIsPermissionsEditorOpen(false), [ setIsPermissionsEditorOpen ])
 
-  const [content, setContent] = useState([])
-  const handleChange_Content = useCallback(newContent => { // TODO: remove this, as the set function is enough
-    console.log('handleChange_Content-newContent', newContent)
-    setContent(newContent)
-  }, [setContent])
+  // const { id = '' } = useParams()
+  const id = '6145b2e319ba9712d370d347'
 
-  const handlePropertiesChange = useCallback(newProperties => { // TODO: remove this, as the set function is enou
-    console.log('handlePropertiesChange-newProperties', newProperties)
-    setProperties(newProperties)
-  }, [setProperties])
+  const [block, setBlock] = useState({
+    type: 'text',
+    properties: {},
+    content: {},
+  })
+  const type = block.type
+  const properties = block.properties
+  const content = block.content
+  const permissions = block.permissions
 
   useEffect(() => {
-    console.log('loading content')
-    let snackbarKey = null
-
-    setCanEdit(true)
-    setLoadingContent(true)
-
-    const loadingDataPromise = new Promise(resolve => {
-      apollo_client.query({
-        query: getBlockBySlug_Query,
-        variables: {
-          slug,
-        },
-      })
-        .then(async ({ data }) => {
-          resolve('got-data')
-
-          if (snackbarKey !== null) {
-            closeSnackbar(snackbarKey)
-          }
-
-          if (typeof data.error === 'string' || !data.blockBySlug) {
-            if (data.error === 'no_edit_permission') {
-              setLoadingContent(false)
-              setCanEdit(false)
-              enqueueSnackbar(getString('path_editor_edit_permission_error'), {
-                variant: 'error',
-                preventDuplicate: true,
-                autoHideDuration: 5000,
-              })
-            } else {
-              enqueueSnackbar('' + data.error, {
-                variant: 'error',
-                preventDuplicate: true,
-                autoHideDuration: 5000,
-              })
-            }
-          }else{
-            data = data.blockBySlug
-
-            console.log('data', data)
-            let {
-              _id = '',
-              type = '',
-              properties = {},
-              content = [],
-            } = data
-
-            if (slug !== '') {
-              properties = { ...properties, slug }
-            }
-
-            setID(_id)
-            setType(type)
-            setProperties(properties)
-            setContent(content)
-
-            setLoadingContent(false)
-          }
+    if (id) {
+      loadBlock(id)
+        .then(loadedBlock => {
+          setBlock(loadedBlock)
         })
-        .catch(async error => {
-          console.error(error)
-          resolve('got-error')
-
-          if (snackbarKey !== null) {
-            closeSnackbar(snackbarKey)
-          }
-
-          enqueueSnackbar('[could not load data] '+error.message, {
-            variant: 'error',
-            preventDuplicate: true,
-            autoHideDuration: 2000,
-          })
-        })
-    })
-
-    // Show a loading-info-snackbar if loading the data takes too long.
-    Promise.race([
-      new Promise(resolve => {
-        setTimeout(() => {
-          resolve('show-loading')
-        }, 300)
-      }),
-      loadingDataPromise,
-    ])
-      .then(response => {
-        if (response === 'show-loading') {
-          snackbarKey = enqueueSnackbar(getString('path_editor_status_started_loading'), {
-            persist: true,
-            preventDuplicate: true,
-          })
-        }
-      })
-      .catch(error => console.error)
-  }, [
-    enqueueSnackbar,
-    closeSnackbar,
-    apollo_client,
-    getString,
-    setLoadingContent,
-    setCanEdit,
-    slug,
-    setType,
-    setContent
-  ])
-
-  const handleSave = useCallback(() => {
-    let snackbarKey = null
-
-    const block = {
-      _id,
-      type,
-      properties,
-      content: content || [],
     }
-
-    const loadingDataPromise = new Promise(resolve => {
-      apollo_client.mutate({
-        mutation: saveBlock_Mutation,
-        variables: {
-          block,
-        },
-      })
-        .then(async ({ data }) => {
-          resolve('got-data')
-
-          if (snackbarKey !== null) {
-            closeSnackbar(snackbarKey)
-          }
-
-          if (typeof data.error === 'string') {
-            if (data.error === 'no_edit_permission') {
-              enqueueSnackbar(getString('path_editor_edit_permission_error'), {
-                variant: 'error',
-                preventDuplicate: true,
-                autoHideDuration: 2000,
-              })
-            } else {
-              enqueueSnackbar('' + data.error, {
-                variant: 'error',
-                preventDuplicate: true,
-                autoHideDuration: 2000,
-              })
-            }
-          } else {
-            enqueueSnackbar(getString('path_editor_status_saved'), {
-              variant: 'success',
-              preventDuplicate: false,
-              autoHideDuration: 2000,
-            })
-          }
-        })
-        .catch(async error => {
-          console.error(error)
-          resolve('got-error')
-
-          if (snackbarKey !== null) {
-            closeSnackbar(snackbarKey)
-          }
-
-          enqueueSnackbar(getString('path_editor_status_error_while_saving', {
-            error: error.message,
-          }), {
-            variant: 'error',
-            preventDuplicate: true,
-            autoHideDuration: 2000,
-          })
-        })
-    })
-
-    // Show a loading-info-snackbar if loading the data takes too long.
-    Promise.race([
-      new Promise(resolve => {
-        setTimeout(() => {
-          resolve('show-loading')
-        }, 300)
-      }),
-      loadingDataPromise,
-    ])
-      .then(response => {
-        if (response === 'show-loading') {
-          snackbarKey = enqueueSnackbar(getString('path_editor_status_started_saving'), {
-            persist: true,
-            preventDuplicate: true,
-          })
-        }
-      })
-      .catch(error => console.error)
   }, [
-    enqueueSnackbar,
-    closeSnackbar,
-    apollo_client,
-    getString,
-    _id,
-    type,
-    properties,
-    content,
+    loadBlock,
+    setBlock,
+    id,
   ])
 
-  const viewStatistics = useCallback(()=>{
-    const a = document.createElement('a')
-    a.href = `https://umami.qiekub.org/share/s0ZHBZbb/volt.link?url=%2F${slug}`
-    a.target = '_blank'
-    a.rel = 'noreferrer'
-    a.click()
-  }, [slug])
+  const saveType = useCallback(newType => {
+    if (newType !== block.type) {
+      const newBlock = {
+        ...block,
+        type: newType,
+      }
 
-  const gotoQrcodePage = () => {
-    const a = document.createElement('a')
-    a.href = `https://qrcode.volt.link/?c=volt.link/${slug}`
-    a.target = '_blank'
-    a.rel = 'noreferrer'
-    a.click()
-  }
+      saveBlock(newBlock)
+        .then(gottenBlock => {
+          setBlock(gottenBlock)
+        })
+    }
+  }, [block, saveBlock, setBlock])
+
+  const saveProperties = useCallback(newProperties => {
+    if (newProperties !== block.properties) {
+      const newBlock = {
+        ...block,
+        properties: newProperties,
+      }
+
+      saveBlock(newBlock)
+        .then(gottenBlock => {
+          setBlock(gottenBlock)
+        })
+    }
+  }, [block, saveBlock, setBlock])
+
+  const saveContent = useCallback(newContent => {
+    if (newContent !== block.content) {
+      const newBlock = {
+        ...block,
+        content: newContent,
+      }
+
+      saveBlock(newBlock)
+        .then(gottenBlock => {
+          setBlock(gottenBlock)
+        })
+    }
+  }, [block, saveBlock, setBlock])
+
+  const savePermissions = useCallback(newPermissions => {
+    if (newPermissions !== block.permissions) {
+      const newBlock = {
+        ...block,
+        permissions: newPermissions,
+      }
+
+      saveBlock(newBlock)
+        .then(gottenBlock => {
+          setBlock(gottenBlock)
+        })
+    }
+  }, [block, saveBlock, setBlock])
+
+  const manuallySaveEverything = useCallback(() => {
+    saveBlock(block)
+      .then(gottenBlock => {
+        if (gottenBlock._id !== block._id) {
+          setBlock(gottenBlock)
+        }
+      })
+  }, [saveBlock, block, setBlock])
+
+  // const isFirstRun = useRef(true)
+  // useEffect(() => {
+  //   if (isFirstRun.current) {
+  //     isFirstRun.current = false
+  //     return;
+  //   }
+  //
+  //   if (
+  //     Object.keys(block).length > 0
+  //     && JSON.stringify(initialBlock) !== JSON.stringify(block)
+  //   ) {
+  //     console.log('initialBlock', initialBlock)
+  //     console.log('block', block)
+  //   }
+  // }, [isFirstRun, initialBlock, block])
+
+  if (typeof id === 'string' && id.length > 0) {
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     {/* <button className="text"><Localized id="path_editor_share"/></button> */}
-    <button className="text hasIcon" onClick={gotoQrcodePage}>
-      <span style={{pointerEvents: 'none'}}>
-        <QrCodeIcon className="icon" />
-        <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_qrcode" /></span>
-      </span>
+
+
+    <LocalesMenu
+      trigger={triggerProps => (
+        <button {...triggerProps} className="text hasIcon">
+          <TranslateIcon className="icon" />
+          <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>
+            {/* <Localized id="path_editor_translate" /> */}
+            {getString('locale_'+currentLocale)}
+          </span>
+        </button>
+      )}
+    />
+
+    {
+      isSharingEditorOpen
+      ? <SharingEditor
+          defaultBlock={block}
+          open={isSharingEditorOpen}
+          onClose={closeSharingEditor}
+          onChange={savePermissions}
+        />
+      : null
+    }
+    <button className="text hasIcon" onClick={openSharingEditor}>
+      <ShareIcon className="icon" />
+      <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_share" /></span>
     </button>
-    <button className="text hasIcon" onClick={viewStatistics}>
-      <span style={{pointerEvents: 'none'}}>
-        <AssessmentIcon className="icon" />
-        <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_statistics" /></span>
-      </span>
+
+    {
+      isPermissionsEditorOpen
+      ? <PermissionsEditor
+          defaultPermissions={permissions}
+          open={isPermissionsEditorOpen}
+          onClose={closePermissionsEditor}
+          onChange={savePermissions}
+        />
+      : null
+    }
+    <button className="text hasIcon" onClick={openPermissionsEditor}>
+      <PermissionsIcon className="icon" />
+      <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_permissions" /></span>
     </button>
-    <button className="green hasIcon" onClick={handleSave}>
-      <span style={{pointerEvents: 'none'}}>
-        <PublishIcon className="icon" />
-        <span style={{verticalAlign: 'middle'}}><Localized id="path_editor_save" /></span>
-      </span>
+
+    <button className="text hasIcon" onClick={manuallySaveEverything}>
+      <SaveIcon className="icon" />
+      <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_save" /></span>
     </button>
 
     <BlockMenu
       {...{
         type,
-        setType,
+        setType: saveType,
       }}
 
       trigger={props => (
@@ -316,41 +236,37 @@ function Editor({ getString }) {
           {...props}
           className="white hasIcon"
         >
-          <span style={{pointerEvents: 'none'}}>
-            <MenuIcon className="icon" />
-          </span>
+          <BlockMenuIcon className="icon" />
         </button>
       )}
     />
   </div>
 
-  return <div
-    className={`hasHeader ${classes.editor} ${loadingContent ? classes.loadingContent : ''}`}
-  >
+  return <div className={`hasHeader ${classes.editor}`}>
     <Header
-      title={<a href={`https://volt.link/${slug}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{slug}</a>}
-      rightActions={canEdit ? rightHeaderActions : null}
+      // title={<a href={`https://volt.link/${slug}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{slug}</a>}
+      title={
+        <button className="text hasIcon" style={{ margin: '0' }}>
+          <BackIcon className="icon"/>
+        </button>
+      }
+      rightActions={rightHeaderActions}
     />
 
-    {
-      canEdit
-        ? <>
-          {/* <OverflowMenu key="OverflowMenu" /> */}
+    <PropertiesEditor
+      type={type}
+      defaultProperties={properties}
+      onChange={saveProperties}
+    />
 
-          <PropertiesEditor
-            type={type}
-            defaultProperties={properties}
-            onChange={handlePropertiesChange}
-          />
-
-          <ContentEditor
-            onChange={handleChange_Content}
-            defaultValue={content}
-          />
-        </>
-        : <p style={{ marginTop: 'var(--basis)' }}><Localized id="path_editor_edit_permission_error" /></p>
-    }
+    <ContentEditor
+      onChange={saveContent}
+      defaultValue={content}
+    />
   </div>
+  }
+
+  return null
 }
 
-export default withLocalization(Editor)
+export default Editor

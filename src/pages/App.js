@@ -26,8 +26,8 @@ function App({ getString }) {
   const [, loggedIn] = useUser()
 
   const history = useHistory()
-  const menuRouteMatch = useRouteMatch("/:slug")
-  const selected_route = menuRouteMatch ? menuRouteMatch.params.slug : ''
+  const menuRouteMatch = useRouteMatch("/:id")
+  const selected_route = menuRouteMatch ? menuRouteMatch.params.id : ''
 
   const handleMenu = new_selected => {
     switch (new_selected) {

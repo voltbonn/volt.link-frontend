@@ -3,35 +3,30 @@ import { useCallback } from 'react'
 import { useLocalization } from '../fluent/Localized.js'
 
 import { useApolloClient } from '@apollo/client'
-import { saveBlock_Mutation } from '../graphql/mutations.js'
+import { getBlock_Query } from '../graphql/queries'
 
 import { useSnackbar } from 'notistack'
 
-function useSaveBlock() {
+function useLoadBlock() {
   const { getString } = useLocalization()
 
   const apollo_client = useApolloClient()
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
-  const handleSaveBlock = useCallback((newBlock) => {
+  const handleLoadBlock = useCallback(_id => {
     return new Promise(final_resolve => {
-      let snackbarKey = null
+    let snackbarKey = null
 
-      newBlock = {...newBlock}
-
-      if (
-        typeof newBlock === 'object'
-        && newBlock !== null
-        && newBlock.hasOwnProperty('__typename')
-      ) {
-        delete newBlock.__typename
-      }
-
+    if (!_id || _id === '') {
+      final_resolve({
+        type: 'text',
+      })
+    } else {
       const loadingDataPromise = new Promise(resolve => {
-        apollo_client.mutate({
-          mutation: saveBlock_Mutation,
+        apollo_client.query({
+          query: getBlock_Query,
           variables: {
-            block: newBlock
+            _id,
           },
         })
           .then(async ({ data }) => {
@@ -41,44 +36,34 @@ function useSaveBlock() {
               closeSnackbar(snackbarKey)
             }
 
-            if (typeof data.error === 'string') {
+            if (typeof data.error === 'string' || !data.block) {
               if (data.error === 'no_edit_permission') {
                 enqueueSnackbar(getString('path_editor_edit_permission_error'), {
                   variant: 'error',
                   preventDuplicate: true,
-                  autoHideDuration: 2000,
+                  autoHideDuration: 5000,
                 })
               } else {
                 enqueueSnackbar('' + data.error, {
                   variant: 'error',
                   preventDuplicate: true,
-                  autoHideDuration: 2000,
+                  autoHideDuration: 5000,
                 })
               }
-            } else {
-              final_resolve({
-                ...newBlock,
-                _id: data.saveBlock,
-              })
-
-              enqueueSnackbar(getString('path_editor_status_saved'), {
-                variant: 'success',
-                preventDuplicate: false,
-                autoHideDuration: 2000,
-              })
+            }else{
+              const loadedBlock = data.block
+              final_resolve(loadedBlock)
             }
           })
           .catch(async error => {
-            console.error(error)
+            console.error('error', error)
             resolve('got-error')
 
             if (snackbarKey !== null) {
               closeSnackbar(snackbarKey)
             }
 
-            enqueueSnackbar(getString('path_editor_status_error_while_saving', {
-              error: error.message,
-            }), {
+            enqueueSnackbar('[could not load data] '+error.message, {
               variant: 'error',
               preventDuplicate: true,
               autoHideDuration: 2000,
@@ -104,7 +89,7 @@ function useSaveBlock() {
           }
         })
         .catch(error => console.error)
-
+    }
     })
   }, [
     enqueueSnackbar,
@@ -113,7 +98,7 @@ function useSaveBlock() {
     getString,
   ])
 
-  return handleSaveBlock
+  return handleLoadBlock
 }
 
-export default useSaveBlock
+export default useLoadBlock

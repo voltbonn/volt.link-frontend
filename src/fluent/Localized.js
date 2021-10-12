@@ -65,10 +65,11 @@ function useLocalization() {
 
   const getString = (id, args, fallback) => l10n.getString(id, args, fallback || ' ')
 
-  return { getString }
+  return { ...l10n, getString }
 }
 
 export {
+  negotiateLanguages,
   withLocalization,
   Localized,
   Localized as default,

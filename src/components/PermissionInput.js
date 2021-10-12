@@ -4,8 +4,6 @@ function PermissionInput({ reorderHandle, actionButton, defaultValue, children, 
   const [changedRole, setChangedRole] = useState(defaultValue.role || 'editor')
   const [changedValue, setChangedValue] = useState(defaultValue.value)
 
-  console.log('defaultValue', defaultValue)
-
   const handleRoleChange = useCallback((event) => {
     setChangedRole(event.target.value)
     if (onChange) {

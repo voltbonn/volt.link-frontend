@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import 'intl-pluralrules'
 import { AppLocalizationProvider, locales } from './fluent/l10n.js'
+import { TranslatedInputProvider } from './components/TranslatedInput.js'
 
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -39,7 +40,7 @@ const client = new ApolloClient({
 //       }
 //     `
 //   })
-//   .then(result => console.log(result));
+//   .then(result => console.info(result));
 
 
 
@@ -116,7 +117,9 @@ function AppLanguageWrapper() {
           }}
           domRoot={document.getElementById('react-notification')}
         >
-          <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
+          <TranslatedInputProvider>
+            <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
+          </TranslatedInputProvider>
         </SnackbarProvider>
       </ThemeProvider>
     </ApolloProvider>
@@ -132,6 +135,6 @@ ReactDOM.render(
 )
 
 // If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
+// to log results (for example: reportWebVitals(console.info))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 // reportWebVitals()

@@ -109,7 +109,6 @@ function useOverflowMenu () {
 
 function OverflowMenu () {
   const menuItems = window.menuItems
-  console.log('rerender OverflowMenu', menuItems)
 
   return <div className="OverflowMenu">
     {Object.keys(menuItems || {}).map((key) => {

@@ -34,39 +34,43 @@ function InlineEditorBlockButtonRaw({
   }
 
   const handleTextChange = useCallback(newTextValue => {
-    const newValue = text
-    .map(t => {
-      if (t.locale === currentLocale) {
-        t.value = newTextValue
+    let newValue = [...text]
+    if (text.length > 0) {
+      if (newValue.findIndex(t => t.locale === currentLocale) > -1) {
+        newValue = newValue.map(t => {
+          if (t.locale === currentLocale) {
+            return {
+              ...t,
+              value: newTextValue,
+            }
+          }
+          return t
+        })
+      } else {
+        newValue = [
+          ...newValue,
+          {locale: currentLocale, value: newTextValue},
+        ]
       }
-      return t
-    })
+    } else {
+      newValue = [{locale: currentLocale, value: newTextValue}]
+    }
+
     setText(newValue)
+  }, [setText, text, currentLocale])
 
+  const publishChanges = useCallback(() => {
     if (onChange) {
       onChange({
         ...block,
         properties: {
           ...block.properties,
-          text: newValue,
+          text,
+          link,
         },
       })
     }
-  }, [setText, onChange, block, text, currentLocale])
-
-  const handleLinkChange = useCallback(newLinkValue => {
-    setLink(newLinkValue)
-
-    if (onChange) {
-      onChange({
-        ...block,
-        properties: {
-          ...block.properties,
-          link: newLinkValue,
-        },
-      })
-    }
-  }, [setLink, onChange, block])
+  }, [onChange, block, text, link])
 
   return <div style={{
     padding: 'var(--basis) 0',
@@ -74,7 +78,8 @@ function InlineEditorBlockButtonRaw({
     <HtmlInput
       placeholder={getString('placeholder_button')}
       defaultValue={currentText}
-      onBlur={handleTextChange}
+      onChange={handleTextChange}
+      onBlur={publishChanges}
       style={{ margin: '0' }}
       linebreaks={true}
       className="hide_border type_button"
@@ -88,7 +93,8 @@ function InlineEditorBlockButtonRaw({
       {({ setError }) => (
         <UrlInput
           onError={setError}
-          onChange={handleLinkChange}
+          onChange={setLink}
+          onBlur={publishChanges}
           type="text"
           defaultValue={link}
           placeholder={getString('path_editor_item_link_label')}

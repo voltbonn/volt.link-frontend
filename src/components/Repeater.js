@@ -225,8 +225,6 @@ function Repeater({
       new_rows.splice(index + offset, 0, newValue)
     }
 
-    console.log('new_rows', new_rows)
-
     setRows(new_rows)
     onChange(new_rows)
   }, [rows, internalAddDefaultValue, setRows, onChange])

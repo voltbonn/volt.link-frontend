@@ -1,3 +1,7 @@
+locale_de = Deutsch
+locale_en = Englisch
+locale_fr = Französisch
+
 default_locale = de
 
 login = Anmelden

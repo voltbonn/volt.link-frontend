@@ -1,0 +1,56 @@
+.dialog {
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+
+  width: auto;
+  max-width: calc(100% - var(--basis_x8));
+  max-height: calc(100% - var(--basis_x8));
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  padding: var(--basis_x8);
+  background: var(--background);
+  margin-bottom: var(--basis_x8);
+  /* box-shadow: var(--basis_x2) var(--basis_x2) 0 0 var(--on-background); */
+}
+@media (max-width: 600px) {
+  .dialog {
+    padding: var(--basis_x4);
+  }
+}
+.dialog h1 {
+  margin: 0 0 var(--basis_x4) 0;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(var(--background-contrast-rgb), 0.6);
+  cursor: pointer;
+}
+
+.dialog h1 {
+  display: inline-block;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: flex-start;
+  width: 500px;
+  max-width: 100%;
+}
+.inputWrapper .input {
+  flex-grow: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}

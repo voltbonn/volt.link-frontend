@@ -2,9 +2,17 @@ import { useState, useEffect, useCallback } from 'react'
 
 import { v4 as uuidv4 } from 'uuid'
 
-import { withLocalization } from '../fluent/Localized.js'
-import Repeater from '../components/Repeater.js'
+import {
+  Add as AddIcon,
+} from '@mui/icons-material'
+
+import { Localized } from '../fluent/Localized.js'
 import InlineEditorBlock from '../components/InlineEditorBlock.js'
+
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
+
+import classes from './Repeater.module.css'
 
 // function stripTmpIds(array){
 //   return [...array].map(obj => {
@@ -93,32 +101,45 @@ function moveCursorToOffsetInLine(contentEditableElement, lastLineStartNode, off
   }
 }
 
-function ContentEditor({ getString, defaultValue, onChange }) {
-  const [blocks, setBlocks] = useState([])
+function reorder(list, startIndex, endIndex) {
+  const result = Array.from(list)
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
+
+  return result
+}
+
+function ContentEditor({ defaultValue = [], onChange }) {
+  const [contentConfigs, setContentConfigs] = useState([])
   const [inputRefs, setInputRefs] = useState({})
 
   useEffect(()=>{
-    if (blocks.length === 0) {
-      let newBlocks = defaultValue || []
-      newBlocks = addTmpIds(newBlocks)
-      setBlocks(newBlocks)
+    if (contentConfigs.length === 0) {
+      if (defaultValue.length > 0) {
+        let newContentConfigs = addTmpIds(defaultValue)
+        setContentConfigs(newContentConfigs)
+      }
     }
-  }, [blocks, defaultValue, setBlocks])
+  }, [contentConfigs, defaultValue, setContentConfigs])
 
-  const saveInputRef = useCallback((inputRef, dataset) => {
+  const saveInputRef = useCallback((keys, inputRef) => {
     const newInputRefs = {...inputRefs}
-    if (!newInputRefs.hasOwnProperty(dataset['data-id'])) {
-      newInputRefs[dataset['data-id']] = inputRef
+
+    if (
+      !newInputRefs.hasOwnProperty(keys.tmp_id)
+      || newInputRefs[keys.tmp_id] !== inputRef
+    ) {
+      newInputRefs[keys.tmp_id] = inputRef
       setInputRefs(newInputRefs)
     }
   }, [ inputRefs, setInputRefs ])
 
-  const goToPrevInput = useCallback(({ caret }, dataset) => {
-    const index = dataset['data-index']
+  const goToPrevInput = useCallback((keys, { caret }) => {
+    const index = keys.index
 
     let prevInputRef = null
-    for (let thisIndex = blocks.length-1; thisIndex >= 0; thisIndex--) {
-      const tmp_id = blocks[thisIndex].tmp_id
+    for (let thisIndex = contentConfigs.length-1; thisIndex >= 0; thisIndex--) {
+      const tmp_id = contentConfigs[thisIndex].tmp_id
       if (thisIndex < index && inputRefs[tmp_id] && inputRefs[tmp_id].current) {
         prevInputRef = inputRefs[tmp_id]
         break
@@ -129,14 +150,14 @@ function ContentEditor({ getString, defaultValue, onChange }) {
       const lastLineStartNode = getLastLineStartNode(prevInputRef.current)
       moveCursorToOffsetInLine(prevInputRef.current, lastLineStartNode, caret.positionFromLineStart)
     }
-  }, [ blocks, inputRefs ])
+  }, [ contentConfigs, inputRefs ])
 
-  const goToNextInput = useCallback(({ caret }, dataset) => {
-    const index = dataset['data-index']
+  const goToNextInput = useCallback((keys, { caret }) => {
+    const index = keys.index
 
     let nextInputRef = null
-    for (let thisIndex = 0; thisIndex < blocks.length; thisIndex++) {
-      const tmp_id = blocks[thisIndex].tmp_id
+    for (let thisIndex = 0; thisIndex < contentConfigs.length; thisIndex++) {
+      const tmp_id = contentConfigs[thisIndex].tmp_id
       if (thisIndex > index && inputRefs[tmp_id] && inputRefs[tmp_id].current) {
         nextInputRef = inputRefs[tmp_id]
         break
@@ -147,12 +168,12 @@ function ContentEditor({ getString, defaultValue, onChange }) {
       const firstLineStartNode = getFirstLineStartNode(nextInputRef.current)
       moveCursorToOffsetInLine(nextInputRef.current, firstLineStartNode, caret.positionFromLineStart)
     }
-  }, [ blocks, inputRefs ])
+  }, [ contentConfigs, inputRefs ])
 
   const focusLastLine = useCallback(() => {
     let lastInputRef = null
-    for (let thisIndex = blocks.length-1; thisIndex >= 0; thisIndex--) {
-      const tmp_id = blocks[thisIndex].tmp_id
+    for (let thisIndex = contentConfigs.length-1; thisIndex >= 0; thisIndex--) {
+      const tmp_id = contentConfigs[thisIndex].tmp_id
       if (inputRefs[tmp_id] && inputRefs[tmp_id].current) {
         lastInputRef = inputRefs[tmp_id]
         break
@@ -163,17 +184,13 @@ function ContentEditor({ getString, defaultValue, onChange }) {
       const lastLineStartNode = getLastLineStartNode(lastInputRef.current)
       moveCursorToOffsetInLine(lastInputRef.current, lastLineStartNode, -1)
     }
-  }, [ blocks, inputRefs ])
+  }, [ contentConfigs, inputRefs ])
 
-  const onSplitText = useCallback(({ blocks: replacerBlocks }, dataset) => {
-    console.log('replacerBlocks', replacerBlocks)
+  /*const splitText = useCallback((keys, { blocks: replacerBlocks }) => {
+    // const index = keys.index
 
-    const index = dataset['data-index']
-    console.log('index', index)
-
-    const newBlocks = [...blocks].splice(index, 0, ...replacerBlocks)
-    console.log('newBlocks', newBlocks)
-    setBlocks(newBlocks)
+    // const newBlocks = [...blocks].splice(index, 0, ...replacerBlocks)
+    // setContentConfigs(newBlocks)
 
     // let nextInputRef = null
     // for (let thisIndex = 0; thisIndex < blocks.length; thisIndex++) {
@@ -184,70 +201,184 @@ function ContentEditor({ getString, defaultValue, onChange }) {
     //   }
     // }
 
-    // console.log('nextInputRef', nextInputRef)
-
     // if (nextInputRef) {
     //   const firstLineStartNode = getFirstLineStartNode(nextInputRef.current)
     //   moveCursorToOffsetInLine(nextInputRef.current, firstLineStartNode, caret.positionFromLineStart)
     // }
-  }, [ blocks, setBlocks ]) // blocks, inputRefs
+  }, []) // blocks, inputRefs
+  */
 
-  const handleChange = useCallback((rows) => {
-    console.log('rows', rows)
-    setBlocks(rows)
-    // onChange(
-    //   rows
-    //   .filter(Boolean)
-    //   .map(row => ({
-    //     tmp_id: row.tmp_id,
-    //     blockId: row.blockId,
-    //   }))
-    // )
-  }, [ setBlocks, onChange ])
+  const handleRowChange = useCallback((keys, newContentConfig) => {
+    const newContentConfigs = [...contentConfigs]
+      .map(oldContentConfig => {
+        if (oldContentConfig.tmp_id === keys.tmp_id) {
+          return {
+            ...oldContentConfig,
+            ...newContentConfig,
+          }
+        }
+        return oldContentConfig
+      })
+
+    setContentConfigs(newContentConfigs)
+    onChange(newContentConfigs)
+  }, [contentConfigs, setContentConfigs, onChange])
+
+  const addRowByIndex = useCallback((index, offset = 0, newValue) => {
+    if (typeof newValue === 'object') {
+      newValue = {
+        tmp_id: uuidv4(),
+        ...newValue,
+      }
+    } else {
+      newValue = newValue || { tmp_id: uuidv4() }
+    }
+
+    if (typeof index === 'number' && !isNaN(index)) {
+      let new_rows = [...contentConfigs]
+      new_rows.splice(index + offset, 0, newValue)
+      setContentConfigs(new_rows)
+      onChange(new_rows)
+    }
+  }, [contentConfigs, setContentConfigs, onChange])
+
+
+  function onDragEnd(result) {
+    if (!result.destination) {
+      return
+    }
+
+    if (result.destination.index === result.source.index) {
+      return
+    }
+
+    const newContentConfigs = reorder(
+      contentConfigs,
+      result.source.index,
+      result.destination.index
+    )
+
+    setContentConfigs(newContentConfigs)
+    onChange(newContentConfigs)
+  }
+
+  const filteredContentConfigs = contentConfigs
+    .filter(contentConfig => contentConfig.tmp_id)
 
   return <>
   <div
     style={{
+      position: 'relative',
       width: 'calc(1000px + var(--basis_x8))',
       maxWidth: '100%',
       margin: 'var(--basis_x8) auto 0 auto',
     }}
   >
-    <Repeater
-      onChange={handleChange}
-      defaultValue={blocks}
-      addDefaultValue={() => ({ tmp_id: uuidv4(), blockId: null })}
-      hideAddButton={true}
-      reorderLabel={getString('content_editor_reorderblock_label')}
-      showActionButton={false}
-      isReorderable={true}
-      render={
-        ({ defaultValue, ...repeater_props }) => {
-          const dataset = repeater_props.dataset || {}
-          return <InlineEditorBlock
-            defaultContentConfig={defaultValue}
-            onInputRef={(inputRef) => saveInputRef(inputRef, dataset)}
-            onGoToPrevInput={(attr) => goToPrevInput(attr, dataset)}
-            onGoToNextInput={(attr) => goToNextInput(attr, dataset)}
-            onSplitText={(attr) => onSplitText(attr, dataset)}
-            // onSplitText,
-            // onMergeToPrevInput,
-            // onMergeToNextInput,
-            {...repeater_props}
-          />
-        }
-      }
-    />
+    <div>
+      <button
+        onClick={() => addRowByIndex(0, 0, {})}
+        className="text hasIcon"
+        style={{
+          margin: '0 0 var(--basis_x2) 0',
+        }}
+      >
+        <span style={{pointerEvents: 'none'}}>
+          <AddIcon className="icon" />
+          <span style={{marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>
+            <Localized id="add_content_before" />
+          </span>
+        </span>
+      </button>
+    </div>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable
+        droppableId="list"
+        isDropDisabled={false}
+      >
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {
+              filteredContentConfigs
+              .map(
+                (contentConfig, index) => {
+                  const tmp_id = contentConfig.tmp_id
+                  const keys = {
+                    index,
+                    tmp_id,
+                  }
+
+                  return <Draggable
+                    key={tmp_id}
+                    draggableId={tmp_id}
+                    index={index}
+                    isDragDisabled={false}
+                    disableInteractiveElementBlocking={true}
+                    shouldRespectForcePress={true}
+                  >
+                    {provided => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+
+                        key={tmp_id}
+                        className={classes.row}
+                      >
+                      <div className={classes.form}>
+                        <InlineEditorBlock
+                          key={tmp_id}
+                          className={classes.item}
+                          dataset={{
+                            'data-index': index,
+                            'data-id': tmp_id,
+                          }}
+                          defaultContentConfig={contentConfig}
+
+                          reorderHandle={
+                            <button
+                              className={`text ${classes.inlineRowButton} ${classes.dragHandleButton}`}
+                              {...provided.dragHandleProps}
+                            >
+                              <DragIndicatorIcon />
+                            </button>
+                          }
+
+                          onRemoveRow={ () => {/*handleRemoveRow(index)*/} }
+                          addRowBefore={ (newValue) => addRowByIndex(index, 0, newValue) }
+                          addRowAfter={ (newValue) => addRowByIndex(index, 1, newValue) }
+
+                          onInputRef={(inputRef) => saveInputRef(keys, inputRef)}
+                          onGoToPrevInput={(attr) => goToPrevInput(keys, attr)}
+                          onGoToNextInput={(attr) => goToNextInput(keys, attr)}
+                          // onSplitText={(attr) => splitText(keys, attr)}
+                          onChange={(attr) => handleRowChange(keys, attr)}
+                          // onSplitText,
+                          // onMergeToPrevInput,
+                          // onMergeToNextInput,
+                          // {...repeater_props}
+                        />
+                      </div>
+                    </div>
+                    )}
+                  </Draggable>
+                }
+              )
+            }
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
   </div>
+
   <div
     style={{
       position: 'relative',
       height: '50vh',
-      cursor: 'text',
+      cursor: (filteredContentConfigs.length === 0 ? 'default' : 'text'),
     }}
-    onClick={focusLastLine}
+    onClick={filteredContentConfigs.length === 0 ? null : focusLastLine}
   ></div>
   </>
 }
 
-export default withLocalization(ContentEditor)
+export default ContentEditor

@@ -1,3 +1,10 @@
+locale_de = German
+locale_en = English
+locale_fr = French
+locale_menu_choose_locale_label = Choose Locale
+locale_menu_hide_translation_help_label = Hide Translation Help
+locale_menu_show_translation_help_label = Show Translation Help
+
 default_locale = en
 
 main_menu = Menu
@@ -47,9 +54,12 @@ path_editor_status_started_saving = Started saving…
 path_editor_status_saved = Saved!
 path_editor_status_error_while_saving = Error while saving! Please try again later. (The error: "{$error}")
 
+path_editor_translate = Translate
 path_editor_share = Share
-path_editor_qrcode = QR-Code
-path_editor_statistics = Statistics
+path_editor_permissions = Permissions
+sharing_qrcode = QR-Code
+sharing_statistics = Statistics
+sharing_copy_url = Copy URL
 
 path_editor_title_label = Title
 path_editor_title_placeholder = Volt Bonn
@@ -99,9 +109,11 @@ path_editor_imprint_info = Leave empty for Volt Europa imprint.
 path_editor_privacy_policy_label = Privacy-Policy Link
 path_editor_privacy_policy_info = Leave empty for Volt Europa privacy policy.
 
+add_content_before = Add Content
 content_editor_reorderblock_label = Reorder
 
 block_menu_choose_type_label = Choose Block Type
+
 block_menu_type_label_page = Page
 block_menu_type_label_redirect = Redirect
 block_menu_type_label_person = Person
@@ -109,6 +121,8 @@ block_menu_type_label_button = Button
 block_menu_type_label_headline = Headline
 block_menu_type_label_headline3 = Headline 3
 block_menu_type_label_text = Text
+block_menu_type_label_divider = Divider
+
 block_menu_close_menu = Close Menu
 block_menu_delete = Delete Block
 block_menu_add_before = Add Block Before
@@ -123,6 +137,11 @@ error_invalid_url = Please enter a valid url. Maybe start the url with "https://
 error_invalid_mailto_url = The email address is invalid. Maybe start the address with "mailto:".
 error_invalid_email = The email address is invalid.
 
+placeholder_main_headline = Untitled
 placeholder_headline = Headline
 placeholder_button = Button
 placeholder_text = Text
+
+role-owner = Owner
+role-editor = Editor
+role-viewer = Viewer

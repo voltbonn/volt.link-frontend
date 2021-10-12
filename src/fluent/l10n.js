@@ -13,7 +13,7 @@ export const locales = {
   en: 'English',
   // es: 'Español',
   // pt: 'Português',
-  // fr: 'Français',
+  fr: 'Français',
   // it: 'Italiano',
   // nl: 'Dutch',
   // pl: 'Polska',

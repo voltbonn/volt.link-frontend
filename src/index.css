@@ -84,6 +84,7 @@ html {
   --background-contrast: var(--grey);
   --background-contrast-rgb: var(--grey-rgb);
   --on-background: var(--purple);
+  --on-background-rgb: var(--purple-rgb);
   --on-background-contrast: var(--purple-dark);
 
   --input-background: var(--background);
@@ -96,6 +97,7 @@ html {
     --background-contrast: var(--purple);
     --background-contrast-rgb: var(--purple-rgb);
     --on-background: var(--white);
+    --on-background-rgb: var(--white-rgb);
     --on-background-contrast: var(--dark-grey);
 
     --input-background: var(--background);
@@ -400,6 +402,9 @@ button.hasIcon .icon.image {
   margin-right: calc(-2 * var(--basis)) !important;
   margin-bottom: calc(-1 * var(--basis));
   margin-left: calc(-2 * var(--basis)) !important;
+}
+button.hasIcon span{
+  vertical-align: middle;
 }
 
 hr {

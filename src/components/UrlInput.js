@@ -17,7 +17,7 @@ function UrlInput({
 
   const handleTextChange = useCallback((event) => {
     const value = event.target.value || ''
-    let isSubmittable = false
+    // let isSubmittable = false
     let error = ''
 
     if (value !== '') {
@@ -26,16 +26,16 @@ function UrlInput({
       const after_schema = schema_parts.join(':')
 
       if (schema === 'tel') {
-        isSubmittable = true
+        // isSubmittable = true
       } else if (schema === 'mailto' || value.match(is_email_not_url_regex)) {
         if (after_schema.match(email_regex)) {
-          isSubmittable = true
+          // isSubmittable = true
         } else {
           error = 'invalid_mailto_url'
         }
       } else {
         if (value.match(url_regex)) {
-          isSubmittable = true
+          // isSubmittable = true
         } else {
           error = 'invalid_url'
         }
@@ -54,10 +54,10 @@ function UrlInput({
   }, [onChange, onError])
 
   const handleBlur = useCallback(() => {
-    if (onBlur && text !== defaultValue) {
+    if (onBlur) {
       onBlur(text)
     }
-  }, [onBlur, text, defaultValue])
+  }, [onBlur, text])
 
   return <input
     type="url"

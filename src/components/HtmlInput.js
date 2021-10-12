@@ -152,40 +152,50 @@ function HtmlInput({
   ...props
 }) {
   const inputRef = useRef(null)
-  const fake_defaultValue = useRef({__html:
-    defaultValue
-    // .replace(/\t/g, '&emsp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    // .replace(/\n/g, '<br />')
-  })
-  const [text, setText] = useState(defaultValue)
+  const [text, setText] = useState('')
+  const [fakeDefaultValue, setFakeDefaultValue] = useState({ __html: '' })
+
+  useEffect(() => {
+    setText(old_text => {
+      if (old_text !== defaultValue) {
+        setFakeDefaultValue((old_fakeDefaultValue) => {
+          const newHtmlValue = defaultValue
+            // .replace(/\t/g, '&emsp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            // .replace(/\n/g, '<br />')
+
+          if (old_fakeDefaultValue.__html !== newHtmlValue) {
+            return {__html: newHtmlValue}
+          }
+          return old_fakeDefaultValue
+        })
+
+        return defaultValue
+      }
+      return old_text
+    })
+  }, [defaultValue, setText, setFakeDefaultValue])
 
   const handleTextChange = useCallback((event) => {
-    try {
-      let value = event.target.innerHTML || ''
-      // .replace(/&emsp;/g, '\t')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
+    let value = event.target.innerHTML || ''
+    // .replace(/&emsp;/g, '\t')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
 
-      if (linebreaks === false) {
-        value = value.replace(/<\/? ?br ?\/?>/g, ' ')
-      } else {
-        value = value.replace(/<\/? ?br ?\/?>/g, '\n')
-      }
-
-      value = value.trim()
-      setText(value)
-
-      if (onChange) {
-        onChange(value)
-      }
-    } catch (error) {
-      if (onError) {
-        onError(error)
-      }
+    if (linebreaks === false) {
+      value = value.replace(/<\/? ?br ?\/?>/g, ' ')
+    } else {
+      value = value.replace(/<\/? ?br ?\/?>/g, '\n')
     }
-  }, [onChange, onError, setText, linebreaks])
+
+    value = value.trim()
+    setText(value)
+
+    if (onChange) {
+      onChange(value)
+    }
+  }, [onChange, setText, linebreaks])
 
   const handleTextBlur = useCallback(() => {
     if (onBlur) {
@@ -306,7 +316,7 @@ function HtmlInput({
     onPaste={handlePaste}
     className={`${classes.rebuild_textarea} ${text.length === 0 ? classes.show_placeholder : ''} ${className}`}
     contentEditable={true}
-    dangerouslySetInnerHTML={fake_defaultValue.current}
+    dangerouslySetInnerHTML={fakeDefaultValue}
     style={style}
     placeholder={placeholder}
   />

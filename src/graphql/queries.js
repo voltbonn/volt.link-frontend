@@ -31,6 +31,10 @@ export const getBlockBySlug_Query = gql`
         lastModified
         created
       }
+      permissions {
+        email
+        role
+      }
     }
   }
 `
