@@ -212,7 +212,6 @@ function TranslatedInput({
   const [arrayWithLocales, setArrayWithLocales] = useState([])
 
   useEffect(() => {
-    console.log('defaultValue', defaultValue)
     if (Array.isArray(defaultValue)) {
       setArrayWithLocales(defaultValue)
     } else {
