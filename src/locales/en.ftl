@@ -20,6 +20,10 @@ login_prompt = Login in the upper right corner, to edit volt.link urls.
 contact = Contact
 source_code = Source Code
 
+create_new_page = Create New Page
+create_new_redirect = Create New Redirect
+create_new_person = Create New Person
+
 chooser_header_title = Edit Micropages
 headline_errors = Errors
 

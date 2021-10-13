@@ -38,3 +38,21 @@ export const getBlockBySlug_Query = gql`
     }
   }
 `
+
+export const getBlocksByType_Query = gql`
+  query getBlocksByType ($type: String!) {
+    blocksByType (type: $type) {
+      _id
+      type
+      properties
+      content {
+        blockId
+      }
+      parent
+      metadata {
+        lastModified
+        created
+      }
+    }
+  }
+`

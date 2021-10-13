@@ -1,26 +1,86 @@
 import { Fragment, useState, useCallback, useEffect } from 'react'
 import classes from './Chooser.module.css'
 
+import {
+  InsertDriveFileSharp as PageIcon,
+  LinkSharp as RedirectIcon,
+  PersonSharp as PersonIcon,
+  Crop75Sharp as ButtonIcon,
+  TitleSharp as HeadlineIcon,
+  NotesSharp as TextIcon,
+  Remove as DividerIcon,
+} from '@mui/icons-material'
+
+import { useApolloClient } from '@apollo/client'
+import { getBlocksByType_Query } from '../graphql/queries'
+import useSaveBlock from '../hooks/useSaveBlock.js'
+
 import { Link, useHistory } from 'react-router-dom'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
 import useKeyPress from '../hooks/useKeyPress.js'
 import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
-  const { getString, fluentByAny } = useLocalization()
+import MultiButton from '../components/MultiButton.js'
 
-function Chooser({ getString, rightHeaderActions }) {
+function Chooser({ leftHeaderActions, rightHeaderActions }) {
+  const { getString, fluentByAny } = useLocalization()
+  const apollo_client = useApolloClient()
+
+  const [type, setType] = useState('page')
+  const [blocks, setBlocks] = useState([])
+  const saveBlock = useSaveBlock()
+
   const [user, ] = useUser()
-  const username = user.username || ''
   const user_editable_links = (user.editable || [])
-  const [userPageAlreadyExists, setUserPageAlreadyExists] = useState(null)
 
   const history = useHistory()
-  const [forbidden, setForbidden] = useState({})
-  const [value, setValue] = useState('')
-  const [alreadyExists, setAlreadyExists] = useState(null)
-  const [error, setError] = useState('')
 
+  const queryBlocks = useCallback(type2query => {
+    apollo_client.query({
+      query: getBlocksByType_Query,
+      variables: {
+        type: type2query,
+      },
+    })
+      .then(async ({ data }) => {
+        if (typeof data.error === 'string' || !data.blocksByType) {
+          console.error('error', data.error)
+        } else {
+          setBlocks(data.blocksByType || [])
+        }
+      })
+      .catch(async error => {
+        console.error('error', error)
+      })
+  }, [ apollo_client, setBlocks ])
+
+  useEffect(() => {
+    queryBlocks(type)
+  }, [ queryBlocks, type ])
+
+  const handleTypeChange = useCallback(newType => {
+    setType(newType)
+    if (
+      typeof newType === 'string'
+      && newType !== ''
+      && newType !== type
+    ) {
+      queryBlocks(newType)
+    }
+  }, [ type, setType, queryBlocks ])
+
+  const createBlock = useCallback(() => {
+    saveBlock({ type })
+      .then(gottenBlock => {
+        history.push(`/edit/${gottenBlock._id}`)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }, [ saveBlock, history, type ])
+
+  /*
   useKeyPress(['Enter'], () => {
     history.push(`/edit/${value}`)
   })
@@ -93,94 +153,50 @@ function Chooser({ getString, rightHeaderActions }) {
         setForbidden({})
       })
   }, [setForbidden])
-
-  useEffect(() => {
-    const newValue = (username || '').toLowerCase()
-
-    if (newValue !== '') {
-      fetch(`${window.domains.backend}quickcheck/${newValue}`, {
-        mode: 'cors',
-        credentials: 'include',
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.allowed === false) {
-            setUserPageAlreadyExists(null)
-          } else {
-            if (data.exists === true) {
-              setUserPageAlreadyExists(true)
-            } else {
-              setUserPageAlreadyExists(false)
-            }
-          }
-        })
-        .catch(error => {
-          console.error(error)
-          setUserPageAlreadyExists(false)
-        })
-    } else {
-      setUserPageAlreadyExists(null)
-    }
-  }, [username, setUserPageAlreadyExists])
+  */
 
   return <div>
     <Header
-      title={<Localized id="chooser_header_title" />}
+      title="volt.link"
+      leftActions={leftHeaderActions || null}
       rightActions={rightHeaderActions || null}
     />
 
-    {
-      username !== ''
-        ? <>
-          <h2><Localized id={userPageAlreadyExists === true ? 'edit_user_page_headline' : 'create_user_page_headline'} /></h2>
-          <p><Localized id={userPageAlreadyExists === true ? 'edit_user_page_info' : 'create_user_page_info'} /></p>
-          <Link to={`/edit/${username}`}>
-            <button style={{ marginLeft: '0', marginRight: '0' }}>
-              <Localized
-                id={userPageAlreadyExists === true ? 'edit_user_page_button' : 'create_user_page_button'}
-                vars={{ username }}
-              />
-            </button>
-          </Link>
-          <br />
-          <br />
-        </>
-        : null
-    }
-    <h2><Localized id="chooser_any_link_headline" /></h2>
-    <p><Localized id="chooser_any_link_info" /></p>
+    <MultiButton
+      onChange={handleTypeChange}
+      defaultValue={type}
+      items={[
+        { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_page') },
+        { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_redirect') },
+        { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_person') },
+        // { value: 'button', icon: <ButtonIcon className="icon" />, title: getString('block_menu_type_label_button') },
+        // { value: 'headline', icon: <HeadlineIcon className="icon" />, title: getString('block_menu_type_label_headline') },
+        // { value: 'text', icon: <TextIcon className="icon" />, title: getString('block_menu_type_label_text') },
+        // { value: 'divider', icon: <DividerIcon className="icon" />, title: getString('block_menu_type_label_divider') },
+      ]}
+    />
 
-    <div className={`${classes.chooserInput} ${alreadyExists === null ? classes.hideSubmitButton : ''}`}>
-      <p className={classes.domainPrefix}>volt.link/</p>
-      <input type="text" placeholder={getString('type_a_path')} onChange={handleCheckIfPathExists}/>
-      {
-        alreadyExists === null
-          ? null
-          : <Link to={`/edit/${value}`}>
-              <button className="green">
-              {alreadyExists ? getString('edit_path_button') : getString('create_path_button')}
-              </button>
-            </Link>
-      }
-    </div>
-    {
-      error !== ''
-        ? <>
-          <h3 className="red"><Localized id="headline_errors" /></h3>
-          <p>{error}</p>
-        </>
-        : null
-    }
+    <br />
+    <br />
+    <button className="green" onClick={createBlock} style={{ margin: '0' }}>
+      <Localized id={'create_new_'+type} />
+    </button>
 
     {
       user_editable_links.length > 0
         ? <>
-          <br />
           <div className="buttonRow usesLinks">
             {
-              user_editable_links
-              .filter(content => content.slug.startsWith(value) || (content.slug.replace(/!/, '')).startsWith(value))
-              .map(content => <a key={content.slug} href={`/edit/${content.slug}`}><button>{content.slug}</button></a>)
+              blocks
+              .map(block => {
+                return <div key={block._id}>
+                  <hr />
+                  <pre>{fluentByAny(block.properties.text, `ObjectId("${block._id}")`)}</pre>
+                  <Link to={`/edit/${block._id}`}>
+                    <button>Edit</button>
+                  </Link>
+                </div>
+              })
             }
           </div>
         </>
