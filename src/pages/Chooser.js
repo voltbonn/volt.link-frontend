@@ -189,9 +189,12 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
             {
               blocks
               .map(block => {
+                const title = fluentByAny(block.properties.text, getString('placeholder_main_headline'))
+                const description = fluentByAny(block.properties.description, '')
                 return <div key={block._id}>
                   <hr />
-                  <pre>{fluentByAny(block.properties.text, `ObjectId("${block._id}")`)}</pre>
+                  { title !== '' ? <h2>{title}</h2> : null }
+                  { description !== '' ? <p>{description}</p> : null }
                   <Link to={`/edit/${block._id}`}>
                     <button>Edit</button>
                   </Link>
