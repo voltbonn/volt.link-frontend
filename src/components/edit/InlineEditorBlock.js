@@ -167,7 +167,7 @@ function InlineEditorBlockRaw({
 
     <BlockMenu
       {...{
-        type: block.type,
+        block,
         setType: handleChange_Type,
         toggle_active,
         active,

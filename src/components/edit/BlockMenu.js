@@ -33,11 +33,11 @@ import { Localized, withLocalization } from '../../fluent/Localized.js'
 import Popover from '../Popover.js'
 
 function BlockMenu ({
+  block,
   getString,
 
   trigger,
 
-  type,
   setType,
 
   toggle_active = null,
@@ -51,6 +51,7 @@ function BlockMenu ({
     prefersDarkMode = true
   }
 
+  const { type = '' } = block
   const handleAddRowBefore = useCallback(() => {
 
     // const newBlock = {

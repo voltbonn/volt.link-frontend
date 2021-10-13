@@ -223,7 +223,7 @@ function Editor() {
 
     <BlockMenu
       {...{
-        type,
+        block,
         setType: saveType,
       }}
 
