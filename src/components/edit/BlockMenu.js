@@ -1,6 +1,10 @@
 import { useCallback } from 'react'
 
 import {
+  useHistory,
+} from 'react-router-dom'
+
+import {
   Paper,
   MenuList,
   MenuItem,
@@ -26,6 +30,8 @@ import {
   TitleSharp as HeadlineIcon,
   NotesSharp as TextIcon,
   Remove as DividerIcon,
+
+  PreviewSharp as ViewIcon,
 } from '@mui/icons-material'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
@@ -51,6 +57,8 @@ function BlockMenu ({
     prefersDarkMode = true
   }
 
+  const history = useHistory()
+
   const { type = '' } = block
   const handleAddRowBefore = useCallback(() => {
 
@@ -64,6 +72,10 @@ function BlockMenu ({
       blockId: newBlockId,
     })
   }, [ addRowBefore ])
+
+  const viewBlock = useCallback(() => {
+    history.push(`/view/${_id}`)
+  }, [ _id, history ])
 
   return <>
   <Popover
@@ -204,6 +216,22 @@ function BlockMenu ({
                       <Localized id="block_menu_delete" />
                     </ListItemText>
                   </MenuItem>
+                : null
+            }
+
+            {
+              typeof _id === 'string' && _id !== ''
+                ? <>
+                    <Divider style={{opacity: 0.2}} />
+                    <MenuItem style={{marginTop:'8px'}} onClick={viewBlock}>
+                      <ListItemIcon>
+                        <ViewIcon />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <Localized id="view_block" />
+                      </ListItemText>
+                    </MenuItem>
+                  </>
                 : null
             }
 
