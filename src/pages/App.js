@@ -17,9 +17,6 @@ import Header from '../components/Header.js'
 import Chooser from './Chooser.js'
 import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
-
-import { OverflowMenuProvider } from '../components/OverflowMenu.js'
-
 import MultiButton from '../components/MultiButton.js'
 
 function App({ getString }) {

@@ -31,8 +31,6 @@ import PermissionsEditor from '../components/PermissionsEditor.js'
 import PropertiesEditor from '../components/PropertiesEditor.js'
 import ContentEditor from '../components/ContentEditor.js'
 
-// import { OverflowMenu } from '../components/OverflowMenu.js'
-
 // const custom_react_select_styles = {
 //   menu: (provided, state) => ({
 //     ...provided,
