@@ -59,7 +59,7 @@ function BlockMenu ({
 
   const history = useHistory()
 
-  const { type = '' } = block
+  const { _id = '', type = '' } = block
 
   const handleAddRowBefore = useCallback(() => {
 
