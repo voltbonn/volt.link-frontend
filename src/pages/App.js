@@ -1,92 +1,128 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 
 import classes from './App.module.css'
 
 import {
   Switch,
   Route,
-  useRouteMatch,
 } from 'react-router-dom'
 
+import {
+  SwipeableDrawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
+
+import {
+  Menu as MenuIcon,
+  Email as ContactIcon,
+  GitHub as SourceCodeIcon,
+  Login as LoginIcon,
+  Logout as LogoutIcon,
+} from '@mui/icons-material'
+
 import { withLocalization } from '../fluent/Localized.js'
-import { useHistory } from 'react-router-dom'
 
 import Localized from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
-import Header from '../components/Header.js'
 import Chooser from './Chooser.js'
 import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
-import MultiButton from '../components/MultiButton.js'
+import Viewer from './Viewer.js'
 
 function App({ getString }) {
   const [, loggedIn] = useUser()
 
-  const history = useHistory()
-  const menuRouteMatch = useRouteMatch("/:id")
-  const selected_route = menuRouteMatch ? menuRouteMatch.params.id : ''
+  const [drawerIsOpen, setDrawerIsOpen] = useState(false)
+  const toggleDrawer = useCallback(() => {
+    setDrawerIsOpen(oldOpen => !oldOpen)
+  }, [ setDrawerIsOpen ])
 
-  const handleMenu = new_selected => {
-    switch (new_selected) {
-      case 'shortcode':
-        history.push('/shortcode')
-        break
-      case 'list':
-        window.open(`${window.domains.backend}list`,'_blank')
-        break
-      default:
-        history.push('/')
-    }
-  }
+  const iOS = (typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent))
 
-  const loginLogoutButton = (
-    loggedIn
-      ? <>
-        <MultiButton
-          onChange={handleMenu}
-          ariaLabel={getString('main_menu')}
-          defaultValue={selected_route}
-          items={[
-            { value: '', title: getString('menu_micropages') },
-            { value: 'shortcode', title: getString('menu_url_shortener') },
-            { value: 'list', title: getString('menu_list') },
-          ]}
-        />
-        <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-          <button className="red" style={{ marginRight: '0' }}><Localized id="logout"/></button>
+  const leftHeaderActions = <>
+    <button onClick={toggleDrawer} className="text hasIcon" style={{ margin: '0' }}>
+      <MenuIcon className="icon" />
+    </button>
+    <SwipeableDrawer
+      anchor="left"
+      open={drawerIsOpen}
+      onOpen={toggleDrawer}
+      onClose={toggleDrawer}
+      disableBackdropTransition={!iOS}
+      disableDiscovery={iOS}
+    >
+      <List style={{ maxWidth: '100%' }}>
+        <a href="mailto:thomas.rosen@volteuropa.org">
+          <ListItem button>
+            <ListItemIcon>
+              <ContactIcon />
+            </ListItemIcon>
+            <ListItemText primary={<Localized id="contact" />} />
+          </ListItem>
         </a>
-      </>
-      : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-        <button style={{ marginRight: '0' }}><Localized id="login"/></button>
-      </a>
-  )
+        <a href="https://github.com/voltbonn/edit.volt.link" target="_blank" rel="noopener noreferrer">
+          <ListItem button>
+            <ListItemIcon>
+              <SourceCodeIcon />
+            </ListItemIcon>
+            <ListItemText primary={<Localized id="source_code" />} />
+          </ListItem>
+        </a>
+        <br />
+        {
+          loggedIn
+            ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <LogoutIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={<Localized id="logout" />} />
+                </ListItem>
+              </a>
+            : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                <ListItem button>
+                  <ListItemIcon>
+                    <LoginIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={<Localized id="login" />} />
+                </ListItem>
+              </a>
+        }
+      </List>
+    </SwipeableDrawer>
+  </>
 
   return (<>
     <div className={classes.app}>
       {
-        !loggedIn
-          ? <div>
-            <Header
-              title="edit.volt.link"
-              rightActions={loginLogoutButton}
-            />
-            <p><Localized id="login_prompt"/></p>
-          </div>
-          : <>
-              <Switch>
-                <Route path="/edit/:code">
-                  <OverflowMenuProvider>
-                    <Editor />
-                  </OverflowMenuProvider>
-                </Route>
-                <Route path="/shortcode">
-                  <Shortcode rightHeaderActions={loginLogoutButton} />
-                </Route>
-                <Route path="/">
-                  <Chooser rightHeaderActions={loginLogoutButton} />
-                </Route>
-              </Switch>
-            </>
+        loggedIn
+        ? <Switch>
+            <Route path="/edit/:id">
+              <Editor leftHeaderActions={leftHeaderActions} />
+            </Route>
+            <Route path="/shortcode">
+              <Shortcode leftHeaderActions={leftHeaderActions} />
+            </Route>
+            <Route path="/">
+              <Chooser leftHeaderActions={leftHeaderActions} />
+            </Route>
+          </Switch>
+        : <Switch>
+            <Route path="/">
+              <h1>Login to view content</h1>
+              <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                <button className="hasIcon" style={{ margin: 'var(--basis_x4) 0 0 0' }}>
+                  <LoginIcon className="icon" />
+                  <span>
+                    <Localized id="login" />
+                  </span>
+                </button>
+              </a>
+            </Route>
+          </Switch>
       }
     </div>
   </>)
