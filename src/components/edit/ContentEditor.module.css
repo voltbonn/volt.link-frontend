@@ -35,3 +35,18 @@
   line-height: 0;
   margin-inline-end: var(--basis_x4);
 }
+@media (any-hover: hover) {
+  @media (min-width: 1200px) {
+    .row .item {
+      margin-inline-start: calc(-1 * calc(var(--basis) + var(--basis_x8)));
+    }
+  }
+  @media (min-width: 800px) {
+    .row .dragHandleButton {
+      opacity: 0;
+    }
+    .row .item:hover .dragHandleButton {
+      opacity: 1;
+    }
+  }
+}
