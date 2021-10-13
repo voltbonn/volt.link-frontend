@@ -68,7 +68,7 @@ function Editor() {
   const [block, setBlock] = useState({
     type: 'page',
     properties: {},
-    content: {},
+    content: [],
   })
   const type = block.type
   const properties = block.properties
