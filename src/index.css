@@ -199,6 +199,7 @@ p,
   max-width: 100%;
   margin: var(--basis) 0;
   text-decoration: inherit;
+  font-size: calc(var(--font-add) + var(--basis));
 }
 
 ul,
