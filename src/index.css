@@ -257,6 +257,7 @@ input[type="url"] {
   color: var(--on-background);
   --input-box-shadow: inset 0 0 0 var(--basis_x0_2) var(--on-background-contrast);
   box-shadow: var(--input-box-shadow);
+  transition: box-shadow 0.2s ease-in-out;
 }
 textarea.inverted,
 div[contentEditable=true].inverted,
