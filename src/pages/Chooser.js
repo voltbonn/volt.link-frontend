@@ -198,6 +198,9 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
                   <Link to={`/edit/${block._id}`}>
                     <button>Edit</button>
                   </Link>
+                  <Link to={`/view/${block._id}`}>
+                    <button>View</button>
+                  </Link>
                 </div>
               })
             }
