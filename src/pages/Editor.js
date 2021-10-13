@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from 'react'
 
-// import {
-//   useParams
-// } from 'react-router-dom'
+import {
+  useParams,
+} from 'react-router-dom'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
 import useLoadBlock from '../hooks/useLoadBlock.js'
@@ -63,8 +63,7 @@ function Editor() {
   const openPermissionsEditor = useCallback(() => setIsPermissionsEditorOpen(true), [ setIsPermissionsEditorOpen ])
   const closePermissionsEditor = useCallback(() => setIsPermissionsEditorOpen(false), [ setIsPermissionsEditorOpen ])
 
-  // const { id = '' } = useParams()
-  const id = '6145b2e319ba9712d370d347'
+  let { id = '' } = useParams()
 
   const [block, setBlock] = useState({
     type: 'text',
@@ -77,7 +76,7 @@ function Editor() {
   const permissions = block.permissions
 
   useEffect(() => {
-    if (id) {
+    if (typeof id === 'string' && id !== '') {
       loadBlock(id)
         .then(loadedBlock => {
           setBlock(loadedBlock)
