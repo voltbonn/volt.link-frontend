@@ -33,7 +33,7 @@ import Editor from './Editor.js'
 import Viewer from './Viewer.js'
 
 function App({ getString }) {
-  const [, loggedIn] = useUser()
+  const { loggedIn } = useUser()
 
   const [drawerIsOpen, setDrawerIsOpen] = useState(false)
   const toggleDrawer = useCallback(() => {

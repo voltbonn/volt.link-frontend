@@ -31,7 +31,7 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
   const [blocks, setBlocks] = useState([])
   const saveBlock = useSaveBlock()
 
-  const [user, ] = useUser()
+  const user = useUser()
   const user_editable_links = (user.editable || [])
 
   const history = useHistory()

@@ -143,7 +143,7 @@ function PermissionsEditor({
 }) {
   const { getString } = useLocalization()
 
-  const [{email: user_email = ''} = {}] = useUser() || []
+  const { email: user_email = '' } = useUser()
 
   const [inputRepaintKey, setInputRepaintKey] = useState(0)
   const [permissions, setPermissions] = useState([])

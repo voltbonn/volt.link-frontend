@@ -38,5 +38,8 @@ export default function useUser(forceRefetch = false) {
     }
   }, [forceRefetch, setUser, setLoggedIn])
 
-  return [user, loggedIn]
+  return {
+    ...user,
+    loggedIn,
+  }
 }
