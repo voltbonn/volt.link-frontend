@@ -133,7 +133,7 @@ function BlockMenu ({
                   { value: 'text', icon: <TextIcon />, label: getString('block_menu_type_label_text') },
                   { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
                 ]
-                .map((option, index) => (
+                .map(option => (
                   <MenuItem
                     key={option.value}
                     selected={option.value === type}
