@@ -149,3 +149,6 @@ placeholder_text = Text
 role-owner = Owner
 role-editor = Editor
 role-viewer = Viewer
+
+edit_block = Edit
+view_block = View
