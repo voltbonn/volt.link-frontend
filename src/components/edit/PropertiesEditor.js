@@ -149,7 +149,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
             placeholder={getString('placeholder_main_headline')}
             style={{ margin: '0' }}
             linebreaks={true}
-            className={`${classes.main_headline_input} type_h1`}
+            className={`show_border_on_active ${classes.main_headline_input} type_h1`}
             {...translatedInputProps}
           />
           )
@@ -172,7 +172,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
               placeholder={getString('path_editor_description_placeholder')}
               style={{ margin: '0' }}
               linebreaks={true}
-              className="type_text"
+              className="show_border_on_active type_text"
               {...translatedInputProps}
             />
             )
@@ -236,6 +236,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
                     margin: '0',
                     width: 'calc(100% - var(--basis_x2))'
                   }}
+                  className="show_border_on_active"
                 />
               )}
             </FancyInput>
@@ -256,6 +257,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
                     margin: '0',
                     width: 'calc(100% - var(--basis_x2))'
                   }}
+                  className="show_border_on_active"
                 />
               )}
             </FancyInput>
@@ -281,6 +283,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
                         marginLeft: '0',
                         width: 'calc(100% - var(--basis_x2))'
                       }}
+                      className="show_border_on_active"
                     />
                   )}
                 </FancyInput>
