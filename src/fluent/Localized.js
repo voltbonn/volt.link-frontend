@@ -6,6 +6,7 @@ import {
 import { negotiateLanguages } from '@fluent/langneg'
 
 import { FluentContext } from '../../node_modules/@fluent/react/esm/context.js'
+import fluentBy from './fluentBy.js'
 
 const Localized = props => (
   <LocalizedOriginal
@@ -64,8 +65,13 @@ function useLocalization() {
   const l10n = React.useContext(FluentContext)
 
   const getString = (id, args, fallback) => l10n.getString(id, args, fallback || ' ')
+  const fluentByAny = (any = [], fallback = '') => fluentBy.fluentByAny(any, l10n.userLocales, fallback)
 
-  return { ...l10n, getString }
+  return {
+    ...l10n,
+    getString,
+    fluentByAny,
+  }
 }
 
 export {
