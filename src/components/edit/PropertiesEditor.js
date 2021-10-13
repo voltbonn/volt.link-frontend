@@ -4,12 +4,12 @@ import { v4 as uuidv4 } from 'uuid'
 
 import classes from './PropertiesEditor.module.css'
 
-import { Localized, withLocalization } from '../fluent/Localized.js'
-import UrlInput from '../components/UrlInput.js'
-import HtmlInput from '../components/HtmlInput.js'
-import FancyInput from '../components/FancyInput.js'
-import CoverphotoPicker from '../components/CoverphotoPicker.js'
-import TranslatedInput from '../components/TranslatedInput.js'
+import { Localized, withLocalization } from '../../fluent/Localized.js'
+import UrlInput from './UrlInput.js'
+import HtmlInput from './HtmlInput.js'
+import FancyInput from './FancyInput.js'
+import CoverphotoPicker from './CoverphotoPicker.js'
+import TranslatedInput from './TranslatedInput.js'
 
 // function stripTmpIds(array){
 //   return [...array].map(obj => {

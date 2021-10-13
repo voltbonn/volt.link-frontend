@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import { withLocalization } from '../fluent/Localized.js'
+import { withLocalization } from '../../fluent/Localized.js'
 
 // import { v4 as uuidv4 } from 'uuid'
 
-import HtmlInput from '../components/HtmlInput.js'
-import TranslatedInput from '../components/TranslatedInput.js'
-// import TranslationRepeater from '../components/TranslationRepeater.js'
+import HtmlInput from './HtmlInput.js'
+import TranslatedInput from './TranslatedInput.js'
+// import TranslationRepeater from '../TranslationRepeater.js'
 
 function InlineEditorBlockTextRaw({
   getString,

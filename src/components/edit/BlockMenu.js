@@ -28,9 +28,9 @@ import {
   Remove as DividerIcon,
 } from '@mui/icons-material'
 
-import { Localized, withLocalization } from '../fluent/Localized.js'
+import { Localized, withLocalization } from '../../fluent/Localized.js'
 
-import Popover from './Popover.js'
+import Popover from '../Popover.js'
 
 function BlockMenu ({
   getString,

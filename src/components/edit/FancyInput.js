@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Localized } from '../fluent/Localized.js'
+import { Localized } from '../../fluent/Localized.js'
 import classes from './FancyInput.module.css'
 
 function FancyInput({ children, className, style, ...props }) {

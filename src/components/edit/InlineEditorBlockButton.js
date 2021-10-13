@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react'
 
-import { withLocalization } from '../fluent/Localized.js'
+import { withLocalization } from '../../fluent/Localized.js'
 
 import FancyInput from './FancyInput.js'
-import HtmlInput from '../components/HtmlInput.js'
-import UrlInput from '../components/UrlInput.js'
+import HtmlInput from './HtmlInput.js'
+import UrlInput from './UrlInput.js'
 
 function InlineEditorBlockButtonRaw({
   getString,

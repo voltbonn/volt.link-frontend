@@ -6,8 +6,8 @@ import { useHistory } from 'react-router-dom'
 import { withLocalization, Localized } from '../fluent/Localized.js'
 import useKeyPress from '../hooks/useKeyPress.js'
 import Header from '../components/Header.js'
-import UrlInput from '../components/UrlInput.js'
-import FancyInput from '../components/FancyInput.js'
+import UrlInput from '../components/edit/UrlInput.js'
+import FancyInput from '../components/edit/FancyInput.js'
 
 function Redirect({ getString, rightHeaderActions }) {
   const history = useHistory()

@@ -6,8 +6,8 @@ import React, {
   useContext,
 } from 'react'
 
-import { Localized, useLocalization } from '../fluent/Localized.js'
-import { fluentByArray } from '../fluent/fluentBy.js'
+import { Localized, useLocalization } from '../../fluent/Localized.js'
+import { fluentByArray } from '../../fluent/fluentBy.js'
 
 import {
   Paper,
@@ -26,7 +26,7 @@ import {
   VisibilityOff as HideIcon,
 } from '@mui/icons-material'
 
-import Popover from './Popover.js'
+import Popover from '../Popover.js'
 
 import classes from './TranslatedInput.module.css'
 

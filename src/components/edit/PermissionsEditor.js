@@ -17,9 +17,9 @@ import {
 } from '@mui/icons-material'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Localized, useLocalization } from '../fluent/Localized.js'
+import { Localized, useLocalization } from '../../fluent/Localized.js'
 
-import useUser from '../hooks/useUser.js'
+import useUser from '../../hooks/useUser.js'
 
 import FancyInput from './FancyInput.js'
 import EmailInput from './EmailInput.js'

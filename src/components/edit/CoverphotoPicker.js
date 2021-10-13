@@ -1,20 +1,20 @@
 
 import classes from './CoverphotoPicker.module.css'
 
-import Popover from './Popover.js'
+import Popover from '../Popover.js'
 
 import { Paper } from '@mui/material'
 
-import { Localized, withLocalization } from '../fluent/Localized.js'
+import { Localized, withLocalization } from '../../fluent/Localized.js'
 
-import MultiButton from '../components/MultiButton.js'
-import FancyInput from '../components/FancyInput.js'
-import UrlInput from '../components/UrlInput.js'
+import MultiButton from '../MultiButton.js'
+import FancyInput from './FancyInput.js'
+import UrlInput from './UrlInput.js'
 
-import plakatschlange_thumb from '../images/coverphotos/thumbs/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.png'
-import aktion_thumb from '../images/coverphotos/thumbs/Aktion.png'
-import volt_bonn_thumb from '../images/coverphotos/thumbs/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.png'
-import welcome_to_volt_thumb from '../images/coverphotos/thumbs/Welcome-to-Volt.png'
+import plakatschlange_thumb from '../../images/coverphotos/thumbs/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.png'
+import aktion_thumb from '../../images/coverphotos/thumbs/Aktion.png'
+import volt_bonn_thumb from '../../images/coverphotos/thumbs/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.png'
+import welcome_to_volt_thumb from '../../images/coverphotos/thumbs/Welcome-to-Volt.png'
 
 
 function CoverphotoPicker({ getString, defaultValue, onChange }) {

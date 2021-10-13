@@ -9,7 +9,7 @@ import {
   ContentCopySharp as CopyIcon,
 } from '@mui/icons-material'
 
-import { Localized } from '../fluent/Localized.js' // useLocalization
+import { Localized } from '../../fluent/Localized.js' // useLocalization
 
 import classes from './SharingEditor.module.css'
 

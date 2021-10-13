@@ -23,14 +23,14 @@ import {
 import classes from './Editor.module.css'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
-import { useTranslatedInputContext, LocalesMenu } from '../components/TranslatedInput.js'
+import { useTranslatedInputContext, LocalesMenu } from '../components/edit/TranslatedInput.js'
 
 import Header from '../components/Header.js'
-import BlockMenu from '../components/BlockMenu.js'
-import SharingEditor from '../components/SharingEditor.js'
-import PermissionsEditor from '../components/PermissionsEditor.js'
-import PropertiesEditor from '../components/PropertiesEditor.js'
-import ContentEditor from '../components/ContentEditor.js'
+import BlockMenu from '../components/edit/BlockMenu.js'
+import SharingEditor from '../components/edit/SharingEditor.js'
+import PermissionsEditor from '../components/edit/PermissionsEditor.js'
+import PropertiesEditor from '../components/edit/PropertiesEditor.js'
+import ContentEditor from '../components/edit/ContentEditor.js'
 
 // const custom_react_select_styles = {
 //   menu: (provided, state) => ({

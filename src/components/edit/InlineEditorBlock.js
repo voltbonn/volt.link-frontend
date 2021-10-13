@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react'
 
-import { withLocalization } from '../fluent/Localized.js'
+import { withLocalization } from '../../fluent/Localized.js'
 
 import BlockMenu from './BlockMenu.js'
-import useSaveBlock from '../hooks/useSaveBlock.js'
-import useLoadBlock from '../hooks/useLoadBlock.js'
+import useSaveBlock from '../../hooks/useSaveBlock.js'
+import useLoadBlock from '../../hooks/useLoadBlock.js'
 
 import InlineEditorBlockText from './InlineEditorBlockText.js'
 import InlineEditorBlockButton from './InlineEditorBlockButton.js'

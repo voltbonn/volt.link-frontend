@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import { withLocalization } from '../fluent/Localized.js'
+import { withLocalization } from '../../fluent/Localized.js'
 
-import HtmlInput from '../components/HtmlInput.js'
-import TranslatedInput from '../components/TranslatedInput.js'
+import HtmlInput from './HtmlInput.js'
+import TranslatedInput from './TranslatedInput.js'
 
 function InlineEditorBlockHeadlineRaw({
   getString,

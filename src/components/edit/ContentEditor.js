@@ -6,13 +6,13 @@ import {
   Add as AddIcon,
 } from '@mui/icons-material'
 
-import { Localized } from '../fluent/Localized.js'
-import InlineEditorBlock from '../components/InlineEditorBlock.js'
+import { Localized } from '../../fluent/Localized.js'
+import InlineEditorBlock from './InlineEditorBlock.js'
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
-import classes from './Repeater.module.css'
+import classes from './ContentEditor.module.css'
 
 // function stripTmpIds(array){
 //   return [...array].map(obj => {
