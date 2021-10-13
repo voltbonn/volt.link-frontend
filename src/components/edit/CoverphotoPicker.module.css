@@ -35,3 +35,13 @@
 
   justify-content: center;
 }
+
+@media (any-hover: hover) {
+  .changeCoverphotoButton {
+    opacity: 0.1;
+  }
+  .coverphoto.no_image .changeCoverphotoButton,
+  .coverphoto:hover .changeCoverphotoButton {
+    opacity: 1;
+  }
+}
