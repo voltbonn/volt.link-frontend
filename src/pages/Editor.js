@@ -169,8 +169,6 @@ function Editor() {
   //   }
   // }, [isFirstRun, initialBlock, block])
 
-  if (typeof id === 'string' && id.length > 0) {
-
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     {/* <button className="text"><Localized id="path_editor_share"/></button> */}
 
@@ -261,9 +259,6 @@ function Editor() {
       defaultValue={content}
     />
   </div>
-  }
-
-  return null
 }
 
 export default Editor
