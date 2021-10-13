@@ -49,7 +49,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-:root {
+:root,
+.basis_x1 {
   --basis: 1rem;
 }
 .basis_0_8 {
@@ -62,6 +63,7 @@
   --basis: 0.3rem;
 }
 :root,
+.basis_x1,
 .basis_0_8,
 .basis_0_4,
 .basis_0_3 {
