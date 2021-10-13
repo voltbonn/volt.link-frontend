@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react'
 
 import {
   useParams,
+  Link,
 } from 'react-router-dom'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -241,9 +242,11 @@ function Editor() {
     <Header
       // title={<a href={`https://volt.link/${slug}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{slug}</a>}
       title={
-        <button className="text hasIcon" style={{ margin: '0' }}>
-          <BackIcon className="icon"/>
-        </button>
+        <Link key={block._id} to="/">
+          <button className="text hasIcon" style={{ margin: '0' }}>
+            <BackIcon className="icon"/>
+          </button>
+        </Link>
       }
       rightActions={rightHeaderActions}
     />
