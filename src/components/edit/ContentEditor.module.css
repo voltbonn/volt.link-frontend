@@ -24,10 +24,10 @@
   text-align: center;
 }
 .row .inlineRowButton:first-child {
-  margin-left: 0;
+  margin-inline-start: 0;
 }
 .row .inlineRowButton:last-child {
-  margin-right: 0;
+  margin-inline-end: 0;
 }
 
 .row .dragHandleButton {
