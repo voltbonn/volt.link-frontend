@@ -1,14 +1,14 @@
-import { Fragment, useState, useCallback, useEffect } from 'react'
-import classes from './Chooser.module.css'
+import { useState, useCallback, useEffect } from 'react'
+// import classes from './Chooser.module.css'
 
 import {
   InsertDriveFileSharp as PageIcon,
   LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
-  Crop75Sharp as ButtonIcon,
-  TitleSharp as HeadlineIcon,
-  NotesSharp as TextIcon,
-  Remove as DividerIcon,
+  // Crop75Sharp as ButtonIcon,
+  // TitleSharp as HeadlineIcon,
+  // NotesSharp as TextIcon,
+  // Remove as DividerIcon,
 } from '@mui/icons-material'
 
 import { useApolloClient } from '@apollo/client'
@@ -18,7 +18,7 @@ import useSaveBlock from '../hooks/useSaveBlock.js'
 import { Link, useHistory } from 'react-router-dom'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
-import useKeyPress from '../hooks/useKeyPress.js'
+// import useKeyPress from '../hooks/useKeyPress.js'
 import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
