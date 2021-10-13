@@ -100,6 +100,9 @@ function App({ getString }) {
       {
         loggedIn
         ? <Switch>
+            <Route path="/view/:id">
+              <Viewer leftHeaderActions={leftHeaderActions} />
+            </Route>
             <Route path="/edit/:id">
               <Editor leftHeaderActions={leftHeaderActions} />
             </Route>
@@ -111,6 +114,9 @@ function App({ getString }) {
             </Route>
           </Switch>
         : <Switch>
+            <Route path="/view/:id">
+              <Viewer leftHeaderActions={leftHeaderActions} />
+            </Route>
             <Route path="/">
               <h1>Login to view content</h1>
               <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
