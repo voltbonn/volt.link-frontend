@@ -43,7 +43,7 @@
   }
   @media (min-width: 800px) {
     .row .dragHandleButton {
-      opacity: 0;
+      opacity: 0.1;
     }
     .row .item:hover .dragHandleButton {
       opacity: 1;
