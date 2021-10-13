@@ -66,7 +66,7 @@ function Editor() {
   let { id = '' } = useParams()
 
   const [block, setBlock] = useState({
-    type: 'text',
+    type: 'page',
     properties: {},
     content: {},
   })
