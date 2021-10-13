@@ -535,7 +535,7 @@ div[contenteditable].hide_border{
   input[type="text"].show_border_on_active:not(#react-select-3-input),
   input[type="email"].show_border_on_active,
   input[type="url"].show_border_on_active {
-    box-shadow: none;
+    box-shadow: inset 0 0 0 var(--basis_x0_2) transparent;
   }
   textarea.show_border_on_active:hover,
   div[contentEditable=true].show_border_on_active:hover,
