@@ -3,10 +3,11 @@ import classes from './Chooser.module.css'
 
 import { Link, useHistory } from 'react-router-dom'
 
-import { withLocalization, Localized } from '../fluent/Localized.js'
+import { Localized, useLocalization } from '../fluent/Localized.js'
 import useKeyPress from '../hooks/useKeyPress.js'
 import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
+  const { getString, fluentByAny } = useLocalization()
 
 function Chooser({ getString, rightHeaderActions }) {
   const [user, ] = useUser()
@@ -188,7 +189,7 @@ function Chooser({ getString, rightHeaderActions }) {
   </div>
 }
 
-export default withLocalization(Chooser)
+export default Chooser
 
 /*
 
