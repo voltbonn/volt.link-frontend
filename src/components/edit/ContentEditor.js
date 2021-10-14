@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from 'uuid'
 import {
   Add as AddIcon,
 } from '@mui/icons-material'
+import {
+  Tooltip,
+} from '@mui/material'
 
 import { Localized } from '../../fluent/Localized.js'
 import InlineEditorBlock from './InlineEditorBlock.js'
@@ -335,12 +338,17 @@ function ContentEditor({ defaultValue = [], onChange }) {
                           defaultContentConfig={contentConfig}
 
                           reorderHandle={
-                            <button
-                              className={`text ${classes.inlineRowButton} ${classes.dragHandleButton}`}
-                              {...provided.dragHandleProps}
-                            >
-                              <DragIndicatorIcon />
-                            </button>
+                            <Tooltip title={<div style={{ textAlign: 'center' }}>
+                              <strong>Drag</strong> to move.<br />
+                              <strong>Click</strong> to open menu.
+                            </div>}>
+                              <button
+                                className={`text ${classes.inlineRowButton} ${classes.dragHandleButton}`}
+                                {...provided.dragHandleProps}
+                              >
+                                <DragIndicatorIcon />
+                              </button>
+                            </Tooltip>
                           }
 
                           onRemoveRow={ () => {/*handleRemoveRow(index)*/} }
