@@ -41,7 +41,7 @@
       margin-inline-start: calc(-1 * calc(var(--basis) + var(--basis_x8)));
     }
     .row .dragHandleButton {
-      opacity: 0.1;
+      opacity: 0;
       transition: opacity 0.2s ease-in-out;
     }
     .row .item:hover .dragHandleButton {
