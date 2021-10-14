@@ -24,7 +24,7 @@ import {
   VerticalAlignBottom as VerticalAlignBottomIcon,
 
   InsertDriveFileSharp as PageIcon,
-  LinkSharp as RedirectIcon,
+  // LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
   Crop75Sharp as ButtonIcon,
   TitleSharp as HeadlineIcon,
@@ -125,7 +125,7 @@ function BlockMenu ({
               {
                 [
                   { value: 'page', icon: <PageIcon />, label: getString('block_menu_type_label_page') },
-                  { value: 'redirect', icon: <RedirectIcon />, label: getString('block_menu_type_label_redirect') },
+                  // { value: 'redirect', icon: <RedirectIcon />, label: getString('block_menu_type_label_redirect') },
                   { value: 'person', icon: <PersonIcon />, label: getString('block_menu_type_label_person') },
                   { value: 'button', icon: <ButtonIcon />, label: getString('block_menu_type_label_button') },
                   { value: 'headline', icon: <HeadlineIcon />, label: getString('block_menu_type_label_headline') },
