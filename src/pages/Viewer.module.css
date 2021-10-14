@@ -6,6 +6,7 @@
   text-align: center;
 
   min-height: 120vh;
+  margin-bottom: var(--basis_x16);
 }
 .app.spine_aligned {
   text-align: unset;
