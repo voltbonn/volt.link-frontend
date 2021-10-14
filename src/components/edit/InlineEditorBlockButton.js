@@ -5,6 +5,7 @@ import { withLocalization } from '../../fluent/Localized.js'
 import FancyInput from './FancyInput.js'
 import HtmlInput from './HtmlInput.js'
 import UrlInput from './UrlInput.js'
+import TranslatedInput from './TranslatedInput.js'
 
 function InlineEditorBlockButtonRaw({
   getString,
@@ -18,46 +19,9 @@ function InlineEditorBlockButtonRaw({
   // onMergeToPrevInput,
   // onMergeToNextInput,
 }) {
-  // const defaultLocale = getString('default_locale')
-
   const properties = block.properties || {}
   const [text, setText] = useState(properties.text || [])
   const [link, setLink] = useState(properties.link || '')
-
-  const currentLocale = 'en'
-  let currentText = text
-  .filter(t => t.locale === currentLocale)
-  if (text.length > 0) {
-    currentText = text[0].value
-  } else {
-    currentText = ''
-  }
-
-  const handleTextChange = useCallback(newTextValue => {
-    let newValue = [...text]
-    if (text.length > 0) {
-      if (newValue.findIndex(t => t.locale === currentLocale) > -1) {
-        newValue = newValue.map(t => {
-          if (t.locale === currentLocale) {
-            return {
-              ...t,
-              value: newTextValue,
-            }
-          }
-          return t
-        })
-      } else {
-        newValue = [
-          ...newValue,
-          {locale: currentLocale, value: newTextValue},
-        ]
-      }
-    } else {
-      newValue = [{locale: currentLocale, value: newTextValue}]
-    }
-
-    setText(newValue)
-  }, [setText, text, currentLocale])
 
   const publishChanges = useCallback(() => {
     if (onChange) {
@@ -75,19 +39,29 @@ function InlineEditorBlockButtonRaw({
   return <div style={{
     padding: 'var(--basis) 0',
   }}>
-    <HtmlInput
-      placeholder={getString('placeholder_button')}
-      defaultValue={currentText}
-      onChange={handleTextChange}
+    <TranslatedInput
+      defaultValue={text}
+      onChange={setText}
       onBlur={publishChanges}
-      style={{ margin: '0' }}
-      linebreaks={true}
-      className="hide_border type_button"
+    >
+      {(translatedInputProps) => {
+        return (
+        <HtmlInput
+          placeholder={getString('placeholder_button')}
+          style={{ margin: '0' }}
+          linebreaks={true}
+          className="hide_border type_button"
 
-      onInputRef={onInputRef}
-      onGoToPrevInput={onGoToPrevInput}
-      onGoToNextInput={onGoToNextInput}
-    />
+          onInputRef={onInputRef}
+          onGoToPrevInput={onGoToPrevInput}
+          onGoToNextInput={onGoToNextInput}
+
+          {...translatedInputProps}
+        />
+        )
+      }
+      }
+    </TranslatedInput>
 
     <FancyInput>
       {({ setError }) => (
