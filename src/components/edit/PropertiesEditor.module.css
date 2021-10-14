@@ -24,6 +24,9 @@
 .properties_row {
   width: 100%;
 }
+.properties_row:first-of-type > h3 {
+  margin-top: 0;
+}
 
 @media (min-width: 800px) {
   .properties_row {
@@ -38,6 +41,7 @@
   .properties_row > * {
     flex: 1;
   }
+  .properties_row:first-of-type > h3,
   .properties_row > h3 {
     max-width: 200px;
     margin: var(--basis) var(--basis_x2) 0 0;
