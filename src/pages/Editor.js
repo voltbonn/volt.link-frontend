@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 
 import {
   useParams,
@@ -64,6 +64,7 @@ function Editor() {
   const openPermissionsEditor = useCallback(() => setIsPermissionsEditorOpen(true), [ setIsPermissionsEditorOpen ])
   const closePermissionsEditor = useCallback(() => setIsPermissionsEditorOpen(false), [ setIsPermissionsEditorOpen ])
 
+  const loadedTheBlock = useRef(false)
   let { id = '' } = useParams()
 
   const [block, setBlock] = useState({
@@ -77,16 +78,25 @@ function Editor() {
   const permissions = block.permissions
 
   useEffect(() => {
-    if (typeof id === 'string' && id !== '') {
+    if (
+      typeof id === 'string'
+      && id !== ''
+      && (
+        !loadedTheBlock.current
+        || id !== block._id
+      )
+    ) {
       loadBlock(id)
         .then(loadedBlock => {
+          loadedTheBlock.current = true
           setBlock(loadedBlock)
         })
     }
   }, [
+    id,
+    block,
     loadBlock,
     setBlock,
-    id,
   ])
 
   const saveType = useCallback(newType => {
