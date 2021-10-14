@@ -149,7 +149,25 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
             placeholder={getString('placeholder_main_headline')}
             style={{ margin: '0' }}
             linebreaks={true}
-            className={`show_border_on_active ${classes.main_headline_input} type_h1`}
+            className={`show_border_on_active type_h1`}
+            {...translatedInputProps}
+          />
+          )
+        }}
+      </TranslatedInput>
+
+      <TranslatedInput
+        defaultValue={properties.description}
+        onBlur={(value) => updateProperty('description', value)}
+      >
+        {(translatedInputProps) => {
+          return (
+          <HtmlInput
+            aria-label={getString('path_editor_description_label')}
+            placeholder={getString('path_editor_description_placeholder')}
+            style={{ margin: '0' }}
+            linebreaks={true}
+            className={`show_border_on_active type_text`}
             {...translatedInputProps}
           />
           )
@@ -158,27 +176,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     </div>
 
     <div className={classes.propertiesFrame}>
-
-      <div className={classes.properties_row}>
-        <h3><Localized id="path_editor_description_label" /></h3>
-        <TranslatedInput
-          defaultValue={properties.description}
-          onBlur={(value) => updateProperty('description', value)}
-        >
-          {(translatedInputProps) => {
-            return (
-            <HtmlInput
-              aria-label={getString('path_editor_description_label')}
-              placeholder={getString('path_editor_description_placeholder')}
-              style={{ margin: '0' }}
-              linebreaks={true}
-              className="show_border_on_active type_text"
-              {...translatedInputProps}
-            />
-            )
-          }}
-        </TranslatedInput>
-      </div>
 
       {/* <div className={classes.properties_row}>
         <h3><Localized id="path_editor_tags_label" /></h3>
