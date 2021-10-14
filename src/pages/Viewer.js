@@ -14,6 +14,7 @@ import Header from '../components/Header.js'
 import ViewerHeadline from '../components/view/ViewerHeadline.js'
 import ViewerText from '../components/view/ViewerText.js'
 import ViewerButton from '../components/view/ViewerButton.js'
+import ViewerDivider from '../components/view/ViewerDivider.js'
 
 import classes from './Viewer.module.css'
 
@@ -130,6 +131,9 @@ function Viewer () {
                   break
                 case 'button':
                   component = <ViewerButton key={contentBlock._id} block={contentBlock} />
+                  break
+                case 'divider':
+                  component = <ViewerDivider key={contentBlock._id} block={contentBlock} />
                   break
                 default:
                   component = null
