@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 import {
   useParams,
@@ -7,9 +7,13 @@ import {
 
 import { useLocalization, Localized } from '../fluent/Localized.js'
 import useLoadBlock from '../hooks/useLoadBlock.js'
+import useLoadBlocksByIds from '../hooks/useLoadBlocksByIds.js'
 import useUser from '../hooks/useUser.js'
 
 import Header from '../components/Header.js'
+import ViewerHeadline from '../components/view/ViewerHeadline.js'
+import ViewerText from '../components/view/ViewerText.js'
+import ViewerButton from '../components/view/ViewerButton.js'
 
 import classes from './Viewer.module.css'
 
@@ -19,8 +23,13 @@ import {
 } from '@mui/icons-material'
 
 function Viewer () {
+  const loadingBlock = useRef(false)
+
   const { loggedIn } = useUser()
+
   const loadBlock = useLoadBlock()
+  const loadBlocksByIds = useLoadBlocksByIds()
+
   const { fluentByAny } = useLocalization()
 
   let { id = '' } = useParams()
@@ -30,20 +39,34 @@ function Viewer () {
     properties: {},
     content: [],
   })
-
-  console.log('block', block)
+  const [contentBlocks, setContentBlocks] = useState([])
 
   useEffect(() => {
-    if (typeof id === 'string' && id !== '') {
+    if (
+      loadingBlock.current === false
+      && typeof id === 'string'
+      && id !== ''
+    ) {
+      loadingBlock.current = true
       loadBlock(id)
         .then(loadedBlock => {
           setBlock(loadedBlock)
+          const ids = loadedBlock.content.map(content => content.blockId)
+          console.log('ids', ids)
+          loadBlocksByIds(ids)
+            .then(loadedContentBlocks => {
+              const contentBlocksOrdered = [...ids].map(id => loadedContentBlocks.find(block => block._id === id))
+              setContentBlocks([...contentBlocksOrdered])
+              loadingBlock.current = false
+            })
         })
     }
   }, [
+    id,
     loadBlock,
     setBlock,
-    id,
+    loadBlocksByIds,
+    setContentBlocks,
   ])
 
   const title = fluentByAny(block.properties.text, '')
@@ -90,8 +113,32 @@ function Viewer () {
             ? <div style={{ backgroundImage: `url(${icon_url})` }} className={classes.icon}></div>
             : null
         }
-        { title !== '' ? <h1>{title}</h1> : null }
-        { description !== '' ? <p>{description}</p> : null }
+        { title !== '' ? <h1 dir="auto">{title}</h1> : null }
+        { description !== '' ? <p dir="auto">{description.split(/\n/g).flatMap(i => [i, <br/>])}<br/></p> : null }
+        <div className={classes.items}>
+          {
+            contentBlocks
+            .map(contentBlock => {
+              let component = null
+
+              switch (contentBlock.type) {
+                case 'headline':
+                  component = <ViewerHeadline key={contentBlock._id} block={contentBlock} />
+                  break
+                case 'text':
+                  component = <ViewerText key={contentBlock._id} block={contentBlock} />
+                  break
+                case 'button':
+                  component = <ViewerButton key={contentBlock._id} block={contentBlock} />
+                  break
+                default:
+                  component = null
+              }
+
+              return <div>{component}</div>
+            })
+          }
+        </div>
       </main>
     </div>
   </>

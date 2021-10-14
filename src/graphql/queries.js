@@ -56,3 +56,22 @@ export const getBlocksByType_Query = gql`
     }
   }
 `
+
+export const getBlocksByIds_Query = gql`
+  query getBlocksByIds ($ids: [ID]) {
+    blocksByIds(ids: $ids) {
+      _id
+      type
+      properties
+    	content {
+      	blockId
+    	}
+      parent
+      metadata {
+        lastModified
+        created
+      }
+    }
+  }
+`
+
