@@ -295,7 +295,9 @@ function TranslatedInput({
             ? <div className={classes.translationHelp}>
                 {
                   best
-                  .map(t => <p key={t.locale}><strong>{t.locale.toUpperCase()}:</strong> {t.value}</p>)
+                  .map(t => <p key={t.locale}>
+                    <strong>{t.locale.toUpperCase()}:</strong> {t.value}
+                  </p>)
                 }
               </div>
             : null
