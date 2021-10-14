@@ -274,22 +274,6 @@ function ContentEditor({ defaultValue = [], onChange }) {
       margin: 'var(--basis_x8) auto 0 auto',
     }}
   >
-    <div>
-      <button
-        onClick={() => addRowByIndex(0, 0, {})}
-        className="text hasIcon"
-        style={{
-          margin: '0 0 var(--basis_x2) 0',
-        }}
-      >
-        <span style={{pointerEvents: 'none'}}>
-          <AddIcon className="icon" />
-          <span style={{marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>
-            <Localized id="add_content_before" />
-          </span>
-        </span>
-      </button>
-    </div>
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable
         droppableId="list"
@@ -368,6 +352,23 @@ function ContentEditor({ defaultValue = [], onChange }) {
         )}
       </Droppable>
     </DragDropContext>
+
+    <div>
+      <button
+        onClick={() => addRowByIndex(0, 0, {})}
+        className="text hasIcon"
+        style={{
+          margin: '0 0 var(--basis_x2) 0',
+        }}
+      >
+        <span style={{pointerEvents: 'none'}}>
+          <AddIcon className="icon" />
+          <span style={{marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>
+            <Localized id="add_content_before" />
+          </span>
+        </span>
+      </button>
+    </div>
   </div>
 
   <div
