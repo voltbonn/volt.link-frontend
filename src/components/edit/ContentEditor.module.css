@@ -40,8 +40,6 @@
     .row .item {
       margin-inline-start: calc(-1 * calc(var(--basis) + var(--basis_x8)));
     }
-  }
-  @media (min-width: 800px) {
     .row .dragHandleButton {
       opacity: 0.1;
       transition: opacity 0.2s ease-in-out;
