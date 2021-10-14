@@ -175,7 +175,11 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       </TranslatedInput>
     </div>
 
-    <div className={classes.propertiesFrame}>
+    <div className={classes.propertiesFrame} style={
+      type === 'page' || type === 'person'
+        ? null
+        : { display: 'none' }
+    }>
 
       {/* <div className={classes.properties_row}>
         <h3><Localized id="path_editor_tags_label" /></h3>
