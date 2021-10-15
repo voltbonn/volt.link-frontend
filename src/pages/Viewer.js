@@ -114,7 +114,7 @@ function Viewer () {
             : null
         }
         { title !== '' ? <h1 dir="auto">{title}</h1> : null }
-        { description !== '' ? <p dir="auto">{description.split(/\n/g).flatMap(i => [i, <br/>])}<br/></p> : null }
+        { description !== '' ? <p dir="auto">{description.split(/\n/g).flatMap(i => [i, <br key={i}/>])}<br/></p> : null }
         <div className={classes.items}>
           {
             contentBlocks
@@ -138,7 +138,7 @@ function Viewer () {
                   component = null
               }
 
-              return <div>{component}</div>
+              return <div key={contentBlock._id}>{component}</div>
             })
           }
         </div>
