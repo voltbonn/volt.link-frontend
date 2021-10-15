@@ -24,7 +24,7 @@ import {
 } from '@mui/icons-material'
 
 function Viewer () {
-  const loadingBlock = useRef(false)
+  const loadingTheBlock = useRef(false)
 
   const { loggedIn } = useUser()
 
@@ -44,11 +44,11 @@ function Viewer () {
 
   useEffect(() => {
     if (
-      loadingBlock.current === false
+      loadingTheBlock.current === false
       && typeof id === 'string'
       && id !== ''
     ) {
-      loadingBlock.current = true
+      loadingTheBlock.current = true
       loadBlock(id)
         .then(loadedBlock => {
           setBlock(loadedBlock)
@@ -57,7 +57,7 @@ function Viewer () {
             .then(loadedContentBlocks => {
               const contentBlocksOrdered = [...ids].map(id => loadedContentBlocks.find(block => block._id === id))
               setContentBlocks([...contentBlocksOrdered])
-              loadingBlock.current = false
+              loadingTheBlock.current = false
             })
         })
     }
