@@ -53,7 +53,6 @@ function Viewer () {
         .then(loadedBlock => {
           setBlock(loadedBlock)
           const ids = loadedBlock.content.map(content => content.blockId)
-          console.log('ids', ids)
           loadBlocksByIds(ids)
             .then(loadedContentBlocks => {
               const contentBlocksOrdered = [...ids].map(id => loadedContentBlocks.find(block => block._id === id))
