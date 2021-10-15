@@ -47,6 +47,7 @@ function Viewer () {
       loadingTheBlock.current === false
       && typeof id === 'string'
       && id !== ''
+      && id !== block._id
     ) {
       loadingTheBlock.current = true
       loadBlock(id)
@@ -63,6 +64,7 @@ function Viewer () {
     }
   }, [
     id,
+    block._id,
     loadBlock,
     setBlock,
     loadBlocksByIds,
