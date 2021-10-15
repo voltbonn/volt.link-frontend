@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 
 import classes from './App.module.css'
 
 import {
   Switch,
   Route,
+  useLocation,
 } from 'react-router-dom'
 
 import {
@@ -34,6 +35,31 @@ import Viewer from './Viewer.js'
 
 function App({ getString }) {
   const { loggedIn } = useUser()
+
+  const location = useLocation()
+
+  const [customLocation, setCustomLocation] = useState({})
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search)
+    const real_path = urlParams.get('real_path')
+
+    if (
+      customLocation.pathname !== real_path
+    ) {
+      if (
+        typeof real_path === 'string'
+        && real_path.length > 0
+      ) {
+        window.history.replaceState(null, '', location.pathname)
+        setCustomLocation({
+          pathname: real_path,
+        })
+      } else {
+        setCustomLocation(location)
+      }
+    }
+  }, [ location, customLocation, setCustomLocation ])
 
   const [drawerIsOpen, setDrawerIsOpen] = useState(false)
   const toggleDrawer = useCallback(() => {
@@ -99,7 +125,7 @@ function App({ getString }) {
     <div className={classes.app}>
       {
         loggedIn
-        ? <Switch>
+        ? <Switch location={customLocation}>
             <Route path="/view/:id">
               <Viewer leftHeaderActions={leftHeaderActions} />
             </Route>
@@ -113,7 +139,7 @@ function App({ getString }) {
               <Chooser leftHeaderActions={leftHeaderActions} />
             </Route>
           </Switch>
-        : <Switch>
+        : <Switch location={customLocation}>
             <Route path="/view/:id">
               <Viewer leftHeaderActions={leftHeaderActions} />
             </Route>
