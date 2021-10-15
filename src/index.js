@@ -49,7 +49,7 @@ const client = new ApolloClient({
 //   })
 //   .then(result => console.info(result));
 
-function AppLanguageWrapper() {
+function Start() {
   // const [userLocales, setUserLocales] = useState(['de'])
   const [userLocales, setUserLocales] = useState(navigator.languages)
   const [currentLocale, setCurrentLocale] = useState(null)
@@ -114,7 +114,9 @@ function AppLanguageWrapper() {
           domRoot={document.getElementById('react-notification')}
         >
           <TranslatedInputProvider>
-            <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
+            <Router>
+              <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
+            </Router>
           </TranslatedInputProvider>
         </SnackbarProvider>
       </ThemeProvider>
@@ -123,12 +125,7 @@ function AppLanguageWrapper() {
   </>
 }
 
-ReactDOM.render(
-  <Router>
-    <AppLanguageWrapper />
-  </Router>,
-  document.getElementById('root')
-)
+ReactDOM.render(<Start />, document.getElementById('root'))
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.info))
