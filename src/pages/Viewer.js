@@ -106,13 +106,13 @@ function Viewer () {
     <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
         coverphoto_url !== ''
-          ? <div style={{ backgroundImage: `url(${window.domains.backend}/download_url?url=${encodeURIComponent(coverphoto_url)})` }} className={classes.coverphoto}></div>
+          ? <div style={{ backgroundImage: `url(${window.domains.backend}download_url?url=${encodeURIComponent(coverphoto_url)})` }} className={classes.coverphoto}></div>
           : null
       }
       <main className={`${classes.contentWrapper}`}>
         {
           icon_url !== ''
-            ? <div style={{ backgroundImage: `url(${window.domains.backend}/download_url?url=${encodeURIComponent(icon_url)})` }} className={classes.icon}></div>
+            ? <div style={{ backgroundImage: `url(${window.domains.backend}download_url?url=${encodeURIComponent(icon_url)})` }} className={classes.icon}></div>
             : null
         }
         { title !== '' ? <h1 dir="auto">{title}</h1> : null }
