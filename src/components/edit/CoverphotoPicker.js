@@ -24,7 +24,7 @@ function CoverphotoPicker({ getString, defaultValue, onChange }) {
         <div
           className={`${classes.coverphoto} ${!defaultValue ? classes.no_image : ''}`}
           style={{
-            backgroundImage: `url(${defaultValue})`,
+            backgroundImage: `url(${window.domains.backend}/download_url?url=${defaultValue})`,
           }}
         >
           <button {...triggerProps} className={classes.changeCoverphotoButton}>Set Coverphoto</button>
