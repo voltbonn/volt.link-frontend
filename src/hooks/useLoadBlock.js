@@ -82,7 +82,7 @@ function useLoadBlock() {
       ])
         .then(response => {
           if (response === 'show-loading') {
-            snackbarKey = enqueueSnackbar(getString('path_editor_status_started_saving'), {
+            snackbarKey = enqueueSnackbar(getString('path_editor_status_started_loading'), {
               persist: true,
               preventDuplicate: true,
             })
