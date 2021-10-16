@@ -30,6 +30,7 @@ import {
   TitleSharp as HeadlineIcon,
   NotesSharp as TextIcon,
   Remove as DividerIcon,
+  CheckBox as CheckboxIcon,
 
   PreviewSharp as ViewIcon,
 } from '@mui/icons-material'
@@ -132,6 +133,7 @@ function BlockMenu ({
                   // { value: 'headline3', label: getString('block_menu_type_label_headline3') },
                   { value: 'text', icon: <TextIcon />, label: getString('block_menu_type_label_text') },
                   { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
+                  { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
                 ]
                 .map(option => (
                   <MenuItem

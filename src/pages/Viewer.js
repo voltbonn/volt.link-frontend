@@ -15,6 +15,7 @@ import ViewerHeadline from '../components/view/ViewerHeadline.js'
 import ViewerText from '../components/view/ViewerText.js'
 import ViewerButton from '../components/view/ViewerButton.js'
 import ViewerDivider from '../components/view/ViewerDivider.js'
+import ViewerCheckboxCard from '../components/view/ViewerCheckboxCard.js'
 
 import classes from './Viewer.module.css'
 
@@ -135,6 +136,9 @@ function Viewer () {
                   break
                 case 'divider':
                   component = <ViewerDivider key={contentBlock._id} block={contentBlock} />
+                case 'checkbox':
+                  component = <ViewerCheckboxCard key={contentBlock._id} block={contentBlock} />
+                  break
                   break
                 default:
                   component = null
