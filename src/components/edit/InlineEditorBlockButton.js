@@ -21,18 +21,39 @@ function InlineEditorBlockButtonRaw({
 }) {
   const properties = block.properties || {}
   const [text, setText] = useState(properties.text || [])
-  const [link, setLink] = useState(properties.link || '')
+  const {
+    action = {}
+  } = properties
+  const [link, setLink] = useState(action.url || '')
 
   const publishChanges = useCallback(() => {
     if (onChange) {
-      onChange({
+      const newBlock = {
         ...block,
         properties: {
           ...block.properties,
-          text,
-          link,
+          text: text,
         },
-      })
+      }
+
+      if (link === '') {
+        if (newBlock.properties.hasOwnProperty('trigger')) {
+          delete newBlock.properties.trigger
+        }
+        if(newBlock.properties.hasOwnProperty('action')) {
+          delete newBlock.properties.action
+        }
+      } else {
+        newBlock.properties.trigger = {
+          type: 'click'
+        }
+        newBlock.properties.action = {
+				  type: 'open_url',
+				  url: link,
+			  }
+      }
+
+      onChange(newBlock)
     }
   }, [onChange, block, text, link])
 
