@@ -4,7 +4,7 @@
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
 
-  width: auto;
+  width: 600px;
   max-width: calc(100% - var(--basis_x8));
   max-height: calc(100% - var(--basis_x8));
 
@@ -41,9 +41,7 @@
 
 .inputWrapper {
   display: flex;
-  align-items: flex-start;
-  width: 500px;
-  max-width: 100%;
+  align-items: center;
 }
 .inputWrapper .input {
   flex-grow: 1;
@@ -52,4 +50,5 @@
 .actions {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }

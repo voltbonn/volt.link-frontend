@@ -202,7 +202,7 @@ function Editor() {
           defaultBlock={block}
           open={isSharingEditorOpen}
           onClose={closeSharingEditor}
-          onChange={savePermissions}
+          onChange={saveProperties}
         />
       : null
     }

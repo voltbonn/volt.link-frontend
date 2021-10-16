@@ -21,47 +21,42 @@ function SharingEditor({
   onChange,
   onClose,
 }) {
-
-  const [ newPath, setNewPath ] = useState('')
-  const [ properties, setProperties ] = useState({})
-
-  const {
-    trigger = {},
-  } = properties
-
-  const {
-		path = '',
-  } = trigger
+  const [ path, setPath ] = useState('')
 
   useEffect(() => {
-    console.log('defaultBlock', defaultBlock)
+    const properties = defaultBlock.properties || {}
+    const initialPath = (properties.trigger || {}).path || ''
 
-    setProperties(defaultBlock.properties)
-  }, [ setProperties, defaultBlock ])
+    setPath(initialPath)
+  }, [ defaultBlock, setPath ])
 
-  const savePath = useCallback(() => {
-    setProperties(oldProperties => {
-      const newProperties = {...oldProperties}
-      if (newPath === '') {
-        if (newProperties.hasOwnProperty('trigger')) {
-          delete newProperties.trigger
-        }
-        if (newProperties.hasOwnProperty('action')) {
-          delete newProperties.action
-        }
-      } else {
-        newProperties.trigger = {
-		    	type: 'path',
-		    	path: newPath,
-		    }
-		    newProperties.action = {
-		    	type: 'render_block',
-		    }
+  const savePath = useCallback(newPath => {
+    const newProperties = {...(defaultBlock.properties || {})}
+
+    if (newPath === '') {
+      if (newProperties.hasOwnProperty('trigger')) {
+        delete newProperties.trigger
       }
+      if (newProperties.hasOwnProperty('action')) {
+        delete newProperties.action
+      }
+    } else {
+      newProperties.trigger = {
+		  	type: 'path',
+		  	path: newPath,
+		  }
+		  newProperties.action = {
+		  	type: 'render_block',
+		  }
+    }
 
-      return newProperties
-    })
-  }, [ newPath, setProperties ])
+    setPath(newPath)
+    onChange(newProperties)
+  }, [
+    defaultBlock,
+    onChange,
+    setPath,
+  ])
 
   const viewStatistics = () => {
     const a = document.createElement('a')
@@ -103,24 +98,15 @@ function SharingEditor({
             {/* <hr style={{ opacity: 0.2 }} /> */}
 
             <div className={classes.inputWrapper}>
-              <HtmlInput
+             <span style={{ paddingRight: 'var(--basis)' }}>volt.link/</span>
+             <HtmlInput
                 defaultValue={path}
-                onChange={setNewPath}
+                onBlur={savePath}
                 linebreak={false}
                 className={classes.input}
+                style={{ margin: '0' }}
               />
-              <button
-                onClick={savePath}
-              >
-                Save
-              </button>
             </div>
-
-            <hr style={{ opacity: 0.2 }} />
-
-            <pre>
-              {JSON.stringify(properties, null, 4)}
-            </pre>
 
             <hr style={{ opacity: 0.2 }} />
 
