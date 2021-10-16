@@ -1,6 +1,6 @@
 import { useLocalization } from '../../fluent/Localized.js'
 
-function ViewerText ({ block }) {
+function ViewerTextCard ({ block }) {
   const { fluentByAny } = useLocalization()
 
   // console.log('block.properties.text', block.properties.text)
@@ -9,4 +9,4 @@ function ViewerText ({ block }) {
   return <p dir="auto">{text}</p>
 }
 
-export default ViewerText
+export default ViewerTextCard

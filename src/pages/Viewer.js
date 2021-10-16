@@ -11,10 +11,10 @@ import useLoadBlocksByIds from '../hooks/useLoadBlocksByIds.js'
 import useUser from '../hooks/useUser.js'
 
 import Header from '../components/Header.js'
-import ViewerHeadline from '../components/view/ViewerHeadline.js'
-import ViewerText from '../components/view/ViewerText.js'
-import ViewerButton from '../components/view/ViewerButton.js'
-import ViewerDivider from '../components/view/ViewerDivider.js'
+import ViewerHeadlineCard from '../components/view/ViewerHeadlineCard.js'
+import ViewerTextCard from '../components/view/ViewerTextCard.js'
+import ViewerButtonCard from '../components/view/ViewerButtonCard.js'
+import ViewerDividerCard from '../components/view/ViewerDividerCard.js'
 import ViewerCheckboxCard from '../components/view/ViewerCheckboxCard.js'
 
 import classes from './Viewer.module.css'
@@ -126,16 +126,17 @@ function Viewer () {
 
               switch (contentBlock.type) {
                 case 'headline':
-                  component = <ViewerHeadline key={contentBlock._id} block={contentBlock} />
+                  component = <ViewerHeadlineCard key={contentBlock._id} block={contentBlock} />
                   break
                 case 'text':
-                  component = <ViewerText key={contentBlock._id} block={contentBlock} />
+                  component = <ViewerTextCard key={contentBlock._id} block={contentBlock} />
                   break
                 case 'button':
-                  component = <ViewerButton key={contentBlock._id} block={contentBlock} />
+                  component = <ViewerButtonCard key={contentBlock._id} block={contentBlock} />
                   break
                 case 'divider':
-                  component = <ViewerDivider key={contentBlock._id} block={contentBlock} />
+                  component = <ViewerDividerCard key={contentBlock._id} block={contentBlock} />
+                  break
                 case 'checkbox':
                   component = <ViewerCheckboxCard key={contentBlock._id} block={contentBlock} />
                   break
