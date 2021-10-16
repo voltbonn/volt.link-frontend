@@ -16,6 +16,7 @@ import ViewerTextCard from '../components/view/ViewerTextCard.js'
 import ViewerButtonCard from '../components/view/ViewerButtonCard.js'
 import ViewerDividerCard from '../components/view/ViewerDividerCard.js'
 import ViewerCheckboxCard from '../components/view/ViewerCheckboxCard.js'
+import ViewerPageCard from '../components/view/ViewerPageCard.js'
 
 import classes from './Viewer.module.css'
 
@@ -140,6 +141,8 @@ function Viewer () {
                 case 'checkbox':
                   component = <ViewerCheckboxCard key={contentBlock._id} block={contentBlock} />
                   break
+                case 'page':
+                  component = <ViewerPageCard key={contentBlock._id} block={contentBlock} />
                   break
                 default:
                   component = null

@@ -22,9 +22,10 @@ import { Localized, useLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
+import ViewerPageCard from '../components/view/ViewerPageCard.js'
 
 function Chooser({ leftHeaderActions, rightHeaderActions }) {
-  const { getString, fluentByAny } = useLocalization()
+  const { getString } = useLocalization()
   const apollo_client = useApolloClient()
 
   const [type, setType] = useState('page')
@@ -189,12 +190,9 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
             {
               blocks
               .map(block => {
-                const title = fluentByAny(block.properties.text, getString('placeholder_main_headline'))
-                const description = fluentByAny(block.properties.description, '')
                 return <div key={block._id}>
                   <hr />
-                  { title !== '' ? <h2>{title}</h2> : null }
-                  { description !== '' ? <p>{description}</p> : null }
+                  <ViewerPageCard block={block} />
                   <Link to={`/edit/${block._id}`}>
                     <button><Localized id="edit_block" /></button>
                   </Link>
