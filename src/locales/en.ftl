@@ -69,7 +69,7 @@ path_editor_title_label = Title
 path_editor_title_placeholder = Volt Bonn
 
 path_editor_description_label = Short description
-path_editor_description_placeholder = Future Made in Europe
+path_editor_description_placeholder = Short description
 
 path_editor_tags_placeholder = #hashtag1 #europa #social_equality
 path_editor_tags_label = Tags
