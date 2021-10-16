@@ -126,6 +126,7 @@ block_menu_type_label_headline = Headline
 block_menu_type_label_headline3 = Headline 3
 block_menu_type_label_text = Text
 block_menu_type_label_divider = Divider
+block_menu_type_label_checkbox = Checkbox
 
 block_menu_close_menu = Close Menu
 block_menu_delete = Delete Block
