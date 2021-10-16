@@ -208,6 +208,7 @@ function TranslatedInput({
   onChange,
   onBlur,
   children = null,
+  style = {},
 }) {
   const [arrayWithLocales, setArrayWithLocales] = useState([])
 
@@ -280,7 +281,7 @@ function TranslatedInput({
   const best = filterByLocale(arrayWithLocales.filter(t => t.locale !== currentLocale))
 
   if (typeof children === 'function') {
-    return <div className={classes.translatedInput}>
+    return <div className={classes.translatedInput} style={style}>
       {/* <div className={classes.content}> */}
         <div style={{ flexGrow: '1', width: '100%' }}>
           {children({
