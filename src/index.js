@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
+
+import snackbarClasses from './Snackbar.module.css'
+
 import App from './pages/App.js'
 // import reportWebVitals from './reportWebVitals'
 import { BrowserRouter as Router } from 'react-router-dom'
@@ -110,6 +113,13 @@ function Start() {
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'right',
+          }}
+          style={{ minWidth: 'unset' }}
+          classes={{
+            variantSuccess: `${snackbarClasses.snackbar} ${snackbarClasses.success}`,
+            variantError: `${snackbarClasses.snackbar} ${snackbarClasses.error}`,
+            variantWarning: `${snackbarClasses.snackbar} ${snackbarClasses.warning}`,
+            variantInfo: `${snackbarClasses.snackbar} ${snackbarClasses.info}`,
           }}
           domRoot={document.getElementById('react-notification')}
         >
