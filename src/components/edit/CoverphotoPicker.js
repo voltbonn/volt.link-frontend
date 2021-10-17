@@ -18,6 +18,17 @@ import welcome_to_volt_thumb from '../../images/coverphotos/thumbs/Welcome-to-Vo
 
 
 function CoverphotoPicker({ getString, defaultValue, onChange, className, style }) {
+  const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
+
+  let defaultValueIsUrl = false
+  if (
+    typeof defaultValue === 'string'
+    && defaultValue.length > 0
+    && isAbsoluteUrlRegexp.test(defaultValue)
+  ) {
+    defaultValueIsUrl = true
+  }
+
   return <div
     className={className}
     style={style}
@@ -25,9 +36,9 @@ function CoverphotoPicker({ getString, defaultValue, onChange, className, style 
     <Popover
       trigger={(triggerProps) => (
         <div
-          className={`${classes.coverphoto} ${!defaultValue ? classes.no_image : ''}`}
+          className={`${classes.coverphoto} ${!defaultValueIsUrl ? classes.no_image : ''}`}
           style={{
-            backgroundImage: defaultValue ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(defaultValue)})` : '',
+            backgroundImage: defaultValueIsUrl ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(defaultValue)})` : '',
           }}
         >
           <div className={classes.button_wrapper}>
