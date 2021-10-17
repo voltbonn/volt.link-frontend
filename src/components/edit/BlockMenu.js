@@ -33,6 +33,7 @@ import {
   CheckBox as CheckboxIcon,
 
   PreviewSharp as ViewIcon,
+  EditSharp as EditIcon,
 } from '@mui/icons-material'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
@@ -72,6 +73,10 @@ function BlockMenu ({
 
   const viewBlock = useCallback(() => {
     history.push(`/view/${_id}`)
+  }, [ _id, history ])
+
+  const editBlock = useCallback(() => {
+    history.push(`/edit/${_id}`)
   }, [ _id, history ])
 
   return <>
@@ -230,6 +235,14 @@ function BlockMenu ({
                       </ListItemIcon>
                       <ListItemText>
                         <Localized id="view_block" />
+                      </ListItemText>
+                    </MenuItem>
+                    <MenuItem style={{marginTop:'8px'}} onClick={editBlock}>
+                      <ListItemIcon>
+                        <EditIcon />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <Localized id="edit_block" />
                       </ListItemText>
                     </MenuItem>
                   </div>
