@@ -16,7 +16,7 @@ import {
   TranslateSharp as TranslateIcon,
   IosShareSharp as ShareIcon,
   LockSharp as PermissionsIcon,
-  // SaveSharp as SaveIcon,
+  SaveSharp as SaveIcon,
   MoreHorizSharp as BlockMenuIcon,
 } from '@mui/icons-material'
 
@@ -155,14 +155,14 @@ function Editor() {
     }
   }, [block, saveBlock, setBlock])
 
-  // const manuallySaveEverything = useCallback(() => {
-  //   saveBlock(block)
-  //     .then(gottenBlock => {
-  //       if (gottenBlock._id !== block._id) {
-  //         setBlock(gottenBlock)
-  //       }
-  //     })
-  // }, [saveBlock, block, setBlock])
+  const manuallySaveEverything = useCallback(() => {
+    saveBlock(block)
+      .then(gottenBlock => {
+        if (gottenBlock._id !== block._id) {
+          setBlock(gottenBlock)
+        }
+      })
+  }, [saveBlock, block, setBlock])
 
   // const isFirstRun = useRef(true)
   // useEffect(() => {
@@ -226,12 +226,10 @@ function Editor() {
       <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_permissions" /></span>
     </button>
 
-    {/*
     <button className="text hasIcon" onClick={manuallySaveEverything}>
       <SaveIcon className="icon" />
       <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_save" /></span>
     </button>
-    */}
 
     <BlockMenu
       {...{
