@@ -17,8 +17,11 @@ import volt_bonn_thumb from '../../images/coverphotos/thumbs/tYADz4UyUAAcV5WlmWL
 import welcome_to_volt_thumb from '../../images/coverphotos/thumbs/Welcome-to-Volt.png'
 
 
-function CoverphotoPicker({ getString, defaultValue, onChange }) {
-  return (
+function CoverphotoPicker({ getString, defaultValue, onChange, className, style }) {
+  return <div
+    className={className}
+    style={style}
+  >
     <Popover
       trigger={(triggerProps) => (
         <div
@@ -125,7 +128,7 @@ function CoverphotoPicker({ getString, defaultValue, onChange }) {
         </Paper>
       )}
     </Popover>
-  )
+  </div>
 }
 
 export default withLocalization(CoverphotoPicker)
