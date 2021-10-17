@@ -10,6 +10,7 @@ import CheckboxInput from './CheckboxInput.js'
 import HtmlInput from './HtmlInput.js'
 import FancyInput from './FancyInput.js'
 import CoverphotoPicker from './CoverphotoPicker.js'
+import IconPicker from './IconPicker.js'
 import TranslatedInput from './TranslatedInput.js'
 
 // function stripTmpIds(array){
@@ -243,6 +244,10 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     <CoverphotoPicker
       defaultValue={properties.coverphoto}
       onChange={newValue => updateProperty('coverphoto', newValue)}
+    />
+    <IconPicker
+      defaultValue={properties.icon}
+      onChange={newValue => updateProperty('icon', newValue)}
     />
 
     <div className={classes.main_headline}>
