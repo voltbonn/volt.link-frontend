@@ -331,7 +331,10 @@ select,
   background: var(--button-background) !important;
   color: var(--button-color) !important;
 }
-.type_button {
+button[disabled]{
+  cursor: default;
+}
+.type_button{
   cursor: text;
 }
 
@@ -377,7 +380,7 @@ button:focus,
   --button-background: var(--background-contrast) !important;
   --button-color: var(--on-background) !important;
 }
-button:hover{
+button:not([disabled]):hover{
   transform-origin: center center;
   transform: scale(1.05);
 }
