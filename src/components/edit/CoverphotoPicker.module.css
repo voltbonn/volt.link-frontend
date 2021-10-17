@@ -32,8 +32,15 @@
 .coverphoto.no_image {
   height: auto;
   background-color: transparent;
+}
 
-  justify-content: center;
+.button_wrapper {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.coverphoto.no_image .button_wrapper {
+  width: 1000px;
 }
 
 /*
