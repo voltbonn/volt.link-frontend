@@ -18,7 +18,7 @@ import {
 import {
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
-  Delete as DeleteIcon,
+  // Delete as DeleteIcon,
   Close as CloseIcon,
   VerticalAlignTop as VerticalAlignTopIcon,
   VerticalAlignBottom as VerticalAlignBottomIcon,
@@ -207,7 +207,7 @@ function BlockMenu ({
                 : null
             }
 
-            {
+            {/*
               onRemoveRow
                 ? <MenuItem style={{marginTop:'8px'}} onClick={onRemoveRow}>
                     <ListItemIcon>
@@ -218,7 +218,7 @@ function BlockMenu ({
                     </ListItemText>
                   </MenuItem>
                 : null
-            }
+            */}
 
             {
               typeof _id === 'string' && _id !== ''
