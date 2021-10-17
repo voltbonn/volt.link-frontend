@@ -155,7 +155,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   // }, [ setVoltTeams ])
 
   let propertiesFrameContent = null
-  if (type === 'page' || type === 'person') {
+  if (type === 'page') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
       <h3><Localized id="path_editor_imprint_label" /></h3>
