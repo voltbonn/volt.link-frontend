@@ -1,9 +1,9 @@
 .main_headline {
-  width: calc(1000px + var(--basis_x8));
+  width: 1000px;
   maxWidth: calc(100% - var(--basis));
   margin: var(--basis_x8) auto;
 }
-@media (max-width: 1075px) {
+@media (max-width: 1000px) {
   .main_headline {
     width: 100%;
     maxWidth: calc(100% - var(--basis));

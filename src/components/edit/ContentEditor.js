@@ -272,7 +272,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
   <div
     style={{
       position: 'relative',
-      width: 'calc(1000px + var(--basis_x8))',
+      width: '1000px',
       maxWidth: '100%',
       margin: 'var(--basis_x8) auto 0 auto',
     }}

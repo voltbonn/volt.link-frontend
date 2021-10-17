@@ -95,7 +95,7 @@ function InlineEditorBlockButtonRaw({
           placeholder={getString('path_editor_item_link_label')}
           style={{
             margin: 'var(--basis) 0',
-            width: 'calc(100% - var(--basis_x2))',
+            width: '100%',
           }}
         />
       )}
