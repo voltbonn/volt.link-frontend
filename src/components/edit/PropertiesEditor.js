@@ -61,6 +61,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       link: 'string',
       description: 'array',
       coverphoto: 'string',
+      icon: 'string',
       imprint: 'string',
       privacy_policy: 'string',
       tags: 'string',
