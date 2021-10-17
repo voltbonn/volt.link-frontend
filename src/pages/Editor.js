@@ -248,11 +248,11 @@ function Editor() {
     />
   </div>
 
-  return <div className={`hasHeader ${classes.editor}`}>
+  return <div key={block._id} className={`hasHeader ${classes.editor}`}>
     <Header
       // title={<a href={`https://volt.link/${slug}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{slug}</a>}
       title={
-        <Link key={block._id} to="/">
+        <Link to="/">
           <button className="text hasIcon" style={{ margin: '0' }}>
             <BackIcon className="icon"/>
           </button>
