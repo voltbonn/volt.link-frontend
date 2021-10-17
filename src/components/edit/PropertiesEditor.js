@@ -152,6 +152,76 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   //     })
   // }, [ setVoltTeams ])
 
+  let propertiesFrameContent = null
+  if (type === 'page' || type === 'person') {
+    propertiesFrameContent = <>
+      <div className={classes.properties_row}>
+      <h3><Localized id="path_editor_imprint_label" /></h3>
+      <div>
+      <FancyInput>
+        {({ setError }) => (
+          <UrlInput
+            onError={setError}
+            onBlur={newValue => updateProperty('imprint', newValue)}
+            defaultValue={properties.imprint}
+            type="text"
+            style={{
+              margin: '0',
+              width: '100%'
+            }}
+            className="show_border_on_active"
+          />
+        )}
+      </FancyInput>
+      </div>
+      </div>
+
+      <div className={classes.properties_row}>
+      <h3><Localized id="path_editor_privacy_policy_label" /></h3>
+      <div>
+      <FancyInput>
+        {({ setError }) => (
+          <UrlInput
+            onError={setError}
+            onBlur={newValue => updateProperty('privacy_policy', newValue)}
+            defaultValue={properties.privacy_policy}
+            type="text"
+            style={{
+              margin: '0',
+              width: '100%'
+            }}
+            className="show_border_on_active"
+          />
+        )}
+      </FancyInput>
+      </div>
+      </div>
+    </>
+  // } else if (type === 'redirect') {
+  //   propertiesFrameContent = <>
+  //     <div className={classes.properties_row}>
+  //     <h3><Localized id="path_editor_redirect_label" /></h3>
+  //     <FancyInput>
+  //       {({ setError }) => (
+  //         <UrlInput
+  //           onError={setError}
+  //           onBlur={newValue => updateProperty('link', newValue)}
+  //           type="text"
+  //           placeholder={getString('path_editor_redirect_placeholder')}
+  //           aria-label={getString('path_editor_redirect_label')}
+  //           defaultValue={properties.link}
+  //           style={{
+  //             marginRight: '0',
+  //             marginLeft: '0',
+  //             width: '100%'
+  //           }}
+  //           className="show_border_on_active"
+  //         />
+  //       )}
+  //     </FancyInput>
+  //     </div>
+  //   </>
+
   return <>
     <CoverphotoPicker
       defaultValue={properties.coverphoto}
@@ -196,10 +266,11 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     </div>
 
     <div className={classes.propertiesFrame} style={
-      type === 'page' || type === 'person'
-        ? null
-        : { display: 'none' }
+      propertiesFrameContent === null
+        ? { display: 'none' }
+        : null
     }>
+      {propertiesFrameContent}
 
       {/* <div className={classes.properties_row}>
         <h3><Localized id="path_editor_tags_label" /></h3>
@@ -239,80 +310,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         </>
         : null
       */}
-
-      {
-        type === 'page' || type === 'person'
-          ? <>
-            <div className={classes.properties_row}>
-            <h3><Localized id="path_editor_imprint_label" /></h3>
-            <div>
-            <FancyInput>
-              {({ setError }) => (
-                <UrlInput
-                  onError={setError}
-                  onBlur={(value) => updateProperty('imprint', value)}
-                  defaultValue={properties.imprint}
-                  type="text"
-                  style={{
-                    margin: '0',
-                    width: 'calc(100% - var(--basis_x2))'
-                  }}
-                  className="show_border_on_active"
-                />
-              )}
-            </FancyInput>
-            </div>
-            </div>
-
-            <div className={classes.properties_row}>
-            <h3><Localized id="path_editor_privacy_policy_label" /></h3>
-            <div>
-            <FancyInput>
-              {({ setError }) => (
-                <UrlInput
-                  onError={setError}
-                  onBlur={(value) => updateProperty('privacy_policy', value)}
-                  defaultValue={properties.privacy_policy}
-                  type="text"
-                  style={{
-                    margin: '0',
-                    width: 'calc(100% - var(--basis_x2))'
-                  }}
-                  className="show_border_on_active"
-                />
-              )}
-            </FancyInput>
-            </div>
-            </div>
-          </>
-          : (
-            type === 'redirect'
-              ? <>
-                <div className={classes.properties_row}>
-                <h3><Localized id="path_editor_redirect_label" /></h3>
-                <FancyInput>
-                  {({ setError }) => (
-                    <UrlInput
-                      onError={setError}
-                      onBlur={(value) => updateProperty('link', value)}
-                      type="text"
-                      placeholder={getString('path_editor_redirect_placeholder')}
-                      aria-label={getString('path_editor_redirect_label')}
-                      defaultValue={properties.link}
-                      style={{
-                        marginRight: '0',
-                        marginLeft: '0',
-                        width: 'calc(100% - var(--basis_x2))'
-                      }}
-                      className="show_border_on_active"
-                    />
-                  )}
-                </FancyInput>
-                </div>
-              </>
-              : null
-          )
-      }
     </div>
   </>
 }
