@@ -63,14 +63,7 @@ function CoverphotoPicker({ getString, defaultValue, onChange, className, style 
           <h3><Localized id="path_editor_coverphoto_label" /></h3>
 
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            <Localized
-              id="path_editor_coverphoto_info"
-              // vars={{
-              //   width: '1200px',
-              //   height: '400px',
-              //   ratio: '3/1',
-              // }}
-            />
+            <Localized id="path_editor_coverphoto_info" />
           </em>
 
           <FancyInput>

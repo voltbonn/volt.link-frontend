@@ -55,14 +55,7 @@ function IconPicker({ defaultValue, onChange, className, style }) {
           <h3><Localized id="path_editor_icon_label" /></h3>
 
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-            <Localized
-              id="path_editor_icon_info"
-              // vars={{
-              //   width: '400px',
-              //   height: '400px',
-              //   ratio: '1/1',
-              // }}
-            />
+            <Localized id="path_editor_icon_info" />
           </em>
 
           <FancyInput>
