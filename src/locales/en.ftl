@@ -113,6 +113,8 @@ path_editor_imprint_info = Leave empty for Volt Europa imprint.
 path_editor_privacy_policy_label = Privacy-Policy Link
 path_editor_privacy_policy_info = Leave empty for Volt Europa privacy policy.
 
+path_editor_checked_label = Checked
+
 add_content_before = Add Content
 content_editor_reorderblock_label = Reorder
 

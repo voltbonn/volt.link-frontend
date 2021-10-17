@@ -1,13 +1,9 @@
 import React, { useState, useCallback, useRef } from 'react'
 
-import {
-  CheckBox as CheckBoxIcon,
-  CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
-} from '@mui/icons-material'
-
 import { withLocalization } from '../../fluent/Localized.js'
 
 import HtmlInput from './HtmlInput.js'
+import CheckboxInput from './CheckboxInput.js'
 import TranslatedInput from './TranslatedInput.js'
 
 function InlineEditorBlockCheckboxRaw({
@@ -39,31 +35,16 @@ function InlineEditorBlockCheckboxRaw({
     }
   }, [onChange, block, text])
 
-  const checkBlock = useCallback(() => {
-    checked.current = true
+  const saveChecked = useCallback(newValue => {
+    checked.current = newValue
     publishChanges()
   }, [ publishChanges ])
 
-  const uncheckBlock = useCallback(() => {
-    checked.current = false
-    publishChanges()
-  }, [ publishChanges ])
-
-  const checkboxStyle = {
-    verticalAlign: 'middle',
-    padding: 'var(--basis)',
-    cursor: 'pointer',
-  }
-
-  return <div style={{
-    padding: 'var(--basis) 0',
-    display: 'flex',
-  }}>
-    {
-      checked.current
-      ? <CheckBoxIcon style={checkboxStyle} onClick={uncheckBlock} />
-      : <CheckBoxOutlineBlankIcon style={checkboxStyle} onClick={checkBlock} />
-    }
+  return <div style={{ display: 'flex' }}>
+    <CheckboxInput
+      checked={checked.current}
+      onChange={saveChecked}
+    />
 
     <TranslatedInput
       defaultValue={text}

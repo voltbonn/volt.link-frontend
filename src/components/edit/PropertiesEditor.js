@@ -6,6 +6,7 @@ import classes from './PropertiesEditor.module.css'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 import UrlInput from './UrlInput.js'
+import CheckboxInput from './CheckboxInput.js'
 import HtmlInput from './HtmlInput.js'
 import FancyInput from './FancyInput.js'
 import CoverphotoPicker from './CoverphotoPicker.js'
@@ -221,6 +222,22 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   //     </FancyInput>
   //     </div>
   //   </>
+  } else if (type === 'checkbox') {
+    propertiesFrameContent = <>
+      <div className={classes.properties_row}>
+        <h3><Localized id="path_editor_checked_label" /></h3>
+        <CheckboxInput
+          onChange={newValue => updateProperty('checked', newValue)}
+          defaultValue={Boolean(properties.checked)}
+          style={{
+            marginRight: '0',
+            marginLeft: '0',
+            width: '100%'
+          }}
+        />
+      </div>
+    </>
+  }
 
   return <>
     <CoverphotoPicker
