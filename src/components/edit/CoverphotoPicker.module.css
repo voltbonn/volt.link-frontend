@@ -1,6 +1,10 @@
 .coverphoto {
   position: relative;
+
   width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+
   background-color: var(--background-contrast);
   background-size: cover;
   background-position: center;
@@ -15,32 +19,41 @@
 }
 @media (max-width: 1000px) {
   .coverphoto{
-    height: 16rem;
+    height: 17rem;
   }
 }
 @media (max-width: 800px) {
   .coverphoto{
-    height: 10rem;
+    height: 11rem;
   }
 }
 @media (max-width: 500px) {
   .coverphoto{
-    height: 7rem;
+    height: 8rem;
   }
 }
 
-.coverphoto.no_image {
+.root.coverphotoIsNotSet {
   height: auto;
   background-color: transparent;
 }
 
 .button_wrapper {
-  width: 100%;
+  width: 1000px;
   max-width: 100%;
   margin: 0 auto;
 }
-.coverphoto.no_image .button_wrapper {
-  width: 1000px;
+.root.coverphotoIsSet.iconIsSet .button_wrapper {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.root.coverphotoIsSet .button_wrapper {
+  width: 100%;
+}
+.root.coverphotoIsNotSet .coverphoto {
+  height: auto;
+  background-color: transparent;
 }
 
 /*
@@ -49,7 +62,7 @@
     opacity: 0.1;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
   }
-  .coverphoto.no_image .changeCoverphotoButton,
+  .root.coverphotoIsNotSet .changeCoverphotoButton,
   .coverphoto:hover .changeCoverphotoButton {
     opacity: 1;
   }

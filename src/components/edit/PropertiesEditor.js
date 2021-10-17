@@ -243,6 +243,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   return <>
     <CoverphotoPicker
       defaultValue={properties.coverphoto}
+      iconValue={properties.icon}
       onChange={newValue => updateProperty('coverphoto', newValue)}
     />
     <IconPicker
