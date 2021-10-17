@@ -64,6 +64,8 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       imprint: 'string',
       privacy_policy: 'string',
       tags: 'string',
+      trigger: 'object',
+      action: 'object',
     }
 
     const newProperties = { ...properties }
@@ -79,6 +81,17 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         break
         case 'string':
           if (newPropertyValue !== '') {
+            newProperties[propertyKey] = newPropertyValue
+          } else if (newProperties.hasOwnProperty(propertyKey)) {
+            delete newProperties[propertyKey]
+          }
+        break
+        case 'object':
+          if (
+            typeof newPropertyValue === 'object'
+            && newPropertyValue !== null
+            && Object.keys(newPropertyValue).length > 0
+          ) {
             newProperties[propertyKey] = newPropertyValue
           } else if (newProperties.hasOwnProperty(propertyKey)) {
             delete newProperties[propertyKey]
