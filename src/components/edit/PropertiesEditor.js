@@ -248,6 +248,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     />
     <IconPicker
       defaultValue={properties.icon}
+      coverphotoValue={properties.coverphoto}
       onChange={newValue => updateProperty('icon', newValue)}
     />
 
