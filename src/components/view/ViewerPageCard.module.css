@@ -1,0 +1,13 @@
+.icon {
+  display: inline-block;
+  height: calc(var(--font-add) + var(--basis));
+  width: calc(var(--font-add) + var(--basis));
+  vertical-align: middle;
+  background-position: center;
+  background-size: cover;
+  margin-right: var(--basis);
+}
+.title {
+  vertical-align: middle;
+  font-weight: bold;
+}
