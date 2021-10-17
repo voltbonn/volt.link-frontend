@@ -134,7 +134,7 @@ function SharingEditor({
 
         <div className={classes.dialog}>
 
-            <h1 style={{ margin: '0 0 var(--basis_x4) 0' }}>Get the link</h1>
+            <h1 style={{ margin: '0 0 var(--basis_x4) 0' }}>Share the link</h1>
             {/* <p>Enter @volteuropa.org addresses to give editing rights.<br/>Groups addresses are not supported.</p> */}
 
             {/* <hr style={{ opacity: 0.2 }} /> */}
