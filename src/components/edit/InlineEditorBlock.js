@@ -11,6 +11,7 @@ import InlineEditorBlockButton from './InlineEditorBlockButton.js'
 import InlineEditorBlockHeadline from './InlineEditorBlockHeadline.js'
 import InlineEditorBlockDivider from './InlineEditorBlockDivider.js'
 import InlineEditorBlockCheckbox from './InlineEditorBlockCheckbox.js'
+import InlineEditorBlockPerson from './InlineEditorBlockPerson.js'
 
 import classes from './InlineEditorBlock.module.css'
 
@@ -50,6 +51,9 @@ function InlineEditorBlockInbetweenComponent({ type = 'text', ...props }){
     break;
     case 'checkbox':
       component = <InlineEditorBlockCheckbox {...props} />
+    break;
+    case 'person':
+      component = <InlineEditorBlockPerson {...props} />
     break;
     default:
       component = <InlineEditorBlockText {...props} />
