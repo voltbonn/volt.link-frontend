@@ -222,7 +222,7 @@ function BlockMenu ({
 
             {
               typeof _id === 'string' && _id !== ''
-                ? <div>
+                ? <div style={{ marginTop:'8px', marginBottom:'8px' }}>
                     <Divider style={{opacity: 0.2}} />
                     <MenuItem style={{marginTop:'8px'}} onClick={viewBlock}>
                       <ListItemIcon>
