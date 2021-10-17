@@ -1,7 +1,17 @@
-.icon_wrapper {
+.root {
   width: 1000px;
   max-width: 100%;
   margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.root.iconIsSet.coverphotoIsSet {
+  margin-top: calc(-32 * var(--basis)) !important;
+}
+.root.iconIsSet {
+  margin-bottom: var(--basis_x16);
 }
 
 .icon {
@@ -10,39 +20,66 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  margin-bottom: var(--basis_x4);
-
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
 
   border-radius: 1000px;
+  margin-bottom: calc(-16 * var(--basis));
 
-  width: 20rem;
-  height: 20rem;
+  --icon-size: calc(64 * var(--basis));
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+.icon:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url(../../images/profile_frame.png);
+  background-size: cover;
+  background-position: center;
+  border-radius: 100%;
 }
 @media (max-width: 1000px) {
   .icon{
-    width: 16rem;
-    height: 16rem;
+    --icon-size: calc(56 * var(--basis));
+  }
+  .root.iconIsSet.coverphotoIsSet{
+    margin-top: calc(-26 * var(--basis)) !important;
   }
 }
 @media (max-width: 800px) {
   .icon{
-    width: 10rem;
-    height: 10rem;
+    --icon-size: calc(48 * var(--basis));
+  }
+  .root.iconIsSet.coverphotoIsSet{
+    margin-top: calc(-17 * var(--basis)) !important;
   }
 }
 @media (max-width: 500px) {
   .icon{
-    width: 7rem;
-    height: 7rem;
+    --icon-size: calc(40 * var(--basis));
+  }
+  .root.iconIsSet.coverphotoIsSet{
+    margin-top: calc(-13 * var(--basis)) !important;
   }
 }
 
-.icon.no_image {
+.iconWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sizing_pixel {
+  width: 100%;
+  height: auto;
+}
+
+.root.iconIsNotSet .icon {
   height: auto;
   background-color: transparent;
+  display: none;
 }
 
 /*
@@ -51,7 +88,7 @@
     opacity: 0.1;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
   }
-  .icon.no_image .changeIconButton,
+  .root.iconIsNotSet .changeIconButton,
   .icon:hover .changeIconButton {
     opacity: 1;
   }

@@ -10,8 +10,7 @@ import { Localized, withLocalization } from '../../fluent/Localized.js'
 import FancyInput from './FancyInput.js'
 import UrlInput from './UrlInput.js'
 
-
-function IconPicker({ defaultValue, onChange, className, style }) {
+function IconPicker({ defaultValue, coverphotoValue, onChange, className, style }) {
   const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
 
   let defaultValueIsUrl = false
@@ -23,21 +22,34 @@ function IconPicker({ defaultValue, onChange, className, style }) {
     defaultValueIsUrl = true
   }
 
+  let coverphotoValueIsUrl = false
+  if (
+    typeof coverphotoValue === 'string'
+    && coverphotoValue.length > 0
+    && isAbsoluteUrlRegexp.test(coverphotoValue)
+  ) {
+    coverphotoValueIsUrl = true
+  }
+
   return <div
-    className={`${classes.icon_wrapper} ${className}`}
+    className={`
+      ${classes.root}
+      ${defaultValueIsUrl ? classes.iconIsSet : classes.iconIsNotSet}
+      ${coverphotoValueIsUrl ? classes.coverphotoIsSet : classes.coverphotoIsNotSet}
+      ${className}
+    `}
     style={style}
   >
     <Popover
-      trigger={(triggerProps) => (
+      trigger={(triggerProps) => (<div className={classes.iconWrapper}>
         <div
           className={`${classes.icon} ${!defaultValueIsUrl ? classes.no_image : ''}`}
           style={{
             backgroundImage: defaultValueIsUrl ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(defaultValue)})` : '',
           }}
-        >
-          <button {...triggerProps} className={classes.changeIconButton}>Set Icon</button>
-        </div>
-      )}
+        ></div>
+        <button {...triggerProps} className={classes.changeIconButton}>Set Icon</button>
+      </div>)}
     >
       {({closePopover, ...popoverProps}) => (
         <Paper
