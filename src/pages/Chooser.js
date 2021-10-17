@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from 'react'
 
 import {
   InsertDriveFileSharp as PageIcon,
-  LinkSharp as RedirectIcon,
+  // LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
   // Crop75Sharp as ButtonIcon,
   // TitleSharp as HeadlineIcon,
