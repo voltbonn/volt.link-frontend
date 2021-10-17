@@ -232,7 +232,6 @@ function BlockMenu ({
                         <Localized id="view_block" />
                       </ListItemText>
                     </MenuItem>
-                  </>
                   </div>
                 : null
             }
