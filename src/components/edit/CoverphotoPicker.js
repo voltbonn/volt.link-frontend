@@ -39,6 +39,8 @@ function CoverphotoPicker({ getString, defaultValue, onChange }) {
             maxHeight: 'calc(calc(100vh - 32px) - var(--basis_x8))',
             overflow: 'auto',
             padding: 'var(--basis_x4)',
+            background: 'var(--background-contrast)',
+            color: 'var(--on-background)',
           }}
           elevation={8}
         >

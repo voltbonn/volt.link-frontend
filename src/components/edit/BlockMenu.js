@@ -53,11 +53,6 @@ function BlockMenu ({
   addRowBefore = null,
   addRowAfter = null,
 }) {
-  let prefersDarkMode = false
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    prefersDarkMode = true
-  }
-
   const history = useHistory()
 
   const { _id = '', type = '' } = block
@@ -91,6 +86,8 @@ function BlockMenu ({
             height: 325,
             maxHeight: 'calc(100vh - 32px)',
             overflow: 'auto',
+            background: 'var(--background-contrast)',
+            color: 'var(--on-background)',
           }}
           elevation={8}
         >
@@ -115,7 +112,8 @@ function BlockMenu ({
                   lineHeight: '1',
                   margin: '-4px 0 0 0',
                   padding: '12px 16px 12px',
-                  backgroundColor: prefersDarkMode ? '#2e2e2e' : '#fff',
+                  backgroundColor: 'var(--background-contrast)',
+                  color: 'var(--on-background)',
                 }}
               >
                 <Localized id="block_menu_choose_type_label" />
