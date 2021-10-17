@@ -141,7 +141,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     <div className={classes.main_headline}>
       <TranslatedInput
         defaultValue={properties.text}
-        onBlur={(value) => updateProperty('text', value)}
+        onBlur={value => updateProperty('text', value)}
       >
         {(translatedInputProps) => {
           return (
@@ -158,7 +158,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
 
       <TranslatedInput
         defaultValue={properties.description}
-        onBlur={(value) => updateProperty('description', value)}
+        onBlur={value => updateProperty('description', value)}
       >
         {(translatedInputProps) => {
           return (
