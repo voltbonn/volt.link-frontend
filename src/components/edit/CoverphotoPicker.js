@@ -120,6 +120,11 @@ function CoverphotoPicker({ getString, defaultValue, onChange }) {
             />
 
           </div>
+          <hr />
+
+          <button onClick={closePopover} style={{ margin: 0 }}>
+            Close
+          </button>
         </Paper>
       )}
     </Popover>
