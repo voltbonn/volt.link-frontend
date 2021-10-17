@@ -42,27 +42,48 @@
   }
 }
 
-.app .icon {
+/* .app .icon {
   display: inline-block;
   width: auto;
   height: auto;
   font-size: 0;
   border-radius: 100%;
   margin-bottom: 0;
+} */
+
+.icon {
+  display: block;
+  position: relative;
+  background-color: var(--background-contrast);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 1000px;
+
+  --icon-size-multiplier: 20;
+  --icon-size: calc(var(--icon-size-multiplier) * var(--basis));
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
-.app .icon:after {
+.icon:after {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  /* background-image: url(/public/profile_frame.png); */
+  background-image: url(../images/profile_frame.png);
   background-size: cover;
   border-radius: 100%;
 }
-.app .icon img {
-  width: 20rem;
+.icon.coverphotoIsSet{
+  margin-top: calc(calc(-0.5 * var(--icon-size-multiplier)) * var(--basis)) !important;
+}
+@media (max-width: 800px) {
+  .icon{
+    --icon-size-multiplier: 30;
+  }
 }
 
 .app .contentWrapper{

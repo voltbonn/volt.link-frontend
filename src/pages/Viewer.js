@@ -114,7 +114,12 @@ function Viewer () {
       <main className={`${classes.contentWrapper}`}>
         {
           icon_url !== ''
-            ? <div style={{ backgroundImage: `url(${window.domains.backend}download_url?url=${encodeURIComponent(icon_url)})` }} className={classes.icon}></div>
+            ? <div
+                style={{
+                  backgroundImage: `url(${window.domains.backend}download_url?url=${encodeURIComponent(icon_url)})`
+                }}
+                className={`${classes.icon} ${coverphoto_url === '' ? classes.coverphotoIsNotSet : classes.coverphotoIsSet}`}
+              ></div>
             : null
         }
         { title !== '' ? <h1 dir="auto">{title}</h1> : null }
