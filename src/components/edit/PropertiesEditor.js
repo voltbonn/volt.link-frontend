@@ -135,13 +135,13 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   return <>
     <CoverphotoPicker
       defaultValue={properties.coverphoto}
-      onChange={coverphoto => updateProperty('coverphoto', coverphoto)}
+      onChange={newValue => updateProperty('coverphoto', newValue)}
     />
 
     <div className={classes.main_headline}>
       <TranslatedInput
         defaultValue={properties.text}
-        onBlur={value => updateProperty('text', value)}
+        onBlur={newValue => updateProperty('text', newValue)}
       >
         {(translatedInputProps) => {
           return (
@@ -158,7 +158,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
 
       <TranslatedInput
         defaultValue={properties.description}
-        onBlur={value => updateProperty('description', value)}
+        onBlur={newValue => updateProperty('description', newValue)}
       >
         {(translatedInputProps) => {
           return (
@@ -184,7 +184,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       {/* <div className={classes.properties_row}>
         <h3><Localized id="path_editor_tags_label" /></h3>
         <HtmlInput
-          onBlur={(value) => updateProperty('tags', value)}
+          onBlur={newValue => updateProperty('tags', newValue)}
           type="text"
           placeholder={getString('path_editor_tags_placeholder')}
           aria-label={getString('path_editor_tags_label')}
