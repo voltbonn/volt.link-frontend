@@ -167,9 +167,9 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
       onChange={handleTypeChange}
       defaultValue={type}
       items={[
-        { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_page') },
-        // { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_redirect') },
-        { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_person') },
+        { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
+        { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
+        { value: 'action', icon: <ActionIcon className="icon" />, title: getString('block_menu_type_label_plural_action') },
         // { value: 'button', icon: <ButtonIcon className="icon" />, title: getString('block_menu_type_label_button') },
         // { value: 'headline', icon: <HeadlineIcon className="icon" />, title: getString('block_menu_type_label_headline') },
         // { value: 'text', icon: <TextIcon className="icon" />, title: getString('block_menu_type_label_text') },

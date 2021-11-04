@@ -21,7 +21,7 @@ contact = Contact
 source_code = Source Code
 
 create_new_page = Create New Page
-create_new_redirect = Create New Redirect
+create_new_action = Create New Action
 create_new_person = Create New Person
 
 chooser_header_title = Edit Micropages
@@ -123,7 +123,12 @@ content_editor_reorderblock_label = Reorder
 
 block_menu_choose_type_label = Choose Block Type
 
+block_menu_type_label_plural_page = Pages
+block_menu_type_label_plural_action = Actions
+block_menu_type_label_plural_person = People
+
 block_menu_type_label_page = Page
+block_menu_type_label_action = Action
 block_menu_type_label_redirect = Redirect
 block_menu_type_label_person = Person
 block_menu_type_label_button = Button
