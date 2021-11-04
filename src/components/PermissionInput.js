@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 
-function PermissionInput({ reorderHandle, actionButton, role, defaultValue, children, className, style, onChange, ariaLabel, placeholder, ...props }) {
+function PermissionInput({ dataset = {}, reorderHandle, actionButton, role, defaultValue, children, className, style, onChange, ariaLabel, placeholder, ...props }) {
   const wrapperDiv = useRef(null)
 
   const [changedRole, setChangedRole] = useState(role || 'editor')
@@ -40,6 +40,7 @@ function PermissionInput({ reorderHandle, actionButton, role, defaultValue, chil
       maxWidth: '100%',
       ...style
     }}
+    {...dataset}
   >
     {
       !!children
