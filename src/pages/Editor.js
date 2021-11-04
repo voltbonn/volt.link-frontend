@@ -54,7 +54,7 @@ function Editor() {
   const saveBlock = useSaveBlock()
   const loadBlock = useLoadBlock()
 
-  const { currentLocale } = useTranslatedInputContext()
+  const { currentLocale, setLocales } = useTranslatedInputContext()
 
   const [ isSharingEditorOpen, setIsSharingEditorOpen ] = useState(false)
   const openSharingEditor = useCallback(() => setIsSharingEditorOpen(true), [ setIsSharingEditorOpen ])
@@ -89,6 +89,15 @@ function Editor() {
       loadBlock(id)
         .then(loadedBlock => {
           loadedTheBlock.current = true
+
+          // get locales from text and description
+          // TODO: also look at the locales from sub-blocks
+          const blockLocales = [...new Set([
+            ...loadedBlock.properties.text.map(t => t.locale),
+            ...loadedBlock.properties.description.map(t => t.locale),
+          ])]
+
+          setLocales(blockLocales)
           setBlock(loadedBlock)
         })
     }
@@ -97,6 +106,7 @@ function Editor() {
     block,
     loadBlock,
     setBlock,
+    setLocales,
   ])
 
   const saveType = useCallback(newType => {
