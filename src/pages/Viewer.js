@@ -11,13 +11,7 @@ import useLoadBlocksByIds from '../hooks/useLoadBlocksByIds.js'
 import useUser from '../hooks/useUser.js'
 
 import Header from '../components/Header.js'
-import ViewerHeadlineCard from '../components/view/ViewerHeadlineCard.js'
-import ViewerTextCard from '../components/view/ViewerTextCard.js'
-import ViewerButtonCard from '../components/view/ViewerButtonCard.js'
-import ViewerDividerCard from '../components/view/ViewerDividerCard.js'
-import ViewerCheckboxCard from '../components/view/ViewerCheckboxCard.js'
-import ViewerPageCard from '../components/view/ViewerPageCard.js'
-import ViewerPersonCard from '../components/view/ViewerPersonCard.js'
+import ViewerAuto from '../components/view/ViewerAuto.js'
 
 import classes from './Viewer.module.css'
 
@@ -128,37 +122,7 @@ function Viewer () {
         <div className={classes.items}>
           {
             contentBlocks
-            .map(contentBlock => {
-              let component = null
-
-              switch (contentBlock.type) {
-                case 'headline':
-                  component = <ViewerHeadlineCard key={contentBlock._id} block={contentBlock} />
-                  break
-                case 'text':
-                  component = <ViewerTextCard key={contentBlock._id} block={contentBlock} />
-                  break
-                case 'button':
-                  component = <ViewerButtonCard key={contentBlock._id} block={contentBlock} />
-                  break
-                case 'divider':
-                  component = <ViewerDividerCard key={contentBlock._id} block={contentBlock} />
-                  break
-                case 'checkbox':
-                  component = <ViewerCheckboxCard key={contentBlock._id} block={contentBlock} />
-                  break
-                case 'page':
-                  component = <ViewerPageCard key={contentBlock._id} block={contentBlock} />
-                  break
-                case 'person':
-                  component = <ViewerPersonCard key={contentBlock._id} block={contentBlock} />
-                  break
-                default:
-                  component = null
-              }
-
-              return <div key={contentBlock._id}>{component}</div>
-            })
+            .map(contentBlock => <ViewerAuto block={contentBlock} />)
           }
         </div>
       </main>

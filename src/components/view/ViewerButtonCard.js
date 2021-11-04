@@ -1,6 +1,6 @@
 import { useLocalization } from '../../fluent/Localized.js'
 
-function ViewerButtonCard ({ block }) {
+function ViewerButtonCard ({ block, actions = {} }) {
   const { fluentByAny } = useLocalization()
 
   let url = ''
@@ -18,7 +18,9 @@ function ViewerButtonCard ({ block }) {
 
   const text = fluentByAny(block.properties.text, '')
 
-  if (url !== '') {
+  const hasClickAction = actions.hasOwnProperty('click')
+
+  if (hasClickAction === false && url !== '') {
     return <a href={url}>
       <button
         dir="auto"
@@ -31,6 +33,18 @@ function ViewerButtonCard ({ block }) {
       </button>
     </a>
   }
+
+  if (hasClickAction === true) {
+    return <button
+      dir="auto"
+      disabled="disabled"
+      style={{
+        margin: '0',
+      }}
+      onClick={actions.onclick}
+    >{text}</button>
+  }
+
   return <button
     dir="auto"
     disabled="disabled"

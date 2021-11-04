@@ -23,7 +23,7 @@ import { Localized, useLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import Header from '../components/Header.js'
 import MultiButton from '../components/MultiButton.js'
-import ViewerPageCard from '../components/view/ViewerPageCard.js'
+import ViewerAuto from '../components/view/ViewerAuto.js'
 
 function Chooser({ leftHeaderActions, rightHeaderActions }) {
   const { getString } = useLocalization()
@@ -195,7 +195,13 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
               .map(block => {
                 return <div key={block._id}>
                   <hr />
-                  <ViewerPageCard block={block} />
+                  <ViewerAuto
+                    block={block}
+                    actions={actions}
+                    style={{
+                      flexGrow: '1',
+                    }}
+                  />
                   <Link to={`/edit/${block._id}`}>
                     <button><Localized id="edit_block" /></button>
                   </Link>

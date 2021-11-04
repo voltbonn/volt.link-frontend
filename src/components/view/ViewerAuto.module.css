@@ -1,0 +1,12 @@
+.root {
+  margin: var(--basis_x2) 0;
+  flex-grow: 1;
+}
+
+/* .root.viewBlock {
+  cursor: pointer;
+}
+.root.viewBlock:hover {
+  background-color: rgba(var(--on-background-rgb), var(--alpha-less));
+  box-shadow: 0 0 0 var(--basis_x2) rgba(var(--on-background-rgb), var(--alpha-less));
+} */
