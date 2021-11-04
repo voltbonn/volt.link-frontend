@@ -19,6 +19,7 @@ function ViewerPageCard ({ block, actions = {} }) {
     history.push(`/view/${blockId}`)
   }, [history, blockId])
 
+  const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
   const text = fluentByAny(block.properties.text, getString('placeholder_main_headline'))
   const description = fluentByAny(block.properties.description, '')
@@ -28,13 +29,21 @@ function ViewerPageCard ({ block, actions = {} }) {
     className={`clickable_card ${classes.root}`}
   >
     {
-      icon_url === ''
-        ? <PagePlaceholderIcon className={classes.icon} />
-        : <div className={classes.icon} style={{ backgroundImage: `url(${icon_url})` }} alt={text}></div>
+      coverphoto_url === ''
+        ? null
+        : <div className={classes.coverphoto} style={{ backgroundImage: `url(${coverphoto_url})` }} alt={text}></div>
     }
 
-    <span dir="auto" className={classes.title}>{text}</span>
-    {description !== '' ? <p dir="auto">{description}</p> : null}
+    <div>
+      {
+        icon_url === ''
+          ? <PagePlaceholderIcon className={classes.icon} />
+          : <div className={classes.icon} style={{ backgroundImage: `url(${icon_url})` }} alt={text}></div>
+      }
+
+      <span dir="auto" className={classes.title}>{text}</span>
+      {description !== '' ? <p dir="auto">{description}</p> : null}
+    </div>
   </div>
 }
 
