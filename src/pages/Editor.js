@@ -437,8 +437,8 @@ function Editor({ getString }) {
               }}
               {...repeater_props}
             >
-              {InputWithLocal_props => <FancyInput 
-                    style={{ ...InputWithLocal_props.style, display: 'flex', flexDirection: 'column' }}
+              {InputWithLocal_props => <FancyInput
+                  style={{ ...InputWithLocal_props.style, display: 'flex', flexDirection: 'column' }}
                 >
                 {({ setError }) => (
                   <EmailInput
