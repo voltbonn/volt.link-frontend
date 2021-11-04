@@ -228,7 +228,7 @@ function Editor() {
 
     <button className="text hasIcon" onClick={manuallySaveEverything}>
       <SaveIcon className="icon" />
-      <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_save" /></span>
+      <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_publish" /></span>
     </button>
 
     <BlockMenu

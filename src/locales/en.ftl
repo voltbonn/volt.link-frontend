@@ -53,7 +53,7 @@ path_editor_edit_permission_error = You're not allowed to edit this link.
 
 path_editor_status_started_loading = Started loading…
 
-path_editor_save = Save
+path_editor_publish = Publish
 path_editor_status_started_saving = Started saving…
 path_editor_status_saved = Saved!
 path_editor_status_error_while_saving = Error while saving! Please try again later. (The error: "{$error}")
