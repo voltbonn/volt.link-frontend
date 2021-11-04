@@ -182,6 +182,8 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
     <button className="green" onClick={createBlock} style={{ margin: '0' }}>
       <Localized id={'create_new_'+type} />
     </button>
+    <br />
+    <br />
 
     {
       user_editable_links.length > 0
