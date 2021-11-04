@@ -105,11 +105,6 @@ function useTranslatedInputContext() {
 function LocalesMenu({ trigger }) {
   const { getString } = useLocalization()
 
-  let prefersDarkMode = false
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    prefersDarkMode = true
-  }
-
   const {
     locales,
     setLocales,
@@ -148,6 +143,8 @@ function LocalesMenu({ trigger }) {
             height: 'auto',
             maxHeight: 'calc(100vh - 32px)',
             overflow: 'auto',
+            background: 'var(--background-contrast)',
+            color: 'var(--on-background)',
           }}
           elevation={8}
         >
@@ -172,7 +169,8 @@ function LocalesMenu({ trigger }) {
                   lineHeight: '1',
                   margin: '-4px 0 0 0',
                   padding: '12px 16px 12px',
-                  backgroundColor: prefersDarkMode ? '#2e2e2e' : '#fff',
+                  backgroundColor: 'var(--background-contrast)',
+                  color: 'var(--on-background)',
                 }}
               >
                 {/* <Localized id="locale_menu_choose_locale_label" /> */}
@@ -209,7 +207,8 @@ function LocalesMenu({ trigger }) {
                   lineHeight: '1',
                   margin: '-4px 0 0 0',
                   padding: '12px 16px 12px',
-                  backgroundColor: prefersDarkMode ? '#2e2e2e' : '#fff',
+                  backgroundColor: 'var(--background-contrast)',
+                  color: 'var(--on-background)',
                 }}
               >
                 {/* <Localized id="locale_menu_choose_locale_label" /> */}
