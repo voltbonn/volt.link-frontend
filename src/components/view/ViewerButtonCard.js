@@ -25,8 +25,7 @@ function ViewerButtonCard ({ block, actions = {} }) {
       <button
         dir="auto"
         style={{
-          marginLeft: '0',
-          marginRight: '0',
+          margin: '0',
         }}
       >
         {text}
@@ -49,8 +48,7 @@ function ViewerButtonCard ({ block, actions = {} }) {
     dir="auto"
     disabled="disabled"
     style={{
-      marginLeft: '0',
-      marginRight: '0',
+      margin: '0',
     }}
   >{text}</button>
 }
