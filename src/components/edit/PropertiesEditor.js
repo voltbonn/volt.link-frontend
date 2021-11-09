@@ -241,16 +241,22 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   }
 
   return <>
-    <CoverphotoPicker
-      defaultValue={properties.coverphoto}
-      iconValue={properties.icon}
-      onChange={newValue => updateProperty('coverphoto', newValue)}
-    />
-    <IconPicker
-      defaultValue={properties.icon}
-      coverphotoValue={properties.coverphoto}
-      onChange={newValue => updateProperty('icon', newValue)}
-    />
+    {
+      type === 'page' || type === 'person'
+      ? <>
+          <CoverphotoPicker
+            defaultValue={properties.coverphoto}
+            iconValue={properties.icon}
+            onChange={newValue => updateProperty('coverphoto', newValue)}
+          />
+          <IconPicker
+            defaultValue={properties.icon}
+            coverphotoValue={properties.coverphoto}
+            onChange={newValue => updateProperty('icon', newValue)}
+          />
+        </>
+      : null
+    }
 
     <div className={classes.main_headline}>
       <TranslatedInput
