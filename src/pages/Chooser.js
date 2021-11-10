@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
-// import classes from './Chooser.module.css'
+import classes from './Chooser.module.css'
 
 import {
   InsertDriveFileSharp as PageIcon,
@@ -10,6 +10,7 @@ import {
   // TitleSharp as HeadlineIcon,
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
+  EditSharp as EditIcon,
 } from '@mui/icons-material'
 
 import { useApolloClient } from '@apollo/client'
@@ -164,6 +165,8 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
       rightActions={rightHeaderActions || null}
     />
 
+    <div className={classes.content}>
+
     <MultiButton
       onChange={handleTypeChange}
       defaultValue={type}
@@ -193,8 +196,17 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
             {
               blocks
               .map(block => {
-                return <div key={block._id}>
-                  <hr />
+
+                const actions = {
+                  click: () => {
+                    history.push(`/view/${block._id}`)
+                  }
+                }
+
+                return <div key={block._id} style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                }}>
                   <ViewerAuto
                     block={block}
                     actions={actions}
@@ -203,10 +215,17 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
                     }}
                   />
                   <Link to={`/edit/${block._id}`}>
-                    <button><Localized id="edit_block" /></button>
-                  </Link>
-                  <Link to={`/view/${block._id}`}>
-                    <button><Localized id="view_block" /></button>
+                    <button
+                      className="hasIcon"
+                      style={{
+                        margin: 'var(--basis) 0 0 var(--basis_x4)',
+                      }}
+                    >
+                      <EditIcon className="icon" />
+                      <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>
+                        <Localized id="edit_block" />
+                      </span>
+                    </button>
                   </Link>
                 </div>
               })
@@ -215,6 +234,8 @@ function Chooser({ leftHeaderActions, rightHeaderActions }) {
         </>
         : null
     }
+    </div>
+
   </div>
 }
 
