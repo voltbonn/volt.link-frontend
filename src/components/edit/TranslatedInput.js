@@ -42,10 +42,10 @@ function TranslatedInputProvider({ children }) {
     defaultLocale = 'en',
   } = useLocalization()
 
-  const thisDefaultLocale = userLocales[0] || defaultLocale
+  const thisDefaultLocale = (!!userLocales[0] ? userLocales[0] : defaultLocale)
 
   const [locales, setLocales] = useState([thisDefaultLocale])
-  const [currentLocale, setCurrentLocale] = useState(null)
+  const [currentLocale, setCurrentLocale] = useState(thisDefaultLocale)
 
   const setLocalesCallback = useCallback(newLocales => {
     if (Array.isArray(newLocales)) {
