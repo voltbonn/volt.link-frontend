@@ -100,7 +100,7 @@
   --basis_x4: calc(4 * var(--basis));
   --basis_x8: calc(8 * var(--basis));
   --basis_x16: calc(16 * var(--basis));
-  /* --basis_x32: calc(32 * var(--basis)); */
+  --basis_x32: calc(32 * var(--basis));
   --basis_x64: calc(64 * var(--basis));
   --font-add: 1rem;
   --body-font-size: calc(var(--font-add) + var(--basis));
