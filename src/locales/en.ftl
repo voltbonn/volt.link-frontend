@@ -110,13 +110,11 @@ path_editor_no_coverphoto = No Coverphoto
 path_editor_icon_label = Icon
 path_editor_icon_info = A url to use for the icon. The photo needs to be uploaded somewhere else.
 
-path_editor_imprint_label = Imprint Link
-path_editor_imprint_info = Leave empty for Volt Europa imprint.
-
-path_editor_privacy_policy_label = Privacy-Policy Link
-path_editor_privacy_policy_info = Leave empty for Volt Europa privacy policy.
-
-path_editor_checked_label = Checked
+properties_editor_imprint_label = Imprint Link
+properties_editor_privacy_policy_label = Privacy-Policy Link
+properties_editor_checked_label = Checked
+properties_editor_trigger_label = Trigger
+properties_editor_action_label = Action
 
 trigger_input_path_placeholder = bonn
 action_input_url_placeholder = https://voltdeutschland.org/bonn

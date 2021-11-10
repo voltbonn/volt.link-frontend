@@ -160,7 +160,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   if (type === 'page') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
-      <h3><Localized id="path_editor_imprint_label" /></h3>
+      <h3><Localized id="properties_editor_imprint_label" /></h3>
       <div>
       <FancyInput>
         {({ setError }) => (
@@ -181,7 +181,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       </div>
 
       <div className={classes.properties_row}>
-      <h3><Localized id="path_editor_privacy_policy_label" /></h3>
+      <h3><Localized id="properties_editor_privacy_policy_label" /></h3>
       <div>
       <FancyInput>
         {({ setError }) => (
@@ -228,7 +228,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   } else if (type === 'checkbox') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
-        <h3><Localized id="path_editor_checked_label" /></h3>
+        <h3><Localized id="properties_editor_checked_label" /></h3>
         <CheckboxInput
           onChange={newValue => updateProperty('checked', newValue)}
           defaultValue={Boolean(properties.checked)}
