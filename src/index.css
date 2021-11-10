@@ -328,7 +328,7 @@ select,
 
   --button-background: var(--on-background);
   --button-color: var(--constant-button-color);
-  background: var(--button-background) !important;
+  background-color: var(--button-background) !important;
   color: var(--button-color) !important;
 }
 button[disabled]{
