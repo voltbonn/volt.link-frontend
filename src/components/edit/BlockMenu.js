@@ -31,6 +31,7 @@ import {
   NotesSharp as TextIcon,
   Remove as DividerIcon,
   CheckBox as CheckboxIcon,
+  AutoAwesomeSharp as ActionIcon,
 
   PreviewSharp as ViewIcon,
   EditSharp as EditIcon,
@@ -137,6 +138,7 @@ function BlockMenu ({
                   { value: 'text', icon: <TextIcon />, label: getString('block_menu_type_label_text') },
                   { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
                   { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
+                  { value: 'action', icon: <ActionIcon />, label: getString('block_menu_type_label_action') },
                 ]
                 .map(option => (
                   <MenuItem
