@@ -7,6 +7,7 @@ import ViewerDividerCard from './ViewerDividerCard.js'
 import ViewerCheckboxCard from './ViewerCheckboxCard.js'
 import ViewerPageCard from './ViewerPageCard.js'
 import ViewerPersonCard from './ViewerPersonCard.js'
+import ViewerActionCard from './ViewerActionCard.js'
 
 import classes from './ViewerAuto.module.css'
 
@@ -34,6 +35,9 @@ function ViewerAuto ({ block, actions, ...props }) {
       break
     case 'person':
       component = <ViewerPersonCard key={block._id} block={block} actions={actions} {...props} />
+      break
+    case 'action':
+      component = <ViewerActionCard key={block._id} block={block} actions={actions} {...props} />
       break
     default:
       component = <ViewerTextCard key={block._id} block={block} actions={actions} {...props} />

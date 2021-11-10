@@ -12,6 +12,8 @@ import FancyInput from './FancyInput.js'
 import CoverphotoPicker from './CoverphotoPicker.js'
 import IconPicker from './IconPicker.js'
 import TranslatedInput from './TranslatedInput.js'
+import TriggerInput from './TriggerInput.js'
+import ActionInput from './ActionInput.js'
 
 // function stripTmpIds(array){
 //   return [...array].map(obj => {
@@ -230,6 +232,48 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         <CheckboxInput
           onChange={newValue => updateProperty('checked', newValue)}
           defaultValue={Boolean(properties.checked)}
+          style={{
+            marginRight: '0',
+            marginLeft: '0',
+            width: '100%'
+          }}
+        />
+      </div>
+    </>
+  } else if (type === 'button') {
+    propertiesFrameContent = <>
+      <div className={classes.properties_row}>
+        <h3><Localized id="properties_editor_action_label" /></h3>
+        <ActionInput
+          onChange={newValue => updateProperty('action', newValue)}
+          defaultValue={properties.action || {}}
+          style={{
+            marginRight: '0',
+            marginLeft: '0',
+            width: '100%'
+          }}
+        />
+      </div>
+    </>
+  } else if (type === 'action') {
+    propertiesFrameContent = <>
+      <div className={classes.properties_row}>
+        <h3><Localized id="properties_editor_trigger_label" /></h3>
+        <TriggerInput
+          onChange={newValue => updateProperty('trigger', newValue)}
+          defaultValue={properties.trigger || {}}
+          style={{
+            marginRight: '0',
+            marginLeft: '0',
+            width: '100%'
+          }}
+        />
+      </div>
+      <div className={classes.properties_row}>
+        <h3><Localized id="properties_editor_action_label" /></h3>
+        <ActionInput
+          onChange={newValue => updateProperty('action', newValue)}
+          defaultValue={properties.action || {}}
           style={{
             marginRight: '0',
             marginLeft: '0',
