@@ -124,7 +124,7 @@ function Viewer () {
         <div className={classes.items}>
           {
             contentBlocks
-            .map(contentBlock => <ViewerAuto block={contentBlock} />)
+            .map(contentBlock => <ViewerAuto key={contentBlock._id} block={contentBlock} />)
           }
         </div>
       </main>
