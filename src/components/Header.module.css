@@ -1,5 +1,5 @@
 .header {
-  z-index: 1000;
+  z-index: 1201;
   position: sticky;
 
   --minus_basis_x4: calc(-1 * var(--basis_x4));
