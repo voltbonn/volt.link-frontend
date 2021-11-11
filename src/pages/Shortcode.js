@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import classes from './Shortcode.module.css'
 
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { withLocalization, Localized } from '../fluent/Localized.js'
 import useKeyPress from '../hooks/useKeyPress.js'
@@ -10,7 +10,7 @@ import UrlInput from '../components/edit/UrlInput.js'
 import FancyInput from '../components/edit/FancyInput.js'
 
 function Redirect({ getString, rightHeaderActions }) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const [redirectLink, setRedirectLink] = useState('')
   const [isSubmittable, setIsSubmittable] = useState(false)
   const [error, setError] = useState('')
@@ -53,7 +53,7 @@ function Redirect({ getString, rightHeaderActions }) {
             console.error(data.error)
             setError(data.error)
           } else if (typeof data.code === 'string') {
-            history.push(`/edit/${data.code}`)
+            navigate(`/edit/${data.code}`)
           } else {
             setError('Undefined Error. Please contact thomas.rosen@volteuropa.org')
           }
@@ -63,7 +63,7 @@ function Redirect({ getString, rightHeaderActions }) {
           setError(error)
         })
     }
-  }, [isSubmittable, redirectLink, history])
+  }, [isSubmittable, redirectLink, navigate])
 
   return <div>
     <Header
