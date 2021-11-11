@@ -84,7 +84,7 @@ function Popover ({
         },
       ]}
       style={{
-        zIndex: 1000,
+        zIndex: 1300,
       }}
     >
       {({ TransitionProps }) => (
