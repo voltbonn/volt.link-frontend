@@ -22,7 +22,7 @@ import {
 import classes from './ViewerActionCard.module.css'
 
 function ViewerActionCard ({ block = {}, actions = {} }) {
-  const { fluentByAny, getString } = useLocalization()
+  const { fluentByAny } = useLocalization()
 
   const navigate = useNavigate()
 
