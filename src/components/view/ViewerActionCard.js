@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useLocalization } from '../../fluent/Localized.js'
 
 import {
@@ -24,13 +24,13 @@ import classes from './ViewerActionCard.module.css'
 function ViewerActionCard ({ block = {}, actions = {} }) {
   const { fluentByAny, getString } = useLocalization()
 
-  let history = useHistory()
+  const navigate = useNavigate()
 
   const blockId = block._id
 
   const viewBlock = useCallback(()=>{
-    history.push(`/view/${blockId}`)
-  }, [history, blockId])
+    navigate(`/view/${blockId}`)
+  }, [navigate, blockId])
 
   const text = fluentByAny(block.properties.text, '') // getString('placeholder_main_headline'))
   const description = fluentByAny(block.properties.description, '')

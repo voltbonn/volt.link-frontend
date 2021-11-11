@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import {
-  useHistory,
+  useNavigate,
 } from 'react-router-dom'
 
 import {
@@ -55,7 +55,7 @@ function BlockMenu ({
   addRowBefore = null,
   addRowAfter = null,
 }) {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const { _id = '', type = '' } = block
 
@@ -73,12 +73,12 @@ function BlockMenu ({
   }, [ addRowBefore ])
 
   const viewBlock = useCallback(() => {
-    history.push(`/view/${_id}`)
-  }, [ _id, history ])
+    navigate(`/view/${_id}`)
+  }, [ _id, navigate ])
 
   const editBlock = useCallback(() => {
-    history.push(`/edit/${_id}`)
-  }, [ _id, history ])
+    navigate(`/edit/${_id}`)
+  }, [ _id, navigate ])
 
   return <>
   <Popover

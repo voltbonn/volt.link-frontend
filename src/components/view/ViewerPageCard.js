@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useLocalization } from '../../fluent/Localized.js'
 
 import {
@@ -11,13 +11,13 @@ import classes from './ViewerPageCard.module.css'
 function ViewerPageCard ({ block, actions = {} }) {
   const { fluentByAny, getString } = useLocalization()
 
-  let history = useHistory()
+  let navigate = useNavigate()
 
   const blockId = block._id
 
   const viewBlock = useCallback(()=>{
-    history.push(`/view/${blockId}`)
-  }, [history, blockId])
+    navigate(`/view/${blockId}`)
+  }, [navigate, blockId])
 
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''

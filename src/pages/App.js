@@ -3,7 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import classes from './App.module.css'
 
 import {
-  Switch,
+  Routes,
   Route,
   useLocation,
 } from 'react-router-dom'
@@ -125,25 +125,14 @@ function App({ getString }) {
     <div className={classes.app}>
       {
         loggedIn
-        ? <Switch location={customLocation}>
-            <Route path="/view/:id">
-              <Viewer leftHeaderActions={leftHeaderActions} />
-            </Route>
-            <Route path="/edit/:id">
-              <Editor leftHeaderActions={leftHeaderActions} />
-            </Route>
-            <Route path="/shortcode">
-              <Shortcode leftHeaderActions={leftHeaderActions} />
-            </Route>
-            <Route path="/">
-              <Chooser leftHeaderActions={leftHeaderActions} />
-            </Route>
-          </Switch>
-        : <Switch location={customLocation}>
-            <Route path="/view/:id">
-              <Viewer leftHeaderActions={leftHeaderActions} />
-            </Route>
-            <Route path="/">
+        ? <Routes location={customLocation}>
+            <Route path="/view/:id" element={<Viewer />} />
+            <Route path="/edit/:id" element={<Editor />} />
+            <Route path="/shortcode" element={<Shortcode />} />
+          </Routes>
+        : <Routes location={customLocation}>
+            <Route path="/view/:id" element={<Viewer />} />
+            <Route path="/" element={<>
               <h1>Login to view content</h1>
               <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
                 <button className="hasIcon" style={{ margin: 'var(--basis_x4) 0 0 0' }}>
@@ -153,9 +142,9 @@ function App({ getString }) {
                   </span>
                 </button>
               </a>
-            </Route>
-          </Switch>
-      }
+            </>} />
+          </Routes>
+        }
     </div>
   </>)
 }
