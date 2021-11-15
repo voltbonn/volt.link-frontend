@@ -33,6 +33,7 @@ window.domains = {
 const client = new ApolloClient({
   uri: window.domains.backend+'graphql/v1/',
   cache: new InMemoryCache(),
+  credentials: 'include',
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'cache-and-network',
