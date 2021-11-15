@@ -132,7 +132,8 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
       types[type2toggle] = !types[type2toggle]
       return types
     })
-  }, [ setTypes ])
+    refetch()
+  }, [ setTypes, refetch ])
 
   return <div className={classes.content}>
     <header className={classes.header}>
