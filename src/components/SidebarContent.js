@@ -63,7 +63,7 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
   const [types, setTypes] = useState({
     page: true,
     person: true,
-    action: false,
+    action: true,
   })
   const filteredTypes = Object.entries(types)
     .filter(([, value]) => value === true)
