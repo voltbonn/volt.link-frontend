@@ -11,12 +11,31 @@ export const getBlock_Query = gql`
       }
 		  parent
 		  metadata {
-        lastModified
+        modified
         created
       }
     }
   }
 `
+
+export const getBlocks_Query = gql`
+  query getBlocks ($ids: [ID], $types: [String]) {
+    blocks (ids: $ids, types: $types) {
+      _id
+      type
+      properties
+      content {
+        blockId
+      }
+      parent
+      metadata {
+        modified
+        created
+      }
+    }
+  }
+`
+
 export const getBlockBySlug_Query = gql`
   query getBlockBySlug ($slug: ID!) {
     blockBySlug (slug: $slug) {
@@ -28,7 +47,7 @@ export const getBlockBySlug_Query = gql`
       }
 		  parent
 		  metadata {
-        lastModified
+        modified
         created
       }
       permissions {
@@ -39,39 +58,12 @@ export const getBlockBySlug_Query = gql`
   }
 `
 
-export const getBlocksByType_Query = gql`
-  query getBlocksByType ($type: String!) {
-    blocksByType (type: $type) {
-      _id
-      type
-      properties
-      content {
-        blockId
-      }
-      parent
-      metadata {
-        lastModified
-        created
-      }
+export const getSelf_Query = gql`
+  query getSelf {
+    self {
+		  logged_in
+		  user
+		  blockId
     }
   }
 `
-
-export const getBlocksByIds_Query = gql`
-  query getBlocksByIds ($ids: [ID]) {
-    blocksByIds(ids: $ids) {
-      _id
-      type
-      properties
-    	content {
-      	blockId
-    	}
-      parent
-      metadata {
-        lastModified
-        created
-      }
-    }
-  }
-`
-

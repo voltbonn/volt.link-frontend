@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { useApolloClient } from '@apollo/client'
-import { getBlocksByIds_Query } from '../graphql/queries'
+import { getBlocks_Query } from '../graphql/queries'
 
 function useLoadBlocksByIds() {
   const apollo_client = useApolloClient()
@@ -10,17 +10,17 @@ function useLoadBlocksByIds() {
     return new Promise(resolve => {
       if (Array.isArray(ids) || ids.length > 0) {
         apollo_client.query({
-          query: getBlocksByIds_Query,
+          query: getBlocks_Query,
           variables: {
             ids,
           },
         })
           .then(async ({ data }) => {
-            if (typeof data.error === 'string' || !data.blocksByIds) {
+            if (typeof data.error === 'string' || !data.blocks) {
               console.error(data.error)
               resolve([])
             }else{
-              resolve(data.blocksByIds)
+              resolve(data.blocks || [])
             }
           })
           .catch(async error => {
