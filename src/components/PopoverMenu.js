@@ -19,9 +19,6 @@ export default function PopoverMenu ({
   trigger,
   children,
 }) {
-  console.log('trigger', trigger)
-  console.log('children', children)
-
   return <>
   <Popover
     trigger={trigger}
