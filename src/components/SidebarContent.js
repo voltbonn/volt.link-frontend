@@ -167,13 +167,7 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
               { value: 'action', icon: <ActionIcon className="icon" />, title: getString('block_menu_type_label_plural_action') },
             */}
 
-            <MenuItem style={{ marginTop: '8px' }}>
-              <ListItemText>
-                Everything
-              </ListItemText>
-            </MenuItem>
-
-            <Divider style={{ opacity: 0.2 }} />
+            <div style={{ marginTop: '8px' }}></div>
 
             {
               Object.keys(types)
