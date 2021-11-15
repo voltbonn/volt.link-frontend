@@ -2,7 +2,6 @@ import { useRef, useState, useCallback, useEffect } from 'react'
 
 import {
   useParams,
-  Link,
 } from 'react-router-dom'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -11,8 +10,6 @@ import useLoadBlock from '../hooks/useLoadBlock.js'
 // import Select from 'react-select'
 
 import {
-  ArrowBackSharp as BackIcon,
-
   TranslateSharp as TranslateIcon,
   IosShareSharp as ShareIcon,
   LockSharp as PermissionsIcon,
@@ -49,7 +46,7 @@ import ContentEditor from '../components/edit/ContentEditor.js'
 // })
 
 function Editor() {
-  const { getString } = useLocalization()
+  const { getString, fluentByAny } = useLocalization()
 
   const saveBlock = useSaveBlock()
   const loadBlock = useLoadBlock()
@@ -92,12 +89,19 @@ function Editor() {
 
           // get locales from text and description
           // TODO: also look at the locales from sub-blocks
-          const blockLocales = [...new Set([
-            ...loadedBlock.properties.text.map(t => t.locale),
-            ...loadedBlock.properties.description.map(t => t.locale),
-          ])]
+          if (
+            loadedBlock.properties
+            && (
+              loadedBlock.properties.text
+              || loadedBlock.properties.description
+            )
+          ) {
+            setLocales([...new Set([
+              ...(loadedBlock.properties.text ? loadedBlock.properties.text.map(t => t.locale) : []),
+              ...(loadedBlock.properties.description ? loadedBlock.properties.description.map(t => t.locale) : []),
+            ])])
+          }
 
-          setLocales(blockLocales)
           setBlock(loadedBlock)
         })
     }
@@ -258,16 +262,15 @@ function Editor() {
     />
   </div>
 
+
+  const pagetitle = fluentByAny(block.properties.text, 'Editor')
+  const title = pagetitle
+
   return <div key={block._id} className={`hasHeader ${classes.editor}`}>
     <Header
+      block={block}
       // title={<a href={`https://volt.link/${slug}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{slug}</a>}
-      title={
-        <Link to="/">
-          <button className="text hasIcon" style={{ margin: '0' }}>
-            <BackIcon className="icon"/>
-          </button>
-        </Link>
-      }
+      title={title}
       rightActions={rightHeaderActions}
     />
 

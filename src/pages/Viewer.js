@@ -16,7 +16,6 @@ import ViewerAuto from '../components/view/ViewerAuto.js'
 import classes from './Viewer.module.css'
 
 import {
-  ArrowBackSharp as BackIcon,
   EditSharp as EditIcon,
 } from '@mui/icons-material'
 
@@ -68,18 +67,12 @@ function Viewer () {
     setContentBlocks,
   ])
 
+  const type = block.type || null
+
   const title = fluentByAny(block.properties.text, '')
   const description = fluentByAny(block.properties.description, '')
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
-
-  const leftHeaderActions = (
-    <Link to="/">
-      <button className="text hasIcon" style={{ margin: '0' }}>
-        <BackIcon className="icon"/>
-      </button>
-    </Link>
-  )
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     <Link to={`/edit/${block._id}`}>
@@ -91,15 +84,12 @@ function Viewer () {
   </div>
 
   return <>
-    {
-      loggedIn
-        ? <Header
-          leftActions={leftHeaderActions}
-          title=""
-          rightActions={rightHeaderActions}
-        />
-        : null
-    }
+    <Header
+      block={block}
+      title={title}
+      rightActions={loggedIn ? rightHeaderActions : null}
+    />
+
     <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
       (type === 'page' || type === 'person')
