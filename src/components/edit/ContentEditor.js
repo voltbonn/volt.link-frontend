@@ -303,6 +303,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {
               filteredContentConfigs
+              .filter(contentConfig => !!contentConfig)
               .map(
                 (contentConfig, index) => {
                   const tmp_id = contentConfig.tmp_id
