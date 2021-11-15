@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.d791845a.chunk.css",
+    "main.css": "/static/css/main.1639428d.chunk.css",
     "main.js": "/static/js/main.ae16d5e5.chunk.js",
     "main.js.map": "/static/js/main.ae16d5e5.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.27bef4fe.js",
@@ -14,7 +14,7 @@
     "static/js/5.a76cb58b.chunk.js": "/static/js/5.a76cb58b.chunk.js",
     "static/js/5.a76cb58b.chunk.js.map": "/static/js/5.a76cb58b.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.d791845a.chunk.css.map": "/static/css/main.d791845a.chunk.css.map",
+    "static/css/main.1639428d.chunk.css.map": "/static/css/main.1639428d.chunk.css.map",
     "static/js/2.c4c67176.chunk.js.LICENSE.txt": "/static/js/2.c4c67176.chunk.js.LICENSE.txt",
     "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png",
     "static/media/Aktion.89c1bcdf.png": "/static/media/Aktion.89c1bcdf.png",
@@ -28,7 +28,7 @@
   "entrypoints": [
     "static/js/runtime-main.27bef4fe.js",
     "static/js/2.c4c67176.chunk.js",
-    "static/css/main.d791845a.chunk.css",
+    "static/css/main.1639428d.chunk.css",
     "static/js/main.ae16d5e5.chunk.js"
   ]
 }
