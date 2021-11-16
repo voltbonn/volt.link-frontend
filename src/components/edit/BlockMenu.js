@@ -108,6 +108,10 @@ function BlockMenu ({
               marginTop: '-8px',
             }}
           >
+
+            {
+              typeof setType === 'function'
+              ?
             <List
               style={{
                 width: '100%',
@@ -158,6 +162,8 @@ function BlockMenu ({
                   </MenuItem>
               ))}
             </List>
+              : <div style={{ marginTop: '8px' }}></div>
+            }
 
             {
               (
