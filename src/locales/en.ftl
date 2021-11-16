@@ -143,6 +143,7 @@ block_menu_close_menu = Close Menu
 block_menu_delete = Delete Block
 block_menu_add_before = Add Block Before
 block_menu_add_after = Add Block After
+block_menu_create_child_block = Create Child Block
 block_menu_hide = Hide Block
 block_menu_show = Show Block
 
