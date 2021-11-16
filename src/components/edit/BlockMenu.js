@@ -22,6 +22,7 @@ import {
   Close as CloseIcon,
   VerticalAlignTop as VerticalAlignTopIcon,
   VerticalAlignBottom as VerticalAlignBottomIcon,
+  Add as AddIcon,
 
   InsertDriveFileSharp as PageIcon,
   // LinkSharp as RedirectIcon,
@@ -40,6 +41,7 @@ import {
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
 import Popover from '../Popover.js'
+import AddMenu from './AddMenu.js'
 
 function BlockMenu ({
   block,
@@ -48,6 +50,7 @@ function BlockMenu ({
   trigger,
 
   setType,
+  createBlock,
 
   toggle_active = null,
   active = null,
@@ -226,6 +229,27 @@ function BlockMenu ({
                   </MenuItem>
                 : null
             */}
+
+            {
+              typeof createBlock === 'function'
+                ? <AddMenu
+                    trigger={triggerProps => (
+                      <MenuItem
+                        style={{marginTop:'8px'}}
+                        {...triggerProps}
+                      >
+                        <ListItemIcon>
+                          <AddIcon />
+                        </ListItemIcon>
+                        <ListItemText>
+                          <Localized id="block_menu_create_child_block" />
+                        </ListItemText>
+                      </MenuItem>
+                    )}
+                    createBlock={createBlock}
+                  />
+                : null
+            }
 
             {
               typeof _id === 'string' && _id !== ''
