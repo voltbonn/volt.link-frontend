@@ -60,7 +60,7 @@
 @media (any-hover: hover) {
   .changeCoverphotoButton {
     opacity: 0.1;
-    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    transition: transform var(--timing), opacity var(--timing);
   }
   .root.coverphotoIsNotSet .changeCoverphotoButton,
   .coverphoto:hover .changeCoverphotoButton {

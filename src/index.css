@@ -25,6 +25,8 @@
   --on-blue: #fff;
   --red: #E63E12;
   --on-red: #fff;
+
+  --timing: .2s ease-in-out;
 }
 
 * {
@@ -290,7 +292,7 @@ input[type="url"] {
   color: var(--on-background);
   --input-box-shadow: inset 0 0 0 var(--basis_x0_2) var(--on-background-contrast);
   box-shadow: var(--input-box-shadow);
-  transition: box-shadow 0.2s ease-in-out;
+  transition: box-shadow var(--timing);
 }
 textarea.inverted,
 div[contentEditable=true].inverted,
@@ -324,7 +326,7 @@ select,
 .wrapped_select,
 .type_button {
   font-weight: bold;
-  transition: transform 0.2s ease;
+  transition: transform var(--timing);
   position: relative;
   cursor: pointer;
   padding: var(--basis) var(--basis_x2);
@@ -458,7 +460,7 @@ button.hasIcon span{
   left: calc(-2 * var(--basis));
 
   background-color: rgba(var(--on-background-rgb), 0);
-  transition: background-color 0.2s ease;
+  transition: background-color var(--timing);
 }
 .clickable_card:hover:before {
   background-color: rgba(var(--on-background-rgb), var(--alpha-less));
