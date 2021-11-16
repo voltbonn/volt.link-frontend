@@ -53,6 +53,41 @@ const blockTypeIcons = {
   action: <ActionIcon />,
 }
 
+function AddMenu ({ trigger, createBlock }) {
+  const { loggedIn } = useUser()
+
+  const types = [
+    'page',
+    'action',
+  ]
+
+  return <>{
+    loggedIn
+      ? <PopoverMenu
+          trigger={trigger}
+        >
+
+        <div style={{ marginTop: '8px' }}></div>
+
+        {
+          types
+            .map(type => (
+              <MenuItem key={type} onClick={() => createBlock({ type })}>
+                <ListItemIcon>
+                  {blockTypeIcons[type]}
+                </ListItemIcon>
+                <ListItemText>
+                  <Localized id={'create_new_'+type} />
+                </ListItemText>
+              </MenuItem>
+            ))
+        }
+
+      </PopoverMenu>
+    : null
+  }</>
+}
+
 export default function SidebarContent({ leftHeaderActions, rightHeaderActions }) {
   const { loggedIn } = useUser()
   // const apollo_client = useApolloClient()
@@ -189,36 +224,15 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
 
           </PopoverMenu>
 
-          {
-          loggedIn
-            ? <PopoverMenu
-                trigger={triggerProps => (
-                  <button className="white hasIcon" {...triggerProps}>
-                    <AddIcon className="icon" />
-                    {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
-                  </button>
-                )}
-              >
-
-                <div style={{ marginTop: '8px' }}></div>
-
-                {
-                  Object.keys(types)
-                    .map(type => (
-                      <MenuItem key={type} onClick={() => createBlock({ type })}>
-                        <ListItemIcon>
-                          {blockTypeIcons[type]}
-                        </ListItemIcon>
-                        <ListItemText>
-                          <Localized id={'create_new_'+type} />
-                        </ListItemText>
-                      </MenuItem>
-                    ))
-                }
-
-              </PopoverMenu>
-            : null
-          }
+          <AddMenu
+            trigger={triggerProps => (
+              <button className="white hasIcon" {...triggerProps}>
+                <AddIcon className="icon" />
+                {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
+              </button>
+            )}
+            createBlock={createBlock}
+          />
         </div>
       </div>
     </header>
