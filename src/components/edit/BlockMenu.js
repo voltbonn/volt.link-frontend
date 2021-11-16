@@ -167,10 +167,14 @@ function BlockMenu ({
 
             {
               (
-                addRowBefore
-                || addRowAfter
-                || (typeof active === 'boolean' && toggle_active)
-                || onRemoveRow
+                typeof setType === 'function'
+                && (
+                  addRowBefore
+                  || addRowAfter
+                  || (typeof active === 'boolean' && toggle_active)
+                  || onRemoveRow
+                  || typeof createBlock === 'function'
+                )
               )
                 ? <Divider style={{opacity: 0.2}} />
                 : null
@@ -260,7 +264,17 @@ function BlockMenu ({
             {
               typeof _id === 'string' && _id !== ''
                 ? <div style={{ marginTop:'8px', marginBottom:'8px' }}>
-                    <Divider style={{opacity: 0.2}} />
+                    {
+                      typeof setType === 'function'
+                      || addRowBefore
+                      || addRowAfter
+                      || (typeof active === 'boolean' && toggle_active)
+                      || onRemoveRow
+                      || typeof createBlock === 'function'
+                        ? <Divider style={{opacity: 0.2}} />
+                        : null
+                    }
+
                     <MenuItem style={{marginTop:'8px'}} onClick={viewBlock}>
                       <ListItemIcon>
                         <ViewIcon />
