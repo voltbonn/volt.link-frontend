@@ -38,6 +38,9 @@ function Popover ({
       ref: anchorRef,
       'aria-describedby': id,
       onClick: handlePopoverToggleClick,
+      style: {
+        pointerEvents: open ? 'none' : 'all',
+      },
     })}
 
   <Portal>
