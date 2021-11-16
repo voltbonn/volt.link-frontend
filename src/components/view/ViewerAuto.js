@@ -12,7 +12,7 @@ import ViewerActionCard from './ViewerActionCard.js'
 
 import classes from './ViewerAuto.module.css'
 
-function ViewerAuto ({ block = {}, actions = {}, size = 'card', ...props }) {
+function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, ...props }) {
   let component = null
 
   const type = block.type || null
@@ -55,6 +55,7 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', ...props }) {
   return <div
     key={block._id}
     className={classes.root}
+    style={style}
   >
     {component}
   </div>

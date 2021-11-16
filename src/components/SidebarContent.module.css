@@ -53,3 +53,23 @@
   margin-top: 0;
   margin-bottom: 0;
 }
+
+
+.blockRow {
+  position: relative;
+}
+.blockRowActions {
+  display: flex;
+}
+@media (any-hover: hover) {
+  @media (min-width: 1200px) {
+    .blockRow .blockRowActions {
+      opacity: 0;
+      transition: opacity var(--timing);
+    }
+    .blockRow:hover .blockRowActions {
+      opacity: 1;
+    }
+  }
+}
+

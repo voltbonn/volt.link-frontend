@@ -14,6 +14,7 @@ import {
   Replay as RequeryIcon,
   Add as AddIcon,
   FilterList as FilterListIcon,
+  MoreHorizSharp as BlockMenuIcon,
 
   Email as ContactIcon,
   GitHub as SourceCodeIcon,
@@ -44,6 +45,7 @@ import { Localized } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import ViewerAuto from './view/ViewerAuto.js'
 import { useSidebarContext } from './Sidebar.js'
+import BlockMenu from './edit/BlockMenu.js'
 import AddMenu from './edit/AddMenu.js'
 
 import PopoverMenu from './PopoverMenu.js'
@@ -217,33 +219,45 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
                   }
                 }
 
-                return <div key={block._id} style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                }}>
+                return <div
+                  key={block._id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                  }}
+                  className={classes.blockRow}
+                >
                   <ViewerAuto
                     size="line"
                     block={block}
                     actions={actions}
                     style={{
                       flexGrow: '1',
+                      width: '100%',
                     }}
                   />
-                  {/*
-                  <Link to={`/edit/${block._id}`}>
-                    <button
-                      className="hasIcon"
-                      style={{
-                        margin: 'var(--basis) 0 0 var(--basis_x4)',
+
+                  <div className={classes.blockRowActions}>
+                    <BlockMenu
+                      {...{
+                        block,
+                        createBlock,
+                        // setType: saveType,
                       }}
-                    >
-                      <EditIcon className="icon" />
-                      <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>
-                        <Localized id="edit_block" />
-                      </span>
-                    </button>
-                  </Link>
-                  */}
+                      trigger={props => (
+                        <button
+                          {...props}
+                          className="text hasIcon"
+                          style={{
+                            margin: '0 0 0 var(--basis_x2)',
+                          }}
+                        >
+                          <BlockMenuIcon className="icon" />
+                        </button>
+                      )}
+                    />
+                  </div>
                 </div>
               })
             }
