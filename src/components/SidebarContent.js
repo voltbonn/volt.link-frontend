@@ -44,6 +44,7 @@ import { Localized } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import ViewerAuto from './view/ViewerAuto.js'
 import { useSidebarContext } from './Sidebar.js'
+import AddMenu from './edit/AddMenu.js'
 
 import PopoverMenu from './PopoverMenu.js'
 
@@ -51,41 +52,6 @@ const blockTypeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   action: <ActionIcon />,
-}
-
-function AddMenu ({ trigger, createBlock }) {
-  const { loggedIn } = useUser()
-
-  const types = [
-    'page',
-    'action',
-  ]
-
-  return <>{
-    loggedIn
-      ? <PopoverMenu
-          trigger={trigger}
-        >
-
-        <div style={{ marginTop: '8px' }}></div>
-
-        {
-          types
-            .map(type => (
-              <MenuItem key={type} onClick={() => createBlock({ type })}>
-                <ListItemIcon>
-                  {blockTypeIcons[type]}
-                </ListItemIcon>
-                <ListItemText>
-                  <Localized id={'create_new_'+type} />
-                </ListItemText>
-              </MenuItem>
-            ))
-        }
-
-      </PopoverMenu>
-    : null
-  }</>
 }
 
 export default function SidebarContent({ leftHeaderActions, rightHeaderActions }) {
