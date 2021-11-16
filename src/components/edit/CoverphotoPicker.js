@@ -75,7 +75,7 @@ function CoverphotoPicker({ getString, defaultValue, iconValue, onChange, classN
           }}
           elevation={8}
         >
-          <h3><Localized id="path_editor_coverphoto_label" /></h3>
+          <h3 style={{ marginTop: '0' }}><Localized id="path_editor_coverphoto_label" /></h3>
 
           <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
             <Localized id="path_editor_coverphoto_info" />
