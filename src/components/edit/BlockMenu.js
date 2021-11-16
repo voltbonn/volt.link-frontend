@@ -92,7 +92,7 @@ function BlockMenu ({
           {...popoverProps}
           sx={{
             maxWidth: 380,
-            height: 325,
+            // height: 325,
             maxHeight: 'calc(100vh - 32px)',
             overflow: 'auto',
             background: 'var(--background-contrast)',
