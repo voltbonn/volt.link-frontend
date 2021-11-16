@@ -15,6 +15,7 @@ import plakatschlange_thumb from '../../images/coverphotos/thumbs/20200912_Plaka
 import aktion_thumb from '../../images/coverphotos/thumbs/Aktion.png'
 import volt_bonn_thumb from '../../images/coverphotos/thumbs/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.png'
 import welcome_to_volt_thumb from '../../images/coverphotos/thumbs/Welcome-to-Volt.png'
+import portugal_thumb from '../../images/coverphotos/thumbs/portugal.jpg'
 
 
 function CoverphotoPicker({ getString, defaultValue, iconValue, onChange, className = '', style = {} }) {
@@ -116,6 +117,10 @@ function CoverphotoPicker({ getString, defaultValue, iconValue, onChange, classN
                 {
                   value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-07/20200912_Plakatschlange_Ko%CC%88ln_Matteo%20Sant_Unione_011.jpeg',
                   icon: plakatschlange_thumb,
+                },
+                {
+                  value: 'https://assets.volteuropa.org/2021-11/portugal.jpg',
+                  icon: portugal_thumb,
                 },
                 {
                   value: 'https://assets.volteuropa.org/styles/scale_1920x/public/2021-05/Aktion.jpeg',
