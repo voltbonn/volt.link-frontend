@@ -32,32 +32,38 @@ const types = [
   'action',
 ]
 
-export default function AddMenu ({ trigger, createBlock }) {
+function AddMenuContent({ createBlock }) {
+  return <>
+    {
+      types
+        .map(type => (
+          <MenuItem key={type} onClick={() => createBlock({ type })}>
+            <ListItemIcon>
+              {blockTypeIcons[type]}
+            </ListItemIcon>
+            <ListItemText>
+              <Localized id={'create_new_'+type} />
+            </ListItemText>
+          </MenuItem>
+        ))
+    }
+  </>
+}
+
+function AddMenu ({ trigger, createBlock }) {
   const { loggedIn } = useUser()
 
-  return <>{
-    loggedIn
-      ? <PopoverMenu
-          trigger={trigger}
-        >
+  if (loggedIn) {
+    return <PopoverMenu trigger={trigger}>
+      <div style={{ marginTop: '8px' }}></div>
+      <AddMenuContent createBlock={createBlock} />
+    </PopoverMenu>
+  }
 
-        <div style={{ marginTop: '8px' }}></div>
+  return null
+}
 
-        {
-          types
-            .map(type => (
-              <MenuItem key={type} onClick={() => createBlock({ type })}>
-                <ListItemIcon>
-                  {blockTypeIcons[type]}
-                </ListItemIcon>
-                <ListItemText>
-                  <Localized id={'create_new_'+type} />
-                </ListItemText>
-              </MenuItem>
-            ))
-        }
-
-      </PopoverMenu>
-    : null
-  }</>
+export {
+  AddMenuContent,
+  AddMenu as default,
 }

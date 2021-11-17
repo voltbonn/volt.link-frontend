@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import classes from './SidebarContent.module.css'
 
 import {
@@ -7,7 +7,6 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-  Collapse,
 } from '@mui/material'
 
 import {
@@ -15,7 +14,6 @@ import {
   Replay as RequeryIcon,
   Add as AddIcon,
   FilterList as FilterListIcon,
-  MoreHorizSharp as BlockMenuIcon,
 
   Email as ContactIcon,
   GitHub as SourceCodeIcon,
@@ -33,23 +31,17 @@ import {
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
   // EditSharp as EditIcon,
-
-  ExpandLess as ExpandLessIcon,
-  ExpandMore as ExpandMoreIcon,
 } from '@mui/icons-material'
 
-import { useQuery } from '@apollo/client' // useApolloClient
-import { getBlocks_Query } from '../graphql/queries'
 import useSaveBlock from '../hooks/useSaveBlock.js'
 
 import { useNavigate, useMatch } from 'react-router-dom'
 
 import { Localized } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
-import ViewerAuto from './view/ViewerAuto.js'
 import { useSidebarContext } from './Sidebar.js'
-import BlockMenu from './edit/BlockMenu.js'
 import AddMenu from './edit/AddMenu.js'
+import BlockTree from './BlockTree.js'
 
 import PopoverMenu from './PopoverMenu.js'
 
@@ -59,137 +51,17 @@ const blockTypeIcons = {
   action: <ActionIcon />,
 }
 
-const checkIfArrayHasContent = level => !!level && Array.isArray(level) && level.length > 0
-
-
-function BlockRows ({ levels, level, createBlock }) {
-  if (!checkIfArrayHasContent(level)) {
-    return null
-  }
-
-  return level
-    .map(block => <BlockRow
-      key={block._id}
-      block={block}
-      levels={levels}
-      createBlock={createBlock}
-    />)
-}
-
-function BlockRow ({ block, levels, createBlock }) {
-  const navigate = useNavigate()
-
-  const [open, setOpen] = useState(false)
-
-  const handleExpandToggle = useCallback(() => {
-    setOpen(oldOpen => !oldOpen)
-  }, [setOpen])
-
-  const actions = {
-    click: () => {
-      navigate(`/view/${block._id}`)
-    }
-  }
-
-  const rowContent = <>
-    <ViewerAuto
-      size="line"
-      block={block}
-      actions={actions}
-      style={{
-        flexGrow: '1',
-        width: '100%',
-      }}
-    />
-
-    <div className={classes.blockRowActions}>
-      <BlockMenu
-        {...{
-          block,
-          createBlock,
-          // setType: saveType,
-        }}
-        trigger={props => (
-          <button
-            {...props}
-            className="text hasIcon"
-            style={{
-              margin: '0 0 0 var(--basis_x2)',
-              padding: 'var(--basis) 0',
-              flexShrink: '0',
-            }}
-          >
-            <BlockMenuIcon className="icon" />
-          </button>
-        )}
-      />
-    </div>
-  </>
-
-  const nextLevel = levels[block._id]
-  if (checkIfArrayHasContent(nextLevel)) {
-    return <>
-      <div style={{
-        display: 'flex',
-      }}>
-        <button
-          className="text hasIcon"
-          style={{
-            margin: '0 calc(2 * var(--basis)) 0 0',
-            padding: 'var(--basis) 0',
-            flexShrink: '0',
-          }}
-          onClick={handleExpandToggle}
-        >
-          {open ? <ExpandLessIcon className="icon" /> : <ExpandMoreIcon className="icon" />}
-        </button>
-
-        <div
-          key={block._id}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'row',
-            width: '100%',
-          }}
-          className={classes.blockRow}
-        >
-          {rowContent}
-        </div>
-      </div>
-      <div style={{
-        marginLeft: 'calc(7.4 * var(--basis))',
-      }}>
-        <Collapse in={open} timeout="auto">
-          <BlockRows
-            levels={levels}
-            level={nextLevel}
-            createBlock={createBlock}
-          />
-        </Collapse>
-      </div>
-    </>
-  } else {
-    return <div
-      key={block._id}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'row',
-      }}
-      className={classes.blockRow}
-    >
-      {rowContent}
-    </div>
-  }
-}
-
-export default function SidebarContent({ leftHeaderActions, rightHeaderActions }) {
+export default function SidebarContent() {
   const { loggedIn } = useUser()
-  // const apollo_client = useApolloClient()
   const { toggleSidebar } = useSidebarContext()
 
   const matchesStartpage = useMatch('/')
+
+  const refetchRef = useRef(null)
+  const refetch = refetchRef.current
+  const saveRefetchFunction = newRefetchFunction => {
+    refetchRef.current = newRefetchFunction
+  }
 
   const [types, setTypes] = useState({
     page: true,
@@ -201,27 +73,7 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
     .map(([key, ]) => key)
 
   const saveBlock = useSaveBlock()
-
   const navigate = useNavigate()
-
-  const { data, refetch } = useQuery(getBlocks_Query, {
-    variables: {
-      types: filteredTypes,
-     },
-  })
-
-  const blocks = data?.blocks || []
-
-  const levels = blocks.reduce((acc, block) => {
-    const parentId = block.parent || '_root'
-    if (!acc[parentId]) {
-      acc[parentId] = []
-    }
-    acc[parentId].push(block)
-    return acc
-  }, {})
-  // get levelKeys and sort by string values
-  const levelKeys = Object.keys(levels).sort((a, b) => a.localeCompare(b))
 
   const createBlock = useCallback(newBlock => {
     saveBlock(newBlock)
@@ -234,12 +86,16 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
   }, [ saveBlock, navigate ])
 
   const toggleType = useCallback(type2toggle => {
-    setTypes(types => {
-      types[type2toggle] = !types[type2toggle]
-      return types
-    })
+    const newTypes = { ...types }
+    newTypes[type2toggle] = !newTypes[type2toggle]
+
+    setTypes(newTypes)
     refetch()
-  }, [ setTypes, refetch ])
+  }, [ types, setTypes, refetch ])
+
+  const viewBlock = useCallback(block => {
+    navigate(`/view/${block._id}`)
+  }, [ navigate ])
 
   return <div className={classes.content}>
     <header className={classes.header}>
@@ -308,19 +164,13 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
       </div>
     </header>
 
-      {
-      blocks.length > 0
-        ? <>
-          <div className="buttonRow usesLinks">
-            <BlockRows
-              levels={levels}
-              level={levels[levelKeys[0]]}
-              createBlock={createBlock}
-            />
-          </div>
-        </>
-        : null
-      }
+      <BlockTree
+        onClick={viewBlock}
+        createBlock={createBlock}
+        blockMenu={true}
+        onGetRefetch={saveRefetchFunction}
+        types={filteredTypes}
+      />
 
       <br/>
       <Divider style={{ opacity: 0.2 }} />

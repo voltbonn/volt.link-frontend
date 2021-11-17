@@ -10,8 +10,6 @@ import {
   MenuItem,
   Divider,
   ListItemIcon,
-  ListItemText,
-  List,
   ListSubheader,
 } from '@mui/material'
 
@@ -23,6 +21,9 @@ import {
   VerticalAlignTop as VerticalAlignTopIcon,
   VerticalAlignBottom as VerticalAlignBottomIcon,
   Add as AddIcon,
+  RepeatSharp as RepeatIcon,
+  AccountTreeSharp as BlockTreeIcon,
+  RemoveCircleSharp as RemoveCircleIcon,
 
   InsertDriveFileSharp as PageIcon,
   // LinkSharp as RedirectIcon,
@@ -40,8 +41,11 @@ import {
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
+import useSaveBlock from '../../hooks/useSaveBlock.js'
 import Popover from '../Popover.js'
-import AddMenu from './AddMenu.js'
+import SubMenu from '../SubMenu.js'
+import BlockTree from '../BlockTree.js'
+import { AddMenuContent } from './AddMenu.js'
 
 function BlockMenu ({
   block,
@@ -90,11 +94,19 @@ function BlockMenu ({
     })
   }, [ createBlock, _id ])
 
+  const saveBlock = useSaveBlock()
+  const setParent = useCallback(newParentId => {
+    saveBlock({
+      ...block,
+      parent: newParentId,
+    })
+  }, [ saveBlock, block ])
+
   return <>
   <Popover
     trigger={trigger}
   >
-    {({closePopover, ...popoverProps}) => (
+    {({closePopover, open, ...popoverProps}) => (
         <Paper
           {...popoverProps}
           sx={{
@@ -112,64 +124,69 @@ function BlockMenu ({
             style={{
               width: '100%',
               maxWidth: '100%',
-              marginTop: '-8px',
+              // marginTop: '-8px',
             }}
           >
 
             {
               typeof setType === 'function'
-              ?
-            <List
-              style={{
-                width: '100%',
-                maxWidth: '100%',
-                marginTop: '-8px',
-              }}
-            >
-              <ListSubheader
-                style={{
-                  whiteSpace: 'nowrap',
-                  lineHeight: '1',
-                  margin: '-4px 0 0 0',
-                  padding: '12px 16px 12px',
-                  backgroundColor: 'var(--background-contrast)',
-                  color: 'var(--on-background)',
-                }}
-              >
-                <Localized id="block_menu_choose_type_label" />
-              </ListSubheader>
-
-              <div style={{height: '4px'}}></div>
-
-              {
-                [
-                  { value: 'page', icon: <PageIcon />, label: getString('block_menu_type_label_page') },
-                  // { value: 'redirect', icon: <RedirectIcon />, label: getString('block_menu_type_label_redirect') },
-                  { value: 'person', icon: <PersonIcon />, label: getString('block_menu_type_label_person') },
-                  { value: 'button', icon: <ButtonIcon />, label: getString('block_menu_type_label_button') },
-                  { value: 'headline', icon: <HeadlineIcon />, label: getString('block_menu_type_label_headline') },
-                  // { value: 'headline3', label: getString('block_menu_type_label_headline3') },
-                  { value: 'text', icon: <TextIcon />, label: getString('block_menu_type_label_text') },
-                  { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
-                  { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
-                  { value: 'action', icon: <ActionIcon />, label: getString('block_menu_type_label_action') },
-                ]
-                .map(option => (
-                  <MenuItem
-                    key={option.value}
-                    selected={option.value === type}
-                    onClick={() => setType(option.value)}
-                  >
+              ? <SubMenu
+                  parentMenuIsOpen={open}
+                  label={<>
                     <ListItemIcon>
-                      {option.icon}
+                      <RepeatIcon />
                     </ListItemIcon>
-                    <ListItemText>
-                      {option.label}
-                    </ListItemText>
-                  </MenuItem>
-              ))}
-            </List>
-              : <div style={{ marginTop: '8px' }}></div>
+                    <Localized id="block_menu_choose_type_label" />
+                  </>}
+                  MenuListProps={{
+                    style: {
+                      marginTop: '-8px',
+                    },
+                  }}
+                >
+                  <ListSubheader
+                    style={{
+                      whiteSpace: 'nowrap',
+                      lineHeight: '1',
+                      margin: '-8px 0 0 0',
+                      padding: '12px 16px 12px',
+                      backgroundColor: 'var(--background-contrast)',
+                      color: 'var(--on-background)',
+                    }}
+                  >
+                    <Localized id="block_menu_choose_type_label" />
+                  </ListSubheader>
+
+                  <div style={{height: '4px'}}></div>
+
+                  {
+                    [
+                      { value: 'page', icon: <PageIcon />, label: getString('block_menu_type_label_page') },
+                      // { value: 'redirect', icon: <RedirectIcon />, label: getString('block_menu_type_label_redirect') },
+                      { value: 'person', icon: <PersonIcon />, label: getString('block_menu_type_label_person') },
+                      { value: 'button', icon: <ButtonIcon />, label: getString('block_menu_type_label_button') },
+                      { value: 'headline', icon: <HeadlineIcon />, label: getString('block_menu_type_label_headline') },
+                      // { value: 'headline3', label: getString('block_menu_type_label_headline3') },
+                      { value: 'text', icon: <TextIcon />, label: getString('block_menu_type_label_text') },
+                      { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
+                      { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
+                      { value: 'action', icon: <ActionIcon />, label: getString('block_menu_type_label_action') },
+                    ]
+                    .map(option => (
+                      <MenuItem
+                        key={option.value}
+                        selected={option.value === type}
+                        onClick={() => setType(option.value)}
+                      >
+                        <ListItemIcon>
+                          {option.icon}
+                        </ListItemIcon>
+                        {option.label}
+                      </MenuItem>
+                    ))
+                  }
+                </SubMenu>
+              : null
             }
 
             {
@@ -193,9 +210,7 @@ function BlockMenu ({
                     <ListItemIcon>
                       <VerticalAlignTopIcon />
                     </ListItemIcon>
-                    <ListItemText>
-                      <Localized id="block_menu_add_before" />
-                    </ListItemText>
+                    <Localized id="block_menu_add_before" />
                   </MenuItem>
                 : null
             }
@@ -206,9 +221,7 @@ function BlockMenu ({
                     <ListItemIcon>
                       <VerticalAlignBottomIcon />
                     </ListItemIcon>
-                    <ListItemText>
-                      <Localized id="block_menu_add_after" />
-                    </ListItemText>
+                    <Localized id="block_menu_add_after" />
                   </MenuItem>
                 : null
             }
@@ -223,13 +236,11 @@ function BlockMenu ({
                         : <VisibilityIcon />
                       }
                     </ListItemIcon>
-                    <ListItemText>
-                      {
-                        active
-                        ? <Localized id="block_menu_hide" />
-                        : <Localized id="block_menu_show" />
-                      }
-                    </ListItemText>
+                    {
+                      active
+                      ? <Localized id="block_menu_hide" />
+                      : <Localized id="block_menu_show" />
+                    }
                   </MenuItem>
                 : null
             }
@@ -240,33 +251,75 @@ function BlockMenu ({
                     <ListItemIcon>
                       <DeleteIcon />
                     </ListItemIcon>
-                    <ListItemText>
-                      <Localized id="block_menu_delete" />
-                    </ListItemText>
+                    <Localized id="block_menu_delete" />
                   </MenuItem>
                 : null
             */}
 
             {
               typeof createBlock === 'function'
-                ? <AddMenu
-                    trigger={triggerProps => (
-                      <MenuItem
-                        style={{marginTop:'8px'}}
-                        {...triggerProps}
-                      >
-                        <ListItemIcon>
-                          <AddIcon />
-                        </ListItemIcon>
-                        <ListItemText>
-                          <Localized id="block_menu_create_child_block" />
-                        </ListItemText>
-                      </MenuItem>
-                    )}
-                    createBlock={createChildBlock}
-                  />
+                ? <SubMenu
+                    parentMenuIsOpen={open}
+                    label={<>
+                      <ListItemIcon>
+                        <AddIcon />
+                      </ListItemIcon>
+                      <Localized id="block_menu_create_child_block" />
+                    </>}
+                  >
+                    <AddMenuContent createBlock={createChildBlock} />
+                  </SubMenu>
                 : null
             }
+
+            <SubMenu
+              parentMenuIsOpen={open}
+              label={<>
+                <ListItemIcon>
+                  <BlockTreeIcon />
+                </ListItemIcon>
+                <Localized id="block_menu_change_parent" />
+              </>}
+              MenuListProps={{
+                style: {
+                  marginTop: '-8px',
+                },
+              }}
+            >
+              <ListSubheader
+                style={{
+                  whiteSpace: 'nowrap',
+                  lineHeight: '1',
+                  margin: '-8px 0 0 0',
+                  padding: '12px 16px 12px',
+                  backgroundColor: 'var(--background-contrast)',
+                  color: 'var(--on-background)',
+                }}
+              >
+                <Localized id="block_menu_change_parent" />
+              </ListSubheader>
+
+              <div style={{height: '8px'}}></div>
+
+              <MenuItem
+                onClick={thisBlock => setParent(null)}
+              >
+                <ListItemIcon>
+                  <RemoveCircleIcon />
+                </ListItemIcon>
+                <Localized id="block_menu_change_parent_none" />
+              </MenuItem>
+
+              <Divider style={{opacity: 0.2}} />
+
+              <div style={{ padding: '0 var(--basis_x2)', marginBottom: '8px' }}>
+                <BlockTree
+                  onClick={thisBlock => setParent(thisBlock._id)}
+                  blockMenu={false}
+                  types={['page', 'person']}
+                />
+              </div>
+            </SubMenu>
 
             {
               typeof _id === 'string' && _id !== ''
@@ -286,17 +339,13 @@ function BlockMenu ({
                       <ListItemIcon>
                         <ViewIcon />
                       </ListItemIcon>
-                      <ListItemText>
-                        <Localized id="view_block" />
-                      </ListItemText>
+                      <Localized id="view_block" />
                     </MenuItem>
-                    <MenuItem style={{marginTop:'8px'}} onClick={editBlock}>
+                    <MenuItem onClick={editBlock}>
                       <ListItemIcon>
                         <EditIcon />
                       </ListItemIcon>
-                      <ListItemText>
-                        <Localized id="edit_block" />
-                      </ListItemText>
+                      <Localized id="edit_block" />
                     </MenuItem>
                   </div>
                 : null
@@ -308,9 +357,7 @@ function BlockMenu ({
               <ListItemIcon>
                 <CloseIcon />
               </ListItemIcon>
-              <ListItemText>
-                <Localized id="block_menu_close_menu" />
-              </ListItemText>
+              <Localized id="block_menu_close_menu" />
             </MenuItem>
 
           </MenuList>

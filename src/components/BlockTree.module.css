@@ -1,0 +1,30 @@
+.blockRow {
+  position: relative;
+}
+.blockRowActions {
+  display: flex;
+  align-items: stretch;
+}
+@media (any-hover: hover) {
+  @media (min-width: 1200px) {
+    .blockRow .blockRowActions {
+      opacity: 0;
+      transition: opacity var(--timing);
+    }
+    .blockRow:hover .blockRowActions {
+      opacity: 1;
+    }
+  }
+}
+
+/*
+.blockRow:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--basis);
+  background: red;
+}
+*/

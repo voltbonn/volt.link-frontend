@@ -123,6 +123,8 @@ add_content_before = Add Content
 content_editor_reorderblock_label = Reorder
 
 block_menu_choose_type_label = Choose Block Type
+block_menu_change_parent = Change Parent
+block_menu_change_parent_none = No Parent
 
 block_menu_type_label_plural_page = Pages
 block_menu_type_label_plural_action = Actions
