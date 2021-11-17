@@ -7,7 +7,7 @@ import {
 
 import { useLocalization, Localized } from '../fluent/Localized.js'
 import useLoadBlock from '../hooks/useLoadBlock.js'
-import useLoadBlocksByIds from '../hooks/useLoadBlocksByIds.js'
+import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
 
 import Header from '../components/Header.js'
@@ -25,7 +25,7 @@ function Viewer () {
   const { loggedIn } = useUser()
 
   const loadBlock = useLoadBlock()
-  const loadBlocksByIds = useLoadBlocksByIds()
+  const loadBlocks = useLoadBlocks()
 
   const { fluentByAny } = useLocalization()
 
@@ -50,7 +50,7 @@ function Viewer () {
         .then(loadedBlock => {
           setBlock(loadedBlock)
           const ids = loadedBlock.content.map(content => content.blockId)
-          loadBlocksByIds(ids)
+          loadBlocks({ ids })
             .then(loadedContentBlocks => {
               const contentBlocksOrdered = [...ids].map(id => loadedContentBlocks.find(block => block._id === id))
               setContentBlocks([...contentBlocksOrdered])
@@ -63,7 +63,7 @@ function Viewer () {
     block._id,
     loadBlock,
     setBlock,
-    loadBlocksByIds,
+    loadBlocks,
     setContentBlocks,
   ])
 
