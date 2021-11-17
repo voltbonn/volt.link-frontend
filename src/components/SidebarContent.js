@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Collapse,
 } from '@mui/material'
 
 import {
@@ -32,6 +33,9 @@ import {
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
   // EditSharp as EditIcon,
+
+  ExpandLess as ExpandLessIcon,
+  ExpandMore as ExpandMoreIcon,
 } from '@mui/icons-material'
 
 import { useQuery } from '@apollo/client' // useApolloClient
@@ -53,6 +57,123 @@ const blockTypeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   action: <ActionIcon />,
+}
+
+const checkIfArrayHasContent = level => !!level && Array.isArray(level) && level.length > 0
+
+
+function RowBlock ({ levels, level, createBlock }) {
+  const navigate = useNavigate()
+
+  const [open, setOpen] = useState(false)
+
+  const handleExpandToggle = useCallback(() => {
+    setOpen(oldOpen => !oldOpen)
+  }, [setOpen])
+
+  if (!checkIfArrayHasContent(level)) {
+    return null
+  }
+
+    return level
+      .map(block => {
+
+        const actions = {
+          click: () => {
+            navigate(`/view/${block._id}`)
+          }
+        }
+
+        const rowContent = <>
+          <ViewerAuto
+            size="line"
+            block={block}
+            actions={actions}
+            style={{
+              flexGrow: '1',
+              width: '100%',
+            }}
+          />
+
+          <div className={classes.blockRowActions}>
+            <BlockMenu
+              {...{
+                block,
+                createBlock,
+                // setType: saveType,
+              }}
+              trigger={props => (
+                <button
+                  {...props}
+                  className="text hasIcon"
+                  style={{
+                    margin: '0 0 0 var(--basis_x2)',
+                  }}
+                >
+                  <BlockMenuIcon className="icon" />
+                </button>
+              )}
+            />
+          </div>
+        </>
+
+        const nextLevel = levels[block._id]
+        if (checkIfArrayHasContent(nextLevel)) {
+          return <>
+            <div style={{
+              display: 'flex',
+            }}>
+              <button
+                className="text hasIcon"
+                style={{
+                  margin: '0 calc(2.5 * var(--basis)) 0 0',
+                  padding: 'var(--basis) 0',
+                  flexShrink: '0',
+                }}
+                onClick={handleExpandToggle}
+              >
+                {open ? <ExpandLessIcon className="icon" /> : <ExpandMoreIcon className="icon" />}
+              </button>
+
+              <div
+                key={block._id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  width: '100%',
+                }}
+                className={classes.blockRow}
+              >
+                {rowContent}
+              </div>
+            </div>
+            <div style={{
+              marginLeft: 'calc(8 * var(--basis))',
+            }}>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <RowBlock
+                  levels={levels}
+                  level={nextLevel}
+                  createBlock={createBlock}
+                />
+              </Collapse>
+            </div>
+          </>
+        } else {
+          return <div
+            key={block._id}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}
+            className={classes.blockRow}
+          >
+            {rowContent}
+          </div>
+        }
+    })
 }
 
 export default function SidebarContent({ leftHeaderActions, rightHeaderActions }) {
@@ -83,6 +204,17 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
 
   const blocks = data?.blocks || []
 
+  const levels = blocks.reduce((acc, block) => {
+    const parentId = block.parent || '_root'
+    if (!acc[parentId]) {
+      acc[parentId] = []
+    }
+    acc[parentId].push(block)
+    return acc
+  }, {})
+  // get levelKeys and sort by string values
+  const levelKeys = Object.keys(levels).sort((a, b) => a.localeCompare(b))
+  const firstKey = levelKeys[0]
 
   const createBlock = useCallback(newBlock => {
     saveBlock(newBlock)
@@ -173,58 +305,11 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
       blocks.length > 0
         ? <>
           <div className="buttonRow usesLinks">
-            {
-              blocks
-              .map(block => {
-
-                const actions = {
-                  click: () => {
-                    navigate(`/view/${block._id}`)
-                  }
-                }
-
-                return <div
-                  key={block._id}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                  }}
-                  className={classes.blockRow}
-                >
-                  <ViewerAuto
-                    size="line"
-                    block={block}
-                    actions={actions}
-                    style={{
-                      flexGrow: '1',
-                      width: '100%',
-                    }}
-                  />
-
-                  <div className={classes.blockRowActions}>
-                    <BlockMenu
-                      {...{
-                        block,
-                        createBlock,
-                        // setType: saveType,
-                      }}
-                      trigger={props => (
-                        <button
-                          {...props}
-                          className="text hasIcon"
-                          style={{
-                            margin: '0 0 0 var(--basis_x2)',
-                          }}
-                        >
-                          <BlockMenuIcon className="icon" />
-                        </button>
-                      )}
-                    />
-                  </div>
-                </div>
-              })
-            }
+            <RowBlock
+              levels={levels}
+              level={levels[firstKey]}
+              createBlock={createBlock}
+            />
           </div>
         </>
         : null
