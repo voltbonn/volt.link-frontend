@@ -21,7 +21,6 @@ import {
   Login as LoginIcon,
   Logout as LogoutIcon,
 
-  Home as HomeIcon,
   // Search as SearchIcon,
 
   InsertDriveFileSharp as PageIcon,
@@ -39,7 +38,7 @@ import { useQuery } from '@apollo/client' // useApolloClient
 import { getBlocks_Query } from '../graphql/queries'
 import useSaveBlock from '../hooks/useSaveBlock.js'
 
-import { Link, useNavigate, useMatch } from 'react-router-dom'
+import { useNavigate, useMatch } from 'react-router-dom'
 
 import { Localized } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
@@ -271,21 +270,6 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
       <br/>
 
       <MenuList style={{ maxWidth: '100%' }}>
-
-        {
-          matchesStartpage
-          ? null
-          : <Link to="/">
-              <MenuItem>
-                <ListItemIcon>
-                  <HomeIcon />
-                </ListItemIcon>
-                <ListItemText>
-                  Home
-                </ListItemText>
-              </MenuItem>
-            </Link>
-        }
 
         {
           loggedIn

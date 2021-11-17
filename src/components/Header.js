@@ -3,7 +3,10 @@ import classes from './Header.module.css'
 import {
   Menu as MenuIcon,
   MoreHoriz as MoreHorizIcon,
+  Home as HomeIcon,
 } from '@mui/icons-material'
+
+import { Link } from 'react-router-dom'
 
 import HeaderMenu from './HeaderMenu.js'
 import { useSidebarContext } from './Sidebar.js'
@@ -23,6 +26,13 @@ export default function Header({ title, block = {}, rightActions, notificationBa
     }
 
     <div style={{ flexGrow: '1' }}>
+      <Link to="/">
+        <button className="text" style={{ margin: 'calc(-2 * var(--basis))' }}>
+          <HomeIcon style={{ verticalAlign: 'middle' }} />
+        </button>
+      </Link>
+      <span style={{ margin: 'var(--basis_x2)', opacity: 'var(--alpha)' }}>/</span>
+
     {
       blockId
         ? <>
