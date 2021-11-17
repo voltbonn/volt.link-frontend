@@ -220,7 +220,6 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
   }, {})
   // get levelKeys and sort by string values
   const levelKeys = Object.keys(levels).sort((a, b) => a.localeCompare(b))
-  const firstKey = levelKeys[0]
 
   const createBlock = useCallback(newBlock => {
     saveBlock(newBlock)
@@ -313,7 +312,7 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
           <div className="buttonRow usesLinks">
             <BlockRows
               levels={levels}
-              level={levels[firstKey]}
+              level={levels[levelKeys[0]]}
               createBlock={createBlock}
             />
           </div>
