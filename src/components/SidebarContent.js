@@ -135,7 +135,7 @@ function BlockRow ({ block, levels, createBlock }) {
         <button
           className="text hasIcon"
           style={{
-            margin: '0 calc(2.5 * var(--basis)) 0 0',
+            margin: '0 calc(2 * var(--basis)) 0 0',
             padding: 'var(--basis) 0',
             flexShrink: '0',
           }}
@@ -158,7 +158,7 @@ function BlockRow ({ block, levels, createBlock }) {
         </div>
       </div>
       <div style={{
-        marginLeft: 'calc(8 * var(--basis))',
+        marginLeft: 'calc(7.4 * var(--basis))',
       }}>
         <Collapse in={open} timeout="auto">
           <BlockRows
