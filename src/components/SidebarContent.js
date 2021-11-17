@@ -368,23 +368,3 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
 
   </div>
 }
-
-/*
-
-
-    <input
-      type="text"
-      placeholder="title"
-      style={{
-        marginRight: '0',
-        marginLeft: '0'
-      }}
-    />
-    <textarea
-      placeholder="description"
-      style={{
-        marginRight: '0',
-        marginLeft: '0'
-      }}
-    />
-*/
