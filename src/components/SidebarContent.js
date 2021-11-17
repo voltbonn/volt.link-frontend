@@ -71,7 +71,6 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
     .filter(([, value]) => value === true)
     .map(([key, ]) => key)
 
-  // const [blocks, setBlocks] = useState([])
   const saveBlock = useSaveBlock()
 
   const navigate = useNavigate()
@@ -84,40 +83,6 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
 
   const blocks = data?.blocks || []
 
-  // const queryBlocks = useCallback(() => {
-  //   console.log('queryBlocks')
-  //   apollo_client.query({
-  //     query: getBlocks_Query,
-  //     variables: {
-  //       types: filteredTypes,
-  //     },
-  //   })
-  //     .then(async ({ data }) => {
-  //       if (typeof data.error === 'string' || !data.blocks) {
-  //         console.error('error', data.error)
-  //       } else {
-  //         setBlocks(data.blocks || [])
-  //       }
-  //     })
-  //     .catch(async error => {
-  //       console.error('error', error)
-  //     })
-  // }, [ apollo_client, setBlocks, filteredTypes ])
-
-  // useEffect(() => {
-  //   queryBlocks()
-  // }, [ queryBlocks ])
-
-  // const handleTypeChange = useCallback(newType => {
-  //   setType(newType)
-  //   if (
-  //     typeof newType === 'string'
-  //     && newType !== ''
-  //     && newType !== type
-  //   ) {
-  //     queryBlocks(newType)
-  //   }
-  // }, [ type, setType, queryBlocks ])
 
   const createBlock = useCallback(newBlock => {
     saveBlock(newBlock)
