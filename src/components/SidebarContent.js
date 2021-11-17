@@ -62,7 +62,21 @@ const blockTypeIcons = {
 const checkIfArrayHasContent = level => !!level && Array.isArray(level) && level.length > 0
 
 
-function RowBlock ({ levels, level, createBlock }) {
+function BlockRows ({ levels, level, createBlock }) {
+  if (!checkIfArrayHasContent(level)) {
+    return null
+  }
+
+  return level
+    .map(block => <BlockRow
+      key={block._id}
+      block={block}
+      levels={levels}
+      createBlock={createBlock}
+    />)
+}
+
+function BlockRow ({ block, levels, createBlock }) {
   const navigate = useNavigate()
 
   const [open, setOpen] = useState(false)
@@ -71,109 +85,101 @@ function RowBlock ({ levels, level, createBlock }) {
     setOpen(oldOpen => !oldOpen)
   }, [setOpen])
 
-  if (!checkIfArrayHasContent(level)) {
-    return null
+  const actions = {
+    click: () => {
+      navigate(`/view/${block._id}`)
+    }
   }
 
-    return level
-      .map(block => {
+  const rowContent = <>
+    <ViewerAuto
+      size="line"
+      block={block}
+      actions={actions}
+      style={{
+        flexGrow: '1',
+        width: '100%',
+      }}
+    />
 
-        const actions = {
-          click: () => {
-            navigate(`/view/${block._id}`)
-          }
-        }
-
-        const rowContent = <>
-          <ViewerAuto
-            size="line"
-            block={block}
-            actions={actions}
+    <div className={classes.blockRowActions}>
+      <BlockMenu
+        {...{
+          block,
+          createBlock,
+          // setType: saveType,
+        }}
+        trigger={props => (
+          <button
+            {...props}
+            className="text hasIcon"
             style={{
-              flexGrow: '1',
-              width: '100%',
+              margin: '0 0 0 var(--basis_x2)',
             }}
-          />
-
-          <div className={classes.blockRowActions}>
-            <BlockMenu
-              {...{
-                block,
-                createBlock,
-                // setType: saveType,
-              }}
-              trigger={props => (
-                <button
-                  {...props}
-                  className="text hasIcon"
-                  style={{
-                    margin: '0 0 0 var(--basis_x2)',
-                  }}
-                >
-                  <BlockMenuIcon className="icon" />
-                </button>
-              )}
-            />
-          </div>
-        </>
-
-        const nextLevel = levels[block._id]
-        if (checkIfArrayHasContent(nextLevel)) {
-          return <>
-            <div style={{
-              display: 'flex',
-            }}>
-              <button
-                className="text hasIcon"
-                style={{
-                  margin: '0 calc(2.5 * var(--basis)) 0 0',
-                  padding: 'var(--basis) 0',
-                  flexShrink: '0',
-                }}
-                onClick={handleExpandToggle}
-              >
-                {open ? <ExpandLessIcon className="icon" /> : <ExpandMoreIcon className="icon" />}
-              </button>
-
-              <div
-                key={block._id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  width: '100%',
-                }}
-                className={classes.blockRow}
-              >
-                {rowContent}
-              </div>
-            </div>
-            <div style={{
-              marginLeft: 'calc(8 * var(--basis))',
-            }}>
-              <Collapse in={open} timeout="auto" unmountOnExit>
-                <RowBlock
-                  levels={levels}
-                  level={nextLevel}
-                  createBlock={createBlock}
-                />
-              </Collapse>
-            </div>
-          </>
-        } else {
-          return <div
-            key={block._id}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'row',
-            }}
-            className={classes.blockRow}
           >
-            {rowContent}
-          </div>
-        }
-    })
+            <BlockMenuIcon className="icon" />
+          </button>
+        )}
+      />
+    </div>
+  </>
+
+  const nextLevel = levels[block._id]
+  if (checkIfArrayHasContent(nextLevel)) {
+    return <>
+      <div style={{
+        display: 'flex',
+      }}>
+        <button
+          className="text hasIcon"
+          style={{
+            margin: '0 calc(2.5 * var(--basis)) 0 0',
+            padding: 'var(--basis) 0',
+            flexShrink: '0',
+          }}
+          onClick={handleExpandToggle}
+        >
+          {open ? <ExpandLessIcon className="icon" /> : <ExpandMoreIcon className="icon" />}
+        </button>
+
+        <div
+          key={block._id}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'row',
+            width: '100%',
+          }}
+          className={classes.blockRow}
+        >
+          {rowContent}
+        </div>
+      </div>
+      <div style={{
+        marginLeft: 'calc(8 * var(--basis))',
+      }}>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <BlockRows
+            levels={levels}
+            level={nextLevel}
+            createBlock={createBlock}
+          />
+        </Collapse>
+      </div>
+    </>
+  } else {
+    return <div
+      key={block._id}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'row',
+      }}
+      className={classes.blockRow}
+    >
+      {rowContent}
+    </div>
+  }
 }
 
 export default function SidebarContent({ leftHeaderActions, rightHeaderActions }) {
@@ -305,7 +311,7 @@ export default function SidebarContent({ leftHeaderActions, rightHeaderActions }
       blocks.length > 0
         ? <>
           <div className="buttonRow usesLinks">
-            <RowBlock
+            <BlockRows
               levels={levels}
               level={levels[firstKey]}
               createBlock={createBlock}
