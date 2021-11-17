@@ -115,6 +115,8 @@ function BlockRow ({ block, levels, createBlock }) {
             className="text hasIcon"
             style={{
               margin: '0 0 0 var(--basis_x2)',
+              padding: 'var(--basis) 0',
+              flexShrink: '0',
             }}
           >
             <BlockMenuIcon className="icon" />

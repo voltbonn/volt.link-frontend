@@ -60,6 +60,7 @@
 }
 .blockRowActions {
   display: flex;
+  align-items: stretch;
 }
 @media (any-hover: hover) {
   @media (min-width: 1200px) {
