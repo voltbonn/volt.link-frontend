@@ -6,8 +6,6 @@ import {
   Popper,
 } from '@mui/material'
 
-import useOnOutsideClick from '../hooks/useOnOutsideClick.js'
-
 const randomString = () => (Math.random() + 1).toString(36).substring(7)
 
 function Popover ({
@@ -17,12 +15,7 @@ function Popover ({
   const anchorRef = useRef(null)
   const [open, setOpen] = useState(false)
 
-  const paperRef = useRef(null)
-  useOnOutsideClick(paperRef, () => {
-    setOpen(false)
-  })
-
-  const handlePopoverToggleClick = event => {
+  const handlePopoverToggleClick = () => {
     setOpen((prevOpen) => !prevOpen)
   }
 
@@ -45,6 +38,7 @@ function Popover ({
 
   <Portal>
     <div
+      onClick={closePopover}
       style={{
         display: (open ? 'block' : 'none'),
         position: 'fixed',
@@ -52,7 +46,7 @@ function Popover ({
         right: 0,
         bottom: 0,
         left: 0,
-        zIndex: 1000,
+        zIndex: 1299,
         cursor: 'pointer',
       }}
     />
@@ -96,7 +90,7 @@ function Popover ({
           {
             !!children && typeof children === 'function'
             ? children({
-              ref: paperRef,
+              open,
               style: {
                 transformOrigin: 'top left',
               },
