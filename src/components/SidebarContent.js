@@ -160,7 +160,7 @@ function BlockRow ({ block, levels, createBlock }) {
       <div style={{
         marginLeft: 'calc(8 * var(--basis))',
       }}>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto">
           <BlockRows
             levels={levels}
             level={nextLevel}
