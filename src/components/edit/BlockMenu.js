@@ -83,6 +83,13 @@ function BlockMenu ({
     navigate(`/edit/${_id}`)
   }, [ _id, navigate ])
 
+  const createChildBlock = useCallback(newBlock => {
+    createBlock({
+      ...newBlock,
+      parent: _id,
+    })
+  }, [ createBlock, _id ])
+
   return <>
   <Popover
     trigger={trigger}
@@ -256,7 +263,7 @@ function BlockMenu ({
                         </ListItemText>
                       </MenuItem>
                     )}
-                    createBlock={createBlock}
+                    createBlock={createChildBlock}
                   />
                 : null
             }
