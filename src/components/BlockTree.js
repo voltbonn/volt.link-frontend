@@ -7,8 +7,8 @@ import {
 
 import {
   MoreHorizSharp as BlockMenuIcon,
-  ExpandLess as ExpandLessIcon,
-  ExpandMore as ExpandMoreIcon,
+  ArrowDropDownSharp as ExpandLessIcon,
+  ArrowRightSharp as ExpandMoreIcon,
 } from '@mui/icons-material'
 
 import { useQuery } from '@apollo/client'
@@ -110,7 +110,7 @@ function BlockRow ({
         <button
           className="text hasIcon"
           style={{
-            margin: '0 calc(2 * var(--basis)) 0 0',
+            margin: '0 var(--basis_x0_5) 0 calc(-8.5 * var(--basis))',
             padding: 'var(--basis) 0',
             flexShrink: '0',
           }}
@@ -133,7 +133,7 @@ function BlockRow ({
         </div>
       </div>
       <div style={{
-        marginLeft: 'calc(7.4 * var(--basis))',
+        marginLeft: 'calc(6 * var(--basis))',
       }}>
         <Collapse in={open} timeout="auto">
           <BlockRows
@@ -153,6 +153,7 @@ function BlockRow ({
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'row',
+        marginLeft: 'calc(-2.5 * var(--basis))',
       }}
       className={classes.blockRow}
     >
@@ -195,7 +196,9 @@ export default function BlockTree ({
   // get levelKeys and sort by string values
   const levelKeys = Object.keys(levels).sort((a, b) => a.localeCompare(b))
 
-  return <>
+  return <div style={{
+    marginLeft: 'calc(5 * var(--basis))',
+  }}>
      {
       blocks.length > 0
         ? <BlockRows
@@ -207,5 +210,5 @@ export default function BlockTree ({
           />
         : null
       }
-  </>
+  </div>
 }
