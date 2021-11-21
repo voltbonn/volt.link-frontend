@@ -74,20 +74,6 @@ export default function Header({ title, block = {}, rightActions, notificationBa
           </span>
     }
     </div>
-
-    {/*
-      <div>
-        <button class="text">Home</button>
-        <ChevronRightIcon style={{
-          verticalAlign: 'middle',
-          height: 'var(--basis_x8)',
-          width: 'var(--basis_x8)',
-          margin: '0 calc(-2 * var(--basis))',
-          opacity: 'var(--alpha-more)',
-        }} />
-        <button class="text">Title</button>
-      </div>
-    */}
   </>
 
   return <header className={classes.header}>
