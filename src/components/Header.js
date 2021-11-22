@@ -110,6 +110,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
               parentBlocks
               .map((block) => {
                 return <ViewerAuto
+                  key={block._id}
                   block={block}
                   size="line"
                   style={{
@@ -139,6 +140,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
               siblingBlocks
               .map((block) => {
                 return <ViewerAuto
+                  key={block._id}
                   block={block}
                   size="line"
                   style={{
