@@ -68,21 +68,8 @@ export default function Header({ title, block = {}, rightActions, notificationBa
       .catch(async error => {
         console.error('error', error)
         setSiblingBlocks([])
-        // setSiblingBlocks([
-        //   {onClick: () => {}, label: 'Volt Bonn Welcome'},
-        // ])
       })
   }, [apollo_client, setSiblingBlocks])
-
-  // const loadBlocks = useCallback(blockId => {
-  //   // setParentBlocks([
-  //   //   {onClick: () => {}, label: 'Volt NRW'},
-  //   //   {onClick: () => {}, label: 'Volt Deutschland'},
-  //   //   {onClick: () => {}, label: 'Volt Europa'},
-  //   // ])
-  //
-  //   loadSiblingBlocks(blockId)
-  // }, [loadSiblingBlocks])
 
   useEffect(() => {
     if (blockId) {
