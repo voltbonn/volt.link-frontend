@@ -67,3 +67,24 @@ export const getSelf_Query = gql`
     }
   }
 `
+
+export const getSiblingBlocks_Query = gql`
+  query getSiblingBlocks ($_id: ID!) {
+    siblingBlocks (_id: $_id) {
+      _id
+      type
+      properties
+    }
+  }
+`
+
+export const getParentBlocks_Query = gql`
+  query getParentBlocks ($_id: ID!) {
+    parentBlocks (_id: $_id) {
+      _id
+      type
+      properties
+      computed
+    }
+  }
+`
