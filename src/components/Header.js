@@ -59,7 +59,10 @@ export default function Header({ title, block = {}, rightActions, notificationBa
           console.error(data.error)
           setSiblingBlocks([])
         }else{
-          setSiblingBlocks(data.siblingBlocks || [])
+          setSiblingBlocks(
+            (data.siblingBlocks || [])
+              .filter(block => block._id !== blockId)
+          )
         }
       })
       .catch(async error => {
