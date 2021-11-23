@@ -106,12 +106,14 @@ function BlockRow ({
     return <>
       <div style={{
         display: 'flex',
+        minHeight: 'calc(6 * var(--basis))',
       }}>
         <button
           className="text hasIcon"
           style={{
-            margin: '0 var(--basis_x0_5) 0 calc(-8.5 * var(--basis))',
-            padding: 'var(--basis) 0',
+            background: 'transparent',
+            margin: '0 calc(-0.8 * var(--basis)) 0 calc(-7 * var(--basis))',
+            padding: '0',
             flexShrink: '0',
           }}
           onClick={handleExpandToggle}
@@ -154,6 +156,7 @@ function BlockRow ({
         alignItems: 'center',
         flexDirection: 'row',
         marginLeft: 'calc(-2.5 * var(--basis))',
+        minHeight: 'calc(6 * var(--basis))',
       }}
       className={classes.blockRow}
     >
