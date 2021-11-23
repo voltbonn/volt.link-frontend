@@ -200,13 +200,13 @@ function BlockMenu ({
                   || typeof createBlock === 'function'
                 )
               )
-                ? <Divider style={{opacity: 0.2}} />
+                ? <Divider style={{opacity: 0.2, marginBottom: '8px' }} />
                 : null
             }
 
             {
               addRowBefore
-                ? <MenuItem style={{marginTop:'8px'}} onClick={handleAddRowBefore}>
+                ? <MenuItem onClick={handleAddRowBefore}>
                     <ListItemIcon>
                       <VerticalAlignTopIcon />
                     </ListItemIcon>
@@ -217,7 +217,7 @@ function BlockMenu ({
 
             {
               addRowAfter
-                ? <MenuItem style={{marginTop:'8px'}} onClick={addRowAfter}>
+                ? <MenuItem onClick={addRowAfter}>
                     <ListItemIcon>
                       <VerticalAlignBottomIcon />
                     </ListItemIcon>
@@ -228,7 +228,7 @@ function BlockMenu ({
 
             {
               typeof active === 'boolean' && toggle_active
-                ? <MenuItem style={{marginTop:'8px'}} onClick={toggle_active}>
+                ? <MenuItem onClick={toggle_active}>
                     <ListItemIcon>
                       {
                         active
@@ -323,7 +323,7 @@ function BlockMenu ({
 
             {
               typeof _id === 'string' && _id !== ''
-                ? <div style={{ marginTop:'8px', marginBottom:'8px' }}>
+                ? <div>
                     {
                       typeof setType === 'function'
                       || addRowBefore
@@ -331,7 +331,7 @@ function BlockMenu ({
                       || (typeof active === 'boolean' && toggle_active)
                       || onRemoveRow
                       || typeof createBlock === 'function'
-                        ? <Divider style={{opacity: 0.2}} />
+                        ? <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px' }} />
                         : null
                     }
 
@@ -351,9 +351,9 @@ function BlockMenu ({
                 : null
             }
 
-            <Divider style={{opacity: 0.2}} />
+            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
 
-            <MenuItem style={{marginTop:'8px'}} onClick={closePopover}>
+            <MenuItem onClick={closePopover}>
               <ListItemIcon>
                 <CloseIcon />
               </ListItemIcon>
