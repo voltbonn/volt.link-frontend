@@ -144,7 +144,7 @@ html[lang="ar"] { /* for arabic */
 }
 
 body {
-  background: var(--background);
+  background: var(--background-contrast);
   color: var(--on-background);
   font-size: var(--body-font-size);
 }

@@ -13,12 +13,12 @@
   margin: var(--minus_basis_x4) var(--minus_basis_x4) var(--basis_x4) var(--minus_basis_x4);
   top: 0;
 
-  background: var(--background);
+  background: var(--background-contrast);
   color: var(--on-background);
 }
 @supports(display: grid) {
   .header {
-    background: rgba(var(--background-rgb), var(--alpha-more));
+    background: rgba(var(--background-contrast-rgb), var(--alpha-more));
     backdrop-filter: blur(var(--blur));
   }
 }

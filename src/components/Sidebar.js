@@ -66,8 +66,9 @@ function Sidebar() {
         [`& .MuiDrawer-paper`]: {
           width: sidebarWidth,
           boxSizing: 'border-box',
-          backgroundColor: 'var(--background)',
+          backgroundColor: 'var(--background-contrast)',
           color: 'var(--on-background)',
+          border: 'none',
         },
       }}
       PaperProps={{

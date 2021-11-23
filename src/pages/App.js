@@ -50,7 +50,7 @@ function App() {
   }, [ location, customLocation, setCustomLocation ])
 
   return (<>
-    <div className={classes.app}>
+    <div className={`${classes.app} ${matchesStartpage ? classes.isStartpage : ''}`}>
       <SidebarProvider>
         {
           matchesStartpage
