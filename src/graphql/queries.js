@@ -69,8 +69,8 @@ export const getSelf_Query = gql`
 `
 
 export const getSiblingBlocks_Query = gql`
-  query getSiblingBlocks ($_id: ID!) {
-    siblingBlocks (_id: $_id) {
+  query getSiblingBlocks ($_id: ID!, $types: [String]) {
+    siblingBlocks (_id: $_id, types: $types) {
       _id
       type
       properties
