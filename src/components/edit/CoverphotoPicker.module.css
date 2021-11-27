@@ -56,15 +56,15 @@
   background-color: transparent;
 }
 
-/*
 @media (any-hover: hover) {
-  .changeCoverphotoButton {
-    opacity: 0.1;
-    transition: transform var(--timing), opacity var(--timing);
-  }
-  .root.coverphotoIsNotSet .changeCoverphotoButton,
-  .coverphoto:hover .changeCoverphotoButton {
-    opacity: 1;
+  @media (min-width: 800px) {
+    .changeCoverphotoButton {
+      opacity: 0;
+      transition: transform var(--timing), opacity var(--timing);
+    }
+    .root.coverphotoIsNotSet .changeCoverphotoButton,
+    .coverphoto:hover .changeCoverphotoButton {
+      opacity: 1;
+    }
   }
 }
-*/

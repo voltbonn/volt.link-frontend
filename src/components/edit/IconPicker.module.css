@@ -82,15 +82,15 @@
   display: none;
 }
 
-/*
 @media (any-hover: hover) {
-  .changeIconButton {
-    opacity: 0.1;
-    transition: transform var(--timing), opacity var(--timing);
-  }
-  .root.iconIsNotSet .changeIconButton,
-  .icon:hover .changeIconButton {
-    opacity: 1;
+  @media (min-width: 800px) {
+    .changeIconButton {
+      opacity: 0;
+      transition: transform var(--timing), opacity var(--timing);
+    }
+    .root.iconIsNotSet .changeIconButton,
+    .iconWrapper:hover .changeIconButton {
+      opacity: 1;
+    }
   }
 }
-*/
