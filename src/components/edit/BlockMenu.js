@@ -317,6 +317,7 @@ function BlockMenu ({
                   onClick={thisBlock => setParent(thisBlock._id)}
                   blockMenu={false}
                   types={['page', 'person']}
+                  filterBlockIds={[_id]}
                 />
               </div>
             </SubMenu>

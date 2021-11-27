@@ -24,12 +24,14 @@ function BlockRows ({
   createBlock,
   onClick,
   blockMenu,
+  filterBlockIds,
 }) {
   if (!checkIfArrayHasContent(level)) {
     return null
   }
 
   return level
+    .filter(block => (!filterBlockIds || filterBlockIds.length === 0) ? true : !filterBlockIds.includes(block._id))
     .map(block => <BlockRow
       key={block._id}
       block={block}
@@ -37,6 +39,7 @@ function BlockRows ({
       createBlock={createBlock}
       onClick={onClick}
       blockMenu={blockMenu}
+      filterBlockIds={filterBlockIds}
     />)
 }
 
@@ -46,6 +49,7 @@ function BlockRow ({
   createBlock,
   onClick,
   blockMenu,
+  filterBlockIds,
 }) {
   // const navigate = useNavigate()
 
@@ -144,6 +148,7 @@ function BlockRow ({
             createBlock={createBlock}
             onClick={onClick}
             blockMenu={blockMenu}
+            filterBlockIds={filterBlockIds}
           />
         </Collapse>
       </div>
@@ -171,6 +176,7 @@ export default function BlockTree ({
   blockMenu = false,
   onGetRefetch = ()=>{},
   types = ['page', 'person', 'action'],
+  filterBlockIds = [],
 }) {
   const { data, refetch } = useQuery(getBlocks_Query, {
     variables: {
@@ -210,6 +216,7 @@ export default function BlockTree ({
             createBlock={createBlock}
             onClick={onClick}
             blockMenu={blockMenu}
+            filterBlockIds={filterBlockIds}
           />
         : null
       }
