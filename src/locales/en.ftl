@@ -149,6 +149,9 @@ block_menu_create_child_block = Create Child Block
 block_menu_hide = Hide Block
 block_menu_show = Show Block
 
+block_menu_info_created = Created
+block_menu_info_modified = Last Modified
+
 path_editor_item_text_info = You can use Markdown and HTML in the text-field.
 
 
