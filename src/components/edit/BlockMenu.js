@@ -226,26 +226,7 @@ function BlockMenu ({
                     <Localized id="block_menu_add_after" />
                   </MenuItem>
                 : null
-            }
-
-            {
-              typeof active === 'boolean' && toggle_active
-                ? <MenuItem onClick={toggle_active}>
-                    <ListItemIcon>
-                      {
-                        active
-                        ? <VisibilityOffIcon />
-                        : <VisibilityIcon />
-                      }
-                    </ListItemIcon>
-                    {
-                      active
-                      ? <Localized id="block_menu_hide" />
-                      : <Localized id="block_menu_show" />
-                    }
-                  </MenuItem>
-                : null
-            }
+            */}
 
             {/*
               onRemoveRow
@@ -323,6 +304,25 @@ function BlockMenu ({
                 />
               </div>
             </SubMenu>
+
+            {
+              typeof active === 'boolean' && toggle_active
+                ? <MenuItem onClick={toggle_active}>
+                    <ListItemIcon>
+                      {
+                        active
+                        ? <VisibilityOffIcon />
+                        : <VisibilityIcon />
+                      }
+                    </ListItemIcon>
+                    {
+                      active
+                      ? <Localized id="block_menu_hide" />
+                      : <Localized id="block_menu_show" />
+                    }
+                  </MenuItem>
+                : null
+            }
 
             {
               typeof _id === 'string' && _id !== ''
