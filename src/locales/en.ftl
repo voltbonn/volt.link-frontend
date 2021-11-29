@@ -138,6 +138,7 @@ block_menu_type_label_button = Button
 block_menu_type_label_headline = Headline
 block_menu_type_label_headline3 = Headline 3
 block_menu_type_label_text = Text
+block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider
 block_menu_type_label_checkbox = Checkbox
 
@@ -163,6 +164,7 @@ placeholder_main_headline = Untitled
 placeholder_headline = Headline
 placeholder_button = Button
 placeholder_text = Text
+placeholder_text = Code
 
 role-owner = Owner
 role-editor = Editor

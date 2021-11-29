@@ -1,5 +1,10 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react'
 
+// import hljs from 'highlight.js/lib/core'
+// import javascript from 'highlight.js/lib/languages/javascript'
+// // import 'highlight.js/styles/github.css'
+// import '../../highlightjs-volt-theme.css'
+
 import {
   offset as getCaretOffset,
   getOffset,
@@ -7,6 +12,17 @@ import {
 
 import classes from './HtmlInput.module.css'
 
+// hljs.registerLanguage('javascript', javascript)
+
+function stripHtml(html){
+  // source: https://ourcodeworld.com/articles/read/376/how-to-strip-html-from-a-string-extract-only-text-content-in-javascript
+  // Create a new div element
+  var temporalDivElement = document.createElement("div");
+  // Set the HTML content with the providen
+  temporalDivElement.innerHTML = html;
+  // Retrieve the text property of the element (cross-browser support)
+  return temporalDivElement.textContent || temporalDivElement.innerText || "";
+}
 
 function getRangeLengthWithLinebreaks(element){
   element.normalize()
@@ -132,6 +148,7 @@ function getCaretPosition(element){
 }
 
 function HtmlInput({
+  type = 'text',
   defaultValue = '',
   children,
   className,
@@ -155,27 +172,44 @@ function HtmlInput({
   const [text, setText] = useState('')
   const [fakeDefaultValue, setFakeDefaultValue] = useState({ __html: '' })
 
+  const updateText = useCallback(defaultValue => {
+
+    let newHtmlValue = stripHtml(defaultValue)
+
+    // if (type === 'code') {
+    //   // const html = hljs.highlightAuto(newHtmlValue, { ignoreIllegals: false })
+    //   const html = hljs.highlight(newHtmlValue, { language: 'javascript', ignoreIllegals: false })
+    //   newHtmlValue = html.value
+    // // } else {
+    // //   newHtmlValue = newHtmlValue
+    // //     // .replace(/\t/g, '&emsp;')
+    // //     .replace(/</g, '&lt;')
+    // //     .replace(/>/g, '&gt;')
+    // //     // .replace(/\n/g, '<br />')
+    // }
+
+    if (fakeDefaultValue.__html !== newHtmlValue) {
+      return setFakeDefaultValue({__html: newHtmlValue})
+    }
+
+    setText(defaultValue)
+  }, [
+    // type,
+    fakeDefaultValue,
+    setText,
+    setFakeDefaultValue,
+  ])
+
   useEffect(() => {
-    setText(old_text => {
-      if (old_text !== defaultValue) {
-        setFakeDefaultValue((old_fakeDefaultValue) => {
-          const newHtmlValue = defaultValue
-            // .replace(/\t/g, '&emsp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            // .replace(/\n/g, '<br />')
-
-          if (old_fakeDefaultValue.__html !== newHtmlValue) {
-            return {__html: newHtmlValue}
-          }
-          return old_fakeDefaultValue
-        })
-
-        return defaultValue
-      }
-      return old_text
-    })
-  }, [defaultValue, setText, setFakeDefaultValue])
+    if (text !== defaultValue) {
+      console.log('text !== defaultValue', text, defaultValue)
+      updateText(defaultValue)
+    }
+  }, [
+    text,
+    defaultValue,
+    updateText,
+  ])
 
   const handleTextChange = useCallback((event) => {
     let value = event.target.innerHTML || ''
@@ -248,17 +282,24 @@ function HtmlInput({
         }
       }
     } else if (event.key === 'Enter') {
-      if (onSplitText) {
-        const caret = getCaretPosition(inputRef.current)
-
-        const innerText = inputRef.current.innerText
-        const start = innerText.slice(0, caret.positionFromStart)
-        const end = innerText.slice(caret.positionFromStart)
-
-        onSplitText({
-          texts: [start, end],
-        })
+      if (type === 'code') {
+        if (linebreaks !== false) {
+          document.execCommand('insertLineBreak')
+        }
         event.preventDefault()
+      } else {
+        if (onSplitText) {
+          const caret = getCaretPosition(inputRef.current)
+
+          const innerText = inputRef.current.innerText
+          const start = innerText.slice(0, caret.positionFromStart)
+          const end = innerText.slice(caret.positionFromStart)
+
+          onSplitText({
+            texts: [start, end],
+          })
+          event.preventDefault()
+        }
       }
     } else if (event.key === 'Backspace') {
       if (onMergeToPrevInput) {
@@ -283,7 +324,16 @@ function HtmlInput({
         }
       }
     }
-  }, [inputRef, linebreaks, onGoToPrevInput, onGoToNextInput, onSplitText, onMergeToPrevInput, onMergeToNextInput])
+  }, [
+    inputRef,
+    linebreaks,
+    onGoToPrevInput,
+    onGoToNextInput,
+    onSplitText,
+    onMergeToPrevInput,
+    onMergeToNextInput,
+    type,
+  ])
 
   useEffect(() => {
     if (onInputRef) {
@@ -308,7 +358,13 @@ function HtmlInput({
     document.execCommand('insertText', false, text)
   }, [linebreaks])
 
-  return <div
+  // const highlighted = hljs.highlightAuto(text, { ignoreIllegals: true })
+  // language
+  //   ? hljs.highlight(language, content)
+  //   : hljs.highlightAuto(content)
+
+  return <>
+  <div
     ref={inputRef}
     onKeyDown={keyDownHandler}
     onInput={handleTextChange}
@@ -320,6 +376,10 @@ function HtmlInput({
     style={style}
     placeholder={placeholder}
   />
+    {/* <pre className="hljs">
+      <code dangerouslySetInnerHTML={{ __html: highlighted.value }} />
+    </pre> */}
+  </>
 }
 
 export default HtmlInput
