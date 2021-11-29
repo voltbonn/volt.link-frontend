@@ -102,7 +102,7 @@ function TriggerInput({
           margin: '0',
           minWidth: '300px',
         }}
-        className="show_border_on_active"
+        // className="show_border_on_active"
       />
     </>
   // } else if (type === 'cron') {

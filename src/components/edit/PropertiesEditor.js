@@ -173,7 +173,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
               margin: '0',
               width: '100%'
             }}
-            className="show_border_on_active"
+            // className="show_border_on_active"
           />
         )}
       </FancyInput>
@@ -194,7 +194,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
               margin: '0',
               width: '100%'
             }}
-            className="show_border_on_active"
+            // className="show_border_on_active"
           />
         )}
       </FancyInput>
@@ -313,7 +313,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
             placeholder={getString('placeholder_main_headline')}
             style={{ margin: '0' }}
             linebreaks={true}
-            className={`show_border_on_active type_h1`}
             {...translatedInputProps}
           />
           )
@@ -321,6 +320,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       </TranslatedInput>
 
       <TranslatedInput
+        className={`type_h1`}
         defaultValue={properties.description}
         onBlur={newValue => updateProperty('description', newValue)}
       >
@@ -331,12 +331,12 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
             placeholder={getString('path_editor_description_placeholder')}
             style={{ margin: '0' }}
             linebreaks={true}
-            className={`show_border_on_active type_text`}
             {...translatedInputProps}
           />
           )
         }}
       </TranslatedInput>
+        className={`type_text`}
     </div>
 
     <div className={classes.propertiesFrame} style={

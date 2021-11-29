@@ -112,7 +112,7 @@ function ActionInput({
               margin: '0',
               width: '100%'
             }}
-            className="show_border_on_active"
+            // className="show_border_on_active"
           />
         )}
       </FancyInput>
@@ -131,7 +131,7 @@ function ActionInput({
           margin: '0',
           minWidth: '300px',
         }}
-        className="show_border_on_active"
+        // className="show_border_on_active"
       />
   }
 

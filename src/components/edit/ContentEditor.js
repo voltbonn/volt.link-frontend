@@ -300,7 +300,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
         isDropDisabled={false}
       >
         {provided => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
+          <div ref={provided.innerRef} {...provided.droppableProps} className="inputBorder">
             {
               filteredContentConfigs
               .filter(contentConfig => !!contentConfig)
