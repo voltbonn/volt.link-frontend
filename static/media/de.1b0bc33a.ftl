@@ -9,7 +9,7 @@ logout = Abmelden
 
 login_prompt = Meld Dich in der oberen rechten Ecke an, um volt.link Urls zu bearbeiten.
 
-contact = Kontakt
+contact = Kontakt + Feedback
 source_code = Quellcode
 
 type_a_path = Geben Sie einen Pfad ein...
