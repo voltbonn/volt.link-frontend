@@ -8,7 +8,7 @@
 .rebuild_textarea.show_placeholder:before {
   position: absolute;
   content: attr(placeholder);
-  opacity: 0.5;
   color: inherit;
   cursor: text;
+  opacity: var(--alpha-less);
 }
