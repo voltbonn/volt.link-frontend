@@ -20,8 +20,8 @@ import {
   VisibilityOff as VisibilityOffIcon,
   // Delete as DeleteIcon,
   Close as CloseIcon,
-  VerticalAlignTop as VerticalAlignTopIcon,
-  VerticalAlignBottom as VerticalAlignBottomIcon,
+  // VerticalAlignTop as VerticalAlignTopIcon,
+  // VerticalAlignBottom as VerticalAlignBottomIcon,
   Add as AddIcon,
   RepeatSharp as RepeatIcon,
   AccountTreeSharp as BlockTreeIcon,
@@ -62,24 +62,24 @@ function BlockMenu ({
   active = null,
   onRemoveRow = null,
   addRowBefore = null,
-  addRowAfter = null,
+  // addRowAfter = null,
 }) {
   const navigate = useNavigate()
 
   const { _id = '', type = '' } = block
 
-  const handleAddRowBefore = useCallback(() => {
-
-    // const newBlock = {
-    //   type,
-    // }
-
-    const newBlockId = ''
-
-    addRowBefore({
-      blockId: newBlockId,
-    })
-  }, [ addRowBefore ])
+  // const handleAddRowBefore = useCallback(() => {
+  //
+  //   // const newBlock = {
+  //   //   type,
+  //   // }
+  //
+  //   const newBlockId = ''
+  //
+  //   addRowBefore({
+  //     blockId: newBlockId,
+  //   })
+  // }, [ addRowBefore ])
 
   const viewBlock = useCallback(() => {
     navigate(`/view/${_id}`)
@@ -191,22 +191,7 @@ function BlockMenu ({
               : null
             }
 
-            {
-              (
-                typeof setType === 'function'
-                && (
-                  addRowBefore
-                  || addRowAfter
-                  || (typeof active === 'boolean' && toggle_active)
-                  || onRemoveRow
-                  || typeof createBlock === 'function'
-                )
-              )
-                ? <Divider style={{opacity: 0.2, marginBottom: '8px' }} />
-                : null
-            }
-
-            {
+            {/*
               addRowBefore
                 ? <MenuItem onClick={handleAddRowBefore}>
                     <ListItemIcon>
@@ -215,9 +200,9 @@ function BlockMenu ({
                     <Localized id="block_menu_add_before" />
                   </MenuItem>
                 : null
-            }
+            */}
 
-            {
+            {/*
               addRowAfter
                 ? <MenuItem onClick={addRowAfter}>
                     <ListItemIcon>
@@ -329,8 +314,8 @@ function BlockMenu ({
                 ? <div>
                     {
                       typeof setType === 'function'
-                      || addRowBefore
-                      || addRowAfter
+                      // || addRowBefore
+                      // || addRowAfter
                       || (typeof active === 'boolean' && toggle_active)
                       || onRemoveRow
                       || typeof createBlock === 'function'
