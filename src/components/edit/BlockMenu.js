@@ -11,6 +11,8 @@ import {
   Divider,
   ListItemIcon,
   ListSubheader,
+  ListItemText,
+  ListItem,
 } from '@mui/material'
 
 import {
@@ -360,6 +362,21 @@ function BlockMenu ({
               </ListItemIcon>
               <Localized id="block_menu_close_menu" />
             </MenuItem>
+
+            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
+
+            <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
+              <ListItemText
+                primary={<Localized id="block_menu_info_created" />}
+                secondary={(block.metadata.created || '').replace(/[TZ]/g, ' ')}
+              />
+            </ListItem>
+            <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
+              <ListItemText
+                primary={<Localized id="block_menu_info_modified" />}
+                secondary={(block.metadata.modified || '').replace(/[TZ]/g, ' ')}
+              />
+            </ListItem>
 
           </MenuList>
         </Paper>
