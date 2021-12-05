@@ -23,7 +23,7 @@ function useSidebarContext() {
 }
 
 function SidebarProvider({ children }) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   const matchesStartpage = useMatch('/')
   const realOpen = matchesStartpage ? false : open
