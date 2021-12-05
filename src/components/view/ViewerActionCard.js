@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalization } from '../../fluent/Localized.js'
 
 import {
   AutoAwesomeSharp as ActionIcon,
@@ -22,8 +21,6 @@ import {
 import classes from './ViewerActionCard.module.css'
 
 function ViewerActionCard ({ block = {}, actions = {} }) {
-  const { fluentByAny } = useLocalization()
-
   const navigate = useNavigate()
 
   const blockId = block._id
@@ -32,8 +29,8 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     navigate(`/view/${blockId}`)
   }, [navigate, blockId])
 
-  const text = fluentByAny(block.properties.text, '') // getString('placeholder_main_headline'))
-  const description = fluentByAny(block.properties.description, '')
+  const text = block.properties.text || '' // getString('placeholder_main_headline'))
+  const description = block.properties.description || ''
 
   let triggerInfo = null
   const triggerProperties = ((block.properties || {}).trigger || {})

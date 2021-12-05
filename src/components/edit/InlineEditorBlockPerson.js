@@ -7,7 +7,6 @@ import {
 } from '@mui/icons-material'
 
 import HtmlInput from './HtmlInput.js'
-import TranslatedInput from './TranslatedInput.js'
 
 function InlineEditorBlockPersonRaw({
   getString,
@@ -17,12 +16,12 @@ function InlineEditorBlockPersonRaw({
   onInputRef,
   onGoToPrevInput,
   onGoToNextInput,
-  // onSplitText,
-  // onMergeToPrevInput,
-  // onMergeToNextInput,
+  onSplitText,
+  onMergeToPrevInput,
+  onMergeFromNextInput,
 }) {
   const properties = block.properties || {}
-  const [text, setText] = useState(properties.text || [])
+  const [text, setText] = useState(properties.text || '')
 
   const publishChanges = useCallback(() => {
     if (onChange) {
@@ -43,36 +42,28 @@ function InlineEditorBlockPersonRaw({
       }}
     />
 
-    <TranslatedInput
+    <HtmlInput
       defaultValue={text}
       onChange={setText}
       onBlur={publishChanges}
+
+      placeholder={getString('placeholder_text')}
       style={{
         flexGrow: '1',
         width: '100%',
+        margin: '0',
+        fontWeight: 'bold',
       }}
-    >
-      {(translatedInputProps) => {
-        return (
-        <HtmlInput
-          placeholder={getString('placeholder_text')}
-          style={{
-            margin: '0',
-            fontWeight: 'bold',
-          }}
-          linebreaks={true}
-          className="hide_border type_text"
+      linebreaks={true}
+      className="hide_border type_text"
 
-          onInputRef={onInputRef}
-          onGoToPrevInput={onGoToPrevInput}
-          onGoToNextInput={onGoToNextInput}
-
-          {...translatedInputProps}
-        />
-        )
-      }
-      }
-    </TranslatedInput>
+      onInputRef={onInputRef}
+      onGoToPrevInput={onGoToPrevInput}
+      onGoToNextInput={onGoToNextInput}
+      onMergeToPrevInput={() => onMergeToPrevInput(block)}
+      onMergeFromNextInput={() => onMergeFromNextInput(block)}
+      onSplitText={onSplitText}
+    />
   </div>
 }
 

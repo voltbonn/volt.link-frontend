@@ -6,11 +6,12 @@ import {
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
 import useLoadBlock from '../hooks/useLoadBlock.js'
+import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
 
 // import Select from 'react-select'
 
 import {
-  TranslateSharp as TranslateIcon,
+  // TranslateSharp as TranslateIcon,
   IosShareSharp as ShareIcon,
   LockSharp as PermissionsIcon,
   SaveSharp as SaveIcon,
@@ -20,7 +21,7 @@ import {
 import classes from './Editor.module.css'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
-import { useTranslatedInputContext, LocalesMenu } from '../components/edit/TranslatedInput.js'
+// import { useTranslatedInputContext, LocalesMenu } from '../components/edit/TranslatedInput.js'
 
 import Header from '../components/Header.js'
 import BlockMenu from '../components/edit/BlockMenu.js'
@@ -28,6 +29,7 @@ import SharingEditor from '../components/edit/SharingEditor.js'
 import PermissionsEditor from '../components/edit/PermissionsEditor.js'
 import PropertiesEditor from '../components/edit/PropertiesEditor.js'
 import ContentEditor from '../components/edit/ContentEditor.js'
+import LoginScreen from '../components/LoginScreen.js'
 
 // const custom_react_select_styles = {
 //   menu: (provided, state) => ({
@@ -51,7 +53,7 @@ function Editor() {
   const saveBlock = useSaveBlock()
   const loadBlock = useLoadBlock()
 
-  const { currentLocale, setLocales } = useTranslatedInputContext()
+  // const { currentLocale, setLocales } = useTranslatedInputContext()
 
   const [ isSharingEditorOpen, setIsSharingEditorOpen ] = useState(false)
   const openSharingEditor = useCallback(() => setIsSharingEditorOpen(true), [ setIsSharingEditorOpen ])
@@ -74,9 +76,23 @@ function Editor() {
   const content = block.content
   const permissions = block.permissions
 
+  const [ canEdit, setCanEdit ] = useState(null)
+  const blockMatchesRoles = useBlockMatchesRoles()
+  useEffect(() => {
+    blockMatchesRoles(id, ['editor', 'owner'])
+      .then(matchesRoles => {
+        setCanEdit(matchesRoles)
+      })
+      .catch(error => {
+        console.error(error)
+        setCanEdit(false)
+      })
+  }, [ id, blockMatchesRoles, setCanEdit ])
+
   useEffect(() => {
     if (
-      typeof id === 'string'
+      canEdit
+      && typeof id === 'string'
       && id !== ''
       && (
         !loadedTheBlock.current
@@ -87,30 +103,31 @@ function Editor() {
         .then(loadedBlock => {
           loadedTheBlock.current = true
 
-          // get locales from text and description
-          // TODO: also look at the locales from sub-blocks
-          if (
-            loadedBlock.properties
-            && (
-              loadedBlock.properties.text
-              || loadedBlock.properties.description
-            )
-          ) {
-            setLocales([...new Set([
-              ...(loadedBlock.properties.text ? loadedBlock.properties.text.map(t => t.locale) : []),
-              ...(loadedBlock.properties.description ? loadedBlock.properties.description.map(t => t.locale) : []),
-            ])])
-          }
+          // // get locales from text and description
+          // // TODO: also look at the locales from sub-blocks
+          // if (
+          //   loadedBlock.properties
+          //   && (
+          //     loadedBlock.properties.text
+          //     || loadedBlock.properties.description
+          //   )
+          // ) {
+          //   setLocales([...new Set([
+          //     ...(loadedBlock.properties.text ? loadedBlock.properties.text.map(t => t.locale) : []),
+          //     ...(loadedBlock.properties.description ? loadedBlock.properties.description.map(t => t.locale) : []),
+          //   ])])
+          // }
 
           setBlock(loadedBlock)
         })
     }
   }, [
+    canEdit,
     id,
     block,
     loadBlock,
     setBlock,
-    setLocales,
+    // setLocales,
   ])
 
   const saveType = useCallback(newType => {
@@ -189,26 +206,30 @@ function Editor() {
   //     Object.keys(block).length > 0
   //     && JSON.stringify(initialBlock) !== JSON.stringify(block)
   //   ) {
-  //     console.log('initialBlock', initialBlock)
-  //     console.log('block', block)
   //   }
   // }, [isFirstRun, initialBlock, block])
+
+  if (canEdit === false) {
+    return <LoginScreen />
+  } else if (canEdit === true) {
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     {/* <button className="text"><Localized id="path_editor_share"/></button> */}
 
 
+    {/*
     <LocalesMenu
       trigger={triggerProps => (
         <button {...triggerProps} className="text hasIcon">
           <TranslateIcon className="icon" />
           <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>
-            {/* <Localized id="path_editor_translate" /> */}
+            <Localized id="path_editor_translate" />
             {getString('locale_'+currentLocale)}
           </span>
         </button>
       )}
     />
+    */}
 
     {
       isSharingEditorOpen
@@ -262,8 +283,7 @@ function Editor() {
     />
   </div>
 
-
-  const pagetitle = fluentByAny(block.properties.text, 'Editor')
+  const pagetitle = fluentByAny(block.properties.text, getString('placeholder_main_headline'))
   const title = pagetitle
 
   return <div key={block._id} className={`hasHeader ${classes.editor}`}>
@@ -285,6 +305,9 @@ function Editor() {
       defaultValue={content}
     />
   </div>
+  } else {
+    return null
+  }
 }
 
 export default Editor

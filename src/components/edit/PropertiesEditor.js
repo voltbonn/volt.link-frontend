@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uuidv4 } from 'uuid'
 
 import classes from './PropertiesEditor.module.css'
 
@@ -11,7 +11,6 @@ import HtmlInput from './HtmlInput.js'
 import FancyInput from './FancyInput.js'
 import CoverphotoPicker from './CoverphotoPicker.js'
 import IconPicker from './IconPicker.js'
-import TranslatedInput from './TranslatedInput.js'
 import TriggerInput from './TriggerInput.js'
 import ActionInput from './ActionInput.js'
 
@@ -23,17 +22,17 @@ import ActionInput from './ActionInput.js'
 //   })
 // }
 
-function addTmpIds(array) {
-  return [...(array || [])].map(obj => {
-    if (!obj.tmp_id) {
-      const obj_new = { ...obj }
-      obj_new.tmp_id = uuidv4()
-      return obj_new
-    }
-
-    return obj
-  })
-}
+// function addTmpIds(array) {
+//   return [...(array || [])].map(obj => {
+//     if (!obj.tmp_id) {
+//       const obj_new = { ...obj }
+//       obj_new.tmp_id = uuidv4()
+//       return obj_new
+//     }
+//
+//     return obj
+//   })
+// }
 
 function PropertiesEditor({ getString, type, defaultProperties = {}, onChange }) {
   const [properties, setProperties] = useState({})
@@ -57,11 +56,10 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   //   })
   // }, [setVoltTeamInfos])
 
-
-  const updateProperty = useCallback((propertyKey, newPropertyValue) => {
+  const updateProperty = useCallback((propertyKey, newPropertyValue, silent = false) => {
     const propertyTypes = {
-      text: 'array',
-      description: 'array',
+      text: 'string',
+      description: 'string',
       coverphoto: 'string',
       icon: 'string',
       imprint: 'string',
@@ -111,12 +109,12 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         default:
           newProperties[propertyKey] = newPropertyValue
       }
+    }
 
-      if (JSON.stringify(newProperties) !== JSON.stringify(properties)) {
-        setProperties(newProperties)
-        if (onChange) {
-          onChange(newProperties)
-        }
+    if (JSON.stringify(newProperties) !== JSON.stringify(properties)) {
+      setProperties(newProperties)
+      if (silent === false && onChange) {
+        onChange(newProperties)
       }
     }
   }, [
@@ -125,11 +123,17 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     onChange,
   ])
 
+  const publishProperties = useCallback(() => {
+    if (onChange) {
+      onChange(properties)
+    }
+  }, [properties, onChange])
+
   useEffect(() => {
     setProperties({
       ...defaultProperties,
-      text: addTmpIds(defaultProperties.text || []),
-      description: addTmpIds(defaultProperties.description || []),
+      text: defaultProperties.text || '',
+      description: defaultProperties.description || '',
     })
   }, [
     defaultProperties,
@@ -303,40 +307,28 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     }
 
     <div className={classes.main_headline}>
-      <TranslatedInput
+      <HtmlInput
         defaultValue={properties.text}
-        onBlur={newValue => updateProperty('text', newValue)}
-      >
-        {(translatedInputProps) => {
-          return (
-          <HtmlInput
-            placeholder={getString('placeholder_main_headline')}
-            style={{ margin: '0' }}
-            linebreaks={true}
-            {...translatedInputProps}
-          />
-          )
-        }}
-      </TranslatedInput>
+        onChange={newValue => updateProperty('text', newValue, true)}
+        onBlur={publishProperties}
 
-      <TranslatedInput
+        placeholder={getString('placeholder_main_headline')}
+        style={{ margin: '0' }}
+        linebreaks={true}
         className={`type_h1`}
+      />
+
+      <HtmlInput
         defaultValue={properties.description}
-        onBlur={newValue => updateProperty('description', newValue)}
-      >
-        {(translatedInputProps) => {
-          return (
-          <HtmlInput
-            aria-label={getString('path_editor_description_label')}
-            placeholder={getString('path_editor_description_placeholder')}
-            style={{ margin: '0' }}
-            linebreaks={true}
-            {...translatedInputProps}
-          />
-          )
-        }}
-      </TranslatedInput>
+        onChange={newValue => updateProperty('description', newValue, true)}
+        onBlur={publishProperties}
+
+        aria-label={getString('path_editor_description_label')}
+        placeholder={getString('path_editor_description_placeholder')}
+        style={{ margin: '0' }}
+        linebreaks={true}
         className={`type_text`}
+      />
     </div>
 
     <div className={classes.propertiesFrame} style={

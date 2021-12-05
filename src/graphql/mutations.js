@@ -5,3 +5,9 @@ export const saveBlock_Mutation = gql`
     saveBlock (block: $block)
   }
 `
+
+export const deleteBlock_Mutation = gql`
+  mutation deleteBlock ($_id: ID!) {
+    deleteBlock (_id: $_id)
+  }
+`

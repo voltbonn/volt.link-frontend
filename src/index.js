@@ -10,7 +10,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import 'intl-pluralrules'
 import { AppLocalizationProvider, locales } from './fluent/l10n.js'
-import { TranslatedInputProvider } from './components/edit/TranslatedInput.js'
+// import { TranslatedInputProvider } from './components/edit/TranslatedInput.js'
 
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -124,11 +124,11 @@ function Start() {
           }}
           domRoot={document.getElementById('react-notification')}
         >
-          <TranslatedInputProvider>
+          {/* <TranslatedInputProvider> */}
             <Router>
               <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
             </Router>
-          </TranslatedInputProvider>
+          {/* </TranslatedInputProvider> */}
         </SnackbarProvider>
       </ThemeProvider>
     </ApolloProvider>

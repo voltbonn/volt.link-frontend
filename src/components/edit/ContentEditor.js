@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -11,6 +11,10 @@ import {
 
 import { Localized } from '../../fluent/Localized.js'
 import InlineEditorBlock from './InlineEditorBlock.js'
+import useLoadBlocks from '../../hooks/useLoadBlocks.js'
+import useSaveBlock from '../../hooks/useSaveBlock.js'
+import useDeleteBlock from '../../hooks/useDeleteBlock.js'
+// import { useTranslatedInputContext } from './TranslatedInput.js'
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
@@ -113,29 +117,87 @@ function reorder(list, startIndex, endIndex) {
 }
 
 function ContentEditor({ defaultValue = [], onChange }) {
-  const [contentConfigs, setContentConfigs] = useState([])
-  const [inputRefs, setInputRefs] = useState({})
+  // const [contentConfigs, setContentConfigs] = useState([])
+  const contentConfigs_Ref = useRef([])
+  const contentConfigs = contentConfigs_Ref.current
+
+  // const [inputRefs, setInputRefs] = useState({})
+  const inputRefs_Ref = useRef({})
+  const inputRefs = inputRefs_Ref.current
+
+  const [updateCounter, setUpdateCounter] = useState(0)
+
+  const loadBlocks = useLoadBlocks()
+  const saveBlock = useSaveBlock()
+  const deleteBlock = useDeleteBlock()
+
+
+  const [autoFocus, setAutoFocus] = useState(null)
+  useEffect(()=>{
+    if (typeof autoFocus === 'object' && autoFocus !== null) {
+      if (
+        inputRefs.hasOwnProperty(autoFocus.tmp_id)
+      ) {
+        const inputRef = inputRefs[autoFocus.tmp_id]
+        if (
+          typeof inputRef === 'object'
+          && inputRef !== null
+        ) {
+          if (autoFocus.inFirstLine === true) {
+            const firstLineStartNode = getFirstLineStartNode(inputRef.current)
+            moveCursorToOffsetInLine(inputRef.current, firstLineStartNode, autoFocus.positionFromLineStart)
+          } else if (autoFocus.inLastLine === true) {
+            const lastLineStartNode = getLastLineStartNode(inputRef.current)
+            moveCursorToOffsetInLine(inputRef.current, lastLineStartNode, autoFocus.positionFromLineStart)
+          }
+          setAutoFocus(null)
+        }
+      }
+    }
+  }, [
+    autoFocus,
+    setAutoFocus,
+    inputRefs,
+  ])
 
   useEffect(()=>{
     if (contentConfigs.length === 0) {
       if (defaultValue.length > 0) {
-        let newContentConfigs = addTmpIds(defaultValue)
-        setContentConfigs(newContentConfigs)
+        let newContentConfigs = [...addTmpIds(defaultValue)]
+
+        const ids = newContentConfigs.map(contentConfig => contentConfig.blockId)
+
+        loadBlocks({ ids })
+          .then(loadedBlocks => {
+            newContentConfigs = newContentConfigs
+              .map(contentConfig => ({
+                ...contentConfig,
+                block: loadedBlocks.find(block => block._id === contentConfig.blockId),
+              }))
+
+            contentConfigs_Ref.current = newContentConfigs
+            setUpdateCounter(old => old + 1)
+          })
       }
+    } else {
+
     }
-  }, [contentConfigs, defaultValue, setContentConfigs])
+  }, [contentConfigs, defaultValue, loadBlocks, contentConfigs_Ref, setUpdateCounter])
 
   const saveInputRef = useCallback((keys, inputRef) => {
-    const newInputRefs = {...inputRefs}
+    const newInputRefs = {...inputRefs_Ref.current}
+
+    // console.log('saveInputRef-keys', keys)
+    console.log('saveInputRef-newInputRefs', newInputRefs)
 
     if (
       !newInputRefs.hasOwnProperty(keys.tmp_id)
       || newInputRefs[keys.tmp_id] !== inputRef
     ) {
       newInputRefs[keys.tmp_id] = inputRef
-      setInputRefs(newInputRefs)
+      inputRefs_Ref.current = newInputRefs
     }
-  }, [ inputRefs, setInputRefs ])
+  }, [ inputRefs_Ref ])
 
   const goToPrevInput = useCallback((keys, { caret }) => {
     const index = keys.index
@@ -189,43 +251,26 @@ function ContentEditor({ defaultValue = [], onChange }) {
     }
   }, [ contentConfigs, inputRefs ])
 
-  /*const splitText = useCallback((keys, { blocks: replacerBlocks }) => {
-    // const index = keys.index
-
-    // const newBlocks = [...blocks].splice(index, 0, ...replacerBlocks)
-    // setContentConfigs(newBlocks)
-
-    // let nextInputRef = null
-    // for (let thisIndex = 0; thisIndex < blocks.length; thisIndex++) {
-    //   const tmp_id = blocks[thisIndex].tmp_id
-    //   if (thisIndex > index + 1 && inputRefs[tmp_id] && inputRefs[tmp_id].current) {
-    //     nextInputRef = inputRefs[tmp_id]
-    //     break
-    //   }
-    // }
-
-    // if (nextInputRef) {
-    //   const firstLineStartNode = getFirstLineStartNode(nextInputRef.current)
-    //   moveCursorToOffsetInLine(nextInputRef.current, firstLineStartNode, caret.positionFromLineStart)
-    // }
-  }, []) // blocks, inputRefs
-  */
-
   const handleRowChange = useCallback((keys, newContentConfig) => {
     const newContentConfigs = [...contentConfigs]
-      .map(oldContentConfig => {
-        if (oldContentConfig.tmp_id === keys.tmp_id) {
-          return {
-            ...oldContentConfig,
-            ...newContentConfig,
-          }
+    for (const index in newContentConfigs) {
+      const oldContentConfig = newContentConfigs[index]
+      if (oldContentConfig.tmp_id === keys.tmp_id) {
+        newContentConfigs[index] = {
+          ...oldContentConfig,
+          ...newContentConfig,
         }
-        return oldContentConfig
-      })
+        break
+      }
+    }
 
-    setContentConfigs(newContentConfigs)
+    contentConfigs_Ref.current = newContentConfigs
     onChange(newContentConfigs)
-  }, [contentConfigs, setContentConfigs, onChange])
+
+    return new Promise(resolve => {
+      resolve(newContentConfigs)
+    })
+  }, [contentConfigs, contentConfigs_Ref, onChange])
 
   const addRowByIndex = useCallback((index, offset = 0, newValue) => {
     if (typeof newValue === 'object') {
@@ -240,11 +285,209 @@ function ContentEditor({ defaultValue = [], onChange }) {
     if (typeof index === 'number' && !isNaN(index)) {
       let new_rows = [...contentConfigs]
       new_rows.splice(index + offset, 0, newValue)
-      setContentConfigs(new_rows)
+      contentConfigs_Ref.current = new_rows
       onChange(new_rows)
     }
-  }, [contentConfigs, setContentConfigs, onChange])
+  }, [contentConfigs, contentConfigs_Ref, onChange])
 
+  const onMergeToPrevInput = useCallback(keys => {
+    const {
+      index,
+    } = keys
+
+    const clonedContentConfigs = [...contentConfigs]
+    if (index > 0) {
+      const prev_index = index - 1
+      const prev_contentConfig = clonedContentConfigs[prev_index]
+      const prev_tmp_id = prev_contentConfig.tmp_id
+
+      const this_block = clonedContentConfigs[index].block
+      const prev_block = clonedContentConfigs[prev_index].block
+
+      const new_prev_block = {
+        ...prev_block,
+        properties: {
+          ...prev_block.properties,
+          text: prev_block.properties.text + this_block.properties.text,
+        },
+      }
+
+      const thisRef = inputRefs_Ref.current[prev_tmp_id]
+      const textLength = thisRef.current.textContent.length
+
+      saveBlock(new_prev_block)
+        .then(savedPrevBlock => {
+          const new_tmp_id = uuidv4()
+          handleRowChange({
+            index: prev_index,
+            tmp_id: prev_tmp_id,
+          }, {
+            ...prev_contentConfig,
+            tmp_id: new_tmp_id,
+            blockId: savedPrevBlock._id,
+            block: savedPrevBlock,
+          })
+            .then(newContentConfigs => {
+              const this_block = newContentConfigs[index].block
+              newContentConfigs.splice(index, 1) // delete the block
+
+              deleteBlock({ _id: this_block._id })
+                .then(() => {
+                  contentConfigs_Ref.current = newContentConfigs
+                  setAutoFocus({
+                    tmp_id: new_tmp_id,
+                    positionFromLineStart: textLength,
+                    inFirstLine: false,
+                    inLastLine: true,
+                  })
+                  onChange(newContentConfigs)
+                })
+            })
+        })
+        .catch(console.error)
+    } else {
+      // This is the first row. Nothing to merge into.
+    }
+  }, [ contentConfigs, inputRefs_Ref, saveBlock, handleRowChange, deleteBlock, contentConfigs_Ref, setAutoFocus, onChange ])
+
+  const onMergeFromNextInput = useCallback(keys => {
+    const {
+      index,
+      tmp_id,
+    } = keys
+
+    const clonedContentConfigs = [...contentConfigs]
+    if (index < clonedContentConfigs.length - 1) {
+
+      const next_index = index + 1
+
+      const this_old_contentConfig = clonedContentConfigs[index]
+      const this_block = clonedContentConfigs[index].block
+      const next_block = clonedContentConfigs[next_index].block
+
+      console.log('next_block', next_block)
+
+      const new_block = {
+        ...this_block,
+        properties: {
+          ...this_block.properties,
+          text: this_block.properties.text + next_block.properties.text,
+        },
+      }
+
+      console.log('new_block', new_block)
+
+      const thisRef = inputRefs_Ref.current[tmp_id]
+      const textLength = thisRef.current.textContent.length
+
+      saveBlock(new_block)
+        .then(savedBlock => {
+          const new_tmp_id = uuidv4()
+          handleRowChange(keys, {
+            ...this_old_contentConfig,
+            tmp_id: new_tmp_id,
+            blockId: savedBlock._id,
+            block: savedBlock,
+          })
+            .then(newContentConfigs => {
+              const next_block = newContentConfigs[next_index].block
+              newContentConfigs.splice(next_index, 1) // delete the block
+
+              deleteBlock({ _id: next_block._id })
+                .then(() => {
+                  contentConfigs_Ref.current = newContentConfigs
+                  setAutoFocus({
+                    tmp_id: new_tmp_id,
+                    positionFromLineStart: textLength,
+                    inFirstLine: false,
+                    inLastLine: true,
+                  })
+                  onChange(newContentConfigs)
+                })
+            })
+        })
+        .catch(console.error)
+
+
+
+
+      // // const firstBlock = rows[index]
+      // // const secondBlock = rows[index + 1]
+
+      // // get current text length (we know the caret is at the end of the text)
+      // const thisRef = inputRefs[tmp_id]
+      // const textLength = thisRef.current.textContent.length
+
+      // // refocus the input at the last caret position
+      // const lastLineStartNode = getLastLineStartNode(thisRef.current)
+      // moveCursorToOffsetInLine(thisRef.current, lastLineStartNode, textLength) // we can't use a text length of -1, as the text length will be changed after the merge
+    } else {
+      // This is the last row. Nothing to merge into.
+    }
+  }, [ contentConfigs, inputRefs_Ref, saveBlock, handleRowChange, deleteBlock, contentConfigs_Ref, setAutoFocus, onChange ])
+
+  const splitText = useCallback((keys, { texts }) => {
+    const {
+      index,
+      tmp_id,
+    } = keys
+
+    const newContentConfigs = [...contentConfigs]
+
+    const block = (newContentConfigs.find(block => block.tmp_id === tmp_id)).block || {}
+
+    const firstBlock = {
+      ...block,
+      properties: {
+        ...block.properties,
+        text: texts[0],
+      },
+    }
+
+    const secondBlock = {
+      type: block.type,
+      properties: {
+        text: texts[1],
+      },
+    }
+
+    saveBlock(firstBlock)
+      .then(savedFirstBlock => {
+        saveBlock(secondBlock)
+          .then(savedSecondBlock => {
+            newContentConfigs[index] = {
+              ...newContentConfigs[index],
+              tmp_id: uuidv4(),
+              blockId: savedFirstBlock._id,
+              block: savedFirstBlock,
+            }
+
+            const nextContentConfig = {
+              tmp_id: uuidv4(),
+              blockId: savedSecondBlock._id,
+              block: savedSecondBlock,
+            }
+            newContentConfigs.splice(index + 1, 0, nextContentConfig)
+
+            contentConfigs_Ref.current = newContentConfigs
+            onChange(newContentConfigs)
+            setAutoFocus({
+              tmp_id: nextContentConfig.tmp_id,
+              positionFromLineStart: 0,
+              inFirstLine: true,
+              inLastLine: false,
+            })
+          })
+          .catch(console.error)
+        })
+      .catch(console.error)
+  }, [
+    contentConfigs,
+    saveBlock,
+    contentConfigs_Ref,
+    onChange,
+    setAutoFocus,
+  ])
 
   function onDragEnd(result) {
     if (!result.destination) {
@@ -261,15 +504,17 @@ function ContentEditor({ defaultValue = [], onChange }) {
       result.destination.index
     )
 
-    setContentConfigs(newContentConfigs)
+    contentConfigs_Ref.current = newContentConfigs
     onChange(newContentConfigs)
   }
 
   const filteredContentConfigs = contentConfigs
+    .filter(Boolean)
     .filter(contentConfig => contentConfig.tmp_id)
 
   return <>
   <div
+    key={updateCounter}
     style={{
       position: 'relative',
       width: '1000px',
@@ -303,7 +548,6 @@ function ContentEditor({ defaultValue = [], onChange }) {
           <div ref={provided.innerRef} {...provided.droppableProps} className="inputBorder">
             {
               filteredContentConfigs
-              .filter(contentConfig => !!contentConfig)
               .map(
                 (contentConfig, index) => {
                   const tmp_id = contentConfig.tmp_id
@@ -336,7 +580,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
                             'data-index': index,
                             'data-id': tmp_id,
                           }}
-                          defaultContentConfig={contentConfig}
+                          contentConfig={contentConfig}
 
                           reorderHandle={
                             <Tooltip title={<div style={{ textAlign: 'center' }}>
@@ -359,11 +603,10 @@ function ContentEditor({ defaultValue = [], onChange }) {
                           onInputRef={(inputRef) => saveInputRef(keys, inputRef)}
                           onGoToPrevInput={(attr) => goToPrevInput(keys, attr)}
                           onGoToNextInput={(attr) => goToNextInput(keys, attr)}
-                          // onSplitText={(attr) => splitText(keys, attr)}
+                          onSplitText={(attr) => splitText(keys, attr)}
                           onChange={(attr) => handleRowChange(keys, attr)}
-                          // onSplitText,
-                          // onMergeToPrevInput,
-                          // onMergeToNextInput,
+                          onMergeToPrevInput={(attr) => onMergeToPrevInput(keys, attr)}
+                          onMergeFromNextInput={(attr) => onMergeFromNextInput(keys, attr)}
                           // {...repeater_props}
                         />
                       </div>

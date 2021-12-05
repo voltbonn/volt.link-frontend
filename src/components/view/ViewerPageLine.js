@@ -9,7 +9,7 @@ import {
 import classes from './ViewerPageLine.module.css'
 
 function ViewerPageLine ({ block, actions = {} }) {
-  const { fluentByAny, getString } = useLocalization()
+  const { getString } = useLocalization()
 
   let navigate = useNavigate()
 
@@ -20,7 +20,7 @@ function ViewerPageLine ({ block, actions = {} }) {
   }, [navigate, blockId])
 
   const icon_url = block.properties.icon || ''
-  const text = fluentByAny(block.properties.text, getString('placeholder_main_headline'))
+  const text = block.properties.text || getString('placeholder_main_headline')
 
   return <div
     onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}

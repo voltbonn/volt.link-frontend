@@ -9,16 +9,12 @@ import {
   useMatch,
 } from 'react-router-dom'
 
-import {
-  Login as LoginIcon,
-} from '@mui/icons-material'
-
-import Localized from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Sidebar.js'
 import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
 import Viewer from './Viewer.js'
+import LoginScreen from '../components/LoginScreen.js'
 
 function App() {
   const { loggedIn } = useUser()
@@ -68,17 +64,9 @@ function App() {
             </Routes>
           : <Routes location={customLocation}>
               <Route path="/view/:id" element={<Viewer />} />
-              <Route path="/" element={<>
-                <h1>Login to view content</h1>
-                <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-                  <button className="hasIcon" style={{ margin: 'var(--basis_x4) 0 0 0' }}>
-                    <LoginIcon className="icon" />
-                    <span>
-                      <Localized id="login" />
-                    </span>
-                  </button>
-                </a>
-              </>} />
+              <Route path="/edit/:id" element={<LoginScreen />} />
+              <Route path="/shortcode" element={<LoginScreen />} />
+              <Route path="/" element={<SidebarContent />} />
             </Routes>
         }
         </Main>

@@ -1,8 +1,4 @@
-import { useLocalization } from '../../fluent/Localized.js'
-
 function ViewerButtonCard ({ block, actions = {} }) {
-  const { fluentByAny } = useLocalization()
-
   let url = ''
   if (
     block
@@ -16,7 +12,7 @@ function ViewerButtonCard ({ block, actions = {} }) {
     url = block.properties.action.url
   }
 
-  const text = fluentByAny(block.properties.text, '')
+  const text = block.properties.text || ''
 
   const hasClickAction = actions.hasOwnProperty('click')
 

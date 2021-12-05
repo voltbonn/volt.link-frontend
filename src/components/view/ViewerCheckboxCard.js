@@ -1,14 +1,10 @@
-import { useLocalization } from '../../fluent/Localized.js'
-
 import {
   CheckBox as CheckBoxIcon,
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
 } from '@mui/icons-material'
 
 function ViewerCheckboxCard ({ block }) {
-  const { fluentByAny } = useLocalization()
-
-  const text = fluentByAny(block.properties.text, '')
+  const text = block.properties.text || ''
 
   const checked = Boolean(block.properties.checked)
 

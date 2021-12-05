@@ -88,3 +88,9 @@ export const getParentBlocks_Query = gql`
     }
   }
 `
+
+export const blockMatchesRoles_Query = gql`
+  query blockMatchesRoles ($_id: ID!, $roles: [String]) {
+    blockMatchesRoles (_id: $_id, roles: $roles)
+  }
+`

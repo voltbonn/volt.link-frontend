@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalization } from '../../fluent/Localized.js'
 
 import {
   Face as PersonPlaceholderIcon,
@@ -9,8 +8,6 @@ import {
 import classes from './ViewerPersonCard.module.css'
 
 function ViewerPersonCard ({ block, actions = {} }) {
-  const { fluentByAny } = useLocalization()
-
   let navigate = useNavigate()
 
   const blockId = block._id
@@ -20,7 +17,7 @@ function ViewerPersonCard ({ block, actions = {} }) {
   }, [navigate, blockId])
 
   const icon_url = block.properties.icon || ''
-  const text = fluentByAny(block.properties.text, '')
+  const text = block.properties.text || ''
 
   return <div
     onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}

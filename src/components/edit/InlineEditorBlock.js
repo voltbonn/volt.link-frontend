@@ -4,7 +4,6 @@ import { withLocalization } from '../../fluent/Localized.js'
 
 import BlockMenu from './BlockMenu.js'
 import useSaveBlock from '../../hooks/useSaveBlock.js'
-import useLoadBlock from '../../hooks/useLoadBlock.js'
 
 import InlineEditorBlockText from './InlineEditorBlockText.js'
 import InlineEditorBlockButton from './InlineEditorBlockButton.js'
@@ -69,7 +68,7 @@ function InlineEditorBlockInbetweenComponent({ type = 'text', ...props }){
 function InlineEditorBlockRaw({
   fluentByObject,
   getString,
-  defaultContentConfig = {},
+  contentConfig = {},
   className,
   onChange,
   reorderHandle,
@@ -85,31 +84,24 @@ function InlineEditorBlockRaw({
   onGoToNextInput,
   onSplitText,
   onMergeToPrevInput,
-  onMergeToNextInput,
+  onMergeFromNextInput,
 }) {
   const saveBlock = useSaveBlock()
-  const loadBlock = useLoadBlock()
 
   // const defaultLocale = getString('default_locale')
 
   const [block, setBlock] = useState({
-    _id: defaultContentConfig.blockId || null,
+    ...(contentConfig.block || { type: 'text' }),
+    _id: contentConfig.blockId || null,
   })
   const properties = block.properties || {}
   const active = typeof properties.active === 'boolean' ? properties.active : true
 
   useEffect(() => {
-    if (Object.keys(block).length === 1 && block.hasOwnProperty('_id')) {
-      loadBlock(block._id)
-        .then(loadedBlock => {
-          setBlock(loadedBlock)
-        })
+    if (contentConfig.block) {
+      setBlock(contentConfig.block)
     }
-  }, [
-    loadBlock,
-    setBlock,
-    block,
-  ])
+  }, [contentConfig.block])
 
   const handleChange_Type = useCallback(newValue => {
     const newBlock = {
@@ -123,6 +115,7 @@ function InlineEditorBlockRaw({
         if (!block._id || block._id !== newBlock._id) {
           onChange({
             blockId: newBlock._id,
+            block: newBlock,
           })
         }
       })
@@ -153,12 +146,13 @@ function InlineEditorBlockRaw({
         if (!block._id || block._id !== newBlock._id) {
           onChange({
             blockId: newBlock._id,
+            block: newBlock,
           })
         }
       })
   }, [block, active, saveBlock, setBlock, onChange])
 
-  const handleSaveBlock = useCallback(newBlock => {
+  const handleBlockChange = useCallback(newBlock => {
     if (JSON.stringify(newBlock) !== JSON.stringify(block)) {
       saveBlock(newBlock)
         .then((newBlock) => {
@@ -166,11 +160,22 @@ function InlineEditorBlockRaw({
           if (!block._id || block._id !== newBlock._id) {
             onChange({
               blockId: newBlock._id,
+              block: newBlock,
             })
           }
         })
     }
   }, [saveBlock, block, onChange])
+
+  const handleSaveBlock = useCallback((newBlock, callback) => {
+    saveBlock(newBlock)
+      .then(newBlock => {
+        if (callback) {
+          callback(newBlock)
+        }
+      })
+      .catch(console.error)
+  }, [ saveBlock ])
 
   return <div
     className={`${classes.block} ${className}`}
@@ -202,7 +207,7 @@ function InlineEditorBlockRaw({
       <InlineEditorBlockInbetweenComponent
         type={block.type}
         block={block}
-        onChange={handleSaveBlock}
+        onChange={handleBlockChange}
         onSaveBlock={handleSaveBlock}
 
         onInputRef={onInputRef}
@@ -210,7 +215,7 @@ function InlineEditorBlockRaw({
         onGoToNextInput={onGoToNextInput}
         onSplitText={onSplitText}
         onMergeToPrevInput={onMergeToPrevInput}
-        onMergeToNextInput={onMergeToNextInput}
+        onMergeFromNextInput={onMergeFromNextInput}
 
         onAddRowAfter={addRowAfter}
       />

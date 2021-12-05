@@ -5,11 +5,13 @@ import {
   Link,
 } from 'react-router-dom'
 
-import { useLocalization, Localized } from '../fluent/Localized.js'
+import { Localized } from '../fluent/Localized.js'
 import useLoadBlock from '../hooks/useLoadBlock.js'
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
+import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
 
+import LoginScreen from '../components/LoginScreen.js'
 import Header from '../components/Header.js'
 import ViewerAuto from '../components/view/ViewerAuto.js'
 
@@ -27,8 +29,6 @@ function Viewer () {
   const loadBlock = useLoadBlock()
   const loadBlocks = useLoadBlocks()
 
-  const { fluentByAny } = useLocalization()
-
   let { id = '' } = useParams()
 
   const [block, setBlock] = useState({
@@ -38,9 +38,23 @@ function Viewer () {
   })
   const [contentBlocks, setContentBlocks] = useState([])
 
+  const [canView, setCanView] = useState(null)
+  const blockMatchesRoles = useBlockMatchesRoles()
+  useEffect(() => {
+    blockMatchesRoles(id, ['viewer', 'owner'])
+      .then(matchesRoles => {
+        setCanView(matchesRoles)
+      })
+      .catch(error => {
+        console.error(error)
+        setCanView(false)
+      })
+  }, [ id, blockMatchesRoles, setCanView ])
+
   useEffect(() => {
     if (
-      loadingTheBlock.current === false
+      canView
+      && loadingTheBlock.current === false
       && typeof id === 'string'
       && id !== ''
       && id !== block._id
@@ -59,6 +73,7 @@ function Viewer () {
         })
     }
   }, [
+    canView,
     id,
     block._id,
     loadBlock,
@@ -67,10 +82,13 @@ function Viewer () {
     setContentBlocks,
   ])
 
+  if (canView === false) {
+    return <LoginScreen />
+  } else if (canView === true) {
   const type = block.type || null
 
-  const title = fluentByAny(block.properties.text, '')
-  const description = fluentByAny(block.properties.description, '')
+  const title = block.properties.text || ''
+  const description = block.properties.description || ''
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
 
@@ -121,6 +139,9 @@ function Viewer () {
       </main>
     </div>
   </>
+  } else {
+    return null
+  }
 }
 
 export default Viewer

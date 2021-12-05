@@ -164,7 +164,7 @@ function HtmlInput({
   onGoToNextInput,
   onSplitText,
   onMergeToPrevInput,
-  onMergeToNextInput,
+  onMergeFromNextInput,
 
   ...props
 }) {
@@ -202,7 +202,6 @@ function HtmlInput({
 
   useEffect(() => {
     if (text !== defaultValue) {
-      console.log('text !== defaultValue', text, defaultValue)
       updateText(defaultValue)
     }
   }, [
@@ -214,8 +213,8 @@ function HtmlInput({
   const handleTextChange = useCallback((event) => {
     let value = event.target.innerHTML || ''
     // .replace(/&emsp;/g, '\t')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
+    // .replace(/&lt;/g, '<')
+    // .replace(/&gt;/g, '>')
 
     if (linebreaks === false) {
       value = value.replace(/<\/? ?br ?\/?>/g, ' ')
@@ -313,10 +312,10 @@ function HtmlInput({
         }
       }
     } else if (event.key === 'Delete') {
-      if (onMergeToNextInput) {
+      if (onMergeFromNextInput) {
         const caret = getCaretPosition(inputRef.current)
         if (caret.positionFromEnd === 0 && caret.inLastLine) {
-          onMergeToNextInput({
+          onMergeFromNextInput({
             caret,
             text: inputRef.current.innerText,
           })
@@ -331,7 +330,7 @@ function HtmlInput({
     onGoToNextInput,
     onSplitText,
     onMergeToPrevInput,
-    onMergeToNextInput,
+    onMergeFromNextInput,
     type,
   ])
 

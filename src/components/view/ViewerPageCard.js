@@ -9,7 +9,7 @@ import {
 import classes from './ViewerPageCard.module.css'
 
 function ViewerPageCard ({ block, actions = {} }) {
-  const { fluentByAny, getString } = useLocalization()
+  const { getString } = useLocalization()
 
   let navigate = useNavigate()
 
@@ -21,8 +21,8 @@ function ViewerPageCard ({ block, actions = {} }) {
 
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
-  const text = fluentByAny(block.properties.text, getString('placeholder_main_headline'))
-  const description = fluentByAny(block.properties.description, '')
+  const text = block.properties.text || getString('placeholder_main_headline')
+  const description = block.properties.description || ''
 
   return <div
     onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}

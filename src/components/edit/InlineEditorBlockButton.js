@@ -5,7 +5,6 @@ import { withLocalization } from '../../fluent/Localized.js'
 import FancyInput from './FancyInput.js'
 import HtmlInput from './HtmlInput.js'
 import UrlInput from './UrlInput.js'
-import TranslatedInput from './TranslatedInput.js'
 
 function InlineEditorBlockButtonRaw({
   getString,
@@ -15,12 +14,12 @@ function InlineEditorBlockButtonRaw({
   onInputRef,
   onGoToPrevInput,
   onGoToNextInput,
-  // onSplitText,
-  // onMergeToPrevInput,
-  // onMergeToNextInput,
+  onSplitText,
+  onMergeToPrevInput,
+  onMergeFromNextInput,
 }) {
   const properties = block.properties || {}
-  const [text, setText] = useState(properties.text || [])
+  const [text, setText] = useState(properties.text || '')
   const {
     action = {}
   } = properties
@@ -32,7 +31,7 @@ function InlineEditorBlockButtonRaw({
         ...block,
         properties: {
           ...block.properties,
-          text: text,
+          text,
         },
       }
 
@@ -60,29 +59,23 @@ function InlineEditorBlockButtonRaw({
   return <div style={{
     padding: 'var(--basis) 0',
   }}>
-    <TranslatedInput
+    <HtmlInput
       defaultValue={text}
       onChange={setText}
       onBlur={publishChanges}
-    >
-      {(translatedInputProps) => {
-        return (
-        <HtmlInput
-          placeholder={getString('placeholder_button')}
-          style={{ margin: '0' }}
-          linebreaks={true}
-          className="hide_border type_button"
 
-          onInputRef={onInputRef}
-          onGoToPrevInput={onGoToPrevInput}
-          onGoToNextInput={onGoToNextInput}
+      placeholder={getString('placeholder_button')}
+      style={{ margin: '0' }}
+      linebreaks={true}
+      className="hide_border type_button"
 
-          {...translatedInputProps}
-        />
-        )
-      }
-      }
-    </TranslatedInput>
+      onInputRef={onInputRef}
+      onGoToPrevInput={onGoToPrevInput}
+      onGoToNextInput={onGoToNextInput}
+      onMergeToPrevInput={() => onMergeToPrevInput(block)}
+      onMergeFromNextInput={() => onMergeFromNextInput(block)}
+      onSplitText={onSplitText}
+    />
 
     <FancyInput>
       {({ setError }) => (

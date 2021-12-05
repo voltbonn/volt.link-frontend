@@ -15,7 +15,7 @@ function InlineEditorBlockCodeRaw({
   onGoToNextInput,
   onSplitText,
   onMergeToPrevInput,
-  onMergeToNextInput,
+  onMergeFromNextInput,
 
   onAddRowAfter,
 }) {
@@ -58,7 +58,7 @@ function InlineEditorBlockCodeRaw({
     onGoToPrevInput={onGoToPrevInput}
     onGoToNextInput={onGoToNextInput}
     onMergeToPrevInput={() => onMergeToPrevInput(block)}
-    onMergeToNextInput={() => onMergeToNextInput(block)}
+    onMergeFromNextInput={() => onMergeFromNextInput(block)}
     onSplitText={onSplitText}
   />
   </code></pre>
