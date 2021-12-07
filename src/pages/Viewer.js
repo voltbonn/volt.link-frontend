@@ -91,6 +91,7 @@ function Viewer () {
   const description = block.properties.description || ''
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
+  const pronouns = block.properties.pronouns || ''
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     <Link to={`/edit/${block._id}`}>
@@ -128,6 +129,12 @@ function Viewer () {
             : null
         }
         { title !== '' ? <h1 dir="auto">{title}</h1> : null }
+        { type === 'person' && pronouns !== '' ? <p dir="auto"><strong style={{
+          padding: 'var(--basis)',
+          margin: 'var(--basis_x0_5) calc(-1 * var(--basis))',
+          display: 'inline-block',
+          backgroundColor: 'rgba(var(--on-background-rgb), var(--alpha-less))',
+        }}>{pronouns}</strong></p> : null }
         { description !== '' ? <p dir="auto">{description.split(/\n/g).flatMap(i => [i, <br key={i}/>])}<br/></p> : null }
         <div className={classes.items}>
           {

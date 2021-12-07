@@ -115,6 +115,7 @@ properties_editor_privacy_policy_label = Privacy-Policy Link
 properties_editor_checked_label = Checked
 properties_editor_trigger_label = Trigger
 properties_editor_action_label = Action
+properties_editor_pronouns_label = Pronouns
 
 trigger_input_path_placeholder = bonn
 action_input_url_placeholder = https://voltdeutschland.org/bonn

@@ -68,6 +68,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       checked: 'boolean',
       trigger: 'object',
       action: 'object',
+      pronouns: 'string',
     }
 
     const newProperties = { ...properties }
@@ -229,6 +230,24 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   //     </FancyInput>
   //     </div>
   //   </>
+  } else if (type === 'person') {
+    propertiesFrameContent = <>
+      <div className={classes.properties_row}>
+        <h3><Localized id="properties_editor_pronouns_label" /></h3>
+        <HtmlInput
+          defaultValue={properties.pronouns}
+          onChange={newValue => updateProperty('pronouns', newValue, true)}
+          onBlur={publishProperties}
+          placeholder={'…'}
+          style={{
+            margin: '0',
+            width: '100%',
+          }}
+          linebreaks={false}
+          className={`type_text`}
+        />
+      </div>
+    </>
   } else if (type === 'checkbox') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
