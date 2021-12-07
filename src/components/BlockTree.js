@@ -195,7 +195,9 @@ export default function BlockTree ({
   const blocks = data?.blocks || []
 
   const levels = blocks.reduce((acc, block) => {
-    const parentId = block.parent || '_root'
+    // compute parent based on content
+    const parentId = blocks.find(possibleParentBlock => possibleParentBlock.content.some(cc => cc.blockId === block._id))?._id || '_root'
+
     if (!acc[parentId]) {
       acc[parentId] = []
     }
