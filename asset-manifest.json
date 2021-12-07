@@ -1,35 +1,35 @@
 {
   "files": {
     "main.css": "/static/css/main.fb72e383.chunk.css",
-    "main.js": "/static/js/main.17584bd4.chunk.js",
-    "main.js.map": "/static/js/main.17584bd4.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c914710e.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c914710e.js.map",
-    "static/js/2.2c41ff9e.chunk.js": "/static/js/2.2c41ff9e.chunk.js",
-    "static/js/2.2c41ff9e.chunk.js.map": "/static/js/2.2c41ff9e.chunk.js.map",
+    "main.js": "/static/js/main.cc99d2d4.chunk.js",
+    "main.js.map": "/static/js/main.cc99d2d4.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.a6788d31.js",
+    "runtime-main.js.map": "/static/js/runtime-main.a6788d31.js.map",
+    "static/js/2.1bc09989.chunk.js": "/static/js/2.1bc09989.chunk.js",
+    "static/js/2.1bc09989.chunk.js.map": "/static/js/2.1bc09989.chunk.js.map",
     "static/js/3.f82c5452.chunk.js": "/static/js/3.f82c5452.chunk.js",
     "static/js/3.f82c5452.chunk.js.map": "/static/js/3.f82c5452.chunk.js.map",
-    "static/js/4.a95d7554.chunk.js": "/static/js/4.a95d7554.chunk.js",
-    "static/js/4.a95d7554.chunk.js.map": "/static/js/4.a95d7554.chunk.js.map",
+    "static/js/4.c29b2ad1.chunk.js": "/static/js/4.c29b2ad1.chunk.js",
+    "static/js/4.c29b2ad1.chunk.js.map": "/static/js/4.c29b2ad1.chunk.js.map",
     "static/js/5.7694f5dc.chunk.js": "/static/js/5.7694f5dc.chunk.js",
     "static/js/5.7694f5dc.chunk.js.map": "/static/js/5.7694f5dc.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.fb72e383.chunk.css.map": "/static/css/main.fb72e383.chunk.css.map",
-    "static/js/2.2c41ff9e.chunk.js.LICENSE.txt": "/static/js/2.2c41ff9e.chunk.js.LICENSE.txt",
+    "static/js/2.1bc09989.chunk.js.LICENSE.txt": "/static/js/2.1bc09989.chunk.js.LICENSE.txt",
     "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png",
     "static/media/Aktion.89c1bcdf.png": "/static/media/Aktion.89c1bcdf.png",
     "static/media/Welcome-to-Volt.39e04eca.png": "/static/media/Welcome-to-Volt.39e04eca.png",
     "static/media/de.ftl": "/static/media/de.1b0bc33a.ftl",
-    "static/media/en.ftl": "/static/media/en.79aa290b.ftl",
+    "static/media/en.ftl": "/static/media/en.3f4c5164.ftl",
     "static/media/fr.ftl": "/static/media/fr.2b9d87b6.ftl",
     "static/media/portugal.682fc2e3.jpg": "/static/media/portugal.682fc2e3.jpg",
     "static/media/Viewer.module.css": "/static/media/profile_frame.9ceb4732.png",
     "static/media/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.6824f6ef.png": "/static/media/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.6824f6ef.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.c914710e.js",
-    "static/js/2.2c41ff9e.chunk.js",
+    "static/js/runtime-main.a6788d31.js",
+    "static/js/2.1bc09989.chunk.js",
     "static/css/main.fb72e383.chunk.css",
-    "static/js/main.17584bd4.chunk.js"
+    "static/js/main.cc99d2d4.chunk.js"
   ]
 }
