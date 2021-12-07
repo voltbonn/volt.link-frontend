@@ -51,7 +51,7 @@ import BlockTree from '../BlockTree.js'
 import { AddMenuContent } from './AddMenu.js'
 
 function BlockMenu ({
-  block,
+  block = {},
   getString,
 
   trigger,
@@ -104,6 +104,8 @@ function BlockMenu ({
       parent: newParentId,
     })
   }, [ saveBlock, block ])
+
+  const metadata = block.metadata || {}
 
   return <>
   <Popover
@@ -355,13 +357,13 @@ function BlockMenu ({
             <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
               <ListItemText
                 primary={<Localized id="block_menu_info_created" />}
-                secondary={(block.metadata.created || '').replace(/[TZ]/g, ' ')}
+                secondary={(metadata.created || '').replace(/[TZ]/g, ' ')}
               />
             </ListItem>
             <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
               <ListItemText
                 primary={<Localized id="block_menu_info_modified" />}
-                secondary={(block.metadata.modified || '').replace(/[TZ]/g, ' ')}
+                secondary={(metadata.modified || '').replace(/[TZ]/g, ' ')}
               />
             </ListItem>
 
