@@ -44,7 +44,9 @@ import {
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
-import useSaveBlock from '../../hooks/useSaveBlock.js'
+import { moveBlock_Mutation } from '../../graphql/mutations.js'
+import useMutation from '../../hooks/useMutation.js'
+
 import Popover from '../Popover.js'
 import SubMenu from '../SubMenu.js'
 import BlockTree from '../BlockTree.js'
@@ -97,13 +99,21 @@ function BlockMenu ({
     })
   }, [ createBlock, _id ])
 
-  const saveBlock = useSaveBlock()
+  const mutationFunction = useMutation()
   const setParent = useCallback(newParentId => {
-    saveBlock({
-      ...block,
-      parent: newParentId,
+    mutationFunction({
+      mutation: moveBlock_Mutation,
+      variables: {
+        movingBlockId: block._id,
+        newParentId: newParentId,
+        newIndex: 0,
+      },
     })
-  }, [ saveBlock, block ])
+    .then(() => {
+      console.log('moved block')
+    })
+    .catch(console.error)
+  }, [ mutationFunction, block ])
 
   const metadata = block.metadata || {}
 
@@ -250,7 +260,7 @@ function BlockMenu ({
                 <ListItemIcon>
                   <BlockTreeIcon />
                 </ListItemIcon>
-                <Localized id="block_menu_change_parent" />
+                <Localized id="block_menu_move_block" />
               </>}
               MenuListProps={{
                 style: {
@@ -268,7 +278,7 @@ function BlockMenu ({
                   color: 'var(--on-background)',
                 }}
               >
-                <Localized id="block_menu_change_parent" />
+                <Localized id="block_menu_move_block" />
               </ListSubheader>
 
               <div style={{height: '8px'}}></div>
