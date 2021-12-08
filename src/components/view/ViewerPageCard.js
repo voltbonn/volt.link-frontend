@@ -34,15 +34,15 @@ function ViewerPageCard ({ block, actions = {} }) {
         : <div className={classes.coverphoto} style={{ backgroundImage: `url(${window.domains.backend}download_url?url=${encodeURIComponent(coverphoto_url)})` }} alt={text}></div>
     }
 
-    <div>
+    <div className="type_p" style={{ margin: '0' }}>
       {
         icon_url === ''
           ? <PagePlaceholderIcon className={classes.icon} />
           : <div className={classes.icon} style={{ backgroundImage: `url(${window.domains.backend}download_url?url=${encodeURIComponent(icon_url)})` }} alt={text}></div>
       }
 
-      <span dir="auto" className={classes.title}>{text}</span>
-      {description !== '' ? <p dir="auto">{description}</p> : null}
+      <span dir="auto" className={`${classes.title}`}>{text}</span>
+      {description !== '' ? <p dir="auto" style={{ marginTop: '0' }}>{description}</p> : null}
     </div>
   </div>
 }
