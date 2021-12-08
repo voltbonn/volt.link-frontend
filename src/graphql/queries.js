@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 export const getBlock_Query = gql`
-  query getBlock ($_id: ID!) {
+  query getBlock ($_id: ObjectID!) {
     block (_id: $_id) {
 		  _id
 		  type
@@ -19,7 +19,7 @@ export const getBlock_Query = gql`
 `
 
 export const getBlocks_Query = gql`
-  query getBlocks ($ids: [ID], $types: [String]) {
+  query getBlocks ($ids: [ObjectID], $types: [String]) {
     blocks (ids: $ids, types: $types) {
       _id
       type
@@ -37,7 +37,7 @@ export const getBlocks_Query = gql`
 `
 
 export const getBlockBySlug_Query = gql`
-  query getBlockBySlug ($slug: ID!) {
+  query getBlockBySlug ($slug: ObjectID!) {
     blockBySlug (slug: $slug) {
 		  _id
 		  type
@@ -69,7 +69,7 @@ export const getSelf_Query = gql`
 `
 
 export const getSiblingBlocks_Query = gql`
-  query getSiblingBlocks ($_id: ID!, $types: [String]) {
+  query getSiblingBlocks ($_id: ObjectID!, $types: [String]) {
     siblingBlocks (_id: $_id, types: $types) {
       _id
       type
@@ -79,7 +79,7 @@ export const getSiblingBlocks_Query = gql`
 `
 
 export const getParentBlocks_Query = gql`
-  query getParentBlocks ($_id: ID!) {
+  query getParentBlocks ($_id: ObjectID!) {
     parentBlocks (_id: $_id) {
       _id
       type
@@ -90,7 +90,7 @@ export const getParentBlocks_Query = gql`
 `
 
 export const blockMatchesRoles_Query = gql`
-  query blockMatchesRoles ($_id: ID!, $roles: [String]) {
+  query blockMatchesRoles ($_id: ObjectID!, $roles: [String]) {
     blockMatchesRoles (_id: $_id, roles: $roles)
   }
 `
