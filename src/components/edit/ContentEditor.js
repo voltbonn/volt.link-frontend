@@ -362,8 +362,6 @@ function ContentEditor({ defaultValue = [], onChange }) {
       const this_block = clonedContentConfigs[index].block
       const next_block = clonedContentConfigs[next_index].block
 
-      console.log('next_block', next_block)
-
       const new_block = {
         ...this_block,
         properties: {
@@ -371,8 +369,6 @@ function ContentEditor({ defaultValue = [], onChange }) {
           text: this_block.properties.text + next_block.properties.text,
         },
       }
-
-      console.log('new_block', new_block)
 
       const thisRef = inputRefs_Ref.current[tmp_id]
       const textLength = thisRef.current.textContent.length
