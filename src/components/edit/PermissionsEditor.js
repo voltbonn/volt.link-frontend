@@ -232,9 +232,6 @@ function PermissionsEditor({
       open={open}
       onClose={onClose}
       hideBackdrop={true}
-      // BackdropComponent={<Backdrop open={true} className={classes.backdrop} />}
-      // aria-labelledby="modal-modal-title"
-      // aria-describedby="modal-modal-description"
     >
       <>
         <div className={classes.backdrop} onClick={onClose}></div>
