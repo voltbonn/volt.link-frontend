@@ -5,7 +5,7 @@
   justify-content: flex-start;
   text-align: center;
 
-  min-height: 120vh;
+  min-height: 100vh;
 }
 .app.spine_aligned {
   text-align: unset;
@@ -13,6 +13,10 @@
 }
 .app.spine_aligned:dir(rtl) {
   align-items: flex-start;
+}
+
+.app .items {
+  margin-bottom: 20vh;
 }
 
 .app .coverphoto {
