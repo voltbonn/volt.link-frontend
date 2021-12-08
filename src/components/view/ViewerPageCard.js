@@ -26,7 +26,7 @@ function ViewerPageCard ({ block, actions = {} }) {
 
   return <div
     onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
-    className={`clickable_card ${classes.root}`}
+    className="clickable_card"
   >
     {
       coverphoto_url === ''
