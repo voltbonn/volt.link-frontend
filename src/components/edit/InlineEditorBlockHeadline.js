@@ -44,7 +44,10 @@ function InlineEditorBlockHeadlineRaw({
     onBlur={publishTextChange}
 
     placeholder={getString('placeholder_headline')}
-    style={{ margin: '0' }}
+    style={{
+      margin: '0',
+      backgroundColor: 'transparent',
+    }}
     linebreaks={true}
     className="hide_border type_h2"
 

@@ -53,6 +53,7 @@ function InlineEditorBlockPersonRaw({
         width: '100%',
         margin: '0',
         fontWeight: 'bold',
+        backgroundColor: 'transparent',
       }}
       linebreaks={true}
       className="hide_border type_text"

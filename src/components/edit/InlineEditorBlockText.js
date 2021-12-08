@@ -44,7 +44,10 @@ function InlineEditorBlockTextRaw({
     onBlur={publishTextChange}
 
     placeholder={getString('placeholder_text')}
-    style={{ margin: '0' }}
+    style={{
+      margin: '0',
+      backgroundColor: 'transparent',
+    }}
     linebreaks={true}
     className="hide_border type_text"
 

@@ -55,6 +55,7 @@ function InlineEditorBlockCheckboxRaw({
         flexGrow: '1',
         width: '100%',
         margin: '0',
+        backgroundColor: 'transparent',
       }}
       linebreaks={true}
       className="hide_border type_text"

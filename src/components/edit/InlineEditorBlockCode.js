@@ -50,6 +50,7 @@ function InlineEditorBlockCodeRaw({
       margin: '0',
       whiteSpace: 'pre',
       fontFamily: 'monospace',
+      backgroundColor: 'transparent',
     }}
     linebreaks={true}
     className="hide_border type_text"
