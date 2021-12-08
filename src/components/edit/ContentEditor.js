@@ -187,9 +187,6 @@ function ContentEditor({ defaultValue = [], onChange }) {
   const saveInputRef = useCallback((keys, inputRef) => {
     const newInputRefs = {...inputRefs_Ref.current}
 
-    // console.log('saveInputRef-keys', keys)
-    console.log('saveInputRef-newInputRefs', newInputRefs)
-
     if (
       !newInputRefs.hasOwnProperty(keys.tmp_id)
       || newInputRefs[keys.tmp_id] !== inputRef
