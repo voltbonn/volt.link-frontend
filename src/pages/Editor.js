@@ -48,7 +48,7 @@ import LoginScreen from '../components/LoginScreen.js'
 // })
 
 function Editor() {
-  const { getString, fluentByAny } = useLocalization()
+  const { getString } = useLocalization()
 
   const saveBlock = useSaveBlock()
   const loadBlock = useLoadBlock()
@@ -268,8 +268,7 @@ function Editor() {
     />
   </div>
 
-  const pagetitle = fluentByAny(block.properties.text, getString('placeholder_main_headline'))
-  const title = pagetitle
+  const title = block.properties.text || getString('placeholder_main_headline')
 
   return <div key={block._id} className={`hasHeader ${classes.editor}`}>
     <Header
