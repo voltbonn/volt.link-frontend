@@ -111,3 +111,12 @@
     width: 100%;
   }
 }
+
+/* correct the spacing between blocks */
+.app .items .type_p,
+.app .items p {
+  margin: 0;
+}
+.app .items > div {
+  margin-top: var(--basis);
+}
