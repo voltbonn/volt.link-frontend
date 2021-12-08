@@ -5,7 +5,7 @@ import {
   Link,
 } from 'react-router-dom'
 
-import { Localized } from '../fluent/Localized.js'
+import { Localized, useLocalization } from '../fluent/Localized.js'
 import useLoadBlock from '../hooks/useLoadBlock.js'
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
@@ -23,6 +23,7 @@ import {
 
 function Viewer () {
   const loadingTheBlock = useRef(false)
+  const { getString } = useLocalization()
 
   const { loggedIn } = useUser()
 
@@ -87,7 +88,7 @@ function Viewer () {
   } else if (canView === true) {
   const type = block.type || null
 
-  const title = block.properties.text || ''
+  const title = block.properties.text || getString('placeholder_main_headline')
   const description = block.properties.description || ''
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
