@@ -15,7 +15,7 @@ function ViewerTextCard ({ block }) {
     dir="auto"
     dangerouslySetInnerHTML={html}
     style={{
-      'white-space': 'pre-wrap',
+      whiteSpace: 'pre-wrap',
     }}
   ></p>
 }
