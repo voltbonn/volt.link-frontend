@@ -103,21 +103,6 @@ function Editor() {
         .then(loadedBlock => {
           loadedTheBlock.current = true
 
-          // // get locales from text and description
-          // // TODO: also look at the locales from sub-blocks
-          // if (
-          //   loadedBlock.properties
-          //   && (
-          //     loadedBlock.properties.text
-          //     || loadedBlock.properties.description
-          //   )
-          // ) {
-          //   setLocales([...new Set([
-          //     ...(loadedBlock.properties.text ? loadedBlock.properties.text.map(t => t.locale) : []),
-          //     ...(loadedBlock.properties.description ? loadedBlock.properties.description.map(t => t.locale) : []),
-          //   ])])
-          // }
-
           setBlock(loadedBlock)
         })
     }

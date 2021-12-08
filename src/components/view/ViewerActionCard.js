@@ -30,7 +30,6 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
   }, [navigate, blockId])
 
   const text = block.properties.text || '' // getString('placeholder_main_headline'))
-  const description = block.properties.description || ''
 
   let triggerInfo = null
   const triggerProperties = ((block.properties || {}).trigger || {})
@@ -144,7 +143,6 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
   >
     <div>
       {text !== '' ? <div dir="auto" className={classes.title}>{text}</div> : null}
-      {description !== '' ? <p dir="auto">{description}</p> : null}
 
       {triggerInfo !== null ? <div className={classes.iconLine}>{triggerInfo}</div> : null}
       {actionInfo !== null ? <div className={classes.iconLine}>{actionInfo}</div> : null}

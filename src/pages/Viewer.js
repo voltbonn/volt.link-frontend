@@ -89,7 +89,6 @@ function Viewer () {
   const type = block.type || null
 
   const title = block.properties.text || getString('placeholder_main_headline')
-  const description = block.properties.description || ''
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
   const pronouns = block.properties.pronouns || ''
@@ -136,7 +135,6 @@ function Viewer () {
           display: 'inline-block',
           backgroundColor: 'rgba(var(--on-background-rgb), var(--alpha-less))',
         }}>{pronouns}</strong></p> : null }
-        { description !== '' ? <p dir="auto">{description.split(/\n/g).flatMap(i => [i, <br key={i}/>])}<br/></p> : null }
         <div className={classes.items}>
           {
             contentBlocks

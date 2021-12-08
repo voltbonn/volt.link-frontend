@@ -59,7 +59,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   const updateProperty = useCallback((propertyKey, newPropertyValue, silent = false) => {
     const propertyTypes = {
       text: 'string',
-      description: 'string',
       coverphoto: 'string',
       icon: 'string',
       imprint: 'string',
@@ -134,7 +133,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     setProperties({
       ...defaultProperties,
       text: defaultProperties.text || '',
-      description: defaultProperties.description || '',
     })
   }, [
     defaultProperties,
@@ -335,18 +333,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         style={{ margin: '0' }}
         linebreaks={true}
         className={`type_h1`}
-      />
-
-      <HtmlInput
-        defaultValue={properties.description}
-        onChange={newValue => updateProperty('description', newValue, true)}
-        onBlur={publishProperties}
-
-        aria-label={getString('path_editor_description_label')}
-        placeholder={getString('path_editor_description_placeholder')}
-        style={{ margin: '0' }}
-        linebreaks={true}
-        className={`type_text`}
       />
     </div>
 

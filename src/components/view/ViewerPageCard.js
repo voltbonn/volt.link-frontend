@@ -22,7 +22,6 @@ function ViewerPageCard ({ block, actions = {} }) {
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
   const text = block.properties.text || getString('placeholder_main_headline')
-  const description = block.properties.description || ''
 
   return <div
     onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
@@ -42,7 +41,6 @@ function ViewerPageCard ({ block, actions = {} }) {
       }
 
       <span dir="auto" className={`${classes.title}`}>{text}</span>
-      {description !== '' ? <p dir="auto" style={{ marginTop: '0' }}>{description}</p> : null}
     </div>
   </div>
 }
