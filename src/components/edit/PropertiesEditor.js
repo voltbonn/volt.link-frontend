@@ -5,10 +5,10 @@ import { useState, useCallback, useEffect } from 'react'
 import classes from './PropertiesEditor.module.css'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
-import UrlInput from './UrlInput.js'
+// import UrlInput from './UrlInput.js'
 import CheckboxInput from './CheckboxInput.js'
 import HtmlInput from './HtmlInput.js'
-import FancyInput from './FancyInput.js'
+// import FancyInput from './FancyInput.js'
 import CoverphotoPicker from './CoverphotoPicker.js'
 import IconPicker from './IconPicker.js'
 import TriggerInput from './TriggerInput.js'
@@ -160,93 +160,94 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   // }, [ setVoltTeams ])
 
   let propertiesFrameContent = null
-  if (type === 'page') {
-    propertiesFrameContent = <>
-      <div className={classes.properties_row}>
-      <h3><Localized id="properties_editor_imprint_label" /></h3>
-      <div>
-      <FancyInput>
-        {({ setError }) => (
-          <UrlInput
-            onError={setError}
-            onBlur={newValue => updateProperty('imprint', newValue)}
-            defaultValue={properties.imprint}
-            type="text"
-            style={{
-              margin: '0',
-              width: '100%'
-            }}
-            // className="show_border_on_active"
-          />
-        )}
-      </FancyInput>
-      </div>
-      </div>
-
-      <div className={classes.properties_row}>
-      <h3><Localized id="properties_editor_privacy_policy_label" /></h3>
-      <div>
-      <FancyInput>
-        {({ setError }) => (
-          <UrlInput
-            onError={setError}
-            onBlur={newValue => updateProperty('privacy_policy', newValue)}
-            defaultValue={properties.privacy_policy}
-            type="text"
-            style={{
-              margin: '0',
-              width: '100%'
-            }}
-            // className="show_border_on_active"
-          />
-        )}
-      </FancyInput>
-      </div>
-      </div>
-    </>
-  // } else if (type === 'redirect') {
+  // if (type === 'page') {
   //   propertiesFrameContent = <>
   //     <div className={classes.properties_row}>
-  //     <h3><Localized id="path_editor_redirect_label" /></h3>
+  //     <h3><Localized id="properties_editor_imprint_label" /></h3>
+  //     <div>
   //     <FancyInput>
   //       {({ setError }) => (
   //         <UrlInput
   //           onError={setError}
-  //           onBlur={newValue => updateProperty('link', newValue)}
+  //           onBlur={newValue => updateProperty('imprint', newValue)}
+  //           defaultValue={properties.imprint}
   //           type="text"
-  //           placeholder={getString('path_editor_redirect_placeholder')}
-  //           aria-label={getString('path_editor_redirect_label')}
-  //           defaultValue={properties.link}
   //           style={{
-  //             marginRight: '0',
-  //             marginLeft: '0',
+  //             margin: '0',
   //             width: '100%'
   //           }}
-  //           className="show_border_on_active"
+  //           // className="show_border_on_active"
   //         />
   //       )}
   //     </FancyInput>
   //     </div>
+  //     </div>
+  //
+  //     <div className={classes.properties_row}>
+  //     <h3><Localized id="properties_editor_privacy_policy_label" /></h3>
+  //     <div>
+  //     <FancyInput>
+  //       {({ setError }) => (
+  //         <UrlInput
+  //           onError={setError}
+  //           onBlur={newValue => updateProperty('privacy_policy', newValue)}
+  //           defaultValue={properties.privacy_policy}
+  //           type="text"
+  //           style={{
+  //             margin: '0',
+  //             width: '100%'
+  //           }}
+  //           // className="show_border_on_active"
+  //         />
+  //       )}
+  //     </FancyInput>
+  //     </div>
+  //     </div>
   //   </>
-  } else if (type === 'person') {
-    propertiesFrameContent = <>
-      <div className={classes.properties_row}>
-        <h3><Localized id="properties_editor_pronouns_label" /></h3>
-        <HtmlInput
-          defaultValue={properties.pronouns}
-          onChange={newValue => updateProperty('pronouns', newValue, true)}
-          onBlur={publishProperties}
-          placeholder={'…'}
-          style={{
-            margin: '0',
-            width: '100%',
-          }}
-          linebreaks={false}
-          className={`type_text`}
-        />
-      </div>
-    </>
-  } else if (type === 'checkbox') {
+  // // } else if (type === 'redirect') {
+  // //   propertiesFrameContent = <>
+  // //     <div className={classes.properties_row}>
+  // //     <h3><Localized id="path_editor_redirect_label" /></h3>
+  // //     <FancyInput>
+  // //       {({ setError }) => (
+  // //         <UrlInput
+  // //           onError={setError}
+  // //           onBlur={newValue => updateProperty('link', newValue)}
+  // //           type="text"
+  // //           placeholder={getString('path_editor_redirect_placeholder')}
+  // //           aria-label={getString('path_editor_redirect_label')}
+  // //           defaultValue={properties.link}
+  // //           style={{
+  // //             marginRight: '0',
+  // //             marginLeft: '0',
+  // //             width: '100%'
+  // //           }}
+  // //           className="show_border_on_active"
+  // //         />
+  // //       )}
+  // //     </FancyInput>
+  // //     </div>
+  // //   </>
+  // } else if (type === 'person') {
+  //   propertiesFrameContent = <>
+  //     <div className={classes.properties_row}>
+  //       <h3><Localized id="properties_editor_pronouns_label" /></h3>
+  //       <HtmlInput
+  //         defaultValue={properties.pronouns}
+  //         onChange={newValue => updateProperty('pronouns', newValue, true)}
+  //         onBlur={publishProperties}
+  //         placeholder={'…'}
+  //         style={{
+  //           margin: '0',
+  //           width: '100%',
+  //         }}
+  //         linebreaks={false}
+  //         className={`type_text`}
+  //       />
+  //     </div>
+  //   </>
+  // } else
+  if (type === 'checkbox') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
         <h3><Localized id="properties_editor_checked_label" /></h3>
