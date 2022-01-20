@@ -19,8 +19,7 @@ export default function PopoverMenu ({
   trigger,
   children,
 }) {
-  return <>
-  <Popover
+  return <Popover
     trigger={trigger}
   >
     {({closePopover, ...popoverProps}) => (
@@ -61,5 +60,4 @@ export default function PopoverMenu ({
         </Paper>
     )}
   </Popover>
-  </>
 }
