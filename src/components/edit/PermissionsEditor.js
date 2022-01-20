@@ -185,8 +185,9 @@ function PermissionsEditor({
       newPermissions = newPermissions.filter(p => p.email !== '@public')
     }
 
-    const doesNotHaveOwner = permissions.filter(p => p.role === 'owner').length === 0
+    const doesNotHaveOwner = newPermissions.filter(p => p.role === 'owner').length === 0
     if (doesNotHaveOwner) {
+      newPermissions = newPermissions.filter(p => p.email !== user_email)
       newPermissions.unshift({ tmp_id: uuidv4(), email: user_email, role: 'owner' })
     }
 
@@ -218,9 +219,15 @@ function PermissionsEditor({
       newPermissions.unshift({ tmp_id: uuidv4(), email: newEmail, role: newRole })
     }
 
+    const doesNotHaveOwner = newPermissions.filter(p => p.role === 'owner').length === 0
+    if (doesNotHaveOwner) {
+      newPermissions = newPermissions.filter(p => p.email !== user_email)
+      newPermissions.unshift({ tmp_id: uuidv4(), email: user_email, role: 'owner' })
+    }
+
     setPermissions(newPermissions)
     onChange(newPermissions)
-  }, [permissions, setPermissions, onChange])
+  }, [permissions, user_email, setPermissions, onChange])
 
   const addNewPermissionFromInput = useCallback(() => {
     addPermissions(newEmails, newRole)
