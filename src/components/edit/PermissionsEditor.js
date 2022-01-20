@@ -159,16 +159,16 @@ function PermissionsEditor({
   const [newRole, setNewRole] = useState('editor')
 
   const setNewPermission = useCallback(newPermissions => {
-    if (user_email !== '') {
-      newPermissions = addTmpIds(newPermissions || [])
+    newPermissions = addTmpIds(newPermissions || [])
 
+    if (user_email !== '') {
       const doesNotHaveOwner = newPermissions.filter(permission => permission.role === 'owner').length === 0
       if (doesNotHaveOwner) {
         newPermissions.unshift({ tmp_id: uuidv4(), email: user_email, role: 'owner' })
       }
-
-      setPermissions(newPermissions)
     }
+    
+    setPermissions(newPermissions)
   }, [ user_email, setPermissions ])
 
   useEffect(() => {
