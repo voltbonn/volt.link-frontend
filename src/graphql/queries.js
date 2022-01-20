@@ -14,6 +14,10 @@ export const getBlock_Query = gql`
         modified
         created
       }
+      permissions {
+        email
+        role
+      }
     }
   }
 `
@@ -31,6 +35,10 @@ export const getBlocks_Query = gql`
       metadata {
         modified
         created
+      }
+      permissions {
+        email
+        role
       }
     }
   }
