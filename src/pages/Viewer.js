@@ -129,12 +129,12 @@ function Viewer () {
             : null
         }
         { title !== '' ? <h1 dir="auto">{title}</h1> : null }
-        { type === 'person' && pronouns !== '' ? <p dir="auto"><strong style={{
+        { /* type === 'person' && pronouns !== '' ? <p dir="auto"><strong style={{
           padding: 'var(--basis)',
           margin: 'var(--basis_x0_5) calc(-1 * var(--basis))',
           display: 'inline-block',
           backgroundColor: 'rgba(var(--on-background-rgb), var(--alpha-less))',
-        }}>{pronouns}</strong></p> : null }
+        }}>{pronouns}</strong></p> : null */ }
         <div className={classes.items}>
           {
             contentBlocks
