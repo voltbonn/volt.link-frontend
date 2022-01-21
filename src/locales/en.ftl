@@ -18,7 +18,7 @@ help_page = Help / Tutorial
 
 login_prompt = Login in the upper right corner, to edit volt.link urls.
 
-contact = Contact + Feedback
+contact = Contact / Feedback
 source_code = Source Code
 
 create_new_page = New Page
