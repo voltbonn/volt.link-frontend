@@ -91,7 +91,7 @@ function Viewer () {
   const title = block.properties.text || getString('placeholder_main_headline')
   const coverphoto_url = block.properties.coverphoto || ''
   const icon_url = block.properties.icon || ''
-  const pronouns = block.properties.pronouns || ''
+  // const pronouns = block.properties.pronouns || ''
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     <Link to={`/edit/${block._id}`}>
