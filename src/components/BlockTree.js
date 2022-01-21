@@ -176,11 +176,13 @@ export default function BlockTree ({
   blockMenu = false,
   onGetRefetch = ()=>{},
   types = ['page', 'person', 'action'],
+  archived = false,
   filterBlockIds = [],
 }) {
   const { data, refetch } = useQuery(getBlocks_Query, {
     variables: {
       types,
+      archived,
      },
   })
 

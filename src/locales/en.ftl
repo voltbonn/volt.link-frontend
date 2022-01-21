@@ -148,6 +148,12 @@ block_menu_create_child_block = Create Child Block
 block_menu_hide = Hide Block
 block_menu_show = Show Block
 
+block_menu_archive = Archive Block
+block_menu_unarchive = Unarchive Block
+
+filter_menu_show_archiv = Show Archiv
+filter_menu_showing_archiv = Showing Archiv
+
 block_menu_info_created = Created
 block_menu_info_modified = Last Modified
 

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 import {
   useNavigate,
@@ -16,6 +16,9 @@ import {
 } from '@mui/material'
 
 import {
+  Archive as ArchiveIcon,
+  Unarchive as UnarchiveIcon,
+
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
   // Delete as DeleteIcon,
@@ -44,13 +47,35 @@ import {
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
-import { moveBlock_Mutation } from '../../graphql/mutations.js'
+import {
+  moveBlock_Mutation,
+  saveBlock_Mutation,
+} from '../../graphql/mutations.js'
 import useMutation from '../../hooks/useMutation.js'
 
 import Popover from '../Popover.js'
 import SubMenu from '../SubMenu.js'
 import BlockTree from '../BlockTree.js'
 import { AddMenuContent } from './AddMenu.js'
+
+function removeProperty(obj, prop) {
+  // remove property from objects, arrays and sub-objects
+
+  obj = JSON.parse(JSON.stringify(obj)) // clone object to make everything mutable
+
+  if (obj.hasOwnProperty(prop)) {
+    delete obj[prop]
+  }
+  for (const i in obj) {
+    if (obj.hasOwnProperty(i)) {
+      if (typeof obj[i] == 'object' && obj[i] !== null) {
+        removeProperty(obj[i], prop)
+      }
+    }
+  }
+
+  return obj
+}
 
 function BlockMenu ({
   block = {},
@@ -70,6 +95,7 @@ function BlockMenu ({
   const navigate = useNavigate()
 
   const { _id = '', type = '' } = block
+  const [archived, setArchived] = useState(block.properties.archived === true)
 
   // const handleAddRowBefore = useCallback(() => {
   //
@@ -114,6 +140,29 @@ function BlockMenu ({
     })
     .catch(console.error)
   }, [ mutationFunction, block ])
+
+  const toggleArchiveBlock = useCallback(() => {
+    const newArchivedValue = archived === true ? false : true
+
+    const blockWithoutTypename = removeProperty(block, '__typename')
+  
+    mutationFunction({
+      mutation: saveBlock_Mutation,
+      variables: {
+        block: {
+          ...blockWithoutTypename,
+          properties: {
+            ...blockWithoutTypename.properties,
+            archived: newArchivedValue,
+          },
+        },
+      },
+    })
+    .then(() => {
+      setArchived(newArchivedValue)
+    })
+    .catch(console.error)
+  }, [ mutationFunction, block, archived, setArchived ])
 
   const metadata = block.metadata || {}
 
@@ -322,6 +371,21 @@ function BlockMenu ({
                   </MenuItem>
                 : null
             }
+
+            <MenuItem onClick={toggleArchiveBlock}>
+              <ListItemIcon>
+                {
+                  archived === true
+                  ? <UnarchiveIcon />
+                  : <ArchiveIcon />
+                }
+              </ListItemIcon>
+              {
+                archived === true
+                ? <Localized id="block_menu_unarchive" />
+                : <Localized id="block_menu_archive" />
+              }
+            </MenuItem>
 
             {
               typeof _id === 'string' && _id !== ''

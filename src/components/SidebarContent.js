@@ -14,6 +14,7 @@ import {
   Replay as RequeryIcon,
   Add as AddIcon,
   FilterList as FilterListIcon,
+  Archive as ArchiveIcon,
 
   Email as ContactIcon,
   GitHub as SourceCodeIcon,
@@ -71,6 +72,11 @@ export default function SidebarContent() {
   const filteredTypes = Object.entries(types)
     .filter(([, value]) => value === true)
     .map(([key, ]) => key)
+  
+  const [showArchived, setShowArchived] = useState(false)
+  function toggleShowArchived() {
+    setShowArchived(setShowArchived => !setShowArchived)
+  }
 
   const saveBlock = useSaveBlock()
   const navigate = useNavigate()
@@ -149,6 +155,20 @@ export default function SidebarContent() {
                 ))
             }
 
+            <Divider style={{opacity: 0.2}} />
+
+            <MenuItem
+              onClick={toggleShowArchived}
+              selected={showArchived === true}
+            >
+              <ListItemIcon>
+                <ArchiveIcon className="icon" />
+              </ListItemIcon>
+              <ListItemText>
+                <Localized id={showArchived ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
+              </ListItemText>
+            </MenuItem>
+
           </PopoverMenu>
 
           <AddMenu
@@ -170,6 +190,7 @@ export default function SidebarContent() {
         blockMenu={true}
         onGetRefetch={saveRefetchFunction}
         types={filteredTypes}
+        archived={showArchived}
       />
 
       <br/>
