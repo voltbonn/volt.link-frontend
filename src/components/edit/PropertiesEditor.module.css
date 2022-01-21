@@ -1,12 +1,12 @@
 .main_headline {
   width: 1000px;
-  maxWidth: calc(100% - var(--basis));
+  max-width: calc(100% - var(--basis));
   margin: var(--basis_x8) auto;
 }
 @media (max-width: 1000px) {
   .main_headline {
     width: 100%;
-    maxWidth: calc(100% - var(--basis));
+    max-width: calc(100% - var(--basis));
     margin: var(--basis_x8) auto;
   }
 }
