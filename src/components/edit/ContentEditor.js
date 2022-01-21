@@ -269,19 +269,27 @@ function ContentEditor({ defaultValue = [], onChange }) {
     })
   }, [contentConfigs, contentConfigs_Ref, onChange])
 
-  const addRowByIndex = useCallback((index, offset = 0, newValue) => {
-    if (typeof newValue === 'object') {
-      newValue = {
+  const addRowByIndex = useCallback((index, offset = 0, newContentConfig) => {
+    if (typeof newContentConfig === 'object') {
+      newContentConfig = {
         tmp_id: uuidv4(),
-        ...newValue,
+        ...newContentConfig,
       }
     } else {
-      newValue = newValue || { tmp_id: uuidv4() }
+      newContentConfig = newContentConfig || { tmp_id: uuidv4() }
     }
 
     if (typeof index === 'number' && !isNaN(index)) {
+      // saveBlock(newBlock)
+      //   .then(newBlock => {
+      //     if (callback) {
+      //       callback(newBlock)
+      //     }
+      //   })
+      //   .catch(console.error)
+
       let new_rows = [...contentConfigs]
-      new_rows.splice(index + offset, 0, newValue)
+      new_rows.splice(index + offset, 0, newContentConfig)
       contentConfigs_Ref.current = new_rows
       onChange(new_rows)
     }
@@ -517,7 +525,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
   >
     <div>
       <button
-        onClick={() => addRowByIndex(0, 0, {})}
+        onClick={() => addRowByIndex(0, 0, { type: 'text' })}
         className="text hasIcon"
         style={{
           margin: '0 0 var(--basis_x2) 0',
