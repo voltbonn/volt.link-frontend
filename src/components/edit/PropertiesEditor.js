@@ -331,7 +331,10 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         onBlur={publishProperties}
 
         placeholder={getString('placeholder_main_headline')}
-        style={{ margin: '0' }}
+        style={{
+          margin: '0',
+          padding: 'var(--basis) calc(8 * var(--basis))',
+        }}
         linebreaks={true}
         className={`type_h1`}
       />
