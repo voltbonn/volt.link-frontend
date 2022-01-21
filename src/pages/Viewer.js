@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 import {
   useParams,
@@ -128,7 +128,7 @@ function Viewer () {
               ></div>
             : null
         }
-        { title !== '' ? <h1 dir="auto">{title}</h1> : null }
+        { title !== '' ? <h1 dir="auto">{title.split('\n').map(l => <React.Fragment key={l}>{l}<br/></React.Fragment>)}</h1> : null }
         { /* type === 'person' && pronouns !== '' ? <p dir="auto"><strong style={{
           padding: 'var(--basis)',
           margin: 'var(--basis_x0_5) calc(-1 * var(--basis))',
