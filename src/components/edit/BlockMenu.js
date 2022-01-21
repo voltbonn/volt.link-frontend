@@ -126,6 +126,7 @@ function BlockMenu ({
   }, [ createBlock, _id ])
 
   const mutationFunction = useMutation()
+
   const setParent = useCallback(newParentId => {
     mutationFunction({
       mutation: moveBlock_Mutation,
