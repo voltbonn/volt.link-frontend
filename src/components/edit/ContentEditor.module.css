@@ -37,9 +37,6 @@
 }
 @media (any-hover: hover) {
   @media (min-width: 1200px) {
-    .row .item {
-      margin-inline-start: calc(-1 * calc(var(--basis) + var(--basis_x8)));
-    }
     .row .dragHandleButton {
       opacity: 0;
       transition: opacity var(--timing);
