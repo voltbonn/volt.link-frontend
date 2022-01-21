@@ -222,7 +222,7 @@ export default function BlockTree ({
             blockMenu={blockMenu}
             filterBlockIds={filterBlockIds}
           />
-        : null
+        : "No blocks found."
       }
   </div>
 }
