@@ -6,6 +6,7 @@ default_locale = de
 
 login = Anmelden
 logout = Abmelden
+help_page = Hilfe / Tutorial
 
 login_prompt = Meld Dich in der oberen rechten Ecke an, um volt.link Urls zu bearbeiten.
 

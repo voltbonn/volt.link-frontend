@@ -14,6 +14,7 @@ menu_list = All Links
 
 login = Login
 logout = Logout
+help_page = Help / Tutorial
 
 login_prompt = Login in the upper right corner, to edit volt.link urls.
 

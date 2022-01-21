@@ -21,6 +21,8 @@ import {
   Login as LoginIcon,
   Logout as LogoutIcon,
 
+  Help as HelpIcon,
+
   // Search as SearchIcon,
 
   InsertDriveFileSharp as PageIcon,
@@ -198,6 +200,19 @@ export default function SidebarContent() {
       <br/>
 
       <MenuList style={{ maxWidth: '100%' }}>
+
+        {
+          loggedIn
+            ? <a href={`${window.domains.frontend}help`}>
+                <MenuItem>
+                  <ListItemIcon>
+                    <HelpIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={<Localized id="help_page" />} />
+                </MenuItem>
+              </a>
+            : null
+        }
 
         {
           loggedIn
