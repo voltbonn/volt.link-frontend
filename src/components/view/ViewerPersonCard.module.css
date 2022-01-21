@@ -8,6 +8,7 @@
   background-size: cover;
   margin-right: var(--basis);
   box-shadow: var(--image-frame-line);
+  flex-shrink: 0;
 }
 .name {
   vertical-align: middle;
