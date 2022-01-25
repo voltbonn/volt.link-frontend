@@ -46,7 +46,7 @@ export const getBlocks_Query = gql`
 
 export const getBlockBySlug_Query = gql`
   query getBlockBySlug ($slug: ObjectID!) {
-    blockBySlug (slug: $slug) {
+    block: blockBySlug (slug: $slug) {
 		  _id
 		  type
 		  properties
@@ -78,7 +78,7 @@ export const getSelf_Query = gql`
 
 export const getSiblingBlocks_Query = gql`
   query getSiblingBlocks ($_id: ObjectID!, $types: [String]) {
-    siblingBlocks (_id: $_id, types: $types) {
+    blocks: siblingBlocks (_id: $_id, types: $types) {
       _id
       type
       properties
@@ -88,7 +88,7 @@ export const getSiblingBlocks_Query = gql`
 
 export const getParentBlocks_Query = gql`
   query getParentBlocks ($_id: ObjectID!) {
-    parentBlocks (_id: $_id) {
+    blocks: parentBlocks (_id: $_id) {
       _id
       type
       properties

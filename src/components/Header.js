@@ -34,11 +34,11 @@ export default function Header({ title, block = {}, rightActions, notificationBa
       },
     })
       .then(async ({ data }) => {
-        if (typeof data.error === 'string' || !data.parentBlocks) {
+        if (typeof data.error === 'string' || !data.blocks) {
           console.error(data.error)
           setParentBlocks([])
         }else{
-          setParentBlocks(data.parentBlocks || [])
+          setParentBlocks(data.blocks || [])
         }
       })
       .catch(async error => {
@@ -56,12 +56,12 @@ export default function Header({ title, block = {}, rightActions, notificationBa
       },
     })
       .then(async ({ data }) => {
-        if (typeof data.error === 'string' || !data.siblingBlocks) {
+        if (typeof data.error === 'string' || !data.blocks) {
           console.error(data.error)
           setSiblingBlocks([])
         }else{
           setSiblingBlocks(
-            (data.siblingBlocks || [])
+            (data.blocks || [])
               .filter(block => block._id !== blockId)
           )
         }
