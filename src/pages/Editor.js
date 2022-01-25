@@ -29,7 +29,7 @@ import SharingEditor from '../components/edit/SharingEditor.js'
 import PermissionsEditor from '../components/edit/PermissionsEditor.js'
 import PropertiesEditor from '../components/edit/PropertiesEditor.js'
 import ContentEditor from '../components/edit/ContentEditor.js'
-import LoginScreen from '../components/LoginScreen.js'
+import { ErrorPage } from '../components/ErrorPages.js'
 
 // const custom_react_select_styles = {
 //   menu: (provided, state) => ({
@@ -195,7 +195,18 @@ function Editor() {
   // }, [isFirstRun, initialBlock, block])
 
   if (canEdit === false) {
-    return <LoginScreen />
+    return <>
+      <Header
+        block={null}
+        title="Error"
+        rightActions={null}
+      />
+      <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
+        <main className={`${classes.contentWrapper}`}>
+          <ErrorPage errorName="no_access" />
+        </main>
+      </div>
+    </>
   } else if (canEdit === true) {
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>

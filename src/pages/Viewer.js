@@ -11,7 +11,7 @@ import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
 import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
 
-import LoginScreen from '../components/LoginScreen.js'
+import { ErrorPage } from '../components/ErrorPages.js'
 import Header from '../components/Header.js'
 import ViewerAuto from '../components/view/ViewerAuto.js'
 
@@ -84,8 +84,19 @@ function Viewer () {
   ])
 
   if (canView === false) {
-    return <LoginScreen />
-  } else if (canView === true) {
+    return <>
+      <Header
+        block={null}
+        title="Error"
+        rightActions={null}
+      />
+      <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
+        <main className={`${classes.contentWrapper}`}>
+          <ErrorPage errorName="no_access" />
+        </main>
+      </div>
+    </>
+  } else {
   const type = block.type || null
 
   const title = block.properties.text || getString('placeholder_main_headline')
@@ -145,8 +156,6 @@ function Viewer () {
       </main>
     </div>
   </>
-  } else {
-    return null
   }
 }
 

@@ -89,12 +89,6 @@
   }
 }
 
-.app .contentWrapper{
-  width: 1000px;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
 .app .items button {
   margin-right: 0;
   margin-bottom: 0;
@@ -103,6 +97,11 @@
 }
 .app .items p {
   margin-bottom: 0;
+}
+.app .contentWrapper{
+  width: 1000px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 @media (max-width: 800px) {
   .app .contentWrapper,

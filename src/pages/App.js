@@ -11,10 +11,10 @@ import {
 
 import useUser from '../hooks/useUser.js'
 import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Sidebar.js'
-import Shortcode from './Shortcode.js'
+// import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
 import Viewer from './Viewer.js'
-import LoginScreen from '../components/LoginScreen.js'
+import LoginScreen from '../components/ErrorPages.js'
 
 function App() {
   const { loggedIn } = useUser()
@@ -64,21 +64,12 @@ function App() {
           : <Sidebar />
         }
         <Main>
-        {
-          loggedIn
-          ? <Routes location={customLocation}>
-              <Route path="/view/:id" element={<Viewer />} />
-              <Route path="/edit/:id" element={<Editor />} />
-              <Route path="/shortcode" element={<Shortcode />} />
-              <Route path="/" element={<SidebarContent />} />
-            </Routes>
-          : <Routes location={customLocation}>
-              <Route path="/view/:id" element={<Viewer />} />
-              <Route path="/edit/:id" element={<LoginScreen />} />
-              <Route path="/shortcode" element={<LoginScreen />} />
-              <Route path="/" element={<SidebarContent />} />
-            </Routes>
-        }
+          <Routes location={customLocation}>
+            <Route path="/:id/view" element={<Viewer />} />
+            <Route path="/:id/edit" element={<Editor />} />
+            {/* <Route path="/shortcode" element={<Shortcode />} /> */}
+            <Route path="/" element={<SidebarContent />} />
+          </Routes>
         </Main>
       </SidebarProvider>
     </div>
