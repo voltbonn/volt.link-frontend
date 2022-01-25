@@ -26,7 +26,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
   const blockId = block._id
 
   const viewBlock = useCallback(()=>{
-    navigate(`/view/${blockId}`)
+    navigate(`/${blockId}/view`)
   }, [navigate, blockId])
 
   const text = block.properties.text || '' // getString('placeholder_main_headline'))

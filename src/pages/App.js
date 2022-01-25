@@ -25,23 +25,33 @@ function App() {
   const [customLocation, setCustomLocation] = useState({})
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search)
-    const real_path = urlParams.get('real_path')
+    //    /slug=id/suffix
+    //    /slugOrId/suffix
+
+    const slugAndIdRegex = /^\/([^=/]*)(?:=?)([^=/]*)(.*)/
+
+    const slugAndIdMatch = location.pathname.match(slugAndIdRegex)
+    const slugOrId = slugAndIdMatch[1]
+    let id = slugAndIdMatch[2]
+    let suffix = slugAndIdMatch[3]
+
+    if (!id && slugOrId) {
+      id = slugOrId
+    }
 
     if (
-      customLocation.pathname !== real_path
+      id !== ''
+      && suffix !== '/edit'
+      && suffix !== '/view'
     ) {
-      if (
-        typeof real_path === 'string'
-        && real_path.length > 0
-      ) {
-        window.history.replaceState(null, '', location.pathname)
-        setCustomLocation({
-          pathname: real_path,
-        })
-      } else {
-        setCustomLocation(location)
-      }
+      suffix = '/view'
+    }
+
+    const newPathname = `/${id}${suffix}`
+    if (customLocation.pathname !== newPathname) {
+      setCustomLocation({
+        pathname: newPathname,
+      })
     }
   }, [ location, customLocation, setCustomLocation ])
 

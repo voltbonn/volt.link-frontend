@@ -62,7 +62,7 @@ function BlockRow ({
   const actions = {
     click: () => {
       onClick(block)
-      // navigate(`/view/${block._id}`)
+      // navigate(`/${block._id}/view`)
     }
   }
 

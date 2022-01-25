@@ -94,7 +94,7 @@ function Viewer () {
   // const pronouns = block.properties.pronouns || ''
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
-    <Link to={`/edit/${block._id}`}>
+    <Link to={`/${block._id}/edit`}>
       <button className="text hasIcon">
         <EditIcon className="icon" />
         <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="edit_block" /></span>

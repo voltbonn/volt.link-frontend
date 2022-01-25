@@ -86,7 +86,7 @@ export default function SidebarContent() {
   const createBlock = useCallback(newBlock => {
     saveBlock(newBlock)
       .then(gottenBlock => {
-        navigate(`/edit/${gottenBlock._id}`)
+        navigate(`/${gottenBlock._id}/edit`)
       })
       .catch(error => {
         console.error(error)
@@ -102,7 +102,7 @@ export default function SidebarContent() {
   }, [ types, setTypes, refetch ])
 
   const viewBlock = useCallback(block => {
-    navigate(`/view/${block._id}`)
+    navigate(`/${block._id}/view`)
   }, [ navigate ])
 
   return <div className={classes.content}>

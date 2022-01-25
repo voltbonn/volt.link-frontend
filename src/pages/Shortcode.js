@@ -53,7 +53,7 @@ function Redirect({ getString, rightHeaderActions }) {
             console.error(data.error)
             setError(data.error)
           } else if (typeof data.code === 'string') {
-            navigate(`/edit/${data.code}`)
+            navigate(`/${data.code}/edit`)
           } else {
             setError('Undefined Error. Please contact thomas.rosen@volteuropa.org')
           }

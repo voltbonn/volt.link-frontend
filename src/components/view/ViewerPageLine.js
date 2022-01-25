@@ -16,7 +16,7 @@ function ViewerPageLine ({ block, actions = {} }) {
   const blockId = block._id
 
   const viewBlock = useCallback(()=>{
-    navigate(`/view/${blockId}`)
+    navigate(`/${blockId}/view`)
   }, [navigate, blockId])
 
   const icon_url = block.properties.icon || ''

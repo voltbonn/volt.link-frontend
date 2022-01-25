@@ -111,11 +111,11 @@ function BlockMenu ({
   // }, [ addRowBefore ])
 
   const viewBlock = useCallback(() => {
-    navigate(`/view/${_id}`)
+    navigate(`/${_id}/view`)
   }, [ _id, navigate ])
 
   const editBlock = useCallback(() => {
-    navigate(`/edit/${_id}`)
+    navigate(`/${_id}/edit`)
   }, [ _id, navigate ])
 
   const createChildBlock = useCallback(newBlock => {
