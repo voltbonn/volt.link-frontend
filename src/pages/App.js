@@ -9,16 +9,12 @@ import {
   useMatch,
 } from 'react-router-dom'
 
-import useUser from '../hooks/useUser.js'
 import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Sidebar.js'
 // import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
 import Viewer from './Viewer.js'
-import LoginScreen from '../components/ErrorPages.js'
 
 function App() {
-  const { loggedIn } = useUser()
-
   const matchesStartpage = useMatch('/')
   const location = useLocation()
 
