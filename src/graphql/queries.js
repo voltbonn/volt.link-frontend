@@ -14,10 +14,7 @@ export const getBlock_Query = gql`
         modified
         created
       }
-      permissions {
-        email
-        role
-      }
+      permissions
     }
   }
 `
@@ -36,10 +33,7 @@ export const getBlocks_Query = gql`
         modified
         created
       }
-      permissions {
-        email
-        role
-      }
+      permissions
     }
   }
 `
@@ -58,10 +52,7 @@ export const getBlockBySlug_Query = gql`
         modified
         created
       }
-      permissions {
-        email
-        role
-      }
+      permissions
     }
   }
 `
