@@ -454,14 +454,15 @@ button.hasIcon span{
 .clickable_card {
   position: relative;
   cursor: pointer;
+  padding: var(--basis_x2);
 }
 .clickable_card:before {
   content: '';
   position: absolute;
-  top: calc(-1 * var(--basis));
-  right: calc(-1 * var(--basis));
-  bottom: calc(-1 * var(--basis));
-  left: calc(-1 * var(--basis));
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   background-color: rgba(var(--on-background-rgb), 0);
   transition: background-color var(--timing);

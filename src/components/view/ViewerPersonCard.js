@@ -24,7 +24,7 @@ function ViewerPersonCard ({ block, actions = {} }) {
   return <div
     onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
     className="clickable_card"
-    style={{ display: 'flex', alignItems: 'center' }}
+    style={{ display: 'flex', alignItems: 'flex-start' }}
   >
     {
       icon_url === ''

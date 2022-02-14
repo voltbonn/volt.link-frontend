@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocalization } from '../../fluent/Localized.js'
 
+import { getImageUrl } from '../../functions.js'
 
 import {
   InsertDriveFile as PagePlaceholderIcon,
