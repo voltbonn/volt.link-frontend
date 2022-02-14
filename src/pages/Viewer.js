@@ -102,10 +102,11 @@ function Viewer () {
   const type = block.type || null
 
   const title = block.properties.text || getString('placeholder_main_headline')
-  // const pronouns = block.properties.pronouns || ''
   const coverphoto_url = getImageUrl(block.properties.coverphoto)
   const icon_url = getImageUrl(block.properties.icon)
 
+  // const pronouns = block.properties.pronouns || ''
+  
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     <Link to={`/${block._id}/edit`}>
       <button className="text hasIcon">
