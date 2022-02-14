@@ -22,7 +22,7 @@ contact = Contact / Feedback
 source_code = Source Code
 
 create_new_page = New Page
-create_new_action = New Action
+create_new_automation = New Automation
 create_new_person = New Person
 
 chooser_header_title = Edit Micropages
@@ -130,7 +130,7 @@ block_menu_type_label_plural_automation = Automations
 block_menu_type_label_plural_person = People
 
 block_menu_type_label_page = Page
-block_menu_type_label_action = Action
+block_menu_type_label_automation = Automation
 block_menu_type_label_redirect = Redirect
 block_menu_type_label_person = Person
 block_menu_type_label_button = Button

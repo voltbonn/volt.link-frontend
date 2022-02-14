@@ -39,7 +39,7 @@ import {
   // CodeSharp as CodeIcon,
   Remove as DividerIcon,
   CheckBox as CheckboxIcon,
-  AutoAwesomeSharp as ActionIcon,
+  AutoAwesomeSharp as AutomationIcon,
 
   PreviewSharp as ViewIcon,
   EditSharp as EditIcon,
@@ -236,7 +236,7 @@ function BlockMenu ({
                       // { value: 'code', icon: <CodeIcon />, label: getString('block_menu_type_label_code') },
                       { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
                       { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
-                      { value: 'action', icon: <ActionIcon />, label: getString('block_menu_type_label_action') },
+                      { value: 'automation', icon: <AutomationIcon />, label: getString('block_menu_type_label_automation') },
                     ]
                     .map(option => (
                       <MenuItem
