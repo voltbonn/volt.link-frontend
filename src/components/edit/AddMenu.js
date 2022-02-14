@@ -7,7 +7,7 @@ import {
 
 import {
   InsertDriveFileSharp as PageIcon,
-  AutoAwesomeSharp as ActionIcon,
+  AutoAwesomeSharp as AutomationIcon,
   // LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
   // Crop75Sharp as ButtonIcon,
@@ -24,12 +24,12 @@ import { Localized } from '../../fluent/Localized.js'
 const blockTypeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
-  action: <ActionIcon />,
+  automation: <AutomationIcon />,
 }
 
 const types = [
   'page',
-  'action',
+  'automation',
 ]
 
 function AddMenuContent({ createBlock }) {
