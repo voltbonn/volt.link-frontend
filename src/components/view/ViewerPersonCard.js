@@ -1,6 +1,8 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { getImageUrl } from '../../functions.js'
+
 import {
   Face as PersonPlaceholderIcon,
 } from '@mui/icons-material'
@@ -16,7 +18,7 @@ function ViewerPersonCard ({ block, actions = {} }) {
     navigate(`/${blockId}/view`)
   }, [navigate, blockId])
 
-  const icon_url = block.properties.icon || ''
+  const icon_url = getImageUrl(block.properties.icon)
   const text = block.properties.text || ''
 
   return <div

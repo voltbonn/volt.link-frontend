@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLocalization } from '../../fluent/Localized.js'
 
+import { getImageUrl } from '../../functions.js'
+
 import {
   InsertDriveFile as PagePlaceholderIcon,
 } from '@mui/icons-material'
@@ -19,7 +21,7 @@ function ViewerPageLine ({ block, actions = {} }) {
     navigate(`/${blockId}/view`)
   }, [navigate, blockId])
 
-  const icon_url = block.properties.icon || ''
+  const icon_url = getImageUrl(block.properties.icon)
   const text = block.properties.text || getString('placeholder_main_headline')
 
   return <div
