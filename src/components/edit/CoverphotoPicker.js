@@ -1,6 +1,8 @@
 
 import classes from './CoverphotoPicker.module.css'
 
+// import { getImageUrl } from '../../functions.js'
+
 import Popover from '../Popover.js'
 
 import { Paper } from '@mui/material'
@@ -18,32 +20,65 @@ import welcome_to_volt_thumb from '../../images/coverphotos/thumbs/Welcome-to-Vo
 import portugal_thumb from '../../images/coverphotos/thumbs/portugal.jpg'
 
 
-function CoverphotoPicker({ getString, defaultValue, iconValue, onChange, className = '', style = {} }) {
-  const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
-
-  let defaultValueIsUrl = false
-  if (
-    typeof defaultValue === 'string'
-    && defaultValue.length > 0
-    && isAbsoluteUrlRegexp.test(defaultValue)
-  ) {
-    defaultValueIsUrl = true
+function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, className = '', style = {} }) {
+  
+  const onUrlChange = newUrl => {
+    onChange({
+      type: 'url',
+      url: newUrl,
+    })
   }
 
-  let iconValueIsUrl = false
+  const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
+
+  // if (
+  //   typeof coverphotoValue === 'object'
+  //   && coverphotoValue !== null
+  //   && !Array.isArray(coverphotoValue)
+  // ) {
+  //   if (coverphotoValue.type === 'url') {
+  //     return coverphotoValue.url || ''
+  //   }
+  // }
+
+  console.log('coverphotoValue', coverphotoValue)
+
+  let coverphotoIsSet = false
+  let iconIsSet = false
+
   if (
-    typeof iconValue === 'string'
-    && iconValue.length > 0
-    && isAbsoluteUrlRegexp.test(iconValue)
+    typeof coverphotoValue === 'object'
+    && coverphotoValue !== null
+    && !Array.isArray(coverphotoValue)
   ) {
-    iconValueIsUrl = true
+    if (
+      coverphotoValue.type === 'url'
+      && typeof coverphotoValue.url === 'string'
+      && isAbsoluteUrlRegexp.test(coverphotoValue.url)
+    ) {
+      coverphotoIsSet = true
+    }
+  }
+
+  if (
+    typeof iconValue === 'object'
+    && iconValue !== null
+    && !Array.isArray(iconValue)
+  ) {
+    if (
+      iconValue.type === 'url'
+      && typeof iconValue.url === 'string'
+      && isAbsoluteUrlRegexp.test(iconValue.url)
+    ) {
+      iconIsSet = true
+    }
   }
 
   return <div
     className={`
       ${classes.root}
-      ${defaultValueIsUrl ? classes.coverphotoIsSet : classes.coverphotoIsNotSet}
-      ${iconValueIsUrl ? classes.iconIsSet : classes.iconIsNotSet}
+      ${coverphotoIsSet ? classes.coverphotoIsSet : classes.coverphotoIsNotSet}
+      ${iconIsSet ? classes.iconIsSet : classes.iconIsNotSet}
       ${className}
     `}
     style={style}
@@ -53,7 +88,7 @@ function CoverphotoPicker({ getString, defaultValue, iconValue, onChange, classN
         <div
           className={classes.coverphoto}
           style={{
-            backgroundImage: defaultValueIsUrl ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(defaultValue)})` : '',
+            backgroundImage: coverphotoIsSet ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(coverphotoValue.url)})` : '',
           }}
         >
           <div className={classes.button_wrapper}>
@@ -85,8 +120,8 @@ function CoverphotoPicker({ getString, defaultValue, iconValue, onChange, classN
             {({ setError }) => (
               <UrlInput
                 onError={setError}
-                onChange={onChange}
-                defaultValue={defaultValue}
+                onChange={onUrlChange}
+                defaultValue={coverphotoValue.url}
                 style={{
                   marginRight: '0',
                   marginLeft: '0',
@@ -97,9 +132,9 @@ function CoverphotoPicker({ getString, defaultValue, iconValue, onChange, classN
           </FancyInput>
 
           <MultiButton
-            onChange={onChange}
+            onChange={onUrlChange}
             ariaLabel={getString('path_editor_coverphoto_label')}
-            defaultValue={defaultValue || ''}
+            defaultValue={coverphotoValue.url || ''}
             items={[
               {
                 value: '',

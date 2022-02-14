@@ -311,12 +311,12 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       type === 'page' || type === 'person'
       ? <>
           <CoverphotoPicker
-            defaultValue={properties.coverphoto}
+            coverphotoValue={properties.coverphoto}
             iconValue={properties.icon}
             onChange={newValue => updateProperty('coverphoto', newValue)}
           />
           <IconPicker
-            defaultValue={properties.icon}
+            iconValue={properties.icon}
             coverphotoValue={properties.coverphoto}
             onChange={newValue => updateProperty('icon', newValue)}
           />

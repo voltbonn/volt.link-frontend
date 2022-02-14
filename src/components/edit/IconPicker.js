@@ -10,32 +10,53 @@ import { Localized, withLocalization } from '../../fluent/Localized.js'
 import FancyInput from './FancyInput.js'
 import UrlInput from './UrlInput.js'
 
-function IconPicker({ defaultValue, coverphotoValue, onChange, className, style }) {
-  const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
+function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) {
 
-  let defaultValueIsUrl = false
-  if (
-    typeof defaultValue === 'string'
-    && defaultValue.length > 0
-    && isAbsoluteUrlRegexp.test(defaultValue)
-  ) {
-    defaultValueIsUrl = true
+  const onUrlChange = newUrl => {
+    onChange({
+      type: 'url',
+      url: newUrl,
+    })
   }
 
-  let coverphotoValueIsUrl = false
+  const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
+
+  let coverphotoIsSet = false
+  let iconIsSet = false
+
   if (
-    typeof coverphotoValue === 'string'
-    && coverphotoValue.length > 0
-    && isAbsoluteUrlRegexp.test(coverphotoValue)
+    typeof coverphotoValue === 'object'
+    && coverphotoValue !== null
+    && !Array.isArray(coverphotoValue)
   ) {
-    coverphotoValueIsUrl = true
+    if (
+      coverphotoValue.type === 'url'
+      && typeof coverphotoValue.url === 'string'
+      && isAbsoluteUrlRegexp.test(coverphotoValue.url)
+    ) {
+      coverphotoIsSet = true
+    }
+  }
+
+  if (
+    typeof iconValue === 'object'
+    && iconValue !== null
+    && !Array.isArray(iconValue)
+  ) {
+    if (
+      iconValue.type === 'url'
+      && typeof iconValue.url === 'string'
+      && isAbsoluteUrlRegexp.test(iconValue.url)
+    ) {
+      iconIsSet = true
+    }
   }
 
   return <div
     className={`
       ${classes.root}
-      ${defaultValueIsUrl ? classes.iconIsSet : classes.iconIsNotSet}
-      ${coverphotoValueIsUrl ? classes.coverphotoIsSet : classes.coverphotoIsNotSet}
+      ${iconIsSet ? classes.iconIsSet : classes.iconIsNotSet}
+      ${coverphotoIsSet ? classes.coverphotoIsSet : classes.coverphotoIsNotSet}
       ${className}
     `}
     style={style}
@@ -43,9 +64,9 @@ function IconPicker({ defaultValue, coverphotoValue, onChange, className, style 
     <Popover
       trigger={(triggerProps) => (<div className={classes.iconWrapper}>
         <div
-          className={`${classes.icon} ${!defaultValueIsUrl ? classes.no_image : ''}`}
+          className={`${classes.icon} ${!iconIsSet ? classes.no_image : ''}`}
           style={{
-            backgroundImage: defaultValueIsUrl ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(defaultValue)})` : '',
+            backgroundImage: iconIsSet ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(iconValue.url)})` : '',
           }}
         ></div>
         <button {...triggerProps} className={classes.changeIconButton}>Set Icon</button>
@@ -74,8 +95,8 @@ function IconPicker({ defaultValue, coverphotoValue, onChange, className, style 
             {({ setError }) => (
               <UrlInput
                 onError={setError}
-                onBlur={onChange}
-                defaultValue={defaultValue}
+                onBlur={onUrlChange}
+                defaultValue={iconValue.url}
                 style={{
                   marginRight: '0',
                   marginLeft: '0',
