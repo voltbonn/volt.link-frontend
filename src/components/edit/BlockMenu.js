@@ -27,8 +27,8 @@ import {
   // VerticalAlignBottom as VerticalAlignBottomIcon,
   Add as AddIcon,
   RepeatSharp as RepeatIcon,
-  AccountTreeSharp as BlockTreeIcon,
-  RemoveCircleSharp as RemoveCircleIcon,
+  // AccountTreeSharp as BlockTreeIcon,
+  // RemoveCircleSharp as RemoveCircleIcon,
 
   InsertDriveFileSharp as PageIcon,
   // LinkSharp as RedirectIcon,
@@ -48,15 +48,15 @@ import {
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
 import {
-  moveBlock_Mutation,
+  // moveBlock_Mutation,
   saveBlock_Mutation,
 } from '../../graphql/mutations.js'
 import useMutation from '../../hooks/useMutation.js'
 
 import Popover from '../Popover.js'
 import SubMenu from '../SubMenu.js'
-import BlockTree from '../BlockTree.js'
 import { AddMenuContent } from './AddMenu.js'
+// import BlockTree from '../BlockTree.js'
 
 function removeProperty(obj, prop) {
   // remove property from objects, arrays and sub-objects
@@ -127,20 +127,20 @@ function BlockMenu ({
 
   const mutationFunction = useMutation()
 
-  const setParent = useCallback(newParentId => {
-    mutationFunction({
-      mutation: moveBlock_Mutation,
-      variables: {
-        movingBlockId: block._id,
-        newParentId: newParentId,
-        newIndex: 0,
-      },
-    })
-    .then(() => {
-      console.log('moved block')
-    })
-    .catch(console.error)
-  }, [ mutationFunction, block ])
+  // const setParent = useCallback(newParentId => {
+  //   mutationFunction({
+  //     mutation: moveBlock_Mutation,
+  //     variables: {
+  //       movingBlockId: block._id,
+  //       newParentId: newParentId,
+  //       newIndex: 0,
+  //     },
+  //   })
+  //   .then(() => {
+  //     console.log('moved block')
+  //   })
+  //   .catch(console.error)
+  // }, [ mutationFunction, block ])
 
   const toggleArchiveBlock = useCallback(() => {
     const newArchivedValue = archived === true ? false : true
@@ -304,6 +304,7 @@ function BlockMenu ({
                 : null
             }
 
+            {/*
             <SubMenu
               parentMenuIsOpen={open}
               label={<>
@@ -353,6 +354,7 @@ function BlockMenu ({
                 />
               </div>
             </SubMenu>
+            */}
 
             {
               typeof active === 'boolean' && toggle_active

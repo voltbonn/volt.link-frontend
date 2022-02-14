@@ -218,7 +218,8 @@ export default function BlockTree ({
   const levelKeys = Object.keys(levels).sort((a, b) => a.localeCompare(b))
 
   return <div style={{
-    marginLeft: 'calc(5 * var(--basis))',
+    marginLeft: 'var(--basis)',
+    // marginLeft: 'calc(5 * var(--basis))',
   }}>
      {
       blocks.length > 0
