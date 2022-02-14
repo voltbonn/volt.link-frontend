@@ -5,6 +5,8 @@ import {
   Link,
 } from 'react-router-dom'
 
+import { getImageUrl } from '../functions.js'
+
 import { Localized, useLocalization } from '../fluent/Localized.js'
 import useLoadBlock from '../hooks/useLoadBlock.js'
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
@@ -100,9 +102,9 @@ function Viewer () {
   const type = block.type || null
 
   const title = block.properties.text || getString('placeholder_main_headline')
-  const coverphoto_url = block.properties.coverphoto || ''
-  const icon_url = block.properties.icon || ''
   // const pronouns = block.properties.pronouns || ''
+  const coverphoto_url = getImageUrl(block.properties.coverphoto)
+  const icon_url = getImageUrl(block.properties.icon)
 
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     <Link to={`/${block._id}/edit`}>
