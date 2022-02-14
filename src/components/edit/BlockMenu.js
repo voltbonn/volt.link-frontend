@@ -431,12 +431,14 @@ function BlockMenu ({
 
             <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
 
+            {/*
             <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
               <ListItemText
                 primary={<Localized id="block_menu_info_created" />}
                 secondary={(metadata.created || '').replace(/[TZ]/g, ' ')}
               />
             </ListItem>
+            */}
             <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
               <ListItemText
                 primary={<Localized id="block_menu_info_modified" />}
