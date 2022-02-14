@@ -126,7 +126,7 @@ block_menu_move_block = Move Block
 block_menu_change_parent_none = No Parent
 
 block_menu_type_label_plural_page = Pages
-block_menu_type_label_plural_action = Actions
+block_menu_type_label_plural_automation = Automations
 block_menu_type_label_plural_person = People
 
 block_menu_type_label_page = Page

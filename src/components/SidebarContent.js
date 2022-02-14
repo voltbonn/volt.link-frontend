@@ -26,7 +26,7 @@ import {
   // Search as SearchIcon,
 
   InsertDriveFileSharp as PageIcon,
-  AutoAwesomeSharp as ActionIcon,
+  AutoAwesomeSharp as AutomationIcon,
   // LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
   // Crop75Sharp as ButtonIcon,
@@ -51,7 +51,7 @@ import PopoverMenu from './PopoverMenu.js'
 const blockTypeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
-  action: <ActionIcon />,
+  automation: <AutomationIcon />,
 }
 
 export default function SidebarContent() {
@@ -69,7 +69,7 @@ export default function SidebarContent() {
   const [types, setTypes] = useState({
     page: true,
     person: true,
-    action: true,
+    automation: true,
   })
   const filteredTypes = Object.entries(types)
     .filter(([, value]) => value === true)
@@ -134,7 +134,7 @@ export default function SidebarContent() {
             {/*
               { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
               { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
-              { value: 'action', icon: <ActionIcon className="icon" />, title: getString('block_menu_type_label_plural_action') },
+              { value: 'automation', icon: <ActionIcon className="icon" />, title: getString('block_menu_type_label_plural_automation') },
             */}
 
             <div style={{ marginTop: '8px' }}></div>

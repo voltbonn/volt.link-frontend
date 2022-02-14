@@ -277,7 +277,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         />
       </div>
     </>
-  } else if (type === 'action') {
+  } else if (type === 'automation') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
         <h3><Localized id="properties_editor_trigger_label" /></h3>

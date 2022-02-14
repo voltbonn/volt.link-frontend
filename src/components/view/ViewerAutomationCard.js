@@ -1,26 +1,31 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { getImageUrl } from '../../functions.js'
+
 import {
-  AutoAwesomeSharp as ActionIcon,
+  AutoAwesomeSharp as AutomationIcon,
 } from '@mui/icons-material'
 
 import MdiIcon from '@mdi/react'
 import {
   mdiGestureTapButton,
-  mdiRayStartArrow,
-  mdiWeb,
-  mdiApplicationOutline,
-  mdiFileCode,
-  mdiCubeSend,
   mdiSetRight,
   mdiTimer,
   mdiOpenInApp,
+  // mdiRayStartArrow,
+  // mdiWeb,
+  // mdiApplicationOutline,
+  // mdiFileCode,
+  // mdiCubeSend,
 } from '@mdi/js'
 
-import classes from './ViewerActionCard.module.css'
+import classes from './ViewerAutomationCard.module.css'
 
-function ViewerActionCard ({ block = {}, actions = {} }) {
+const triggerIconSize = 1
+// const actionIconSize = 1
+
+function ViewerAautomationLine ({ block = {}, actions = {} }) {
   const navigate = useNavigate()
 
   const blockId = block._id
@@ -29,6 +34,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     navigate(`/${blockId}/view`)
   }, [navigate, blockId])
 
+  const icon_url = getImageUrl(block.properties.icon)
   const text = block.properties.text || '' // getString('placeholder_main_headline'))
 
   let triggerInfo = null
@@ -38,16 +44,16 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     triggerInfo = <>
       <MdiIcon
         path={mdiOpenInApp}
-        size={1}
+        size={triggerIconSize}
         className={classes.icon}
       />
-      <p>volt.link/{triggerProperties.path}</p>
+      <p>/{triggerProperties.path}</p>
     </>
   } else if (triggerType === 'click') {
     triggerInfo = <>
       <MdiIcon
         path={mdiGestureTapButton}
-        size={1}
+        size={triggerIconSize}
         className={classes.icon}
       />
       <p>{triggerProperties.blockId}</p>
@@ -56,7 +62,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     triggerInfo = <>
       <MdiIcon
         path={mdiTimer}
-        size={1}
+        size={triggerIconSize}
         className={classes.icon}
       />
       <p>{triggerProperties.cron}</p>
@@ -65,14 +71,14 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     triggerInfo = <>
       <MdiIcon
         path={mdiSetRight}
-        size={1}
+        size={triggerIconSize}
         className={classes.icon}
       />
       <p>{triggerProperties.blockId}</p>
     </>
   } else {
     triggerInfo = <>
-      <ActionIcon
+      <AutomationIcon
         className={classes.icon}
       />
       <p>{
@@ -83,6 +89,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     </>
   }
 
+  /*
   let actionInfo = null
   const actionProperties = ((block.properties || {}).action || {})
   const actionType = actionProperties.type
@@ -90,7 +97,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     actionInfo = <>
       <MdiIcon
         path={mdiWeb}
-        size={1}
+        size={actionIconSize}
         className={classes.icon}
       />
       <p>{actionProperties.url}</p>
@@ -99,7 +106,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     actionInfo = <>
       <MdiIcon
         path={mdiApplicationOutline}
-        size={1}
+        size={actionIconSize}
         className={classes.icon}
       />
       <p>{actionProperties.blockId}</p>
@@ -108,7 +115,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     actionInfo = <>
       <MdiIcon
         path={mdiFileCode}
-        size={1}
+        size={actionIconSize}
         className={classes.icon}
       />
       <p>{actionProperties.blockId}</p>
@@ -117,7 +124,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     actionInfo = <>
       <MdiIcon
         path={mdiCubeSend}
-        size={1}
+        size={actionIconSize}
         className={classes.icon}
       />
       <p>{actionProperties.blockId}</p>
@@ -126,7 +133,7 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
     actionInfo = <>
       <MdiIcon
         path={mdiRayStartArrow}
-        size={1}
+        size={actionIconSize}
         className={classes.icon}
       />
       <p>{
@@ -136,19 +143,47 @@ function ViewerActionCard ({ block = {}, actions = {} }) {
       }</p>
     </>
   }
+  */
 
   return <div
     onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
     className={`clickable_card ${classes.root}`}
   >
-    <div>
-      {text !== '' ? <div dir="auto" className={classes.title}>{text}</div> : null}
+    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+      {
+        icon_url === ''
+          ? <AutomationIcon className={classes.icon} />
+          : <div className={classes.icon} style={{ backgroundImage: `url(${window.domains.backend}download_url?url=${encodeURIComponent(icon_url)})` }} alt={text}></div>
+      }
 
-      {triggerInfo !== null ? <div className={classes.iconLine}>{triggerInfo}</div> : null}
-      {actionInfo !== null ? <div className={classes.iconLine}>{actionInfo}</div> : null}
+      <div className={classes.content}>
+        {
+          text !== ''
+          ? <div dir="auto" className={classes.title}>{text}</div>
+          : null // <div dir="auto" className={classes.title} style={{ opacity: 0.4 }}>Untitled Automation</div>
+        }
+        
+        {triggerInfo !== null ? <div className={classes.iconLine}>{triggerInfo}</div> : null}
+        {/* {actionInfo !== null ? <div className={classes.iconLine}>{actionInfo}</div> : null} */}
 
+      </div>
     </div>
   </div>
+
+
+  // return <div
+  //   onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
+  //   className={`clickable_card ${classes.root}`}
+  // >
+  //   <div>
+  //     {text !== '' ? <div dir="auto" className={classes.title}>{text}</div> : null}
+  //
+  //     {triggerInfo !== null ? <div className={classes.iconLine}>{triggerInfo}</div> : null}
+  //     {actionInfo !== null ? <div className={classes.iconLine}>{actionInfo}</div> : null}
+  //
+  //   </div>
+  // </div>
+
 }
 
-export default ViewerActionCard
+export default ViewerAautomationLine

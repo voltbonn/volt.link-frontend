@@ -21,9 +21,15 @@
 .title {
   vertical-align: middle;
   font-weight: bold;
+  line-height: 1;
+  margin-bottom: var(--basis);
 }
 
 .iconLine {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+}
+.iconLine p {
+  margin: 0;
+  word-break: break-all;
 }
