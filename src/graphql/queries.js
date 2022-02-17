@@ -12,7 +12,7 @@ export const getBlock_Query = gql`
 		  parent
 		  metadata {
         modified
-        created
+        modified_by
       }
       permissions
     }
@@ -31,7 +31,7 @@ export const getBlocks_Query = gql`
       parent
       metadata {
         modified
-        created
+        modified_by
       }
       permissions
     }
@@ -50,7 +50,7 @@ export const getBlockBySlug_Query = gql`
 		  parent
 		  metadata {
         modified
-        created
+        modified_by
       }
       permissions
     }
