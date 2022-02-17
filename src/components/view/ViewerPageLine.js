@@ -21,7 +21,10 @@ function ViewerPageLine ({ block, actions = {} }) {
     navigate(`/${blockId}/view`)
   }, [navigate, blockId])
 
-  const icon_url = getImageUrl(block.properties.icon)
+  let icon_url = getImageUrl(block.properties.icon)
+  if (!icon_url) {
+    icon_url = getImageUrl(block.properties.coverphoto)
+  }
   const text = block.properties.text || getString('placeholder_main_headline')
 
   return <div

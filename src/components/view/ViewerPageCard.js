@@ -22,7 +22,10 @@ function ViewerPageCard ({ block, actions = {} }) {
   }, [navigate, blockId])
 
   const coverphoto_url = getImageUrl(block.properties.coverphoto)
-  const icon_url = getImageUrl(block.properties.icon)
+  let icon_url = getImageUrl(block.properties.icon)
+  if (!icon_url) {
+    icon_url = getImageUrl(block.properties.coverphoto)
+  }
   const text = block.properties.text || getString('placeholder_main_headline')
 
   return <div
