@@ -52,25 +52,6 @@ export const getBlocks_Query = gql`
   }
 `
 
-export const getBlockBySlug_Query = gql`
-  query getBlockBySlug ($slug: ObjectID!) {
-    block: blockBySlug (slug: $slug) {
-		  _id
-		  type
-		  properties
-		  content {
-        blockId
-      }
-		  parent
-		  metadata {
-        modified
-        modified_by
-      }
-      permissions
-    }
-  }
-`
-
 export const getSelf_Query = gql`
   query getSelf {
     self {
