@@ -161,26 +161,34 @@ function ContentEditor({ defaultValue = [], onChange }) {
   ])
 
   useEffect(()=>{
+    async function loadMissingBlocks () {
+      let newContentConfigs = [...addTmpIds(defaultValue)]
+
+      const ids2load = newContentConfigs
+        .filter(contentConfig => !contentConfig.hasOwnProperty('block'))
+        .map(contentConfig => contentConfig.blockId)
+
+      let loadedBlocks = []
+      if (ids2load.length > 0) {
+        loadedBlocks = await loadBlocks({ ids: ids2load })
+      }
+      
+      newContentConfigs = newContentConfigs
+        .map(contentConfig => {
+          if (!contentConfig.hasOwnProperty('block')) {
+            contentConfig.block = loadedBlocks.find(block => block._id === contentConfig.blockId)
+          }
+          return contentConfig
+        })
+
+      contentConfigs_Ref.current = newContentConfigs
+      setUpdateCounter(old => old + 1)
+    }
+
     if (contentConfigs.length === 0) {
       if (defaultValue.length > 0) {
-        let newContentConfigs = [...addTmpIds(defaultValue)]
-
-        const ids = newContentConfigs.map(contentConfig => contentConfig.blockId)
-
-        loadBlocks({ ids })
-          .then(loadedBlocks => {
-            newContentConfigs = newContentConfigs
-              .map(contentConfig => ({
-                ...contentConfig,
-                block: loadedBlocks.find(block => block._id === contentConfig.blockId),
-              }))
-
-            contentConfigs_Ref.current = newContentConfigs
-            setUpdateCounter(old => old + 1)
-          })
+        loadMissingBlocks()
       }
-    } else {
-
     }
   }, [contentConfigs, defaultValue, loadBlocks, contentConfigs_Ref, setUpdateCounter])
 

@@ -8,6 +8,20 @@ export const getBlock_Query = gql`
 		  properties
 		  content {
         blockId
+        block {
+          _id
+          type
+          properties
+          content {
+            blockId
+          }
+          parent
+          metadata {
+            modified
+            modified_by
+          }
+          permissions
+        }
       }
 		  parent
 		  metadata {

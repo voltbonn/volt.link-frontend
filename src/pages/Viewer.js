@@ -64,15 +64,45 @@ function Viewer () {
     ) {
       loadingTheBlock.current = true
       loadBlock(id)
-        .then(loadedBlock => {
-          setBlock(loadedBlock)
-          const ids = loadedBlock.content.map(content => content.blockId)
-          loadBlocks({ ids })
-            .then(loadedContentBlocks => {
-              const contentBlocksOrdered = [...ids].map(id => loadedContentBlocks.find(block => block._id === id))
-              setContentBlocks([...contentBlocksOrdered])
-              loadingTheBlock.current = false
-            })
+        .then(async loadedBlock => {
+
+          let newLoadedBlock = loadedBlock
+
+          if (
+            Array.isArray(loadedBlock.content)
+            && loadedBlock.content.length > 0
+          ) {
+            let newContentConfigs = [...loadedBlock.content]
+
+            const ids2load = loadedBlock.content
+              .filter(contentConfig => !contentConfig.hasOwnProperty('block'))
+              .map(contentConfig => contentConfig.blockId)
+
+            let loadedContentBlocks = []
+            if (ids2load.length > 0) {
+              loadedContentBlocks = await loadBlocks({ ids: ids2load })
+            }
+          
+            newContentConfigs = newContentConfigs
+              .map(contentConfig => {
+                if (!contentConfig.hasOwnProperty('block')) {
+                  contentConfig.block = loadedContentBlocks.find(block => block._id === contentConfig.blockId)
+                }
+                return contentConfig
+              })
+
+            newLoadedBlock = {
+              ...newLoadedBlock,
+              content: newContentConfigs,
+            }
+          }
+
+          const blocks = (newLoadedBlock.content || [])
+          .map(contentConfig => contentConfig.block)
+
+          setBlock(newLoadedBlock)
+          setContentBlocks(blocks)
+          loadingTheBlock.current = false
         })
     }
   }, [
