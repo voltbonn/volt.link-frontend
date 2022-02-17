@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import classes from './SidebarContent.module.css'
 
 import {
@@ -54,7 +54,45 @@ const blockTypeIcons = {
   automation: <AutomationIcon />,
 }
 
+function debounce(func, wait, immediate) {
+  // Source: underscore.js
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
+
 export default function SidebarContent() {
+  const mounted = useRef(false);
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
+
+  const [showBlockTree, setShowBlockTree] = useState(false)
+  var efficientSetShowBlockTree = useCallback(()=>{
+    if (mounted.current) {
+      debounce(() => {
+        if (mounted.current) {
+	        setShowBlockTree(true)
+        }
+      }, 10)()
+    }
+  }, [ setShowBlockTree, mounted ])
+  useEffect(() => {
+    efficientSetShowBlockTree()
+  }, [ efficientSetShowBlockTree ])
+  
   const { loggedIn } = useUser()
   const { toggleSidebar } = useSidebarContext()
 
@@ -186,14 +224,18 @@ export default function SidebarContent() {
       </div>
     </header>
 
-      <BlockTree
-        onClick={viewBlock}
-        createBlock={createBlock}
-        blockMenu={true}
-        onGetRefetch={saveRefetchFunction}
-        types={filteredTypes}
-        archived={showArchived}
-      />
+      {
+        showBlockTree
+        ? <BlockTree
+            onClick={viewBlock}
+            createBlock={createBlock}
+            blockMenu={true}
+            onGetRefetch={saveRefetchFunction}
+            types={filteredTypes}
+            archived={showArchived}
+          />
+        : null
+      }
 
       <br/>
       <Divider style={{ opacity: 0.2 }} />
