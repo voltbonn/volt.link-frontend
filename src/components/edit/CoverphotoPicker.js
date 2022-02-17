@@ -41,8 +41,6 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
   //   }
   // }
 
-  console.log('coverphotoValue', coverphotoValue)
-
   let coverphotoIsSet = false
   let iconIsSet = false
 
