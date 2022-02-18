@@ -22,7 +22,7 @@ const checkIfArrayHasContent = level => !!level && Array.isArray(level) && leve
 
 function BlockRowsRender ({
   virtual,
-  
+
   levels,
   createBlock,
   onClick,
