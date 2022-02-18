@@ -1,4 +1,15 @@
+import { useState, useEffect } from 'react'
+
+import { renderInlineMarkdown } from '../../markdown.js'
+
 function ViewerButtonCard ({ block, actions = {} }) {
+  const [html, setHtml] = useState({ __html: '' })
+
+  useEffect(() => {
+    const text = renderInlineMarkdown(block.properties.text)
+    setHtml({ __html: text })
+  }, [block, setHtml])
+
   let url = ''
   if (
     block
@@ -12,41 +23,43 @@ function ViewerButtonCard ({ block, actions = {} }) {
     url = block.properties.action.url
   }
 
-  const text = block.properties.text || ''
-
   const hasClickAction = actions.hasOwnProperty('click')
 
   if (hasClickAction === false && url !== '') {
     return <a href={url}>
       <button
         dir="auto"
+        dangerouslySetInnerHTML={html}
         style={{
           margin: '0',
+          whiteSpace: 'pre-wrap',
         }}
-      >
-        {text}
-      </button>
+      ></button>
     </a>
   }
 
   if (hasClickAction === true) {
     return <button
       dir="auto"
+      dangerouslySetInnerHTML={html}
       disabled="disabled"
       style={{
         margin: '0',
+        whiteSpace: 'pre-wrap',
       }}
       onClick={actions.onclick}
-    >{text}</button>
+    ></button>
   }
 
   return <button
     dir="auto"
+    dangerouslySetInnerHTML={html}
     disabled="disabled"
     style={{
       margin: '0',
+      whiteSpace: 'pre-wrap',
     }}
-  >{text}</button>
+  ></button>
 }
 
 export default ViewerButtonCard
