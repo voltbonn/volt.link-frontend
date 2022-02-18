@@ -72,6 +72,11 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
     }
   }
 
+  let coverphotoValueUrl = ''
+  if (coverphotoValue && coverphotoValue.url) {
+    coverphotoValueUrl = coverphotoValue.url || ''
+  }
+
   return <div
     className={`
       ${classes.root}
@@ -119,7 +124,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
               <UrlInput
                 onError={setError}
                 onChange={onUrlChange}
-                defaultValue={coverphotoValue.url}
+                defaultValue={coverphotoValueUrl}
                 style={{
                   marginRight: '0',
                   marginLeft: '0',
@@ -132,7 +137,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
           <MultiButton
             onChange={onUrlChange}
             ariaLabel={getString('path_editor_coverphoto_label')}
-            defaultValue={coverphotoValue.url || ''}
+            defaultValue={coverphotoValueUrl}
             items={[
               {
                 value: '',
