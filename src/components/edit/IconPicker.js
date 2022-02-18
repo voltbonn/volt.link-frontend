@@ -66,7 +66,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
         <div
           className={`${classes.icon} ${!iconIsSet ? classes.no_image : ''}`}
           style={{
-            backgroundImage: iconIsSet ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(iconValue.url)})` : '',
+            backgroundImage: iconIsSet ? `url(${window.domains.backend}download_url?f=jpg&w=400&h=400&url=${encodeURIComponent(iconValue.url)})` : '',
           }}
         ></div>
         <button {...triggerProps} className={classes.changeIconButton}>Set Icon</button>

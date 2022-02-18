@@ -91,7 +91,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
         <div
           className={classes.coverphoto}
           style={{
-            backgroundImage: coverphotoIsSet ? `url(${window.domains.backend}download_url?url=${encodeURIComponent(coverphotoValue.url)})` : '',
+            backgroundImage: coverphotoIsSet ? `url(${window.domains.backend}download_url?f=jpg&w=1400&h=400&url=${encodeURIComponent(coverphotoValue.url)})` : '',
           }}
         >
           <div className={classes.button_wrapper}>
