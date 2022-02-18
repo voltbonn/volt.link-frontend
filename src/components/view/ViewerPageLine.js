@@ -31,7 +31,7 @@ function ViewerPageLine ({ block, actions = {} }) {
     onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
     className={`clickable_card ${classes.root}`}
   >
-    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       {
         icon_url === ''
           ? <PagePlaceholderIcon className={classes.icon} />

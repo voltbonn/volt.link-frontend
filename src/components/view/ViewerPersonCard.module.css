@@ -13,6 +13,7 @@
 .name {
   vertical-align: middle;
   font-weight: bold;
+  font-size: calc(3.5 * var(--basis));
 
   white-space: nowrap;
   overflow: hidden;
