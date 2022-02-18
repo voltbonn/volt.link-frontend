@@ -16,12 +16,14 @@
   background: var(--background-contrast);
   color: var(--on-background);
 }
-@supports(display: grid) {
+/*
+@supports(backdrop-filter: blur(var(--blur))) {
   .header {
-    background: rgba(var(--background-contrast-rgb), var(--alpha-more));
+    background: rgba(var(--background-rgb), var(--alpha-more));
     backdrop-filter: blur(var(--blur));
   }
 }
+*/
 @media (max-width: 1000px) {
   .header {
     --minus_basis_x2: calc(-1 * var(--basis_x2));
