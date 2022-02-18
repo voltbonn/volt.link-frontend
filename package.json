@@ -22,6 +22,9 @@
     "graphql": "^15.5.3",
     "highlight.js": "^11.3.1",
     "intl-pluralrules": "^1.2.2",
+    "markdown-it": "^12.3.2",
+    "markdown-it-emoji": "^2.0.0",
+    "markdown-it-kbd": "^2.2.2",
     "material-ui-popup-state": "^1.9.3",
     "notistack": "^1.0.10",
     "react": "^17.0.2",
@@ -31,6 +34,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "react-select": "^4.3.1",
+    "twemoji": "^13.1.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },

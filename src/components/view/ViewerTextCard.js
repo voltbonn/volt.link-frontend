@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 
+import { renderInlineMarkdown } from '../../markdown.js'
+
 function ViewerTextCard ({ block }) {
   const [html, setHtml] = useState({ __html: '' })
 
   useEffect(() => {
-    let text = block.properties.text || ''
-    text = text.replace(/\n/g, '<br>')
-    // text = text.replace(/\t/g, '&emsp;')
-
+    const text = renderInlineMarkdown(block.properties.text)
     setHtml({ __html: text })
   }, [block, setHtml])
 
