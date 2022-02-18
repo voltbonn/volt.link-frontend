@@ -36,7 +36,13 @@ const client = new ApolloClient({
   credentials: 'include',
   defaultOptions: {
     watchQuery: {
-      fetchPolicy: 'cache-and-network',
+      // fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all',
     },
   },
 })
