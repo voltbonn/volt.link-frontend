@@ -224,23 +224,6 @@ export default function SidebarContent() {
       </div>
     </header>
 
-      {
-        showBlockTree
-        ? <BlockTree
-            onClick={viewBlock}
-            createBlock={createBlock}
-            blockMenu={true}
-            onGetRefetch={saveRefetchFunction}
-            types={filteredTypes}
-            archived={showArchived}
-          />
-        : null
-      }
-
-      <br/>
-      <Divider style={{ opacity: 0.2 }} />
-      <br/>
-
       <MenuList style={{ maxWidth: '100%' }}>
 
         {
@@ -295,6 +278,25 @@ export default function SidebarContent() {
         </a>
 
       </MenuList>
+
+      <br/>
+      <Divider style={{ opacity: 0.2 }} />
+      <br/>
+
+      
+      
+      {
+        showBlockTree
+        ? <BlockTree
+            onClick={viewBlock}
+            createBlock={createBlock}
+            blockMenu={true}
+            onGetRefetch={saveRefetchFunction}
+            types={filteredTypes}
+            archived={showArchived}
+          />
+        : null
+      }
 
   </div>
 }
