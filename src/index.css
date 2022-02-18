@@ -467,7 +467,6 @@ button.hasIcon span{
   border-radius: var(--basis_x2);
 
   background-color: rgba(var(--on-background-rgb), 0);
-  transition: background-color var(--timing);
 }
 .clickable_card:hover:before {
   background-color: rgba(var(--on-background-rgb), var(--alpha-less));
