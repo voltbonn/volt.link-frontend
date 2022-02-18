@@ -11,7 +11,6 @@
 .title {
   vertical-align: middle;
   font-weight: bold;
-  line-height: 1;
   font-size: calc(3.5 * var(--basis));
 
   white-space: nowrap;
