@@ -1,6 +1,7 @@
 .root {
   /* margin: var(--basis_x2) 0; */
   flex-grow: 1;
+  overflow: hidden;
 }
 
 /* .root.viewBlock {

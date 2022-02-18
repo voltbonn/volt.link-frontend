@@ -13,4 +13,8 @@
 .name {
   vertical-align: middle;
   font-weight: bold;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
