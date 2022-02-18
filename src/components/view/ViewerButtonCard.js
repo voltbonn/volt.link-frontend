@@ -30,6 +30,7 @@ function ViewerButtonCard ({ block, actions = {} }) {
       <button
         dir="auto"
         dangerouslySetInnerHTML={html}
+        className="default square"
         style={{
           margin: '0',
           whiteSpace: 'pre-wrap',
@@ -43,6 +44,7 @@ function ViewerButtonCard ({ block, actions = {} }) {
       dir="auto"
       dangerouslySetInnerHTML={html}
       disabled="disabled"
+      className="default square"
       style={{
         margin: '0',
         whiteSpace: 'pre-wrap',
@@ -55,6 +57,7 @@ function ViewerButtonCard ({ block, actions = {} }) {
     dir="auto"
     dangerouslySetInnerHTML={html}
     disabled="disabled"
+    className="default square"
     style={{
       margin: '0',
       whiteSpace: 'pre-wrap',

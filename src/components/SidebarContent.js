@@ -213,7 +213,7 @@ export default function SidebarContent() {
 
           <AddMenu
             trigger={triggerProps => (
-              <button className="white hasIcon" {...triggerProps}>
+              <button className="default hasIcon" {...triggerProps}>
                 <AddIcon className="icon" />
                 {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
               </button>

@@ -271,7 +271,7 @@ function Editor() {
       trigger={props => (
         <button
           {...props}
-          className="white hasIcon"
+          className="default hasIcon"
         >
           <BlockMenuIcon className="icon" />
         </button>

@@ -67,7 +67,7 @@ function InlineEditorBlockButtonRaw({
       placeholder={getString('placeholder_button')}
       style={{ margin: '0' }}
       linebreaks={true}
-      className="hide_border type_button"
+      className="hide_border type_button default"
 
       onInputRef={onInputRef}
       onGoToPrevInput={onGoToPrevInput}

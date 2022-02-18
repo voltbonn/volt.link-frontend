@@ -335,10 +335,20 @@ select,
   cursor: pointer;
   padding: var(--basis) var(--basis_x2);
 
+  background-color: var(--button-background) !important;
+  color: var(--button-color) !important;
+}
+
+button.default,
+select,
+.wrapped_select,
+.type_button.default {
   --button-background: var(--on-background);
   --button-color: var(--constant-button-color);
   background-color: var(--button-background) !important;
   color: var(--button-color) !important;
+
+  --border-radius: 0;
 }
 button[disabled]{
   cursor: default;
@@ -364,6 +374,16 @@ select {
   }
 }
 
+button,
+.clickable_card{
+  --borderRadius: var(--basis);
+  border-radius: var(--borderRadius);
+}
+button.default,
+button.square,
+.clickable_card.square {
+  --borderRadius: 0;
+}
 button.yellow {
   --button-background: var(--yellow);
   --button-color: var(--on-yellow);
@@ -389,9 +409,26 @@ button:focus,
   --button-background: var(--background-contrast) !important;
   --button-color: var(--on-background) !important;
 }
-button:not([disabled]):hover{
+/* button:not([disabled]):hover{
   transform-origin: center center;
   transform: scale(1.05);
+} */
+button:not([disabled]):hover:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--background-contrast);
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  border-radius: var(--borderRadius);
+}
+button.text:not([disabled]):hover:before {
+  opacity: var(--alpha-less);
+  mix-blend-mode: normal;
+  background-color: var(--on-background);
 }
 button.choosen:after {
   content: "";
@@ -464,7 +501,7 @@ button.hasIcon span{
   bottom: 0;
   left: 0;
 
-  border-radius: var(--basis_x2);
+  border-radius: var(--borderRadius);
 
   background-color: rgba(var(--on-background-rgb), 0);
 }
