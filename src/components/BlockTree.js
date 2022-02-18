@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback } from 'react'
 import classes from './BlockTree.module.css'
 
+import VirtualList from 'react-virtual-list'
+
 import {
   Collapse,
 } from '@mui/material'
@@ -18,29 +20,52 @@ import ViewerAuto from './view/ViewerAuto.js'
 
 const checkIfArrayHasContent = level => !!level && Array.isArray(level) && level.length > 0
 
-function BlockRows ({
+function BlockRowsRender ({
+  virtual,
+  
   levels,
-  level,
   createBlock,
   onClick,
   blockMenu,
   filterBlockIds,
 }) {
+  return <div style={virtual.style}>
+    {virtual.items.map(block => (
+      <BlockRow
+        key={block._id}
+        block={block}
+        levels={levels}
+        createBlock={createBlock}
+        onClick={onClick}
+        blockMenu={blockMenu}
+        filterBlockIds={filterBlockIds}
+      />
+    ))}
+  </div>
+}
+const VirtualBlockRowsRender = VirtualList()(BlockRowsRender)
+
+
+function BlockRows ({
+  level,
+  filterBlockIds,
+  ...props
+}) {
   if (!checkIfArrayHasContent(level)) {
     return null
   }
 
-  return level
+  const blocks = level
     .filter(block => (!filterBlockIds || filterBlockIds.length === 0) ? true : !filterBlockIds.includes(block._id))
-    .map(block => <BlockRow
-      key={block._id}
-      block={block}
-      levels={levels}
-      createBlock={createBlock}
-      onClick={onClick}
-      blockMenu={blockMenu}
-      filterBlockIds={filterBlockIds}
-    />)
+    .map(block => ({
+      ...block,
+    }))
+
+  return <VirtualBlockRowsRender
+    items={blocks}
+    itemHeight={40}
+    {...props}
+  />
 }
 
 function BlockRow ({
