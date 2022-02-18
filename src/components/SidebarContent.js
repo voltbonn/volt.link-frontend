@@ -107,7 +107,7 @@ export default function SidebarContent() {
   const [types, setTypes] = useState({
     page: true,
     person: true,
-    automation: true,
+    // automation: true,
   })
   const filteredTypes = Object.entries(types)
     .filter(([, value]) => value === true)
