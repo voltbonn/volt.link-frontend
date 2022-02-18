@@ -464,6 +464,8 @@ button.hasIcon span{
   bottom: 0;
   left: 0;
 
+  border-radius: var(--basis_x2);
+
   background-color: rgba(var(--on-background-rgb), 0);
   transition: background-color var(--timing);
 }
