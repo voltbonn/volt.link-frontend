@@ -136,14 +136,19 @@ export default function SidebarContent() {
     newTypes[type2toggle] = !newTypes[type2toggle]
 
     setTypes(newTypes)
-    refetch()
+    if (typeof refetch === 'function') {
+      refetch()
+    }
   }, [ types, setTypes, refetch ])
 
   const viewBlock = useCallback(block => {
     navigate(`/${block._id}/view`)
   }, [ navigate ])
 
-  return <div className={classes.content}>
+  const scrollContainerRef = useRef(null)
+
+  return <div ref={scrollContainerRef} className={classes.scrollContainer}>
+    <div className={classes.content}>
     <header className={classes.header}>
       <div className={classes.headerBar}>
         {
@@ -283,8 +288,6 @@ export default function SidebarContent() {
       <Divider style={{ opacity: 0.2 }} />
       <br/>
 
-      
-      
       {
         showBlockTree
         ? <BlockTree
@@ -294,9 +297,10 @@ export default function SidebarContent() {
             onGetRefetch={saveRefetchFunction}
             types={filteredTypes}
             archived={showArchived}
+            scrollContainer={scrollContainerRef}
           />
         : null
       }
-
+    </div>
   </div>
 }
