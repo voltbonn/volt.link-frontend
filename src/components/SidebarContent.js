@@ -56,22 +56,22 @@ const blockTypeIcons = {
 
 function debounce(func, wait, immediate) {
   // Source: underscore.js
-	var timeout;
+	var timeout
 	return function() {
-		var context = this, args = arguments;
+		var context = this, args = arguments
 		var later = function() {
-			timeout = null;
-			if (!immediate) func.apply(context, args);
-		};
-		var callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow) func.apply(context, args);
-	};
-};
+			timeout = null
+			if (!immediate) func.apply(context, args)
+		}
+		var callNow = immediate && !timeout
+		clearTimeout(timeout)
+		timeout = setTimeout(later, wait)
+		if (callNow) func.apply(context, args)
+	}
+}
 
 export default function SidebarContent() {
-  const mounted = useRef(false);
+  const mounted = useRef(false)
   useEffect(() => {
     mounted.current = true
     return () => {
