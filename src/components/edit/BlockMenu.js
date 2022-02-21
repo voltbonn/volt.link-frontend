@@ -25,7 +25,7 @@ import {
   Close as CloseIcon,
   // VerticalAlignTop as VerticalAlignTopIcon,
   // VerticalAlignBottom as VerticalAlignBottomIcon,
-  // Add as AddIcon,
+  Add as AddIcon,
   RepeatSharp as RepeatIcon,
   // RemoveCircleSharp as RemoveCircleIcon,
 
@@ -53,7 +53,7 @@ import useMutation from '../../hooks/useMutation.js'
 
 import Popover from '../Popover.js'
 import SubMenu from '../SubMenu.js'
-// import { AddMenuContent } from './AddMenu.js'
+import { AddMenuContent } from './AddMenu.js'
 
 function removeProperty(obj, prop) {
   // remove property from objects, arrays and sub-objects
@@ -115,12 +115,12 @@ function BlockMenu ({
     navigate(`/${_id}/edit`)
   }, [ _id, navigate ])
 
-  // const createChildBlock = useCallback(newBlock => {
-  //   createBlock({
-  //     ...newBlock,
-  //     parent: _id,
-  //   })
-  // }, [ createBlock, _id ])
+  const createChildBlock = useCallback(newBlock => {
+    createBlock({
+      ...newBlock,
+      parent: _id,
+    })
+  }, [ createBlock, _id ])
 
   const mutationFunction = useMutation()
 
@@ -270,7 +270,7 @@ function BlockMenu ({
                 : null
             */}
 
-            {/*
+            {
               typeof createBlock === 'function'
                 ? <SubMenu
                     parentMenuIsOpen={open}
@@ -284,7 +284,7 @@ function BlockMenu ({
                     <AddMenuContent createBlock={createChildBlock} />
                   </SubMenu>
                 : null
-            */}
+            }
 
             {
               typeof active === 'boolean' && toggle_active
