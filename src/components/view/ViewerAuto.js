@@ -69,6 +69,9 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable 
           newIndex: 0,
         },
       })
+        // .then(() => {
+        //   // TODO: reload sidebar
+        // })
         .catch(console.error)
     }
   }, [ mutationFunction, block ])
