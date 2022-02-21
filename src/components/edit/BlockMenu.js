@@ -27,7 +27,6 @@ import {
   // VerticalAlignBottom as VerticalAlignBottomIcon,
   // Add as AddIcon,
   RepeatSharp as RepeatIcon,
-  // AccountTreeSharp as BlockTreeIcon,
   // RemoveCircleSharp as RemoveCircleIcon,
 
   InsertDriveFileSharp as PageIcon,
@@ -48,14 +47,12 @@ import {
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
 import {
-  // moveBlock_Mutation,
   saveBlock_Mutation,
 } from '../../graphql/mutations.js'
 import useMutation from '../../hooks/useMutation.js'
 
 import Popover from '../Popover.js'
 import SubMenu from '../SubMenu.js'
-// import BlockTree from '../BlockTree.js'
 // import { AddMenuContent } from './AddMenu.js'
 
 function removeProperty(obj, prop) {
@@ -126,21 +123,6 @@ function BlockMenu ({
   // }, [ createBlock, _id ])
 
   const mutationFunction = useMutation()
-
-  // const setParent = useCallback(newParentId => {
-  //   mutationFunction({
-  //     mutation: moveBlock_Mutation,
-  //     variables: {
-  //       movingBlockId: block._id,
-  //       newParentId: newParentId,
-  //       newIndex: 0,
-  //     },
-  //   })
-  //   .then(() => {
-  //     console.log('moved block')
-  //   })
-  //   .catch(console.error)
-  // }, [ mutationFunction, block ])
 
   const toggleArchiveBlock = useCallback(() => {
     const newArchivedValue = archived === true ? false : true
@@ -302,58 +284,6 @@ function BlockMenu ({
                     <AddMenuContent createBlock={createChildBlock} />
                   </SubMenu>
                 : null
-            */}
-
-            {/*
-            <SubMenu
-              parentMenuIsOpen={open}
-              label={<>
-                <ListItemIcon>
-                  <BlockTreeIcon />
-                </ListItemIcon>
-                <Localized id="block_menu_move_block" />
-              </>}
-              MenuListProps={{
-                style: {
-                  marginTop: '-8px',
-                },
-              }}
-            >
-              <ListSubheader
-                style={{
-                  whiteSpace: 'nowrap',
-                  lineHeight: '1',
-                  margin: '-8px 0 0 0',
-                  padding: '12px 16px 12px',
-                  backgroundColor: 'var(--background-contrast)',
-                  color: 'var(--on-background)',
-                }}
-              >
-                <Localized id="block_menu_move_block" />
-              </ListSubheader>
-
-              <div style={{height: '8px'}}></div>
-
-              <MenuItem
-                onClick={thisBlock => setParent(null)}
-              >
-                <ListItemIcon>
-                  <RemoveCircleIcon />
-                </ListItemIcon>
-                <Localized id="block_menu_change_parent_none" />
-              </MenuItem>
-
-              <Divider style={{opacity: 0.2}} />
-
-              <div style={{ padding: '0 var(--basis_x2)', marginBottom: '8px' }}>
-                <BlockTree
-                  onClick={thisBlock => setParent(thisBlock._id)}
-                  blockMenu={false}
-                  types={['page', 'person']}
-                  filterBlockIds={[_id]}
-                />
-              </div>
-            </SubMenu>
             */}
 
             {
