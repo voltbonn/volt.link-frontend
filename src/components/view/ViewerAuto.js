@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+
+import { DataBothWays } from '../DataTransmat.js'
 
 import ViewerHeadlineCard from './ViewerHeadlineCard.js'
 import ViewerTextCard from './ViewerTextCard.js'
@@ -12,7 +14,10 @@ import ViewerAutomationCard from './ViewerAutomationCard.js'
 
 import classes from './ViewerAuto.module.css'
 
-function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, ...props }) {
+import { moveBlock_Mutation } from '../../graphql/mutations.js'
+import useMutation from '../../hooks/useMutation.js'
+
+function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable = false, ...props }) {
   let component = null
 
   const type = block.type || null
@@ -52,13 +57,39 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, ...props 
       component = JSON.stringify(block) // <ViewerTextCard key={block._id} block={block} actions={actions} {...props} />
   }
 
-  return <div
+  const mutationFunction = useMutation()
+
+  const onReceive = useCallback(({ data: movingBlock }) => {
+    if (movingBlock._id !== block._id) {
+      mutationFunction({
+        mutation: moveBlock_Mutation,
+        variables: {
+          movingBlockId: movingBlock._id,
+          newParentId: block._id,
+          newIndex: 0,
+        },
+      })
+        .catch(console.error)
+    }
+  }, [ mutationFunction, block ])
+
+  return <DataBothWays
     key={block._id}
+    draggable={dragable}
     className={classes.root}
     style={style}
+    onTransmit={() => ({
+      data: {
+        // 'text/plain': 'Hello world!',
+        // 'text/html': '<h1>Hello world!</h1>',
+        // 'text/uri-list': 'http://example.com',
+        'application/json': block,
+      }
+    })}
+    onReceive={onReceive}
   >
     {component}
-  </div>
+  </DataBothWays>
 }
 
 export default ViewerAuto

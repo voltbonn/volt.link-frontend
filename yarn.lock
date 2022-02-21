@@ -10511,6 +10511,11 @@ scheduler@^0.20.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
+schema-dts@^0.8.2:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/schema-dts/-/schema-dts-0.8.3.tgz#6c03ca47200e80e9a871d6de626a7cf04fe009b7"
+  integrity sha512-GSLeVkUgEe8DzS8/FGWou1wlC8tQ1KXA5amCqCIH/psUzF74fWswtT0QFlSoJLT08CYyixnc3S/lkAm+RExoLQ==
+
 schema-utils@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-1.0.0.tgz#0b79a93204d7b600d4b2850d1f66c2a34951c770"
@@ -11497,6 +11502,13 @@ tr46@^2.1.0:
   integrity sha512-15Ih7phfcdP5YxqiB+iDtLoaTz4Nd35+IiAv0kQ5FNKHzXgdWqPoTIqEDDJmXceQt4JZk6lVPT8lnDlPpGDppw==
   dependencies:
     punycode "^2.1.1"
+
+transmat@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/transmat/-/transmat-0.2.1.tgz#b6de9452489c134bea0a502244f33dfe51231297"
+  integrity sha512-5EHIY5/qV9Rt/fAqRlMg+aTGigUDbFA27C5bsFBfCBHrgAHHhkncKmM6pSZkEkGVfiAS4Wv5hU/Fa7ePVTKgAQ==
+  dependencies:
+    schema-dts "^0.8.2"
 
 tryer@^1.0.1:
   version "1.0.1"

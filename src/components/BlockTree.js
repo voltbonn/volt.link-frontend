@@ -11,8 +11,8 @@ import classes from './BlockTree.module.css'
 
 import {
   MoreHorizSharp as BlockMenuIcon,
-  // ArrowDropDownSharp as ExpandLessIcon,
-  // ArrowRightSharp as ExpandMoreIcon,
+  ArrowDropDownSharp as ExpandLessIcon,
+  ArrowRightSharp as ExpandMoreIcon,
 } from '@mui/icons-material'
 
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
@@ -55,8 +55,108 @@ function useViewportHeight() {
   return { height }
 }
 
+function buildTree(nodes){
+  // Build a tree from the blocks.
+  // Where each block has a parentId property.
+  // Each tree item should have the block itself, a list of children and a nesting level.
+  
+  const treeRoots = []
 
-const BlockRow = ({ createBlock, onClick, index, style, data }) => {
+  for (let node of nodes) {
+    let parentBlock = null
+    if (node.block.parent) {
+      parentBlock = nodes.find(n => n._id === node.block.parent)
+      if (!parentBlock) {
+        console.error('Invalid parent')
+      }
+    }
+
+    if (!parentBlock) {
+      treeRoots.push(node)
+    } else {
+      // If the parentBlock has no children, create the children array.
+      if (!parentBlock.children) {
+        parentBlock.children = []
+      }
+      parentBlock.children.push(node)
+    }
+  }
+
+  return treeRoots
+}
+
+function* treeWalker(treeRoots) {
+  const stack = []
+ 
+  // Remember all the necessary data of the first node in the stack.
+  for (const root of treeRoots) {
+    stack.unshift({
+      nestingLevel: 0,
+      node: root,
+    })
+  }
+ 
+  // Walk through the tree until we have no nodes available.
+  while (stack.length !== 0) {
+    const {
+      node: {children = [], _id, block, isOpen},
+      nestingLevel,
+    } = stack.pop()
+
+    yield {
+      _id,
+      isLeaf: children.length === 0,
+      isOpen,
+      block,
+      nestingLevel,
+    }
+ 
+    // Basing on the node openness state we are deciding if we need to render
+    // the child nodes (if they exist).
+    if (children.length !== 0 && isOpen) {
+      // Since it is a stack structure, we need to put nodes we want to render
+      // first to the end of the stack.
+      for (let i = children.length - 1; i >= 0; i--) {
+        stack.push({
+          nestingLevel: nestingLevel + 1,
+          node: children[i],
+        });
+      }
+    }
+  }
+}
+
+function getFlatTree(treeRoots){
+  const flatTree = []
+
+  const walker = treeWalker(treeRoots)
+
+  let done = false
+  while (!done) {
+    const { done: new_done, value } = walker.next()
+    done = new_done
+    if (!done) {
+      flatTree.push(value)
+    }
+  }
+
+  return flatTree
+}
+
+const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) => {
+  const {
+    _id,
+    isLeaf,
+    isOpen,
+    block,
+    nestingLevel,
+  } = data[index]
+
+  const toggleOpen = useCallback(() => {
+    if (typeof toggleOpenById === 'function') {
+      toggleOpenById(_id)
+    }
+  }, [ toggleOpenById, _id ])
 
   const actions = {
     click: () => {
@@ -65,10 +165,9 @@ const BlockRow = ({ createBlock, onClick, index, style, data }) => {
     }
   }
 
-  const block = data[index]
-
   const rowContent = <>
     <ViewerAuto
+      dragable={true}
       size="line"
       block={block}
       actions={actions}
@@ -90,7 +189,7 @@ const BlockRow = ({ createBlock, onClick, index, style, data }) => {
             {...props}
             className="text hasIcon"
             style={{
-              margin: '0 0 0 var(--basis_x2)',
+              margin: '0',
               padding: 'var(--basis) 0',
               flexShrink: '0',
             }}
@@ -102,6 +201,8 @@ const BlockRow = ({ createBlock, onClick, index, style, data }) => {
     </div>
   </>
 
+  const inset = ~~(nestingLevel * 30 + (isLeaf ? 24 : 0))
+
   return <div
     key={block._id}
     style={{
@@ -109,9 +210,28 @@ const BlockRow = ({ createBlock, onClick, index, style, data }) => {
       alignItems: 'center',
       flexDirection: 'row',
       ...style,
+      marginLeft: inset,
+      width: `calc(100% - ${inset}px)`,
     }}
     className={classes.blockRow}
   >
+    {!isLeaf && (
+      <button
+        onClick={toggleOpen}
+        className="text hasIcon"
+        style={{
+          margin: '0',
+          padding: 'var(--basis) 0',
+          flexShrink: '0',
+        }}
+      >
+        {
+          isOpen
+            ? <ExpandLessIcon style={{ verticalAlign: 'middle' }} />
+            : <ExpandMoreIcon style={{ verticalAlign: 'middle' }} />
+        }
+      </button>
+    )}
     {rowContent}
   </div>
 }
@@ -129,7 +249,9 @@ function BlockTree({
   const treeRef = React.useRef(null)
   const [outerHeight, setOuterHeight] = useState(minItemSize)
   const [bottomMargin, setBottomMargin] = useState(0)
-  const [blocks, setBlocks] = useState([])
+  const [nodes, setNodes] = useState({})
+  const [openById, setOpenById] = useState({})
+  const [treeNodes, setTreeNodes] = useState([])
   const prevFetchArguments = React.useRef({})
 
 
@@ -157,10 +279,25 @@ function BlockTree({
     updateHeight()
   }, [ updateHeight ])
 
+  const updateTree = useCallback(nodes => {
+    if (nodes.length > 0) {
+      nodes = nodes.map(node => ({
+        ...node,
+        isOpen: openById[node._id] || false,
+      }))
+      const treeRoots = buildTree(JSON.parse(JSON.stringify(nodes)))
+      const flatTree = getFlatTree(treeRoots)
+      setTreeNodes(flatTree)
+    } else {
+      setTreeNodes([])
+    }
+    updateHeight()
+  }, [ setTreeNodes, updateHeight, openById ])
+
   const loadBlocks = useLoadBlocks()
   const refetchData = useCallback(() => {
     if (
-      blocks.length === 0
+      nodes.length === 0
       || prevFetchArguments.current.archived !== archived
       || prevFetchArguments.current.types !== types
     ) {
@@ -169,12 +306,20 @@ function BlockTree({
       
       loadBlocks({ types, archived })
         .then(async loadedBlocks => {
-          setBlocks(loadedBlocks)
-          updateHeight()
+          const nodes = loadedBlocks
+          .map(block => ({
+            _id: block._id,
+            block,
+            children: [],
+            isOpen: false,
+          }))
+
+          setNodes(nodes)
+          updateTree(nodes)
         })
         .catch(error => console.error(error))
     }
-  }, [ blocks, loadBlocks, types, archived, setBlocks, updateHeight ])
+  }, [ nodes, loadBlocks, types, archived, setNodes, updateTree ])
 
   useEffect(() => {
     refetchData()
@@ -186,20 +331,35 @@ function BlockTree({
 
 
 
+  const toggleOpenById = useCallback((_id) => {
+    openById[_id] = !openById[_id]
+    setOpenById(openById)
+    updateTree(nodes)
+  }, [setOpenById, openById, updateTree, nodes])
+
   const row = (props) => {
     return <BlockRow
       createBlock={createBlock}
       onClick={onClick}
+      toggleOpenById={toggleOpenById}
       {...props}
     />
   }
 
-  return <div style={{ height: outerHeight, marginBottom: bottomMargin }} ref={outerTreeRef}>
+  return <div
+    style={{
+      height: outerHeight,
+      marginRight: '-12px',
+      marginLeft: '-12px',
+      marginBottom: bottomMargin,
+    }}
+    ref={outerTreeRef}
+  >
     <AutoSizer disableWidth>
       {({height}) => (
         <FixedSizeList
-          itemData={blocks}
-          itemCount={blocks.length}
+          itemData={treeNodes}
+          itemCount={treeNodes.length}
           ref={treeRef}
           innerRef={innerTreeRef}
           // onScroll={updateHeight}
@@ -210,9 +370,7 @@ function BlockTree({
             overflow: 'hidden',
             // 'overflow-x': 'hidden'
           }}
-          itemKey={function itemKey(index, data) {
-            return data[index]._id || index;
-          }}
+          itemKey={(index, data) => data[index]._id}
         >
           {row}
         </FixedSizeList>
