@@ -21,6 +21,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
 
   const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
 
+  let iconValueUrl = ''
   let coverphotoIsSet = false
   let iconIsSet = false
 
@@ -49,6 +50,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
       && isAbsoluteUrlRegexp.test(iconValue.url)
     ) {
       iconIsSet = true
+      iconValueUrl = iconValue.url || ''
     }
   }
 
@@ -66,10 +68,10 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
         <div
           className={`${classes.icon} ${!iconIsSet ? classes.no_image : ''}`}
           style={{
-            backgroundImage: iconIsSet ? `url(${window.domains.backend}download_url?f=jpg&w=400&h=400&url=${encodeURIComponent(iconValue.url)})` : '',
+            backgroundImage: iconIsSet ? `url(${window.domains.backend}download_url?f=jpg&w=400&h=400&url=${encodeURIComponent(iconValueUrl)})` : '',
           }}
         ></div>
-        <button {...triggerProps} className={classes.changeIconButton}>Set Icon</button>
+        <button {...triggerProps} className={`text ${classes.changeIconButton}`}>Set Icon</button>
       </div>)}
     >
       {({closePopover, ...popoverProps}) => (
@@ -96,7 +98,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
               <UrlInput
                 onError={setError}
                 onBlur={onUrlChange}
-                defaultValue={iconValue.url}
+                defaultValue={iconValueUrl}
                 style={{
                   marginRight: '0',
                   marginLeft: '0',
@@ -108,7 +110,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
 
           <hr />
 
-          <button onClick={closePopover} style={{ margin: 0 }}>
+          <button className="text" onClick={closePopover} style={{ margin: 0 }}>
             Close
           </button>
         </Paper>

@@ -41,6 +41,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
   //   }
   // }
 
+  let coverphotoValueUrl = ''
   let coverphotoIsSet = false
   let iconIsSet = false
 
@@ -55,6 +56,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
       && isAbsoluteUrlRegexp.test(coverphotoValue.url)
     ) {
       coverphotoIsSet = true
+      coverphotoValueUrl = coverphotoValue.url || ''
     }
   }
 
@@ -70,11 +72,6 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
     ) {
       iconIsSet = true
     }
-  }
-
-  let coverphotoValueUrl = ''
-  if (coverphotoValue && coverphotoValue.url) {
-    coverphotoValueUrl = coverphotoValue.url || ''
   }
 
   return <div
@@ -95,7 +92,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
           }}
         >
           <div className={classes.button_wrapper}>
-            <button {...triggerProps} className={classes.changeCoverphotoButton}>Set Coverphoto</button>
+            <button {...triggerProps} className={`text ${classes.changeCoverphotoButton}`}>Set Coverphoto</button>
           </div>
         </div>
       )}
@@ -185,7 +182,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
 
           <hr />
 
-          <button onClick={closePopover} style={{ margin: 0 }}>
+          <button className="text" onClick={closePopover} style={{ margin: 0 }}>
             Close
           </button>
         </Paper>
