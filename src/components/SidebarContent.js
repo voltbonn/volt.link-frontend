@@ -106,7 +106,7 @@ export default function SidebarContent() {
 
   const [types, setTypes] = useState({
     page: true,
-    person: true,
+    person: false,
     // automation: true,
   })
   const filteredTypes = Object.entries(types)
@@ -133,7 +133,13 @@ export default function SidebarContent() {
 
   const toggleType = useCallback(type2toggle => {
     const newTypes = { ...types }
-    newTypes[type2toggle] = !newTypes[type2toggle]
+    for (const type of Object.keys(newTypes)) {
+      if (type === type2toggle) {
+        newTypes[type] = true
+      } else {
+        newTypes[type] = false
+      }
+    }
 
     setTypes(newTypes)
     if (typeof refetch === 'function') {
