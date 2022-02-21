@@ -13,7 +13,7 @@ import { Localized } from '../../fluent/Localized.js'
 import InlineEditorBlock from './InlineEditorBlock.js'
 import useLoadBlocks from '../../hooks/useLoadBlocks.js'
 import useSaveBlock from '../../hooks/useSaveBlock.js'
-import useDeleteBlock from '../../hooks/useDeleteBlock.js'
+import useArchiveBlock from '../../hooks/useArchiveBlock.js'
 // import { useTranslatedInputContext } from './TranslatedInput.js'
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
@@ -129,7 +129,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
 
   const loadBlocks = useLoadBlocks()
   const saveBlock = useSaveBlock()
-  const deleteBlock = useDeleteBlock()
+  const archiveBlock = useArchiveBlock()
 
 
   const [autoFocus, setAutoFocus] = useState(null)
@@ -344,7 +344,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
               const this_block = newContentConfigs[index].block
               newContentConfigs.splice(index, 1) // delete the block
 
-              deleteBlock({ _id: this_block._id })
+              archiveBlock({ _id: this_block._id })
                 .then(() => {
                   contentConfigs_Ref.current = newContentConfigs
                   setAutoFocus({
@@ -361,7 +361,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
     } else {
       // This is the first row. Nothing to merge into.
     }
-  }, [ contentConfigs, inputRefs_Ref, saveBlock, handleRowChange, deleteBlock, contentConfigs_Ref, setAutoFocus, onChange ])
+  }, [ contentConfigs, inputRefs_Ref, saveBlock, handleRowChange, archiveBlock, contentConfigs_Ref, setAutoFocus, onChange ])
 
   const onMergeFromNextInput = useCallback(keys => {
     const {
@@ -402,7 +402,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
               const next_block = newContentConfigs[next_index].block
               newContentConfigs.splice(next_index, 1) // delete the block
 
-              deleteBlock({ _id: next_block._id })
+              archiveBlock({ _id: next_block._id })
                 .then(() => {
                   contentConfigs_Ref.current = newContentConfigs
                   setAutoFocus({
@@ -433,7 +433,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
     } else {
       // This is the last row. Nothing to merge into.
     }
-  }, [ contentConfigs, inputRefs_Ref, saveBlock, handleRowChange, deleteBlock, contentConfigs_Ref, setAutoFocus, onChange ])
+  }, [ contentConfigs, inputRefs_Ref, saveBlock, handleRowChange, archiveBlock, contentConfigs_Ref, setAutoFocus, onChange ])
 
   const splitText = useCallback((keys, { texts }) => {
     const {
