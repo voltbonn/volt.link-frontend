@@ -94,8 +94,8 @@ function BlockMenu ({
 }) {
   const navigate = useNavigate()
 
-  const { _id = '', type = '' } = block
-  const [archived, setArchived] = useState(block.properties.archived === true)
+  const { _id = '', type = '', properties = {} } = block
+  const [archived, setArchived] = useState(properties.archived === true)
 
   // const handleAddRowBefore = useCallback(() => {
   //
