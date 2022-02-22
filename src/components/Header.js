@@ -107,19 +107,20 @@ export default function Header({ title, block = {}, rightActions, notificationBa
               </button>
             )}
           >
-            {
-              parentBlocks
-              .map((block) => {
-                return <ViewerAuto
-                  key={block._id}
-                  block={block}
-                  size="line"
-                  style={{
-                    margin: 'var(--basis_x4) var(--basis_x2)',
-                  }}
-                />
-              })
-            }
+            <div style={{
+              padding: 'var(--basis_x2)',
+            }}>
+              {
+                parentBlocks
+                .map((block) => {
+                  return <ViewerAuto
+                    key={block._id}
+                    block={block}
+                    size="line"
+                  />
+                })
+              }
+            </div>
           </PopoverMenu>
           <span style={{ margin: 'var(--basis_x2)', opacity: 'var(--alpha)' }}>/</span>
         </>
@@ -137,19 +138,20 @@ export default function Header({ title, block = {}, rightActions, notificationBa
               </button>
             )}
           >
-            {
-              siblingBlocks
-              .map((block) => {
-                return <ViewerAuto
-                  key={block._id}
-                  block={block}
-                  size="line"
-                  style={{
-                    margin: 'var(--basis_x4) var(--basis_x2)',
-                  }}
-                />
-              })
-            }
+            <div style={{
+              padding: 'var(--basis_x2)',
+            }}>
+              {
+                siblingBlocks
+                .map((block) => {
+                  return <ViewerAuto
+                    key={block._id}
+                    block={block}
+                    size="line"
+                  />
+                })
+              }
+            </div>
           </PopoverMenu>
         : <span style={{ fontWeight: 'bold' }}>
             {title}
