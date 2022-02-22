@@ -211,6 +211,7 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
       flexDirection: 'row',
       ...style,
       marginLeft: inset,
+      minWidth: `calc(100% - ${(isLeaf ? 24 : 0)}px)`,
       width: `calc(100% - ${inset}px)`,
     }}
     className={classes.blockRow}
@@ -367,7 +368,8 @@ function BlockTree({
           height={height}
           width="100%"
           style={{
-            overflow: 'hidden',
+            'overflow-y': 'hidden',
+            'overflow-x': 'auto',
             // 'overflow-x': 'hidden'
           }}
           itemKey={(index, data) => data[index]._id}
