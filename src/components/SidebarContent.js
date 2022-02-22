@@ -192,6 +192,7 @@ export default function SidebarContent() {
               Object.keys(types)
                 .map(type => (
                   <MenuItem
+                    className="roundMenuItem"
                     key={type}
                     onClick={() => toggleType(type)}
                     selected={filteredTypes.includes(type)}
@@ -209,6 +210,7 @@ export default function SidebarContent() {
             <Divider style={{opacity: 0.2}} />
 
             <MenuItem
+              className="roundMenuItem"
               onClick={toggleShowArchived}
               selected={showArchived === true}
             >
