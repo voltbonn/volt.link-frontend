@@ -201,7 +201,7 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
     </div>
   </>
 
-  const inset = ~~(nestingLevel * 30 + (isLeaf ? 24 : 0))
+  const inset = ~~(nestingLevel * 25 + (isLeaf ? 24 : 0))
 
   return <div
     key={block._id}
