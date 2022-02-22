@@ -240,7 +240,7 @@ export default function SidebarContent() {
         {
           loggedIn
             ? <a href={`${window.domains.frontend}help`}>
-                <MenuItem>
+                <MenuItem className="roundMenuItem">
                   <ListItemIcon>
                     <HelpIcon />
                   </ListItemIcon>
@@ -253,7 +253,7 @@ export default function SidebarContent() {
         {
           loggedIn
             ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-                <MenuItem>
+                <MenuItem className="roundMenuItem">
                   <ListItemIcon>
                     <LogoutIcon />
                   </ListItemIcon>
@@ -261,7 +261,7 @@ export default function SidebarContent() {
                 </MenuItem>
               </a>
             : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-                <MenuItem>
+                <MenuItem className="roundMenuItem">
                   <ListItemIcon>
                     <LoginIcon />
                   </ListItemIcon>
@@ -271,7 +271,7 @@ export default function SidebarContent() {
         }
 
         <a href="mailto:thomas.rosen@volteuropa.org">
-          <MenuItem>
+          <MenuItem className="roundMenuItem">
             <ListItemIcon>
               <ContactIcon />
             </ListItemIcon>
@@ -280,7 +280,7 @@ export default function SidebarContent() {
         </a>
 
         <a href="https://github.com/voltbonn/edit.volt.link" target="_blank" rel="noopener noreferrer">
-          <MenuItem>
+          <MenuItem className="roundMenuItem">
             <ListItemIcon>
               <SourceCodeIcon />
             </ListItemIcon>

@@ -37,7 +37,7 @@ function AddMenuContent({ createBlock }) {
     {
       types
         .map(type => (
-          <MenuItem key={type} onClick={() => createBlock({ type })}>
+          <MenuItem className="roundMenuItem" key={type} onClick={() => createBlock({ type })}>
             <ListItemIcon>
               {blockTypeIcons[type]}
             </ListItemIcon>

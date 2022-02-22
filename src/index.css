@@ -653,3 +653,9 @@ div[contenteditable].hide_border{
     box-shadow: var(--input-box-shadow);
   }
 }
+
+.roundMenuItem {
+  border-radius: var(--basis) !important;
+  margin: 0 var(--basis_x2) !important;
+  padding: var(--basis) var(--basis_x2) !important;
+}

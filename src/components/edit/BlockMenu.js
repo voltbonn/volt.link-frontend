@@ -195,7 +195,7 @@ function BlockMenu ({
                     style={{
                       whiteSpace: 'nowrap',
                       lineHeight: '1',
-                      margin: '-8px 0 0 0',
+                      margin: '0',
                       padding: '12px 16px 12px',
                       backgroundColor: 'var(--background-contrast)',
                       color: 'var(--on-background)',
@@ -225,6 +225,7 @@ function BlockMenu ({
                         key={option.value}
                         selected={option.value === type}
                         onClick={() => setType(option.value)}
+                        className="roundMenuItem"
                       >
                         <ListItemIcon>
                           {option.icon}
@@ -288,7 +289,7 @@ function BlockMenu ({
 
             {
               typeof active === 'boolean' && toggle_active
-                ? <MenuItem onClick={toggle_active}>
+                ? <MenuItem className="roundMenuItem" onClick={toggle_active}>
                     <ListItemIcon>
                       {
                         active
@@ -305,7 +306,7 @@ function BlockMenu ({
                 : null
             }
 
-            <MenuItem onClick={toggleArchiveBlock}>
+            <MenuItem className="roundMenuItem" onClick={toggleArchiveBlock}>
               <ListItemIcon>
                 {
                   archived === true
@@ -334,13 +335,13 @@ function BlockMenu ({
                         : null
                     }
 
-                    <MenuItem style={{marginTop:'8px'}} onClick={viewBlock}>
+                    <MenuItem className="roundMenuItem" style={{marginTop:'8px'}} onClick={viewBlock}>
                       <ListItemIcon>
                         <ViewIcon />
                       </ListItemIcon>
                       <Localized id="view_block" />
                     </MenuItem>
-                    <MenuItem onClick={editBlock}>
+                    <MenuItem className="roundMenuItem" onClick={editBlock}>
                       <ListItemIcon>
                         <EditIcon />
                       </ListItemIcon>
@@ -352,7 +353,7 @@ function BlockMenu ({
 
             <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
 
-            <MenuItem onClick={closePopover}>
+            <MenuItem className="roundMenuItem" onClick={closePopover}>
               <ListItemIcon>
                 <CloseIcon />
               </ListItemIcon>

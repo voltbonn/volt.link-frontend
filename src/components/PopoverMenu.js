@@ -45,9 +45,9 @@ export default function PopoverMenu ({
           >
             {children}
 
-            <Divider style={{opacity: 0.2}} />
+            <Divider style={{opacity: 0.2, marginBottom:'8px'}}  />
 
-            <MenuItem style={{marginTop:'8px'}} onClick={closePopover}>
+            <MenuItem className="roundMenuItem" onClick={closePopover}>
               <ListItemIcon>
                 <CloseIcon />
               </ListItemIcon>

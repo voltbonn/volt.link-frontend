@@ -47,6 +47,7 @@ export default function SubMenu ({
 
       ref={triggerRef}
       onClick={toggleSubmenu}
+      className="roundMenuItem"
       style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -95,7 +96,7 @@ export default function SubMenu ({
 
         <Divider style={{opacity: 0.2}} />
 
-        <MenuItem style={{marginTop:'8px'}} onClick={closeSubmenu}>
+        <MenuItem className="roundMenuItem" style={{marginTop:'8px'}} onClick={closeSubmenu}>
           <ListItemIcon>
             <CloseIcon />
           </ListItemIcon>
