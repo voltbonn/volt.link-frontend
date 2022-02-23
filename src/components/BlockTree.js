@@ -152,11 +152,23 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
     nestingLevel,
   } = data[index]
 
+  const [blockMenuIsOpen, setBlockMenuIsOpen] = useState(false)
+
   const toggleOpen = useCallback(() => {
     if (typeof toggleOpenById === 'function') {
       toggleOpenById(_id)
     }
   }, [ toggleOpenById, _id ])
+
+  const onBlockMentToogle = useCallback(newValue => {
+    if (newValue === false) {
+      setTimeout(() => {
+        setBlockMenuIsOpen(newValue)
+      }, 200) // The fade-out animation is 200ms. Only rerender after it, for it not to loose the element.
+    } else {
+      setBlockMenuIsOpen(newValue)
+    }
+  }, [ setBlockMenuIsOpen ])
 
   const actions = {
     click: () => {
@@ -179,6 +191,7 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
 
     <div className={classes.blockRowActions}>
       <BlockMenu
+        onToogle={onBlockMentToogle}
         {...{
           block,
           createBlock,
@@ -187,7 +200,7 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
         trigger={props => (
           <button
             {...props}
-            className="text hasIcon"
+            className={`text hasIcon ${blockMenuIsOpen ? 'fakeHover' : ''}`}
             style={{
               margin: '0',
               padding: 'var(--basis) 0',
@@ -214,7 +227,7 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
       minWidth: `calc(100% - ${(isLeaf ? 24 : 0)}px)`,
       width: `calc(100% - ${inset}px)`,
     }}
-    className={classes.blockRow}
+    className={`${classes.blockRow} ${blockMenuIsOpen ? classes.fakeHover : ''}`}
   >
     {!isLeaf && (
       <button

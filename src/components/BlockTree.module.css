@@ -10,6 +10,7 @@
     .blockRow .blockRowActions {
       display: none;
     }
+    .blockRow.fakeHover .blockRowActions,
     .blockRow:hover .blockRowActions {
       display: flex;
       align-items: stretch;

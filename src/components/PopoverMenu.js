@@ -18,9 +18,11 @@ import Popover from './Popover.js'
 export default function PopoverMenu ({
   trigger,
   children,
+  onToogle,
 }) {
   return <Popover
     trigger={trigger}
+    onToogle={onToogle}
   >
     {({closePopover, ...popoverProps}) => (
         <Paper

@@ -11,15 +11,20 @@ const randomString = () => (Math.random() + 1).toString(36).substring(7)
 function Popover ({
   trigger,
   children = () => {},
+  onToogle = () => {},
 }) {
   const anchorRef = useRef(null)
   const [open, setOpen] = useState(false)
 
   const handlePopoverToggleClick = () => {
-    setOpen((prevOpen) => !prevOpen)
+    setOpen((prevOpen) => {
+      onToogle(!prevOpen)
+      return !prevOpen
+    })
   }
 
   const closePopover = () => {
+    onToogle(false)
     setOpen(false)
   }
 

@@ -413,6 +413,7 @@ button:focus,
   transform-origin: center center;
   transform: scale(1.05);
 } */
+button:not([disabled]).fakeHover:before,
 button:not([disabled]):hover:before {
   content: "";
   position: absolute;
@@ -425,6 +426,7 @@ button:not([disabled]):hover:before {
   opacity: 0.3;
   border-radius: var(--borderRadius);
 }
+button.text:not([disabled]).fakeHover:before,
 button.text:not([disabled]):hover:before {
   opacity: var(--alpha-less);
   mix-blend-mode: normal;

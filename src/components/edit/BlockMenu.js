@@ -79,6 +79,7 @@ function BlockMenu ({
   getString,
 
   trigger,
+  onToogle,
 
   setType,
   createBlock,
@@ -152,6 +153,7 @@ function BlockMenu ({
   return <>
   <Popover
     trigger={trigger}
+    onToogle={onToogle}
   >
     {({closePopover, open, ...popoverProps}) => (
         <Paper
