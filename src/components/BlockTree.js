@@ -381,9 +381,9 @@ function BlockTree({
           height={height}
           width="100%"
           style={{
-            'overflow-y': 'hidden',
-            'overflow-x': 'auto',
-            // 'overflow-x': 'hidden'
+            overflowY: 'hidden',
+            overflowX: 'auto',
+            // overflowX: 'hidden',
           }}
           itemKey={(index, data) => data[index]._id}
         >
