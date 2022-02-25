@@ -328,8 +328,10 @@ function BlockTree({
             isOpen: false,
           }))
 
-          setNodes(nodes)
-          updateTree(nodes)
+          if (nodes.length > 0) {
+            setNodes(nodes)
+            updateTree(nodes)
+          }
         })
         .catch(error => console.error(error))
     }
