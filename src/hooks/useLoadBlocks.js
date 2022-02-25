@@ -12,12 +12,13 @@ function useLoadBlocks() {
         query: getBlocks_Query,
         variables,
       })
-        .then(async ({ data }) => {
-          if (typeof data.error === 'string' || !data.blocks) {
-            console.error(data.error)
-            resolve([])
+        .then(async ({ errors, data }) => {
+          if (Array.isArray(errors) && errors.length > 0) {
+            throw errors
+          } else if (Array.isArray(data.blocks)) {
+            resolve(data.blocks)
           }else{
-            resolve(data.blocks || [])
+            throw new Error('Unknown error while loading blocks.')
           }
         })
         .catch(async error => {
