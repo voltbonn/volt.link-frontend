@@ -1,7 +1,7 @@
 .icon {
   display: inline-block;
-  height: calc(var(--font-add) + var(--basis));
-  width: calc(var(--font-add) + var(--basis));
+  height: calc(5 * var(--basis)) !important;
+  width: calc(5 * var(--basis)) !important;
   vertical-align: middle;
   background-position: center;
   background-size: cover;
