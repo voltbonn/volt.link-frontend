@@ -344,7 +344,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
               const this_block = newContentConfigs[index].block
               newContentConfigs.splice(index, 1) // delete the block
 
-              archiveBlock({ _id: this_block._id })
+              archiveBlock({ _id: this_block._id, archive: true })
                 .then(() => {
                   contentConfigs_Ref.current = newContentConfigs
                   setAutoFocus({
@@ -402,7 +402,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
               const next_block = newContentConfigs[next_index].block
               newContentConfigs.splice(next_index, 1) // delete the block
 
-              archiveBlock({ _id: next_block._id })
+              archiveBlock({ _id: next_block._id, archive: true })
                 .then(() => {
                   contentConfigs_Ref.current = newContentConfigs
                   setAutoFocus({
