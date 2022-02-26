@@ -157,6 +157,7 @@ filter_menu_showing_archiv = Showing Archiv
 
 block_menu_info_created = Created
 block_menu_info_modified = Last Modified
+block_menu_info_id = ID of the block
 
 path_editor_item_text_info = You can use Markdown and HTML in the text-field.
 

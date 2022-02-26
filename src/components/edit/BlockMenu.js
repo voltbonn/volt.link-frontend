@@ -342,6 +342,12 @@ function BlockMenu ({
                 secondary={(metadata.modified || '').replace(/[TZ]/g, ' ')}
               />
             </ListItem>
+            <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
+              <ListItemText
+                primary={<Localized id="block_menu_info_id" />}
+                secondary={_id}
+              />
+            </ListItem>
 
           </MenuList>
         </Paper>
