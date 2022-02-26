@@ -46,33 +46,11 @@ import {
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
-import {
-  saveBlock_Mutation,
-} from '../../graphql/mutations.js'
-import useMutation from '../../hooks/useMutation.js'
+import useArchiveBlock from '../../hooks/useArchiveBlock.js'
 
 import Popover from '../Popover.js'
 import SubMenu from '../SubMenu.js'
 import { AddMenuContent } from './AddMenu.js'
-
-function removeProperty(obj, prop) {
-  // remove property from objects, arrays and sub-objects
-
-  obj = JSON.parse(JSON.stringify(obj)) // clone object to make everything mutable
-
-  if (obj.hasOwnProperty(prop)) {
-    delete obj[prop]
-  }
-  for (const i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      if (typeof obj[i] == 'object' && obj[i] !== null) {
-        removeProperty(obj[i], prop)
-      }
-    }
-  }
-
-  return obj
-}
 
 function BlockMenu ({
   block = {},
@@ -93,7 +71,9 @@ function BlockMenu ({
   const navigate = useNavigate()
 
   const { _id = '', type = '', properties = {} } = block
+
   const [archived, setArchived] = useState(properties.archived === true)
+  const archiveBlock = useArchiveBlock()
 
   // const handleAddRowBefore = useCallback(() => {
   //
@@ -123,30 +103,14 @@ function BlockMenu ({
     })
   }, [ createBlock, _id ])
 
-  const mutationFunction = useMutation()
-
   const toggleArchiveBlock = useCallback(() => {
-    const newArchivedValue = archived === true ? false : true
-
-    const blockWithoutTypename = removeProperty(block, '__typename')
-  
-    mutationFunction({
-      mutation: saveBlock_Mutation,
-      variables: {
-        block: {
-          ...blockWithoutTypename,
-          properties: {
-            ...blockWithoutTypename.properties,
-            archived: newArchivedValue,
-          },
-        },
-      },
-    })
-    .then(() => {
-      setArchived(newArchivedValue)
-    })
-    .catch(console.error)
-  }, [ mutationFunction, block, archived, setArchived ])
+    const newArchived = !archived
+    archiveBlock({ _id: block._id, archive: newArchived })
+      .then(() => {
+        setArchived(newArchived)
+      })
+      .catch(console.error)
+  }, [ archiveBlock, setArchived, archived, block ])
 
   const metadata = block.metadata || {}
 
