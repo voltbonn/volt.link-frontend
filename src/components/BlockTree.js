@@ -329,6 +329,7 @@ function BlockTree({
           }))
 
           if (nodes.length > 0) {
+            // TODO: This prevents from displaying empty trees.
             setNodes(nodes)
             updateTree(nodes)
           }
