@@ -6,6 +6,9 @@ import classes from './CoverphotoPicker.module.css'
 import Popover from '../Popover.js'
 
 import { Paper } from '@mui/material'
+import {
+  RectangleSharp as CoverphotoIcon,
+} from '@mui/icons-material'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
@@ -92,7 +95,10 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
           }}
         >
           <div className={classes.button_wrapper}>
-            <button {...triggerProps} className={`text ${classes.changeCoverphotoButton}`}>Set Coverphoto</button>
+            <button {...triggerProps} className={`text hasIcon ${classes.changeCoverphotoButton}`}>
+              <CoverphotoIcon className="icon" />
+              <span style={{ marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>Set Coverphoto</span>
+            </button>
           </div>
         </div>
       )}

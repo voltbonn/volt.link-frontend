@@ -4,6 +4,9 @@ import classes from './IconPicker.module.css'
 import Popover from '../Popover.js'
 
 import { Paper } from '@mui/material'
+import {
+  CircleSharp as IconIcon,
+} from '@mui/icons-material'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
 
@@ -71,7 +74,10 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
             backgroundImage: iconIsSet ? `url(${window.domains.backend}download_url?f=jpg&w=400&h=400&url=${encodeURIComponent(iconValueUrl)})` : '',
           }}
         ></div>
-        <button {...triggerProps} className={`text ${classes.changeIconButton}`}>Set Icon</button>
+        <button {...triggerProps} className={`text hasIcon ${classes.changeIconButton}`}>
+          <IconIcon className="icon" />
+          <span style={{ marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>Set Icon</span>
+        </button>
       </div>)}
     >
       {({closePopover, ...popoverProps}) => (
