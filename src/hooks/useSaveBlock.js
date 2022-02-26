@@ -7,6 +7,25 @@ import { saveBlock_Mutation } from '../graphql/mutations.js'
 
 import { useSnackbar } from 'notistack'
 
+function removeProperty(obj, prop) {
+  // remove property from objects, arrays and sub-objects
+
+  obj = JSON.parse(JSON.stringify(obj)) // clone object to make everything mutable
+
+  if (obj.hasOwnProperty(prop)) {
+    delete obj[prop]
+  }
+  for (const i in obj) {
+    if (obj.hasOwnProperty(i)) {
+      if (typeof obj[i] == 'object' && obj[i] !== null) {
+        removeProperty(obj[i], prop)
+      }
+    }
+  }
+
+  return obj
+}
+
 function useSaveBlock() {
   const { getString } = useLocalization()
 
@@ -18,13 +37,11 @@ function useSaveBlock() {
       let snackbarKey = null
 
       newBlock = {...newBlock}
-
-      if (
-        typeof newBlock === 'object'
-        && newBlock !== null
-        && newBlock.hasOwnProperty('__typename')
-      ) {
-        delete newBlock.__typename
+      newBlock = removeProperty(newBlock, '__typename')
+      if (newBlock.hasOwnProperty('content') && Array.isArray(newBlock.content)) {
+        newBlock.content = newBlock.content.map(contentConfig => ({
+          blockId: contentConfig.blockId,
+        }))
       }
 
       const loadingDataPromise = new Promise(resolve => {
