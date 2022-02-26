@@ -332,8 +332,8 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
 
         placeholder={getString('placeholder_main_headline')}
         style={{
-          margin: '0',
-          padding: 'var(--basis) calc(8 * var(--basis))',
+          margin: '0 0 0 calc(8 * var(--basis))',
+          padding: 'var(--basis) var(--basis_x2)',
         }}
         linebreaks={true}
         className={`type_h1`}
