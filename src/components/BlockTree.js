@@ -160,7 +160,7 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
     }
   }, [ toggleOpenById, _id ])
 
-  const onBlockMentToogle = useCallback(newValue => {
+  const onBlockMenuToogle = useCallback(newValue => {
     if (newValue === false) {
       setTimeout(() => {
         setBlockMenuIsOpen(newValue)
@@ -191,7 +191,7 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
 
     <div className={classes.blockRowActions}>
       <BlockMenu
-        onToogle={onBlockMentToogle}
+        onToogle={onBlockMenuToogle}
         {...{
           block,
           createBlock,
