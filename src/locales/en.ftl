@@ -121,7 +121,7 @@ action_input_url_placeholder = https://voltdeutschland.org/bonn
 add_content_before = Add Content
 content_editor_reorderblock_label = Reorder
 
-block_menu_choose_type_label = Choose Block Type
+block_menu_choose_type_label = Turn into…
 block_menu_move_block = Move Block
 block_menu_change_parent_none = No Parent
 
