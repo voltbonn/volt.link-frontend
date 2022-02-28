@@ -10,10 +10,12 @@ import {
   AutoAwesomeSharp as AutomationIcon,
   // LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
-  // Crop75Sharp as ButtonIcon,
-  // TitleSharp as HeadlineIcon,
-  // NotesSharp as TextIcon,
-  // Remove as DividerIcon,
+  Crop75Sharp as ButtonIcon,
+  TitleSharp as HeadlineIcon,
+  NotesSharp as TextIcon,
+  Remove as DividerIcon,
+  CodeSharp as CodeIcon,
+  CheckBox as CheckboxIcon,
   // EditSharp as EditIcon,
 } from '@mui/icons-material'
 
@@ -22,17 +24,28 @@ import PopoverMenu from '../PopoverMenu.js'
 import { Localized } from '../../fluent/Localized.js'
 
 const blockTypeIcons = {
+  button: <ButtonIcon />,
+  headline: <HeadlineIcon />,
+  headline3: <HeadlineIcon />,
+  text: <TextIcon />,
+  code: <CodeIcon />,
+  divider: <DividerIcon />,
+  checkbox: <CheckboxIcon />,
   page: <PageIcon />,
   person: <PersonIcon />,
   automation: <AutomationIcon />,
 }
 
-const types = [
+const default_types = [
   'page',
   'automation',
 ]
 
-function AddMenuContent({ createBlock }) {
+function AddMenuContent({ createBlock, types }) {
+  if (!types || !Array.isArray(types)) {
+    types = default_types
+  }
+
   return <>
     {
       types
@@ -42,7 +55,7 @@ function AddMenuContent({ createBlock }) {
               {blockTypeIcons[type]}
             </ListItemIcon>
             <ListItemText>
-              <Localized id={'create_new_'+type} />
+              <Localized id={'block_menu_type_label_'+type} />
             </ListItemText>
           </MenuItem>
         ))
@@ -50,13 +63,13 @@ function AddMenuContent({ createBlock }) {
   </>
 }
 
-function AddMenu ({ trigger, createBlock }) {
+function AddMenu ({ trigger, createBlock, types }) {
   const { loggedIn } = useUser()
 
   if (loggedIn) {
     return <PopoverMenu trigger={trigger}>
       <div style={{ marginTop: '8px' }}></div>
-      <AddMenuContent createBlock={createBlock} />
+      <AddMenuContent createBlock={createBlock} types={types} />
     </PopoverMenu>
   }
 

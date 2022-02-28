@@ -16,6 +16,8 @@ import useSaveBlock from '../../hooks/useSaveBlock.js'
 import useArchiveBlock from '../../hooks/useArchiveBlock.js'
 // import { useTranslatedInputContext } from './TranslatedInput.js'
 
+import AddMenu from './AddMenu.js'
+
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
@@ -532,20 +534,35 @@ function ContentEditor({ defaultValue = [], onChange }) {
     }}
   >
     <div>
-      <button
-        onClick={() => addRowByIndex(0, 0, { type: 'text' })}
-        className="text hasIcon"
-        style={{
-          margin: '0 0 var(--basis_x2) 0',
-        }}
-      >
-        <span style={{pointerEvents: 'none'}}>
-          <AddIcon className="icon" />
-          <span style={{marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>
-            <Localized id="add_content_before" />
-          </span>
-        </span>
-      </button>
+      <AddMenu
+        types={[
+          'button',
+          'text',
+          'headline',
+          // 'headline3',
+          // 'code',
+          'divider',
+          // 'checkbox',
+          // 'page',
+        ]}
+        createBlock={({ type }) => addRowByIndex(0, 0, { block: { type: type } })}
+        trigger={triggerProps => 
+          <button
+            {...triggerProps}
+            className="text hasIcon"
+            style={{
+              margin: '0 0 var(--basis_x2) 0',
+            }}
+          >
+            <span style={{pointerEvents: 'none'}}>
+              <AddIcon className="icon" />
+              <span style={{marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>
+                <Localized id="add_content_before" />
+              </span>
+            </span>
+          </button>
+        }
+      />
     </div>
 
     <DragDropContext onDragEnd={onDragEnd}>
