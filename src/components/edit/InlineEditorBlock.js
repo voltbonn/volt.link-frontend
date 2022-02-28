@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 
 import { withLocalization } from '../../fluent/Localized.js'
 
@@ -89,6 +89,7 @@ function InlineEditorBlockRaw({
   onSplitText,
   onMergeToPrevInput,
   onMergeFromNextInput,
+  onRemoveSelf,
 }) {
   const saveBlock = useSaveBlock()
 
@@ -181,6 +182,19 @@ function InlineEditorBlockRaw({
       .catch(console.error)
   }, [ saveBlock ])
 
+  const setOpenBlockMenuRef = useRef(null)
+  const onArchiveToggle = useCallback(newArchivedValue => {
+    if (
+      typeof setOpenBlockMenuRef.current === 'function'
+      && typeof onRemoveSelf === 'function'
+    ) {
+      setOpenBlockMenuRef.current(false)
+      setTimeout(() => {
+        onRemoveSelf()
+      }, 200) // The fade-out animation is 200ms. Only rerender after it, for it not to loose the element.
+    }
+  }, [ setOpenBlockMenuRef, onRemoveSelf ])
+
   return <div
     className={`${classes.block} ${className}`}
     {...dataset}
@@ -196,6 +210,9 @@ function InlineEditorBlockRaw({
         addRowBefore,
         addRowAfter,
       }}
+
+      onArchivedToggle={onArchiveToggle}
+      setOpenBlockMenuRef={setOpenBlockMenuRef}
 
       trigger={props => (
         <div

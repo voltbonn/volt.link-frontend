@@ -500,6 +500,19 @@ function ContentEditor({ defaultValue = [], onChange }) {
     setAutoFocus,
   ])
 
+  const handleRemoveSelf = useCallback(keys => {
+    const {
+      index,
+    } = keys
+
+    const newContentConfigs = [...contentConfigs]
+    newContentConfigs.splice(index, 1) // delete the block
+
+    contentConfigs_Ref.current = newContentConfigs
+
+    onChange(newContentConfigs)
+  }, [ contentConfigs, onChange ])
+
   function onDragEnd(result) {
     if (!result.destination) {
       return
@@ -631,7 +644,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
                             </Tooltip>
                           }
 
-                          onRemoveRow={ () => {/*handleRemoveRow(index)*/} }
+                          onRemoveSelf={ () => handleRemoveSelf(keys) }
                           addRowBefore={ (newValue) => addRowByIndex(index, 0, newValue) }
                           addRowAfter={ (newValue) => addRowByIndex(index, 1, newValue) }
 
