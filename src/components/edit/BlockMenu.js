@@ -67,6 +67,9 @@ function BlockMenu ({
   onRemoveRow = null,
   addRowBefore = null,
   // addRowAfter = null,
+  onArchivedToggle = null,
+
+  setOpenBlockMenuRef,
 }) {
   const navigate = useNavigate()
 
@@ -108,9 +111,12 @@ function BlockMenu ({
     archiveBlock({ _id: block._id, archive: newArchived })
       .then(() => {
         setArchived(newArchived)
+        if (typeof onArchivedToggle === 'function') {
+          onArchivedToggle(newArchived)
+        }
       })
       .catch(console.error)
-  }, [ archiveBlock, setArchived, archived, block ])
+  }, [ archiveBlock, setArchived, archived, block, onArchivedToggle ])
 
   const metadata = block.metadata || {}
 
@@ -118,6 +124,7 @@ function BlockMenu ({
   <Popover
     trigger={trigger}
     onToogle={onToogle}
+    setOpenBlockMenuRef={setOpenBlockMenuRef}
   >
     {({closePopover, open, ...popoverProps}) => (
         <Paper
@@ -271,20 +278,24 @@ function BlockMenu ({
                 : null
             }
 
-            <MenuItem className="roundMenuItem" onClick={toggleArchiveBlock}>
-              <ListItemIcon>
-                {
-                  archived === true
-                  ? <UnarchiveIcon />
-                  : <ArchiveIcon />
-                }
-              </ListItemIcon>
-              {
-                archived === true
-                ? <Localized id="block_menu_unarchive" />
-                : <Localized id="block_menu_archive" />
-              }
-            </MenuItem>
+            {
+              typeof onArchivedToggle === 'function'
+              ? <MenuItem className="roundMenuItem" onClick={toggleArchiveBlock}>
+                  <ListItemIcon>
+                    {
+                      archived === true
+                      ? <UnarchiveIcon />
+                      : <ArchiveIcon />
+                    }
+                  </ListItemIcon>
+                  {
+                    archived === true
+                    ? <Localized id="block_menu_unarchive" />
+                    : <Localized id="block_menu_archive" />
+                  }
+                </MenuItem>
+              : null
+            }
 
             {
               typeof _id === 'string' && _id !== ''
