@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 import {
   Portal,
@@ -12,9 +12,20 @@ function Popover ({
   trigger,
   children = () => {},
   onToogle = () => {},
+  setOpenBlockMenuRef,
 }) {
   const anchorRef = useRef(null)
   const [open, setOpen] = useState(false)
+
+  const setOpenExternal = useCallback((newOpen) => {
+    setOpen(newOpen)
+  }, [ setOpen ])
+
+  useEffect(() => {
+    if (!!setOpenBlockMenuRef) {
+      setOpenBlockMenuRef.current = setOpenExternal
+    }
+  }, [ setOpenExternal, setOpenBlockMenuRef ])
 
   const handlePopoverToggleClick = () => {
     setOpen((prevOpen) => {
