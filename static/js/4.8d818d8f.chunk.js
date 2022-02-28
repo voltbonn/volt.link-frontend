@@ -1,2 +1,0 @@
-(this["webpackJsonpedit.volt.link"]=this["webpackJsonpedit.volt.link"]||[]).push([[4],{322:function(t,i,e){"use strict";e.r(i),i.default=e.p+"static/media/en.29c8afc9.ftl"}}]);
-//# sourceMappingURL=4.8d818d8f.chunk.js.map
