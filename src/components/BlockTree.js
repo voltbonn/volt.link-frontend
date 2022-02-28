@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window';
 
@@ -143,7 +143,15 @@ function getFlatTree(treeRoots){
   return flatTree
 }
 
-const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) => {
+const BlockRow = ({
+  createBlock,
+  onClick,
+  index,
+  style,
+  data,
+  toggleOpenById,
+  refetchData,
+}) => {
   const {
     _id,
     isLeaf,
@@ -170,6 +178,19 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
     }
   }, [ setBlockMenuIsOpen ])
 
+  const setOpenBlockMenuRef = useRef(null)
+  const onArchiveToggle = useCallback(newArchivedValue => {
+    if (
+      typeof setOpenBlockMenuRef.current === 'function'
+      && typeof refetchData === 'function'
+    ) {
+      setOpenBlockMenuRef.current(false)
+      setTimeout(() => {
+        refetchData({ force: true })
+      }, 200) // The fade-out animation is 200ms. Only rerender after it, for it not to loose the element.
+    }
+  }, [ refetchData, setOpenBlockMenuRef ])
+
   const actions = {
     click: () => {
       onClick(block)
@@ -192,6 +213,8 @@ const BlockRow = ({ createBlock, onClick, index, style, data, toggleOpenById }) 
     <div className={classes.blockRowActions}>
       <BlockMenu
         onToogle={onBlockMenuToogle}
+        onArchivedToggle={onArchiveToggle}
+        setOpenBlockMenuRef={setOpenBlockMenuRef}
         {...{
           block,
           createBlock,
@@ -309,9 +332,12 @@ function BlockTree({
   }, [ setTreeNodes, updateHeight, openById ])
 
   const loadBlocks = useLoadBlocks()
-  const refetchData = useCallback(() => {
+  const refetchData = useCallback(options => {
+    const { force = false } = options || {}
+
     if (
-      nodes.length === 0
+      force === true
+      || nodes.length === 0
       || prevFetchArguments.current.archived !== archived
       || prevFetchArguments.current.types !== types
     ) {
@@ -359,6 +385,7 @@ function BlockTree({
       createBlock={createBlock}
       onClick={onClick}
       toggleOpenById={toggleOpenById}
+      refetchData={refetchData}
       {...props}
     />
   }
