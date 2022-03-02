@@ -1,8 +1,7 @@
-import { useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useLocalization } from '../../fluent/Localized.js'
 
 import { getImageUrl } from '../../functions.js'
+import useClickOnBlock from '../../hooks/useClickOnBlock.js'
 
 import {
   InsertDriveFile as PagePlaceholderIcon,
@@ -13,13 +12,7 @@ import classes from './ViewerPageLine.module.css'
 function ViewerPageLine ({ block, actions = {} }) {
   const { getString } = useLocalization()
 
-  let navigate = useNavigate()
-
-  const blockId = block._id
-
-  const viewBlock = useCallback(()=>{
-    navigate(`/${blockId}/view`)
-  }, [navigate, blockId])
+  const { clickOnBlock } = useClickOnBlock({ block })
 
   let isSquareIcon = false
   let icon_url = getImageUrl(block.properties.icon)
@@ -31,7 +24,7 @@ function ViewerPageLine ({ block, actions = {} }) {
   const text = block.properties.text || getString('placeholder_main_headline')
 
   return <div
-    onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
+    onClick={actions.hasOwnProperty('click') ? actions.click : clickOnBlock}
     className={`clickable_card ${classes.root}`}
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>

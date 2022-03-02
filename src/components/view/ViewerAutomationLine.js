@@ -1,4 +1,3 @@
-import { useCallback } from 'react'
 import { useLocalization } from '../../fluent/Localized.js'
 
 import { getImageUrl } from '../../functions.js'
@@ -13,9 +12,6 @@ import classes from './ViewerAutomationLine.module.css'
 function ViewerAutomationLine ({ block, actions = {} }) {
   const { getString } = useLocalization()
   const { clickOnBlock } = useClickOnBlock({ block })
-  const viewBlock = useCallback(() => {
-    clickOnBlock({ block })
-  }, [ clickOnBlock, block ])
 
   let isSquareIcon = false
   let icon_url = getImageUrl(block.properties.icon)
@@ -45,7 +41,7 @@ function ViewerAutomationLine ({ block, actions = {} }) {
   }
 
   return <div
-    onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
+    onClick={actions.hasOwnProperty('click') ? actions.click : clickOnBlock}
     className={`clickable_card ${classes.root}`}
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>

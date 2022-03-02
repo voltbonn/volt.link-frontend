@@ -1,7 +1,5 @@
-import { useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
-
 import { getImageUrl } from '../../functions.js'
+import useClickOnBlock from '../../hooks/useClickOnBlock.js'
 
 import {
   Face as PersonPlaceholderIcon,
@@ -10,13 +8,7 @@ import {
 import classes from './ViewerPersonCard.module.css'
 
 function ViewerPersonCard ({ block, actions = {} }) {
-  let navigate = useNavigate()
-
-  const blockId = block._id
-
-  const viewBlock = useCallback(()=>{
-    navigate(`/${blockId}/view`)
-  }, [navigate, blockId])
+  const { clickOnBlock } = useClickOnBlock({ block })
 
   let isSquareIcon = false
   let icon_url = getImageUrl(block.properties.icon)
@@ -28,7 +20,7 @@ function ViewerPersonCard ({ block, actions = {} }) {
   const text = block.properties.text || ''
 
   return <div
-    onClick={actions.hasOwnProperty('click') ? actions.click : viewBlock}
+    onClick={actions.hasOwnProperty('click') ? actions.click : clickOnBlock}
     className="clickable_card"
     style={{ display: 'flex', alignItems: 'center' }}
   >
