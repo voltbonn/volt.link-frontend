@@ -1,4 +1,6 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useEffect } from 'react'
+
+import HtmlInput from './HtmlInput.js'
 
 function PathInput({
   defaultValue = '',
@@ -7,18 +9,39 @@ function PathInput({
   onSubmit,
   onError,
   allowExisting = false,
-  placeholder = 'bonn',
-  style,
-  className
+  placeholder = 'de-bonn',
+  ...props
 }) {
-  const [forbidden, setForbidden] = useState({})
+  const [forbiddenInPath, setForbiddenInPath] = useState({})
   const [text, setText] = useState(defaultValue)
 
-  useKeyPress(['Enter'], () => {
-    if (onSubmit) {
-      onSubmit(text)
+  const checkPath = useCallback(async path => {
+    const forbidden_letters_splitted = forbiddenInPath.letters.split('')
+
+    const path_split = path.split('')
+
+    const errors = []
+
+    // TODO: check if path is a blockId
+    
+    if (path.includes('/')) {
+      errors.push(`Cant't contain a slash (/).`)
     }
-  })
+
+    if (path.startsWith('volt')) {
+      errors.push(`Cant't start with "volt".`)
+    }
+
+    if (forbiddenInPath.codes.includes(path)) {
+      errors.push(`Can't be a forbidden path.`)
+    }
+
+    if (forbidden_letters_splitted.filter(value => !path_split.includes(value)).length < forbidden_letters_splitted.length) {
+      errors.push(`Can't contain one or more of these forbidden letter: ${forbidden_letters_splitted.join(' ')}`)
+    }
+
+    return errors
+  }, [ forbiddenInPath ])
 
   useEffect(() => {
     fetch(`${window.domains.backend}forbidden_codes/`, {
@@ -27,37 +50,30 @@ function PathInput({
     })
       .then(response => response.json())
       .then(data => {
-        setForbidden(data)
+        console.log('forbidden codes data:', data)
+        setForbiddenInPath(data)
       })
       .catch(error => {
-        console.error(error)
-        setForbidden({})
+        console.error('forbidden codes error:', error)
+        setForbiddenInPath({})
       })
-  }, [setForbidden])
+  }, [setForbiddenInPath])
 
-  const handleTextChange = useCallback(newText => {
+  const handleTextChange = useCallback(async newText => {
     newText = newText.toLowerCase()
     setText(newText)
 
+    let isSubmittable = true
     let error = ''
     if (newText !== '') {
-      const forbidden_letters = (forbidden.letters || '').split('')
-      const newText_split = newText.split('')
-      const forbidden_letters_filtered = forbidden_letters.filter(value => !newText_split.includes(value))
-
-      const forbidden_codes = forbidden.codes || []
-      const value_is_a_forbidden_code = forbidden_codes.includes(newText)
-
-      if (value_is_a_forbidden_code) {
-        error = 'This path is not allowed.'
-      } else if (forbidden_letters_filtered.length < forbidden_letters.length) {
-        error = 'This path contains forbidden characters.'
-      } else if (newText.startsWith('volt')) {
-        error = 'A path can\'t start with "volt".'
+      const errors = await checkPath(newText)
+      if (errors.length > 0) {
+        isSubmittable = false
+        error = errors.join('\n')
       }
     }
 
-    if (onChange) {
+    if (isSubmittable && onChange) {
       onChange(newText)
     }
 
@@ -66,8 +82,7 @@ function PathInput({
     }
   }, [
     setText,
-    forbidden.letters,
-    forbidden.codes,
+    checkPath,
     onChange,
     onError,
   ])
@@ -84,8 +99,7 @@ function PathInput({
     defaultValue={defaultValue}
     placeholder={placeholder}
     linebreaks={false}
-    style={style}
-    className={className}
+    {...props}
   />
 }
 
