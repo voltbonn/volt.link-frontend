@@ -5,8 +5,6 @@ import classes from './FancyInput.module.css'
 function FancyInput({ children, className, style, ...props }) {
   const [error, setError] = useState('')
 
-  console.log('error', error)
-
   return <div
     className={className}
     style={style}

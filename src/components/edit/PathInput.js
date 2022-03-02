@@ -50,7 +50,6 @@ function PathInput({
     })
       .then(response => response.json())
       .then(data => {
-        console.log('forbidden codes data:', data)
         setForbiddenInPath(data)
       })
       .catch(error => {
