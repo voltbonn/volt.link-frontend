@@ -12,9 +12,10 @@
 }
 
 .propertiesFrame {
-  background: rgba(var(--on-background-rgb), 0.1);
+  background: var(--background-contrast);
   color: var(--on-background-rgb);
   padding: var(--basis_x4);
+  border-radius: var(--basis_x2);
 
   width: 1000px;
   max-width: calc(100% - var(--basis_x8));
