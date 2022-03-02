@@ -189,6 +189,7 @@ function Viewer () {
           {
             contentBlocks
             .filter(block => !!block)
+            .filter(block => block.properties.active !== false)
             .map(contentBlock => <ViewerAuto key={contentBlock._id} block={contentBlock} />)
           }
         </div>
