@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
-import { FixedSizeList } from 'react-window';
+import { FixedSizeList } from 'react-window'
 
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
