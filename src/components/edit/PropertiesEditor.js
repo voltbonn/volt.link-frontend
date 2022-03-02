@@ -308,7 +308,9 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
 
   return <>
     {
-      type === 'page' || type === 'person'
+      type === 'page'
+      || type === 'person'
+      || type === 'automation'
       ? <>
           <CoverphotoPicker
             coverphotoValue={properties.coverphoto}
