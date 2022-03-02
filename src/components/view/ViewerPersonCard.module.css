@@ -2,13 +2,18 @@
   display: inline-block;
   height: calc(5 * var(--basis)) !important;
   width: calc(5 * var(--basis)) !important;
-  border-radius: 100px;
   vertical-align: middle;
   background-position: center;
   background-size: cover;
   margin-right: var(--basis);
-  box-shadow: var(--image-frame-line);
   flex-shrink: 0;
+}
+.icon.square {
+  border-radius: 0px;
+}
+.icon.round {
+  border-radius: 100px;
+  box-shadow: var(--image-frame-line);
 }
 .name {
   vertical-align: middle;

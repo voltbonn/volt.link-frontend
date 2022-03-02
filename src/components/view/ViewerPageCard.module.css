@@ -18,6 +18,13 @@
   margin-right: var(--basis);
   flex-shrink: 0;
 }
+.icon.square {
+  border-radius: 0px;
+}
+.icon.round {
+  border-radius: 100px;
+  box-shadow: var(--image-frame-line);
+}
 .title {
   vertical-align: middle;
   font-weight: bold;

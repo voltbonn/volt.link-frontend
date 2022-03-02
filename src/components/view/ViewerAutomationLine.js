@@ -8,7 +8,7 @@ import {
   AutoAwesomeSharp as AutomationIcon,
 } from '@mui/icons-material'
 
-import classes from './ViewerPageLine.module.css'
+import classes from './ViewerAutomationLine.module.css'
 
 function ViewerAutomationLine ({ block, actions = {} }) {
   const { getString } = useLocalization()
@@ -17,8 +17,10 @@ function ViewerAutomationLine ({ block, actions = {} }) {
     clickOnBlock({ block })
   }, [ clickOnBlock, block ])
 
+  let isSquareIcon = false
   let icon_url = getImageUrl(block.properties.icon)
   if (!icon_url) {
+    isSquareIcon = true
     icon_url = getImageUrl(block.properties.coverphoto)
   }
 
@@ -50,7 +52,7 @@ function ViewerAutomationLine ({ block, actions = {} }) {
       {
         icon_url === ''
           ? <AutomationIcon className={classes.icon} />
-          : <div className={classes.icon} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt=""></div>
+          : <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt=""></div>
       }
 
       <span dir="auto" className={classes.title}>{title}</span>

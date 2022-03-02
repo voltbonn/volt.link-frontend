@@ -21,10 +21,13 @@ function ViewerPageLine ({ block, actions = {} }) {
     navigate(`/${blockId}/view`)
   }, [navigate, blockId])
 
+  let isSquareIcon = false
   let icon_url = getImageUrl(block.properties.icon)
   if (!icon_url) {
+    isSquareIcon = true
     icon_url = getImageUrl(block.properties.coverphoto)
   }
+
   const text = block.properties.text || getString('placeholder_main_headline')
 
   return <div
@@ -35,7 +38,7 @@ function ViewerPageLine ({ block, actions = {} }) {
       {
         icon_url === ''
           ? <PagePlaceholderIcon className={classes.icon} />
-          : <div className={classes.icon} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={text}></div>
+          : <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={text}></div>
       }
 
       <span dir="auto" className={classes.title}>{text}</span>
