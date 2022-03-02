@@ -29,6 +29,12 @@ export default function useClickOnBlock() {
         ) {
           const url =  actionProperties.url || ''
           window.open(url, '_blank')
+        } else if (
+          window.env === 'prod'
+          && typeof triggerProperties.path === 'string'
+          && triggerProperties.path.length > 0
+        ) {
+          navigate(`/${triggerProperties.path}`)
         } else {
           navigate(`/${blockId}/view`)
         }
