@@ -5,6 +5,8 @@ import {
   Link,
 } from 'react-router-dom'
 
+import { Helmet } from 'react-helmet'
+
 import { getImageUrl } from '../functions.js'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
@@ -147,6 +149,10 @@ function Viewer () {
   </div>
 
   return <div className={classes.viewer}>
+    <Helmet>
+      <title>{title}</title>
+    </Helmet>
+
     <Header
       block={block}
       title={title}

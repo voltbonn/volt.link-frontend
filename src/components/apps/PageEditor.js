@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react'
 
 import useSaveBlock from '../../hooks/useSaveBlock.js'
 
+import { Helmet } from 'react-helmet'
+
 // import Select from 'react-select'
 
 import {
@@ -221,6 +223,10 @@ function PageEditor({
   const title = block.properties.text || getString('placeholder_main_headline')
 
   return <div key={block._id} className={`hasHeader ${classes.editor}`}>
+    <Helmet>
+      <title>✍️ {title}</title>
+    </Helmet>
+    
     <Header
       block={block}
       // title={<a href={`https://volt.link/${slug}`} target="_blank" rel="noopener noreferrer"><span className="hideOnSmallScreen">volt.link</span>/{slug}</a>}
