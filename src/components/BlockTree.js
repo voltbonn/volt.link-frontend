@@ -18,7 +18,7 @@ import {
 
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 
-const minItemSize = 40
+const minItemSize = 43
 
 // const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
 // const getHeight = () => window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
