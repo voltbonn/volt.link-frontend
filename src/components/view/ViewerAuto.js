@@ -10,7 +10,7 @@ import ViewerCheckboxCard from './ViewerCheckboxCard.js'
 import ViewerPageLine from './ViewerPageLine.js'
 // import ViewerPageCard from './ViewerPageCard.js'
 import ViewerPersonCard from './ViewerPersonCard.js'
-import ViewerAutomationCard from './ViewerAutomationCard.js'
+import ViewerAutomationLine from './ViewerAutomationLine.js'
 
 import classes from './ViewerAuto.module.css'
 
@@ -51,7 +51,7 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable 
       component = <ViewerPersonCard key={block._id} block={block} actions={actions} {...props} />
       break
     case 'automation':
-      component = <ViewerAutomationCard key={block._id} block={block} actions={actions} {...props} />
+      component = <ViewerAutomationLine key={block._id} block={block} actions={actions} {...props} />
       break
     default:
       component = JSON.stringify(block) // <ViewerTextCard key={block._id} block={block} actions={actions} {...props} />

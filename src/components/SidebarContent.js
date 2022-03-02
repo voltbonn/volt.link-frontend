@@ -37,6 +37,7 @@ import {
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
+import useClickOnBlock from '../hooks/useClickOnBlock.js'
 
 import { useNavigate, useMatch } from 'react-router-dom'
 
@@ -105,9 +106,9 @@ export default function SidebarContent() {
   }
 
   const [types, setTypes] = useState({
-    page: true,
+    page: false,
     person: false,
-    // automation: true,
+    automation: true,
   })
   const filteredTypes = Object.entries(types)
     .filter(([, value]) => value === true)
@@ -147,9 +148,10 @@ export default function SidebarContent() {
     }
   }, [ types, setTypes, refetch ])
 
+  const { clickOnBlock } = useClickOnBlock()
   const viewBlock = useCallback(block => {
-    navigate(`/${block._id}/view`)
-  }, [ navigate ])
+    clickOnBlock({ block })
+  }, [ clickOnBlock ])
 
   const scrollContainerRef = useRef(null)
 
