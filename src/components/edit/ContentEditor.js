@@ -133,7 +133,6 @@ function ContentEditor({ defaultValue = [], onChange }) {
   const saveBlock = useSaveBlock()
   const archiveBlock = useArchiveBlock()
 
-
   const [autoFocus, setAutoFocus] = useState(null)
   useEffect(()=>{
     if (typeof autoFocus === 'object' && autoFocus !== null) {
