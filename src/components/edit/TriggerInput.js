@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from 'react'
 
-// import FancyInput from './FancyInput.js'
-// import UrlInput from './UrlInput.js'
-import HtmlInput from './HtmlInput.js'
+import FancyInput from './FancyInput.js'
+import PathInput from './PathInput.js'
+// import HtmlInput from './HtmlInput.js'
 
 import { useLocalization } from '../../fluent/Localized.js'
 
@@ -92,18 +92,26 @@ function TriggerInput({
     morePropsInput = null
   } else if (type === 'path') {
     morePropsInput = <>
-      <HtmlInput
-        placeholder={getString('trigger_input_path_placeholder')}
-        defaultValue={properties.path}
-        onBlur={newValue => updateProperty('path', newValue)}
-        linebreak={false}
+      <FancyInput
         style={{
           flexGrow: '1',
-          margin: '0',
-          minWidth: '300px',
         }}
-        // className="show_border_on_active"
-      />
+      >
+        {({ setError }) => (
+          <PathInput
+            onError={setError}
+            placeholder={getString('trigger_input_path_placeholder')}
+            defaultValue={properties.path}
+            onBlur={newValue => updateProperty('path', newValue)}
+            style={{
+              flexGrow: '1',
+              margin: '0',
+              minWidth: '300px',
+            }}
+            // className="show_border_on_active"
+          />
+        )}
+      </FancyInput>
     </>
   // } else if (type === 'cron') {
   //   morePropsInput = <>cron: String</>
