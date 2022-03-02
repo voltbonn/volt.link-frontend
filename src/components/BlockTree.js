@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
+// import { useLayoutEffect } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
 
@@ -143,6 +144,20 @@ function getFlatTree(treeRoots){
   return flatTree
 }
 
+// const useWindowSize = () => {
+//   let [size, setSize] = useState([0, 0])
+//   useLayoutEffect(() => {
+//     function updateSize() {
+//       setSize([window.innerWidth, window.innerHeight])
+//     }
+//     window.addEventListener("resize", updateSize)
+//     updateSize()
+//     return () => window.removeEventListener("resize", updateSize)
+//   }, [])
+//   return size
+// }
+
+
 const BlockRow = ({
   createBlock,
   onClick,
@@ -151,6 +166,7 @@ const BlockRow = ({
   data,
   toggleOpenById,
   refetchData,
+  // onSetSize,
 }) => {
   const {
     _id,
@@ -159,6 +175,16 @@ const BlockRow = ({
     block,
     nestingLevel,
   } = data[index]
+
+  // const rootRef = useRef()
+  // const [ windowWidth ] = useWindowSize()
+  // useEffect(() => {
+  //   if (typeof onSetSize === 'function') {
+  //     const height = rootRef.current.getBoundingClientRect().height
+  //     console.log('onSetSize', height)
+  //     onSetSize(index, height)
+  //   }
+  // }, [ index, onSetSize, windowWidth ])
 
   const [blockMenuIsOpen, setBlockMenuIsOpen] = useState(false)
 
@@ -240,12 +266,14 @@ const BlockRow = ({
   const inset = ~~(nestingLevel * 25 + (isLeaf ? 24 : 0))
 
   return <div
+    // ref={rootRef}
     key={block._id}
     style={{
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'row',
       ...style,
+      // height: 'auto',
       marginLeft: inset,
       minWidth: `calc(100% - ${(isLeaf ? 24 : 0)}px)`,
       width: `calc(100% - ${inset}px)`,
@@ -291,6 +319,16 @@ function BlockTree({
   const [treeNodes, setTreeNodes] = useState([])
   const prevFetchArguments = React.useRef({})
 
+  /*
+  const sizeMap = useRef({})
+  const setSize = useCallback((index, size) => {
+    sizeMap.current = {
+      ...sizeMap.current,
+      [index]: size,
+    }
+  }, [])
+  const getSize = useCallback(index => sizeMap.current[index] || minItemSize, [])
+  */
 
 
   const { height: viewportHeight } = useViewportHeight()
@@ -386,6 +424,7 @@ function BlockTree({
       onClick={onClick}
       toggleOpenById={toggleOpenById}
       refetchData={refetchData}
+      // onSetSize={setSize}
       {...props}
     />
   }
