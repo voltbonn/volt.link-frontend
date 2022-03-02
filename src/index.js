@@ -23,6 +23,8 @@ import {
   ApolloProvider,
 } from '@apollo/client'
 
+window.process = {}
+
 window.domains = {
   // frontend: 'http://localhost:3000/',
   backend: 'https://api.volt.link/',
