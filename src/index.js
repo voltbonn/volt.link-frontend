@@ -23,7 +23,7 @@ import {
   ApolloProvider,
 } from '@apollo/client'
 
-window.process = {}
+window.process = {} // BUGFIX for CRA4 error-page after hot-reloading.
 
 window.domains = {
   // frontend: 'http://localhost:3000/',
