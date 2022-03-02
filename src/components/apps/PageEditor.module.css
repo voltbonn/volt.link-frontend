@@ -28,6 +28,7 @@
 
 .editor {
   min-height: 100vh;
+  padding: var(--basis_x4);
   transition: opacity var(--timing);
 }
 .editor.loadingContent {

@@ -146,7 +146,7 @@ function Viewer () {
     </Link>
   </div>
 
-  return <>
+  return <div className={classes.viewer}>
     <Header
       block={block}
       title={title}
@@ -188,7 +188,7 @@ function Viewer () {
         </div>
       </main>
     </div>
-  </>
+  </div>
   }
 }
 

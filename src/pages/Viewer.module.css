@@ -119,3 +119,7 @@
 .app .items > div {
   margin-top: var(--basis);
 }
+
+.viewer {
+  padding: var(--basis_x4);
+}
