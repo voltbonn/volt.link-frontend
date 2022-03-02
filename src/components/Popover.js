@@ -84,17 +84,6 @@ function Popover ({
             padding: 8,
           },
         },
-        {
-          name: 'preventOverflow',
-          enabled: true,
-          options: {
-            altAxis: true,
-            altBoundary: true,
-            tether: true,
-            rootBoundary: 'viewport',
-            padding: 8,
-          },
-        },
       ]}
       style={{
         zIndex: 1300,
