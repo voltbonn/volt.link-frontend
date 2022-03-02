@@ -14,10 +14,6 @@ export default function useClickOnBlock() {
       const actionProperties = ((block.properties || {}).action || {})
       const actionType = actionProperties.type
 
-      console.log('triggerType', triggerType)
-      console.log('actionType', actionType)
-      console.log('actionProperties.url', actionProperties.url)
-
       if (
         triggerType === 'path'
         || triggerType === 'click'
