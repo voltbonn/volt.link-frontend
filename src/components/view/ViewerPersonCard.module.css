@@ -1,11 +1,11 @@
 .icon {
   display: inline-block;
-  height: calc(5 * var(--basis)) !important;
-  width: calc(5 * var(--basis)) !important;
+  height: var(--body-font-size) !important;
+  width: var(--body-font-size) !important;
   vertical-align: middle;
   background-position: center;
   background-size: cover;
-  margin-right: var(--basis);
+  margin-right: calc(0.5 * var(--body-font-size));
   flex-shrink: 0;
 }
 .icon.square {
@@ -18,7 +18,7 @@
 .name {
   vertical-align: middle;
   font-weight: bold;
-  font-size: calc(3.5 * var(--basis));
+  font-size: calc(0.9 * var(--body-font-size));
 
   white-space: nowrap;
   overflow: hidden;

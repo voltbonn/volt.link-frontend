@@ -10,8 +10,8 @@
 
 .icon {
   display: inline-block;
-  height: calc(var(--font-add) + var(--basis));
-  width: calc(var(--font-add) + var(--basis));
+  height: var(--body-font-size);
+  width: var(--body-font-size);
   vertical-align: middle;
   background-position: center;
   background-size: cover;
@@ -23,6 +23,7 @@
   font-weight: bold;
   line-height: 1;
   margin-bottom: var(--basis);
+  font-size: calc(0.9 * var(--body-font-size));
 }
 
 .iconLine {

@@ -376,7 +376,7 @@ select {
 
 button,
 .clickable_card{
-  --borderRadius: var(--basis);
+  --borderRadius: calc(0.25 * var(--body-font-size));
   border-radius: var(--borderRadius);
 }
 button.default,
@@ -493,7 +493,7 @@ button.hasIcon span{
 .clickable_card {
   position: relative;
   cursor: pointer;
-  padding: var(--basis_x2);
+  padding: calc(0.5 * var(--body-font-size));
 }
 .clickable_card:before {
   content: '';
