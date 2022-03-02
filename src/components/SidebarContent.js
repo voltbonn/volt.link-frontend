@@ -161,7 +161,7 @@ export default function SidebarContent() {
       <div className={classes.headerBar}>
         {
           matchesStartpage
-          ? <h1>Volt.Link</h1>
+          ? <h1>VoltLink</h1>
           : <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0' }}>
               <MenuOpenIcon className="icon" />
             </button>
