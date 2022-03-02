@@ -400,7 +400,7 @@ function BlockTree({
     ref={outerTreeRef}
   >
     <AutoSizer disableWidth>
-      {({height}) => (
+      {({ height }) => (
         <FixedSizeList
           itemData={treeNodes}
           itemCount={treeNodes.length}
