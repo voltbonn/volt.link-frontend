@@ -40,7 +40,7 @@ path_editor_redirect_label = Url to redirect to
 path_editor_redirect_placeholder = https://voltdeutschland.org/bonn
 
 path_editor_coverphoto_label = Coverphoto
-path_editor_coverphoto_info = A url to use for the coverphoto. The photo needs to be uploaded somewhere else.
+path_editor_coverphoto_info = A url to use for the coverphoto. The photo needs to be uploaded somewhere else. Here is a help for Google Drive: https://sites.google.com/site/gdocs2direct/
 path_editor_no_coverphoto = No Coverphoto
 
 path_editor_icon_label = Icon
@@ -83,20 +83,20 @@ block_menu_hide = Hide
 block_menu_show = Show
 
 block_menu_archive = Archive / Remove
-block_menu_unarchive = Unarchive
+block_menu_unarchive = Dearchive
 
 filter_menu_show_archiv = Show Archiv
 filter_menu_showing_archiv = Showing Archiv
 
 block_menu_info_created = Created
 block_menu_info_modified = Last Modified
-block_menu_info_id = ID of the block
+block_menu_info_id = ID
 
 placeholder_main_headline = Untitled
 placeholder_headline = Headline
 placeholder_button = Button
 placeholder_text = Text
-placeholder_text = Code
+placeholder_code = Code
 
 edit_block = Edit
 view_block = View
