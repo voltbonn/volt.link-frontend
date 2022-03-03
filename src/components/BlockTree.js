@@ -11,12 +11,46 @@ import ViewerAuto from './view/ViewerAuto.js'
 import classes from './BlockTree.module.css'
 
 import {
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from '@mui/material'
+
+import {
   MoreHorizSharp as BlockMenuIcon,
   ArrowDropDownSharp as ExpandLessIcon,
   ArrowRightSharp as ExpandMoreIcon,
+
+  Replay as RequeryIcon,
+  FilterList as FilterListIcon,
+  Archive as ArchiveIcon,
+
+  // Search as SearchIcon,
+
+  InsertDriveFileSharp as PageIcon,
+  AutoAwesomeSharp as AutomationIcon,
+  // LinkSharp as RedirectIcon,
+  PersonSharp as PersonIcon,
+  // Crop75Sharp as ButtonIcon,
+  // TitleSharp as HeadlineIcon,
+  // NotesSharp as TextIcon,
+  // Remove as DividerIcon,
+  // EditSharp as EditIcon,
 } from '@mui/icons-material'
 
+import { Localized } from '../fluent/Localized.js'
+
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
+
+import PopoverMenu from './PopoverMenu.js'
+
+const blockTypeIcons = {
+  page: <PageIcon />,
+  person: <PersonIcon />,
+  automation: <AutomationIcon />,
+}
+
 
 const minItemSize = 43
 
@@ -301,14 +335,17 @@ const BlockRow = ({
   </div>
 }
 
+const getFilteredTypes = types => Object.entries(types)
+  .filter(([, value]) => value === true)
+  .map(([key, ]) => key)
+
 function BlockTree({
   createBlock = ()=>{},
   onClick = ()=>{},
-  onGetRefetch = ()=>{},
-  types = ['page', 'person', 'action'],
-  archived = false,
   scrollContainer = window,
 }) {
+  console.log('BlockTree')
+
   const outerTreeRef = React.useRef(null)
   const innerTreeRef = React.useRef(null)
   const treeRef = React.useRef(null)
@@ -317,9 +354,23 @@ function BlockTree({
   const [nodes, setNodes] = useState({})
   const [openById, setOpenById] = useState({})
   const [treeNodes, setTreeNodes] = useState([])
+
   const [treeNodesFiltered, setTreeNodesFiltered] = useState([])
   const [searchString, setSearchString] = useState('')
   const prevFetchArguments = React.useRef({})
+
+  const [types, setTypes] = useState({
+    person: true,
+    page: true,
+    automation: true,
+  })
+  const filteredTypes = getFilteredTypes(types)
+  
+  const [archived, setArchived] = useState(false)
+  function toggleArchived() {
+    setArchived(oldArchived => !oldArchived)
+  }
+
 
   /*
   const sizeMap = useRef({})
@@ -337,16 +388,18 @@ function BlockTree({
 
   const updateHeight = useCallback(() => {
     if (innerTreeRef.current && outerTreeRef.current) {
-      const outerBounds = outerTreeRef.current.getBoundingClientRect()      
-      const maxHeight = viewportHeight - outerBounds.top
+      setTimeout(() => {
+        const outerBounds = outerTreeRef.current.getBoundingClientRect()      
+        const maxHeight = viewportHeight - outerBounds.top
 
-      const innerBounds = innerTreeRef.current.getBoundingClientRect()
-      const fullHeight = innerBounds.height
-      if (typeof fullHeight === 'number' && !isNaN(fullHeight) && fullHeight > minItemSize) {
-        const newHeight = Math.min(maxHeight, fullHeight)
-        setOuterHeight(~~(newHeight))
-        setBottomMargin(~~(Math.max(fullHeight - newHeight, 0)))
-      }
+        const innerBounds = innerTreeRef.current.getBoundingClientRect()
+        const fullHeight = innerBounds.height
+        if (typeof fullHeight === 'number' && !isNaN(fullHeight) && fullHeight > minItemSize) {
+          const newHeight = Math.min(maxHeight, fullHeight)
+          setOuterHeight(~~(newHeight))
+          setBottomMargin(~~(Math.max(fullHeight - newHeight, 0)))
+        }
+      }, 100)
     }
   }, [ viewportHeight, innerTreeRef, outerTreeRef, setOuterHeight, setBottomMargin ])
 
@@ -373,18 +426,21 @@ function BlockTree({
 
   const loadBlocks = useLoadBlocks()
   const refetchData = useCallback(options => {
-    const { force = false } = options || {}
+    const {
+      force = false,
+      filteredTypes,
+      archived,
+    } = options || {}
 
     if (
       force === true
-      || nodes.length === 0
       || prevFetchArguments.current.archived !== archived
-      || prevFetchArguments.current.types !== types
+      || prevFetchArguments.current.types !== filteredTypes
     ) {
-      prevFetchArguments.current.types = types
+      prevFetchArguments.current.types = filteredTypes
       prevFetchArguments.current.archived = archived
       
-      loadBlocks({ types, archived })
+      loadBlocks({ types: filteredTypes, archived })
         .then(async loadedBlocks => {
           const nodes = loadedBlocks
           .map(block => ({
@@ -402,20 +458,18 @@ function BlockTree({
         })
         .catch(error => console.error(error))
     }
-  }, [ nodes, loadBlocks, types, archived, setNodes, updateTree ])
+  }, [ loadBlocks, setNodes, updateTree ])
+
+  // useEffect(() => {
+  //   refetchData()
+  // }, [ refetchData ])
+
+
+
+
+
 
   useEffect(() => {
-    refetchData()
-  }, [ refetchData ])
-
-  useEffect(() => {
-    onGetRefetch(refetchData)
-  }, [ onGetRefetch, refetchData ])
-
-  useEffect(() => {
-    console.log('searchString', searchString)
-    console.log('treeNodes', treeNodes)
-
     const searchStringLower = searchString.toLowerCase()
 
     const filtered = treeNodes
@@ -442,11 +496,30 @@ function BlockTree({
       })
 
     setTreeNodesFiltered(filtered)
-  }, [ searchString, treeNodes, setTreeNodesFiltered ])
+    updateHeight()
+  }, [ searchString, treeNodes, setTreeNodesFiltered, updateHeight ])
 
   const handleSearch = useCallback(event => {
     setSearchString(event.target.value || '')
   }, [ setSearchString ])
+
+  const toggleType = useCallback(type2toggle => {
+    const newTypes = { ...types }
+    newTypes[type2toggle] = !newTypes[type2toggle]
+
+    const typesValues = Object.values(newTypes)
+    if (!typesValues.every(value => value === false)) {
+      setTypes(newTypes)
+    }
+  }, [ types, setTypes ])
+
+
+
+
+
+
+
+
 
 
 
@@ -455,6 +528,15 @@ function BlockTree({
     setOpenById(openById)
     updateTree(nodes)
   }, [setOpenById, openById, updateTree, nodes])
+
+
+  useEffect(() => {
+    refetchData({
+      filteredTypes: getFilteredTypes(types),
+      archived,
+    })
+  }, [ types, archived, refetchData ])
+
 
   const row = (props) => {
     return <BlockRow
@@ -468,15 +550,82 @@ function BlockTree({
   }
 
   return <>
-  <input
-    type="text"
-    placeholder="Search…"
-    style={{
-      width: '100%',
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
       margin: '0 0 var(--basis_x2) 0',
-    }}
-    onChange={handleSearch}
-  />
+    }}>
+
+      <input
+        type="text"
+        placeholder="Search…"
+        style={{
+          width: '100%',
+        }}
+        onChange={handleSearch}
+      />
+
+      <PopoverMenu
+        trigger={triggerProps => (
+          <button className="text hasIcon" {...triggerProps}>
+            <FilterListIcon className="icon" />
+            {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Filter</span> */}
+          </button>
+        )}
+      >
+        {/*
+          { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
+          { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
+          { value: 'automation', icon: <ActionIcon className="icon" />, title: getString('block_menu_type_label_plural_automation') },
+        */}
+
+        <div style={{ marginTop: '8px' }}></div>
+
+        {
+          Object.keys(types)
+            .map(type => (
+              <MenuItem
+                className="roundMenuItem"
+                key={type}
+                onClick={() => toggleType(type)}
+                selected={filteredTypes.includes(type)}
+                sx={{
+                  marginTop: '2px !important',
+                  marginBottom: '2px !important',
+                }}
+              >
+                <ListItemIcon>
+                  {blockTypeIcons[type]}
+                </ListItemIcon>
+                <ListItemText>
+                  <Localized id={'block_menu_type_label_plural_'+type} />
+                </ListItemText>
+              </MenuItem>
+            ))
+        }
+
+        <Divider style={{opacity: 0.2}} />
+
+        <MenuItem
+          className="roundMenuItem"
+          onClick={toggleArchived}
+          selected={archived === true}
+        >
+          <ListItemIcon>
+            <ArchiveIcon className="icon" />
+          </ListItemIcon>
+          <ListItemText>
+            <Localized id={archived ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
+          </ListItemText>
+        </MenuItem>
+
+      </PopoverMenu>
+
+      <button className="text hasIcon" onClick={refetchData}>
+        <RequeryIcon className="icon" />
+        {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Reload</span> */}
+      </button>
+    </div>
   <div
     style={{
       height: outerHeight,

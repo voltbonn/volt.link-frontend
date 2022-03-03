@@ -11,10 +11,7 @@ import {
 
 import {
   MenuOpen as MenuOpenIcon,
-  Replay as RequeryIcon,
   Add as AddIcon,
-  FilterList as FilterListIcon,
-  Archive as ArchiveIcon,
 
   Email as ContactIcon,
   GitHub as SourceCodeIcon,
@@ -22,18 +19,6 @@ import {
   Logout as LogoutIcon,
 
   Help as HelpIcon,
-
-  // Search as SearchIcon,
-
-  InsertDriveFileSharp as PageIcon,
-  AutoAwesomeSharp as AutomationIcon,
-  // LinkSharp as RedirectIcon,
-  PersonSharp as PersonIcon,
-  // Crop75Sharp as ButtonIcon,
-  // TitleSharp as HeadlineIcon,
-  // NotesSharp as TextIcon,
-  // Remove as DividerIcon,
-  // EditSharp as EditIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -46,14 +31,6 @@ import useUser from '../hooks/useUser.js'
 import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
-
-import PopoverMenu from './PopoverMenu.js'
-
-const blockTypeIcons = {
-  page: <PageIcon />,
-  person: <PersonIcon />,
-  automation: <AutomationIcon />,
-}
 
 function debounce(func, wait, immediate) {
   // Source: underscore.js
@@ -99,26 +76,6 @@ export default function SidebarContent() {
 
   const matchesStartpage = useMatch('/')
 
-  const refetchRef = useRef(null)
-  const refetch = refetchRef.current
-  const saveRefetchFunction = newRefetchFunction => {
-    refetchRef.current = newRefetchFunction
-  }
-
-  const [types, setTypes] = useState({
-    page: true,
-    person: true,
-    automation: true,
-  })
-  const filteredTypes = Object.entries(types)
-    .filter(([, value]) => value === true)
-    .map(([key, ]) => key)
-  
-  const [showArchived, setShowArchived] = useState(false)
-  function toggleShowArchived() {
-    setShowArchived(setShowArchived => !setShowArchived)
-  }
-
   const saveBlock = useSaveBlock()
   const navigate = useNavigate()
 
@@ -131,19 +88,6 @@ export default function SidebarContent() {
         console.error(error)
       })
   }, [ saveBlock, navigate ])
-
-  const toggleType = useCallback(type2toggle => {
-    const newTypes = { ...types }
-    newTypes[type2toggle] = !newTypes[type2toggle]
-
-    const typesValues = Object.values(newTypes)
-    if (!typesValues.every(value => value === false)) {
-      setTypes(newTypes)
-      if (typeof refetch === 'function') {
-        refetch()
-      }
-    }
-  }, [ types, setTypes, refetch ])
 
   const { clickOnBlock } = useClickOnBlock()
   const viewBlock = useCallback(block => {
@@ -164,79 +108,15 @@ export default function SidebarContent() {
             </button>
         }
 
-        <div>
-
-          <button className="text hasIcon" onClick={() => refetch()}>
-            <RequeryIcon className="icon" />
-            {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Reload</span> */}
-          </button>
-
-          <PopoverMenu
-            trigger={triggerProps => (
-              <button className="text hasIcon" {...triggerProps}>
-                <FilterListIcon className="icon" />
-                {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Filter</span> */}
-              </button>
-            )}
-          >
-            {/*
-              { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
-              { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
-              { value: 'automation', icon: <ActionIcon className="icon" />, title: getString('block_menu_type_label_plural_automation') },
-            */}
-
-            <div style={{ marginTop: '8px' }}></div>
-
-            {
-              Object.keys(types)
-                .map(type => (
-                  <MenuItem
-                    className="roundMenuItem"
-                    key={type}
-                    onClick={() => toggleType(type)}
-                    selected={filteredTypes.includes(type)}
-                    sx={{
-                      marginTop: '2px !important',
-                      marginBottom: '2px !important',
-                    }}
-                  >
-                    <ListItemIcon>
-                      {blockTypeIcons[type]}
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Localized id={'block_menu_type_label_plural_'+type} />
-                    </ListItemText>
-                  </MenuItem>
-                ))
-            }
-
-            <Divider style={{opacity: 0.2}} />
-
-            <MenuItem
-              className="roundMenuItem"
-              onClick={toggleShowArchived}
-              selected={showArchived === true}
-            >
-              <ListItemIcon>
-                <ArchiveIcon className="icon" />
-              </ListItemIcon>
-              <ListItemText>
-                <Localized id={showArchived ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
-              </ListItemText>
-            </MenuItem>
-
-          </PopoverMenu>
-
-          <AddMenu
-            trigger={triggerProps => (
-              <button className="default hasIcon" {...triggerProps}>
-                <AddIcon className="icon" />
-                {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
-              </button>
-            )}
-            createBlock={createBlock}
-          />
-        </div>
+        <AddMenu
+          trigger={triggerProps => (
+            <button className="default hasIcon" {...triggerProps}>
+              <AddIcon className="icon" />
+              {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
+            </button>
+          )}
+          createBlock={createBlock}
+        />
       </div>
     </header>
 
@@ -305,9 +185,6 @@ export default function SidebarContent() {
             onClick={viewBlock}
             createBlock={createBlock}
             blockMenu={true}
-            onGetRefetch={saveRefetchFunction}
-            types={filteredTypes}
-            archived={showArchived}
             scrollContainer={scrollContainerRef}
           />
         : null
