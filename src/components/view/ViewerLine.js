@@ -20,14 +20,36 @@ function ViewerLine ({ block, actions = {} }) {
     clickOnBlock({ block })
   }, [ clickOnBlock, block ])
 
+  let text = block.properties.text || ''
+  if (text === '') {
+    if (block.type === 'automation') {
+      const triggerProperties = ((block.properties || {}).trigger || {})
+      const triggerType = triggerProperties.type
+
+      if (triggerType === 'path') {
+        text = '/'+triggerProperties.path
+      } else if (triggerType === 'click') {
+        text = triggerProperties.blockId
+      } else if (triggerType === 'cron') {
+        text = triggerProperties.cron
+      } else if (triggerType === 'block_change') {
+        text = triggerProperties.blockId
+      } else if (Object.keys(triggerProperties).length > 0) {
+        text = JSON.stringify(triggerProperties)
+      } else {
+        text = getString('placeholder_main_headline')
+      }
+    } else {
+      text = getString('placeholder_main_headline')
+    }
+  }
+  
   let isSquareIcon = false
   let icon_url = getImageUrl(block.properties.icon)
   if (!icon_url) {
     isSquareIcon = true
     icon_url = getImageUrl(block.properties.coverphoto)
   }
-
-  const text = block.properties.text || getString('placeholder_main_headline')
 
   let iconComponent = null
   if (icon_url === '') {
