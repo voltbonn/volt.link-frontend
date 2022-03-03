@@ -8,7 +8,6 @@ import ViewerButtonCard from './ViewerButtonCard.js'
 import ViewerDividerCard from './ViewerDividerCard.js'
 import ViewerCheckboxCard from './ViewerCheckboxCard.js'
 import ViewerPageLine from './ViewerPageLine.js'
-// import ViewerPageCard from './ViewerPageCard.js'
 import ViewerPersonCard from './ViewerPersonCard.js'
 import ViewerAutomationLine from './ViewerAutomationLine.js'
 
@@ -39,13 +38,7 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable 
       component = <ViewerCheckboxCard key={block._id} block={block} actions={actions} {...props} />
       break
     case 'page':
-      // switch (size) {
-      //   case 'line':
-          component = <ViewerPageLine key={block._id} block={block} actions={actions} {...props} />
-      //     break
-      //   default:
-      //     component = <ViewerPageCard key={block._id} block={block} actions={actions} {...props} />
-      // }
+      component = <ViewerPageLine key={block._id} block={block} actions={actions} {...props} />
       break
     case 'person':
       component = <ViewerPersonCard key={block._id} block={block} actions={actions} {...props} />
