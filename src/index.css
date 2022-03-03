@@ -376,7 +376,7 @@ select {
 
 button,
 .clickable_card{
-  --borderRadius: calc(0.25 * var(--body-font-size));
+  --borderRadius: calc(0.3 * var(--body-font-size));
   border-radius: var(--borderRadius);
 }
 button.default,
