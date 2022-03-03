@@ -422,7 +422,7 @@ button:not([disabled]):hover:before {
   bottom: 0;
   left: 0;
   background: var(--background-contrast);
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; */
   opacity: 0.3;
   border-radius: var(--borderRadius);
 }
