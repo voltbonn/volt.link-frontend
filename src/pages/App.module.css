@@ -13,8 +13,3 @@
 .app.isStartpage {
   background: var(--background-contrast);
 }
-@media (max-width: 1000px) {
-  .app {
-    padding: var(--basis_x2);
-  }
-}
