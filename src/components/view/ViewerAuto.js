@@ -36,7 +36,7 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable 
       component = <ViewerCheckboxCard key={block._id} block={block} actions={actions} {...props} />
       break
     case 'page':
-      component = <ViewerPageLine key={block._id} block={block} actions={actions} {...props} />
+      component = <ViewerLine key={block._id} block={block} actions={actions} {...props} />
       break
     case 'person':
       component = <ViewerLine key={block._id} block={block} actions={actions} {...props} />
