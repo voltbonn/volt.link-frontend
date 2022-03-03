@@ -195,6 +195,10 @@ export default function SidebarContent() {
                     key={type}
                     onClick={() => toggleType(type)}
                     selected={filteredTypes.includes(type)}
+                    sx={{
+                      marginTop: '2px !important',
+                      marginBottom: '2px !important',
+                    }}
                   >
                     <ListItemIcon>
                       {blockTypeIcons[type]}
