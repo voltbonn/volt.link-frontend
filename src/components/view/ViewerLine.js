@@ -22,13 +22,13 @@ function ViewerLine ({ block, actions = {} }) {
 
   let title = block.properties.text || ''
   if (title === '') {
-    if (block.type === 'automation') {
-      const triggerProperties = ((block.properties || {}).trigger || {})
-      const triggerType = triggerProperties.type
+    const triggerProperties = ((block.properties || {}).trigger || {})
+    const triggerType = triggerProperties.type
 
-      if (triggerType === 'path') {
-        title = '/'+triggerProperties.path
-      } else if (triggerType === 'click') {
+    if (triggerType === 'path') {
+      title = '/'+triggerProperties.path
+    } else if (block.type === 'automation') {
+      if (triggerType === 'click') {
         title = triggerProperties.blockId
       } else if (triggerType === 'cron') {
         title = triggerProperties.cron
