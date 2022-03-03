@@ -468,6 +468,7 @@ function BlockTree({
 
 
 
+  // START Filter + Search
 
   useEffect(() => {
     const searchStringLower = searchString.toLowerCase()
