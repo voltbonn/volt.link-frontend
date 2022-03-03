@@ -20,27 +20,27 @@ function ViewerLine ({ block, actions = {} }) {
     clickOnBlock({ block })
   }, [ clickOnBlock, block ])
 
-  let text = block.properties.text || ''
-  if (text === '') {
+  let title = block.properties.text || ''
+  if (title === '') {
     if (block.type === 'automation') {
       const triggerProperties = ((block.properties || {}).trigger || {})
       const triggerType = triggerProperties.type
 
       if (triggerType === 'path') {
-        text = '/'+triggerProperties.path
+        title = '/'+triggerProperties.path
       } else if (triggerType === 'click') {
-        text = triggerProperties.blockId
+        title = triggerProperties.blockId
       } else if (triggerType === 'cron') {
-        text = triggerProperties.cron
+        title = triggerProperties.cron
       } else if (triggerType === 'block_change') {
-        text = triggerProperties.blockId
+        title = triggerProperties.blockId
       } else if (Object.keys(triggerProperties).length > 0) {
-        text = JSON.stringify(triggerProperties)
+        title = JSON.stringify(triggerProperties)
       } else {
-        text = getString('placeholder_main_headline')
+        title = getString('placeholder_main_headline')
       }
     } else {
-      text = getString('placeholder_main_headline')
+      title = getString('placeholder_main_headline')
     }
   }
   
@@ -64,7 +64,7 @@ function ViewerLine ({ block, actions = {} }) {
       iconComponent = <PageIcon className={classes.icon} />
     }
   } else {
-    iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={text}></div>
+    iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={title}></div>
   }
 
   return <div
@@ -73,7 +73,7 @@ function ViewerLine ({ block, actions = {} }) {
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>
       {iconComponent}
-      <span dir="auto" className={classes.title}>{text}</span>
+      <span dir="auto" className={classes.title}>{title}</span>
     </div>
   </div>
 }
