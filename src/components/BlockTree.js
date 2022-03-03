@@ -348,9 +348,9 @@ function BlockTree({
 }) {
   console.log('BlockTree')
 
-  const outerTreeRef = React.useRef(null)
-  const innerTreeRef = React.useRef(null)
-  const treeRef = React.useRef(null)
+  const outerTreeRef = useRef(null)
+  const innerTreeRef = useRef(null)
+  const treeRef = useRef(null)
   const [outerHeight, setOuterHeight] = useState(minItemSize)
   const [bottomMargin, setBottomMargin] = useState(0)
   const [nodes, setNodes] = useState({})
@@ -359,7 +359,7 @@ function BlockTree({
 
   const [treeNodesFiltered, setTreeNodesFiltered] = useState([])
   const [searchString, setSearchString] = useState('')
-  const prevFetchArguments = React.useRef({})
+  const prevFetchArguments = useRef({})
 
   const [types, setTypes] = useState({
     person: true,
