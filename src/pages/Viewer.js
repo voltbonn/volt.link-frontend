@@ -120,7 +120,7 @@ function Viewer () {
   ])
 
   if (canView === false) {
-    return <>
+    return <div className={classes.viewer}>
       <Header
         block={null}
         title="Error"
@@ -131,7 +131,7 @@ function Viewer () {
           <ErrorPage errorName="no_access" />
         </main>
       </div>
-    </>
+    </div>
   } else {
   const type = block.type || null
 

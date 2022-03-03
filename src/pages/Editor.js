@@ -83,7 +83,7 @@ function Editor() {
   // }, [isFirstRun, initialBlock, block])
 
   if (canEdit === false) {
-    return <>
+    return <div className={classes.editor}>
       <Header
         block={null}
         title="Error"
@@ -94,7 +94,7 @@ function Editor() {
           <ErrorPage errorName="no_access" />
         </main>
       </div>
-    </>
+    </div>
   } else if (canEdit === true) {
     if (type === 'automation') {
       return <AutomationEditor
