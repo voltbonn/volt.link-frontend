@@ -513,6 +513,14 @@ function BlockTree({
     }
   }, [ types, setTypes ])
 
+  useEffect(() => {
+    refetchData({
+      filteredTypes: getFilteredTypes(types),
+      archived,
+    })
+  }, [ types, archived, refetchData ])
+
+  // END Filter + Search
 
 
 
@@ -528,14 +536,6 @@ function BlockTree({
     setOpenById(openById)
     updateTree(nodes)
   }, [setOpenById, openById, updateTree, nodes])
-
-
-  useEffect(() => {
-    refetchData({
-      filteredTypes: getFilteredTypes(types),
-      archived,
-    })
-  }, [ types, archived, refetchData ])
 
 
   const row = (props) => {
