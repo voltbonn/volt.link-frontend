@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useLocalization } from '../../fluent/Localized.js'
 
 import { getImageUrl } from '../../functions.js'
@@ -14,7 +15,10 @@ import classes from './ViewerLine.module.css'
 function ViewerLine ({ block, actions = {} }) {
   const { getString } = useLocalization()
 
-  const { clickOnBlock } = useClickOnBlock({ block })
+  const { clickOnBlock } = useClickOnBlock()
+  const handleClick = useCallback(() => {
+    clickOnBlock({ block })
+  }, [ clickOnBlock, block ])
 
   let isSquareIcon = false
   let icon_url = getImageUrl(block.properties.icon)
@@ -42,7 +46,7 @@ function ViewerLine ({ block, actions = {} }) {
   }
 
   return <div
-    onClick={actions.hasOwnProperty('click') ? actions.click : clickOnBlock}
+    onClick={actions.hasOwnProperty('click') ? actions.click : handleClick}
     className={`clickable_card ${classes.root}`}
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>
