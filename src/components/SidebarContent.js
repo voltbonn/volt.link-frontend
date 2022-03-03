@@ -134,17 +134,14 @@ export default function SidebarContent() {
 
   const toggleType = useCallback(type2toggle => {
     const newTypes = { ...types }
-    for (const type of Object.keys(newTypes)) {
-      if (type === type2toggle) {
-        newTypes[type] = true
-      } else {
-        newTypes[type] = false
-      }
-    }
+    newTypes[type2toggle] = !newTypes[type2toggle]
 
-    setTypes(newTypes)
-    if (typeof refetch === 'function') {
-      refetch()
+    const typesValues = Object.values(newTypes)
+    if (!typesValues.every(value => value === false)) {
+      setTypes(newTypes)
+      if (typeof refetch === 'function') {
+        refetch()
+      }
     }
   }, [ types, setTypes, refetch ])
 
