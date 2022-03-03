@@ -8,6 +8,8 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import BlockMenu from './edit/BlockMenu.js'
 import ViewerAuto from './view/ViewerAuto.js'
 
+import { useLocalization } from '../fluent/Localized.js'
+
 import classes from './BlockTree.module.css'
 
 import {
@@ -346,6 +348,8 @@ function BlockTree({
   onClick = ()=>{},
   scrollContainer = window,
 }) {
+  const { getString } = useLocalization()
+
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
   const treeRef = useRef(null)
@@ -555,7 +559,7 @@ function BlockTree({
 
       <input
         type="text"
-        placeholder="Search…"
+        placeholder={getString('search')}
         style={{
           width: '100%',
         }}

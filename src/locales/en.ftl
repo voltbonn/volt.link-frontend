@@ -100,3 +100,5 @@ placeholder_code = Code
 
 edit_block = Edit
 view_block = View
+
+search = Search…
