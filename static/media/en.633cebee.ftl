@@ -118,12 +118,13 @@ add_content_before = Add Content
 content_editor_reorderblock_label = Reorder
 
 block_menu_choose_type_label = Turn into…
-block_menu_move_block = Move Block
+block_menu_move_block = Move
 block_menu_change_parent_none = No Parent
 
 block_menu_type_label_plural_page = Pages
 block_menu_type_label_plural_automation = Automations
 block_menu_type_label_plural_person = People
+block_menu_type_label_plural_team = Teams
 
 block_menu_type_label_page = Page
 block_menu_type_label_automation = Automation
@@ -136,17 +137,18 @@ block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider
 block_menu_type_label_checkbox = Checkbox
+block_menu_type_label_team = Team
 
 block_menu_close_menu = Close Menu
-block_menu_delete = Delete Block
-block_menu_add_before = Add Block Before
-block_menu_add_after = Add Block After
-block_menu_create_child_block = Create Child Block
-block_menu_hide = Hide Block
-block_menu_show = Show Block
+block_menu_delete = Delete
+block_menu_add_before = Add Before
+block_menu_add_after = Add After
+block_menu_create_child_block = Add page inside…
+block_menu_hide = Hide
+block_menu_show = Show
 
-block_menu_archive = Archive Block
-block_menu_unarchive = Unarchive Block
+block_menu_archive = Archive / Remove
+block_menu_unarchive = Unarchive
 
 filter_menu_show_archiv = Show Archiv
 filter_menu_showing_archiv = Showing Archiv
