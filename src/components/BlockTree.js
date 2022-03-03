@@ -101,9 +101,11 @@ function buildTree(nodes){
     let parentBlock = null
     if (node.block.parent) {
       parentBlock = nodes.find(n => n._id === node.block.parent)
-      if (!parentBlock) {
-        console.error('Invalid parent')
-      }
+      // if (!parentBlock) {
+      //   console.error('Invalid parent:')
+      //   console.error('parentBlockt', parentBlock)
+      //   console.error('node.block.parent', node.block.parent)
+      // }
     }
 
     if (!parentBlock) {
