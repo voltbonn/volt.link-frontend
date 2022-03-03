@@ -346,8 +346,6 @@ function BlockTree({
   onClick = ()=>{},
   scrollContainer = window,
 }) {
-  console.log('BlockTree')
-
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
   const treeRef = useRef(null)
