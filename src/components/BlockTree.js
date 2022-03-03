@@ -405,10 +405,6 @@ function BlockTree({
 
   useScrollPosition(updateHeight, [ updateHeight ], null, false, 300, scrollContainer)
 
-  useEffect(() => {
-    updateHeight()
-  }, [ updateHeight ])
-
   const updateTree = useCallback(nodes => {
     if (nodes.length > 0) {
       nodes = nodes.map(node => ({
