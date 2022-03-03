@@ -232,17 +232,6 @@ function BlockMenu ({
                 : null
             */}
 
-            {/*
-              onRemoveRow
-                ? <MenuItem style={{marginTop:'8px'}} onClick={onRemoveRow}>
-                    <ListItemIcon>
-                      <DeleteIcon />
-                    </ListItemIcon>
-                    <Localized id="block_menu_delete" />
-                  </MenuItem>
-                : null
-            */}
-
             {
               typeof createBlock === 'function'
                 ? <SubMenu
