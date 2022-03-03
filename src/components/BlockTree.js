@@ -317,6 +317,8 @@ function BlockTree({
   const [nodes, setNodes] = useState({})
   const [openById, setOpenById] = useState({})
   const [treeNodes, setTreeNodes] = useState([])
+  const [treeNodesFiltered, setTreeNodesFiltered] = useState([])
+  const [searchString, setSearchString] = useState('')
   const prevFetchArguments = React.useRef({})
 
   /*
@@ -410,6 +412,42 @@ function BlockTree({
     onGetRefetch(refetchData)
   }, [ onGetRefetch, refetchData ])
 
+  useEffect(() => {
+    console.log('searchString', searchString)
+    console.log('treeNodes', treeNodes)
+
+    const searchStringLower = searchString.toLowerCase()
+
+    const filtered = treeNodes
+      .filter(node => {
+        if (
+          !!node
+          && !!node.block
+          && !!node.block.properties
+          && !!node.block.properties.text
+          && node.block.properties.text.toLowerCase().includes(searchStringLower)
+        ) {
+          return true
+        } else if (
+          !!node
+          && !!node.block
+          && !!node.block.properties
+          && !!node.block.properties.trigger
+          && !!node.block.properties.trigger.path
+          && node.block.properties.trigger.path.toLowerCase().includes(searchStringLower)
+        ) {
+          return true
+        }
+        return false
+      })
+
+    setTreeNodesFiltered(filtered)
+  }, [ searchString, treeNodes, setTreeNodesFiltered ])
+
+  const handleSearch = useCallback(event => {
+    setSearchString(event.target.value || '')
+  }, [ setSearchString ])
+
 
 
   const toggleOpenById = useCallback((_id) => {
@@ -429,7 +467,17 @@ function BlockTree({
     />
   }
 
-  return <div
+  return <>
+  <input
+    type="text"
+    placeholder="Search…"
+    style={{
+      width: '100%',
+      margin: '0 0 var(--basis_x2) 0',
+    }}
+    onChange={handleSearch}
+  />
+  <div
     style={{
       height: outerHeight,
       marginRight: '-12px',
@@ -441,8 +489,8 @@ function BlockTree({
     <AutoSizer disableWidth>
       {({ height }) => (
         <FixedSizeList
-          itemData={treeNodes}
-          itemCount={treeNodes.length}
+          itemData={treeNodesFiltered}
+          itemCount={treeNodesFiltered.length}
           ref={treeRef}
           innerRef={innerTreeRef}
           // onScroll={updateHeight}
@@ -461,6 +509,7 @@ function BlockTree({
       )}
     </AutoSizer>
   </div>
+  </>
 }
 
 export default BlockTree
