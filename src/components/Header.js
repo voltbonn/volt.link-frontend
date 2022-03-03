@@ -52,7 +52,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
       query: getSiblingBlocks_Query,
       variables: {
         _id: blockId,
-        types: ['page', 'person', 'action'],
+        types: ['page', 'person', 'automation'],
       },
     })
       .then(async ({ data }) => {
