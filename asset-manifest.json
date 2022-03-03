@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.8c3b1214.chunk.css",
-    "main.js": "/static/js/main.7487d491.chunk.js",
-    "main.js.map": "/static/js/main.7487d491.chunk.js.map",
+    "main.js": "/static/js/main.e7deaf1e.chunk.js",
+    "main.js.map": "/static/js/main.e7deaf1e.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.992924ea.js",
     "runtime-main.js.map": "/static/js/runtime-main.992924ea.js.map",
-    "static/js/2.f2812478.chunk.js": "/static/js/2.f2812478.chunk.js",
-    "static/js/2.f2812478.chunk.js.map": "/static/js/2.f2812478.chunk.js.map",
+    "static/js/2.360c8513.chunk.js": "/static/js/2.360c8513.chunk.js",
+    "static/js/2.360c8513.chunk.js.map": "/static/js/2.360c8513.chunk.js.map",
     "static/js/3.c35eaebc.chunk.js": "/static/js/3.c35eaebc.chunk.js",
     "static/js/3.c35eaebc.chunk.js.map": "/static/js/3.c35eaebc.chunk.js.map",
     "static/js/4.ac563f48.chunk.js": "/static/js/4.ac563f48.chunk.js",
@@ -15,7 +15,7 @@
     "static/js/5.74b9e83c.chunk.js.map": "/static/js/5.74b9e83c.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.8c3b1214.chunk.css.map": "/static/css/main.8c3b1214.chunk.css.map",
-    "static/js/2.f2812478.chunk.js.LICENSE.txt": "/static/js/2.f2812478.chunk.js.LICENSE.txt",
+    "static/js/2.360c8513.chunk.js.LICENSE.txt": "/static/js/2.360c8513.chunk.js.LICENSE.txt",
     "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png",
     "static/media/Aktion.89c1bcdf.png": "/static/media/Aktion.89c1bcdf.png",
     "static/media/Welcome-to-Volt.39e04eca.png": "/static/media/Welcome-to-Volt.39e04eca.png",
@@ -28,8 +28,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.992924ea.js",
-    "static/js/2.f2812478.chunk.js",
+    "static/js/2.360c8513.chunk.js",
     "static/css/main.8c3b1214.chunk.css",
-    "static/js/main.7487d491.chunk.js"
+    "static/js/main.e7deaf1e.chunk.js"
   ]
 }
