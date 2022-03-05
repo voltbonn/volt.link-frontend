@@ -568,7 +568,13 @@ function BlockTree({
 
       <PopoverMenu
         trigger={triggerProps => (
-          <button className="text hasIcon" {...triggerProps}>
+          <button
+            {...triggerProps}
+            className="text hasIcon"
+            style={{
+              flexShrink: '0',
+            }}
+          >
             <FilterListIcon className="icon" />
             {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Filter</span> */}
           </button>
@@ -622,7 +628,13 @@ function BlockTree({
 
       </PopoverMenu>
 
-      <button className="text hasIcon" onClick={refetchData}>
+      <button
+        className="text hasIcon"
+        onClick={refetchData}
+        style={{
+          flexShrink: '0',
+        }}
+      >
         <RequeryIcon className="icon" />
         {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Reload</span> */}
       </button>
