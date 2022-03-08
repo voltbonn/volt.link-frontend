@@ -45,7 +45,7 @@ function InlineEditorBlockHeadlineRaw({
 
     placeholder={getString('placeholder_headline')}
     style={{
-      margin: '0',
+      margin: 'var(--basis_x4) 0 var(--basis) 0',
       backgroundColor: 'transparent',
     }}
     linebreaks={true}
