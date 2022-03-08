@@ -288,19 +288,24 @@ function ContentEditor({ defaultValue = [], onChange }) {
       newContentConfig = newContentConfig || { tmp_id: uuidv4() }
     }
 
-    if (typeof index === 'number' && !isNaN(index)) {
-      // saveBlock(newBlock)
-      //   .then(newBlock => {
-      //     if (callback) {
-      //       callback(newBlock)
-      //     }
-      //   })
-      //   .catch(console.error)
+    const newBlock = newContentConfig.block || null
 
-      let new_rows = [...contentConfigs]
-      new_rows.splice(index + offset, 0, newContentConfig)
-      contentConfigs_Ref.current = new_rows
-      onChange(new_rows)
+    if (
+      newBlock !== null
+      && typeof index === 'number'
+      && !isNaN(index)
+    ) {
+      saveBlock(newBlock)
+        .then(newBlock => {
+          newContentConfig.block = newBlock
+          newContentConfig.blockId = newBlock._id
+
+          let new_rows = [...contentConfigs]
+          new_rows.splice(index + offset, 0, newContentConfig)
+          contentConfigs_Ref.current = new_rows
+          onChange(new_rows)
+        })
+        .catch(console.error)
     }
   }, [contentConfigs, contentConfigs_Ref, onChange])
 
