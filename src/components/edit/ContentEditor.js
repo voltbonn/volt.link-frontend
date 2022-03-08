@@ -307,7 +307,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
         })
         .catch(console.error)
     }
-  }, [contentConfigs, contentConfigs_Ref, onChange])
+  }, [contentConfigs, contentConfigs_Ref, saveBlock, onChange])
 
   const onMergeToPrevInput = useCallback(keys => {
     const {
