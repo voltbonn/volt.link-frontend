@@ -52,6 +52,30 @@ import Popover from '../Popover.js'
 import SubMenu from '../SubMenu.js'
 import { AddMenuContent } from './AddMenu.js'
 
+const typeIcons = {
+  button: <ButtonIcon />,
+  text: <TextIcon />,
+  headline: <HeadlineIcon />,
+  // headline3: <HeadlineIcon />,
+  // checkbox: <CheckboxIcon />,
+  // code: <CodeIcon />,
+  divider: <DividerIcon />,
+  page: <PageIcon />,
+  automation: <AutomationIcon />,
+}
+
+const defaultTypeOptions = [
+  'button',
+  'text',
+  'headline',
+  // 'headline3',
+  // 'checkbox',
+  // 'code',
+  'divider',
+  'page',
+  'automation',
+]
+
 function BlockMenu ({
   block = {},
   getString,
@@ -60,6 +84,7 @@ function BlockMenu ({
   onToogle,
 
   setType,
+  typeOptions = defaultTypeOptions,
   createBlock,
 
   toggle_active = null,
@@ -152,6 +177,8 @@ function BlockMenu ({
               (
                 typeof setType === 'function'
                 && type !== 'person'
+                && Array.isArray(typeOptions)
+                && typeOptions.length > 0
               )
               ? <SubMenu
                   parentMenuIsOpen={open}
@@ -183,28 +210,18 @@ function BlockMenu ({
                   <div style={{height: '4px'}}></div>
 
                   {
-                    [
-                      { value: 'button', icon: <ButtonIcon />, label: getString('block_menu_type_label_button') },
-                      { value: 'text', icon: <TextIcon />, label: getString('block_menu_type_label_text') },
-                      { value: 'headline', icon: <HeadlineIcon />, label: getString('block_menu_type_label_headline') },
-                      // { value: 'headline3', label: getString('block_menu_type_label_headline3') },
-                      // { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
-                      // { value: 'code', icon: <CodeIcon />, label: getString('block_menu_type_label_code') },
-                      { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
-                      { value: 'page', icon: <PageIcon />, label: getString('block_menu_type_label_page') },
-                      { value: 'automation', icon: <AutomationIcon />, label: getString('block_menu_type_label_automation') },
-                    ]
-                    .map(option => (
+                    typeOptions
+                    .map(typeName => (
                       <MenuItem
-                        key={option.value}
-                        selected={option.value === type}
-                        onClick={() => setType(option.value)}
+                        key={typeName}
+                        selected={typeName === type}
+                        onClick={() => setType(typeName)}
                         className="roundMenuItem"
                       >
                         <ListItemIcon>
-                          {option.icon}
+                          {typeIcons[typeName]}
                         </ListItemIcon>
-                        {option.label}
+                        {getString(`block_menu_type_label_${typeName}`, typeName)}
                       </MenuItem>
                     ))
                   }
