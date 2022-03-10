@@ -185,12 +185,12 @@ function BlockMenu ({
                   {
                     [
                       { value: 'button', icon: <ButtonIcon />, label: getString('block_menu_type_label_button') },
+                      { value: 'text', icon: <TextIcon />, label: getString('block_menu_type_label_text') },
                       { value: 'headline', icon: <HeadlineIcon />, label: getString('block_menu_type_label_headline') },
                       // { value: 'headline3', label: getString('block_menu_type_label_headline3') },
-                      { value: 'text', icon: <TextIcon />, label: getString('block_menu_type_label_text') },
+                      // { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
                       // { value: 'code', icon: <CodeIcon />, label: getString('block_menu_type_label_code') },
                       { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
-                      // { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
                       { value: 'page', icon: <PageIcon />, label: getString('block_menu_type_label_page') },
                       { value: 'automation', icon: <AutomationIcon />, label: getString('block_menu_type_label_automation') },
                     ]
