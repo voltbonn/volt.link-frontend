@@ -153,6 +153,11 @@ function AutomationEditor({
         setType: saveType,
       }}
 
+      typeOptions={[
+        'page',
+        'automation',
+      ]}
+
       trigger={props => (
         <button
           {...props}
