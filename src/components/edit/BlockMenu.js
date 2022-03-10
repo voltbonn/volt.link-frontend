@@ -10,7 +10,6 @@ import {
   MenuItem,
   Divider,
   ListItemIcon,
-  ListSubheader,
   ListItemText,
   ListItem,
 } from '@mui/material'
@@ -188,27 +187,8 @@ function BlockMenu ({
                     </ListItemIcon>
                     <Localized id="block_menu_choose_type_label" />
                   </>}
-                  MenuListProps={{
-                    style: {
-                      marginTop: '-8px',
-                    },
-                  }}
+                  header={<Localized id="block_menu_choose_type_label" />}
                 >
-                  <ListSubheader
-                    style={{
-                      whiteSpace: 'nowrap',
-                      lineHeight: '1',
-                      margin: '0',
-                      padding: '12px 16px 12px',
-                      backgroundColor: 'var(--background-contrast)',
-                      color: 'var(--on-background)',
-                    }}
-                  >
-                    <Localized id="block_menu_choose_type_label" />
-                  </ListSubheader>
-
-                  <div style={{height: '4px'}}></div>
-
                   {
                     typeOptions
                     .map(typeName => (

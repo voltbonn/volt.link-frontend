@@ -5,6 +5,7 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
+  ListSubheader,
 } from '@mui/material'
 
 import {
@@ -20,6 +21,7 @@ export default function SubMenu ({
   parentMenuIsOpen = true,
   label = '',
   triggerProps = {},
+  header = null,
   MenuListProps = {},
   position = 'right',
   onOpen = () => {},
@@ -92,6 +94,23 @@ export default function SubMenu ({
       }}
     >
       <div style={{pointerEvents: 'auto'}}>
+        {
+          header !== null
+            ? <ListSubheader
+                style={{
+                  whiteSpace: 'nowrap',
+                  lineHeight: '1',
+                  margin: '0',
+                  padding: '4px 16px 12px',
+                  backgroundColor: 'var(--background-contrast)',
+                  color: 'var(--on-background)',
+                }}
+              >
+                {header}
+              </ListSubheader>
+            : null
+        }
+
         {children}
 
         <Divider style={{opacity: 0.2}} />
