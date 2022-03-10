@@ -149,7 +149,10 @@ function BlockMenu ({
           >
 
             {
-              typeof setType === 'function'
+              (
+                typeof setType === 'function'
+                && type !== 'person'
+              )
               ? <SubMenu
                   parentMenuIsOpen={open}
                   label={<>
@@ -189,7 +192,6 @@ function BlockMenu ({
                       { value: 'divider', icon: <DividerIcon />, label: getString('block_menu_type_label_divider') },
                       // { value: 'checkbox', icon: <CheckboxIcon />, label: getString('block_menu_type_label_checkbox') },
                       { value: 'page', icon: <PageIcon />, label: getString('block_menu_type_label_page') },
-                      { value: 'person', icon: <PersonIcon />, label: getString('block_menu_type_label_person') },
                       { value: 'automation', icon: <AutomationIcon />, label: getString('block_menu_type_label_automation') },
                     ]
                     .map(option => (
