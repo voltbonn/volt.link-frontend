@@ -31,7 +31,7 @@ import {
 
   InsertDriveFileSharp as PageIcon,
   // LinkSharp as RedirectIcon,
-  PersonSharp as PersonIcon,
+  // PersonSharp as PersonIcon,
   Crop75Sharp as ButtonIcon,
   TitleSharp as HeadlineIcon,
   NotesSharp as TextIcon,
