@@ -557,9 +557,9 @@ function ContentEditor({ defaultValue = [], onChange }) {
           'text',
           'headline',
           // 'headline3',
+          // 'checkbox',
           // 'code',
           'divider',
-          // 'checkbox',
           'page',
           'automation',
         ]}
