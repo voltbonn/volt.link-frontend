@@ -560,7 +560,8 @@ function ContentEditor({ defaultValue = [], onChange }) {
           // 'code',
           'divider',
           // 'checkbox',
-          // 'page',
+          'page',
+          'automation',
         ]}
         createBlock={({ type }) => addRowByIndex(0, 0, { block: { type: type } })}
         trigger={triggerProps => 
