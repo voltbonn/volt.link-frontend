@@ -545,13 +545,20 @@ function BlockTree({
     updateTree(nodes)
   }, [setOpenById, openById, updateTree, nodes])
 
+  const refetchDataWithFilter = useCallback(options => {
+    refetchData({
+      ...options,
+      filteredTypes: getFilteredTypes(types),
+      archived,
+    })
+  }, [ types, archived, refetchData ])
 
   const row = (props) => {
     return <BlockRow
       createBlock={createBlock}
       onClick={onClick}
       toggleOpenById={toggleOpenById}
-      refetchData={refetchData}
+      refetchData={refetchDataWithFilter}
       // onSetSize={setSize}
       showBlockMenu={showBlockMenu}
       {...props}
@@ -638,7 +645,7 @@ function BlockTree({
 
       <button
         className="text hasIcon"
-        onClick={refetchData}
+        onClick={refetchDataWithFilter}
         style={{
           flexShrink: '0',
         }}
