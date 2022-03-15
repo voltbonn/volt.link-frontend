@@ -14,7 +14,7 @@ import {
   MoreHorizSharp as BlockMenuIcon,
 } from '@mui/icons-material'
 
-import classes from './AutomationEditor.module.css'
+import classes from './RedirectEditor.module.css'
 
 import { Localized, useLocalization } from '../../fluent/Localized.js'
 
@@ -25,7 +25,7 @@ import PermissionsEditor from '../edit/PermissionsEditor.js'
 import PropertiesEditor from '../edit/PropertiesEditor.js'
 import ContentEditor from '../edit/ContentEditor.js'
 
-function AutomationEditor({
+function RedirectEditor({
   block,
   onSaveBlock,
 }) {
@@ -155,7 +155,7 @@ function AutomationEditor({
 
       typeOptions={[
         'page',
-        'automation',
+        'redirect',
       ]}
 
       trigger={props => (
@@ -196,4 +196,4 @@ function AutomationEditor({
   </div>
 }
 
-export default AutomationEditor
+export default RedirectEditor

@@ -13,7 +13,7 @@ import Header from '../components/Header.js'
 import { ErrorPage } from '../components/ErrorPages.js'
 
 import PageEditor from '../components/apps/PageEditor.js'
-import AutomationEditor from '../components/apps/AutomationEditor.js'
+import RedirectEditor from '../components/apps/RedirectEditor.js'
 
 function Editor() {
   const loadBlock = useLoadBlock()
@@ -96,8 +96,8 @@ function Editor() {
       </div>
     </div>
   } else if (canEdit === true) {
-    if (type === 'automation') {
-      return <AutomationEditor
+    if (type === 'redirect') {
+      return <RedirectEditor
         block={block}
         onSaveBlock={setBlock}
       />

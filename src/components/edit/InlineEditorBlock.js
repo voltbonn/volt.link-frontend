@@ -7,6 +7,7 @@ import useSaveBlock from '../../hooks/useSaveBlock.js'
 
 import InlineEditorBlockText from './InlineEditorBlockText.js'
 import InlineEditorBlockButton from './InlineEditorBlockButton.js'
+import InlineEditorBlockRedirect from './InlineEditorBlockRedirect.js'
 import InlineEditorBlockDivider from './InlineEditorBlockDivider.js'
 import InlineEditorBlockCheckbox from './InlineEditorBlockCheckbox.js'
 import InlineEditorBlockPerson from './InlineEditorBlockPerson.js'
@@ -43,6 +44,8 @@ function InlineEditorBlockInbetweenComponent({ type = 'text', ...props }){
     case 'button':
       component = <InlineEditorBlockButton {...props} />
     break;
+    case 'redirect':
+      component = <InlineEditorBlockRedirect {...props} />
     break;
     case 'divider':
       component = <InlineEditorBlockDivider {...props} />

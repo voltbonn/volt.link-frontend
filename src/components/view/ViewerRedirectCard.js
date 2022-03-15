@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { getImageUrl } from '../../functions.js'
 
 import {
-  AutoAwesomeSharp as AutomationIcon,
+  AutoAwesomeSharp as ActionIcon,
 } from '@mui/icons-material'
 
 import MdiIcon from '@mdi/react'
@@ -20,12 +20,12 @@ import {
   // mdiCubeSend,
 } from '@mdi/js'
 
-import classes from './ViewerAutomationCard.module.css'
+import classes from './ViewerRedirectCard.module.css'
 
 const triggerIconSize = 1
 // const actionIconSize = 1
 
-function ViewerAautomationLine ({ block = {}, actions = {} }) {
+function ViewerRedirectCard ({ block = {}, actions = {} }) {
   const navigate = useNavigate()
 
   const blockId = block._id
@@ -78,7 +78,7 @@ function ViewerAautomationLine ({ block = {}, actions = {} }) {
     </>
   } else {
     triggerInfo = <>
-      <AutomationIcon
+      <ActionIcon
         className={classes.icon}
       />
       <p>{
@@ -152,7 +152,7 @@ function ViewerAautomationLine ({ block = {}, actions = {} }) {
     <div style={{ display: 'flex', alignItems: 'flex-start' }}>
       {
         icon_url === ''
-          ? <AutomationIcon className={classes.icon} />
+          ? <ActionIcon className={classes.icon} />
           : <div className={classes.icon} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={text}></div>
       }
 
@@ -160,7 +160,7 @@ function ViewerAautomationLine ({ block = {}, actions = {} }) {
         {
           text !== ''
           ? <div dir="auto" className={classes.title}>{text}</div>
-          : null // <div dir="auto" className={classes.title} style={{ opacity: 0.4 }}>Untitled Automation</div>
+          : null // <div dir="auto" className={classes.title} style={{ opacity: 0.4 }}>Untitled Action</div>
         }
         
         {triggerInfo !== null ? <div className={classes.iconLine}>{triggerInfo}</div> : null}
@@ -186,4 +186,4 @@ function ViewerAautomationLine ({ block = {}, actions = {} }) {
 
 }
 
-export default ViewerAautomationLine
+export default ViewerRedirectCard

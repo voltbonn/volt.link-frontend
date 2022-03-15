@@ -29,7 +29,7 @@ import {
   // RemoveCircleSharp as RemoveCircleIcon,
 
   InsertDriveFileSharp as PageIcon,
-  // LinkSharp as RedirectIcon,
+  LinkSharp as RedirectIcon,
   // PersonSharp as PersonIcon,
   Crop75Sharp as ButtonIcon,
   TitleSharp as HeadlineIcon,
@@ -37,7 +37,6 @@ import {
   // CodeSharp as CodeIcon,
   Remove as DividerIcon,
   // CheckBox as CheckboxIcon,
-  AutoAwesomeSharp as AutomationIcon,
 
   PreviewSharp as ViewIcon,
   EditSharp as EditIcon,
@@ -60,7 +59,7 @@ const typeIcons = {
   // code: <CodeIcon />,
   divider: <DividerIcon />,
   page: <PageIcon />,
-  automation: <AutomationIcon />,
+  redirect: <RedirectIcon />,
 }
 
 const defaultTypeOptions = [
@@ -70,7 +69,7 @@ const defaultTypeOptions = [
   // 'code',
   'divider',
   'page',
-  'automation',
+  'redirect',
 ]
 
 function BlockMenu ({

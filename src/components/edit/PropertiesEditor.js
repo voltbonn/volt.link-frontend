@@ -277,7 +277,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         />
       </div>
     </>
-  } else if (type === 'automation') {
+  } else if (type === 'redirect') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
         <h3><Localized id="properties_editor_trigger_label" /></h3>
@@ -310,7 +310,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     {
       type === 'page'
       || type === 'person'
-      || type === 'automation'
+      || type === 'redirect'
       ? <>
           <CoverphotoPicker
             coverphotoValue={properties.coverphoto}

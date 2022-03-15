@@ -67,11 +67,11 @@ block_menu_text_style_label_body = Body
 block_menu_text_style_label_caption = Caption
 
 block_menu_type_label_plural_page = Pages
-block_menu_type_label_plural_automation = Automations
+block_menu_type_label_plural_redirect = Redirects
 block_menu_type_label_plural_person = People
 
 block_menu_type_label_page = Page
-block_menu_type_label_automation = Automation
+block_menu_type_label_redirect = Redirect
 block_menu_type_label_person = Person
 block_menu_type_label_button = Button
 block_menu_type_label_headline = Headline

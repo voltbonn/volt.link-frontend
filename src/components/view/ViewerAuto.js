@@ -37,7 +37,7 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable 
     case 'person':
       component = <ViewerLine key={block._id} block={block} actions={actions} {...props} />
       break
-    case 'automation':
+    case 'redirect':
       component = <ViewerLine key={block._id} block={block} actions={actions} {...props} />
       break
     default:

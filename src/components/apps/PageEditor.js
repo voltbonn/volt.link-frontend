@@ -227,7 +227,7 @@ function PageEditor({
 
       typeOptions={[
         'page',
-        'automation',
+        'redirect',
       ]}
 
       trigger={props => (

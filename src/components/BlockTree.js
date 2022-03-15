@@ -31,8 +31,8 @@ import {
   // Search as SearchIcon,
 
   InsertDriveFileSharp as PageIcon,
-  AutoAwesomeSharp as AutomationIcon,
-  // LinkSharp as RedirectIcon,
+  // AutoAwesomeSharp as ActionIcon,
+  LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
   // Crop75Sharp as ButtonIcon,
   // TitleSharp as HeadlineIcon,
@@ -50,7 +50,7 @@ import PopoverMenu from './PopoverMenu.js'
 const blockTypeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
-  automation: <AutomationIcon />,
+  redirect: <RedirectIcon />,
 }
 
 
@@ -373,7 +373,7 @@ function BlockTree({
   const [types, setTypes] = useState({
     person: true,
     page: true,
-    automation: true,
+    redirect: true,
   })
   const filteredTypes = getFilteredTypes(types)
   
@@ -591,7 +591,7 @@ function BlockTree({
         {/*
           { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
           { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
-          { value: 'automation', icon: <ActionIcon className="icon" />, title: getString('block_menu_type_label_plural_automation') },
+          { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_plural_redirect') },
         */}
 
         <div style={{ marginTop: '8px' }}></div>

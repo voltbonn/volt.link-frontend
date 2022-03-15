@@ -61,11 +61,11 @@ add_content_before = Inhalt hinzufügen
 block_menu_choose_type_label = Umwandeln in…
 
 block_menu_type_label_plural_page = Seiten
-block_menu_type_label_plural_automation = Automatisierungen
+block_menu_type_label_plural_redirect = Weiterleitungen
 block_menu_type_label_plural_person = Personen
 
 block_menu_type_label_page = Seite
-block_menu_type_label_automation = Automatisierung
+block_menu_type_label_redirect = Weiterleitung
 block_menu_type_label_person = Person
 block_menu_type_label_button = Button
 block_menu_type_label_headline = Überschrift

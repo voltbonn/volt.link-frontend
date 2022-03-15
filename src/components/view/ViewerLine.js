@@ -7,7 +7,7 @@ import useClickOnBlock from '../../hooks/useClickOnBlock.js'
 import {
   InsertDriveFile as PageIcon,
   Face as PersonIcon,
-  AutoAwesomeSharp as AutomationIcon,
+  LinkSharp as RedirectIcon,
 } from '@mui/icons-material'
 
 import classes from './ViewerLine.module.css'
@@ -27,7 +27,7 @@ function ViewerLine ({ block, actions = {} }) {
 
     if (triggerType === 'path') {
       title = '/'+triggerProperties.path
-    } else if (block.type === 'automation') {
+    } else if (block.type === 'redirect') {
       if (triggerType === 'click') {
         title = triggerProperties.blockId
       } else if (triggerType === 'cron') {
@@ -57,8 +57,8 @@ function ViewerLine ({ block, actions = {} }) {
       case 'person':
         iconComponent = <PersonIcon className={classes.icon} />
         break
-      case 'automation':
-        iconComponent = <AutomationIcon className={classes.icon} />
+      case 'redirect':
+        iconComponent = <RedirectIcon className={classes.icon} />
         break
       default:
       iconComponent = <PageIcon className={classes.icon} />

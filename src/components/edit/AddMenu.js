@@ -7,8 +7,7 @@ import {
 
 import {
   InsertDriveFileSharp as PageIcon,
-  AutoAwesomeSharp as AutomationIcon,
-  // LinkSharp as RedirectIcon,
+  LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
   Crop75Sharp as ButtonIcon,
   NotesSharp as TextIcon,
@@ -30,12 +29,12 @@ const blockTypeIcons = {
   checkbox: <CheckboxIcon />,
   page: <PageIcon />,
   person: <PersonIcon />,
-  automation: <AutomationIcon />,
+  redirect: <RedirectIcon />,
 }
 
 const default_types = [
   'page',
-  'automation',
+  'redirect',
 ]
 
 function AddMenuContent({ createBlock, types }) {
