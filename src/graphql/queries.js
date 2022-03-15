@@ -34,8 +34,8 @@ export const getBlock_Query = gql`
 `
 
 export const getBlocks_Query = gql`
-  query getBlocks ($ids: [ObjectID], $types: [String], $archived: Boolean) {
-    blocks (ids: $ids, types: $types, archived: $archived) {
+  query getBlocks ($ids: [ObjectID], $types: [String], $archived: Boolean, $roots: [ObjectID]) {
+    blocks (ids: $ids, types: $types, archived: $archived, roots: $roots) {
       _id
       type
       properties
