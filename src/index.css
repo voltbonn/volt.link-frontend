@@ -504,10 +504,13 @@ button.hasIcon span{
   bottom: 0;
   left: 0;
 
+  pointer-events: none;
+
   border-radius: var(--borderRadius);
 
   background-color: rgba(var(--on-background-rgb), 0);
 }
+.clickable_card.active:before,
 .clickable_card:hover:before {
   background-color: rgba(var(--on-background-rgb), var(--alpha-less));
 }
