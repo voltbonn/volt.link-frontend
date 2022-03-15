@@ -184,7 +184,7 @@ export default function SidebarContent() {
         ? <BlockTree
             onClick={viewBlock}
             createBlock={createBlock}
-            blockMenu={true}
+            showBlockMenu={true}
             scrollContainer={scrollContainerRef}
           />
         : null

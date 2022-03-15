@@ -205,6 +205,7 @@ const BlockRow = ({
   toggleOpenById,
   refetchData,
   // onSetSize,
+  showBlockMenu = true,
 }) => {
   const {
     _id,
@@ -274,31 +275,36 @@ const BlockRow = ({
       }}
     />
 
-    <div className={classes.blockRowActions}>
-      <BlockMenu
-        onToogle={onBlockMenuToogle}
-        onArchivedToggle={onArchiveToggle}
-        setOpenBlockMenuRef={setOpenBlockMenuRef}
-        {...{
-          block,
-          createBlock,
-          // setType: saveType,
-        }}
-        trigger={props => (
-          <button
-            {...props}
-            className={`text hasIcon ${blockMenuIsOpen ? 'fakeHover' : ''}`}
-            style={{
-              margin: '0',
-              padding: 'var(--basis) 0',
-              flexShrink: '0',
+    {
+      showBlockMenu === true
+      && (
+        <div className={classes.blockRowActions}>
+          <BlockMenu
+            onToogle={onBlockMenuToogle}
+            onArchivedToggle={onArchiveToggle}
+            setOpenBlockMenuRef={setOpenBlockMenuRef}
+            {...{
+              block,
+              createBlock,
+              // setType: saveType,
             }}
-          >
-            <BlockMenuIcon className="icon" />
-          </button>
-        )}
-      />
-    </div>
+            trigger={props => (
+              <button
+                {...props}
+                className={`text hasIcon ${blockMenuIsOpen ? 'fakeHover' : ''}`}
+                style={{
+                  margin: '0',
+                  padding: 'var(--basis) 0',
+                  flexShrink: '0',
+                }}
+              >
+                <BlockMenuIcon className="icon" />
+              </button>
+            )}
+          />
+        </div>
+      )
+    }
   </>
 
   const inset = ~~(nestingLevel * 25 + (isLeaf ? 24 : 0))
@@ -347,6 +353,7 @@ function BlockTree({
   createBlock = ()=>{},
   onClick = ()=>{},
   scrollContainer = window,
+  showBlockMenu = true,
 }) {
   const { getString } = useLocalization()
 
@@ -546,6 +553,7 @@ function BlockTree({
       toggleOpenById={toggleOpenById}
       refetchData={refetchData}
       // onSetSize={setSize}
+      showBlockMenu={showBlockMenu}
       {...props}
     />
   }
