@@ -57,8 +57,11 @@ function InlineEditorBlockButtonRaw({
   }, [onChange, block, text, link])
 
   return <div style={{
-    padding: 'var(--basis) 0',
-  }}>
+    margin: 'var(--basis) 0',
+    cursor: 'auto',
+  }}
+  className="clickable_card active"
+  >
     <HtmlInput
       defaultValue={text}
       onChange={setText}
@@ -87,7 +90,7 @@ function InlineEditorBlockButtonRaw({
           defaultValue={link}
           placeholder={getString('path_editor_item_link_label')}
           style={{
-            margin: 'var(--basis) 0',
+            margin: 'var(--basis) 0 0 0',
             width: '100%',
           }}
         />
