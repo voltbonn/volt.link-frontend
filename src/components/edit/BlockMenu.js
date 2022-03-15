@@ -84,8 +84,6 @@ function BlockMenu ({
   typeOptions = defaultTypeOptions,
   createBlock,
 
-  toggle_active = null,
-  active = null,
   onRemoveRow = null,
   addRowBefore = null,
   // addRowAfter = null,
@@ -97,6 +95,7 @@ function BlockMenu ({
 
   const { _id = '', type = '', properties = {} } = block
   const {
+    active = true,
     text_style = null,
   } = properties
 
@@ -142,6 +141,12 @@ function BlockMenu ({
       })
       .catch(console.error)
   }, [ archiveBlock, setArchived, archived, block, onArchivedToggle ])
+
+  const toggleActive = useCallback(() => {
+    if (typeof setProperty === 'function') {
+      setProperty('active', !active)
+    }
+  }, [ active, setProperty ])
 
   const metadata = block.metadata || {}
 
@@ -289,8 +294,8 @@ function BlockMenu ({
             }
 
             {
-              typeof active === 'boolean' && toggle_active
-                ? <MenuItem className="roundMenuItem" onClick={toggle_active}>
+              typeof setProperty === 'function'
+                ? <MenuItem className="roundMenuItem" onClick={toggleActive}>
                     <ListItemIcon>
                       {
                         active

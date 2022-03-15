@@ -108,23 +108,47 @@ function InlineEditorBlockRaw({
     }
   }, [contentConfig.block])
 
-  const handleChange_Type = useCallback(newValue => {
+  const saveBlockCallback = useCallback(newBlock => {
+    saveBlock(newBlock)
+      .then(gottenBlock => {
+        setBlock(gottenBlock)
+        if (!block._id || block._id !== gottenBlock._id) {
+          onChange({
+            blockId: gottenBlock._id,
+            block: gottenBlock,
+          })
+        }
+      })
+  }, [block, onChange, saveBlock])
+
+  const changeType = useCallback(newValue => {
     const newBlock = {
       ...block,
       type: newValue,
     }
 
-    saveBlock(newBlock)
-      .then((newBlock) => {
-        setBlock(newBlock)
-        if (!block._id || block._id !== newBlock._id) {
-          onChange({
-            blockId: newBlock._id,
-            block: newBlock,
-          })
+    saveBlockCallback(newBlock)
+  }, [ block, saveBlockCallback])
+
+  const saveProperty = useCallback((propertyName, newValue) => {
+    if (typeof propertyName === 'string') {
+      const newProperties = { ...block.properties }
+      if (newValue === null) {
+        delete newProperties[propertyName]
+      } else {
+        newProperties[propertyName] = newValue
+      }
+
+      if (newProperties !== block.properties) {
+        const newBlock = {
+          ...block,
+          properties: newProperties,
         }
-      })
-  }, [setBlock, block, saveBlock, onChange])
+
+        saveBlockCallback(newBlock)
+      }
+    }
+  }, [ block, saveBlockCallback ])
 
   // const handleChange = useCallback(newBlock => {
   //   setBlock(newBlock)
@@ -135,27 +159,6 @@ function InlineEditorBlockRaw({
   //     onChange({ target })
   //   }
   // }, [setBlock, onChange])
-
-  const toggle_active = useCallback(() => {
-    const newBlock = {
-      ...block,
-      properties: {
-        ...block.properties,
-        active: !active,
-      },
-    }
-
-    saveBlock(newBlock)
-      .then((newBlock) => {
-        setBlock(newBlock)
-        if (!block._id || block._id !== newBlock._id) {
-          onChange({
-            blockId: newBlock._id,
-            block: newBlock,
-          })
-        }
-      })
-  }, [block, active, saveBlock, setBlock, onChange])
 
   const handleBlockChange = useCallback(newBlock => {
     if (JSON.stringify(newBlock) !== JSON.stringify(block)) {
@@ -203,9 +206,8 @@ function InlineEditorBlockRaw({
     <BlockMenu
       {...{
         block,
-        setType: handleChange_Type,
-        toggle_active,
-        active,
+        setType: changeType,
+        setProperty: saveProperty,
         onRemoveRow,
         addRowBefore,
         addRowAfter,
