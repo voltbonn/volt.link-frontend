@@ -41,6 +41,8 @@ import {
 
   PreviewSharp as ViewIcon,
   EditSharp as EditIcon,
+
+  FormatSizeSharp as TextStyleIcon,
 } from '@mui/icons-material'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
@@ -54,8 +56,6 @@ import { AddMenuContent } from './AddMenu.js'
 const typeIcons = {
   button: <ButtonIcon />,
   text: <TextIcon />,
-  headline: <HeadlineIcon />,
-  // headline3: <HeadlineIcon />,
   // checkbox: <CheckboxIcon />,
   // code: <CodeIcon />,
   divider: <DividerIcon />,
@@ -66,8 +66,6 @@ const typeIcons = {
 const defaultTypeOptions = [
   'button',
   'text',
-  'headline',
-  // 'headline3',
   // 'checkbox',
   // 'code',
   'divider',
@@ -82,6 +80,7 @@ function BlockMenu ({
   trigger,
   onToogle,
 
+  setProperty,
   setType,
   typeOptions = defaultTypeOptions,
   createBlock,
@@ -98,6 +97,9 @@ function BlockMenu ({
   const navigate = useNavigate()
 
   const { _id = '', type = '', properties = {} } = block
+  const {
+    text_style = null,
+  } = properties
 
   const [archived, setArchived] = useState(properties.archived === true)
   const archiveBlock = useArchiveBlock()
@@ -208,6 +210,46 @@ function BlockMenu ({
                 </SubMenu>
               : null
             }
+
+            {
+              (
+                typeof setProperty === 'function'
+                && type === 'text'
+              )
+              ? <SubMenu
+                  parentMenuIsOpen={open}
+                  label={<>
+                    <ListItemIcon>
+                      <TextStyleIcon />
+                    </ListItemIcon>
+                    <Localized id="block_menu_choose_text_style_label" />
+                  </>}
+                  header={<Localized id="block_menu_choose_text_style_label" />}
+                >
+                  {
+                    [
+                      // 'h1', // title
+                      'h2', // heading
+                      'h3', // subheading
+                      'body', // body text. This is saved as null.
+                      // 'caption',
+                    ]
+                    .map(thisStyle => (
+                      <MenuItem
+                        key={thisStyle}
+                        selected={thisStyle === 'body' ? text_style === null : text_style === thisStyle}
+                        onClick={() => setProperty('text_style', thisStyle === 'body' ? null : thisStyle)}
+                        className="roundMenuItem"
+                      >
+                        {getString(`block_menu_text_style_label_${thisStyle}`, thisStyle)}
+                      </MenuItem>
+                    ))
+                  }
+                </SubMenu>
+              : null
+            }
+
+            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
 
             {/*
               addRowBefore

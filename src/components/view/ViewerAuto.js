@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 
 import { DataBothWays } from '../DataTransmat.js'
 
-import ViewerHeadlineCard from './ViewerHeadlineCard.js'
 import ViewerTextCard from './ViewerTextCard.js'
 import ViewerButtonCard from './ViewerButtonCard.js'
 import ViewerDividerLine from './ViewerDividerLine.js'
@@ -20,9 +19,6 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable 
   const type = block.type || null
 
   switch (type) {
-    case 'headline':
-      component = <ViewerHeadlineCard key={block._id} block={block} actions={actions} {...props} />
-      break
     case 'text':
       component = <ViewerTextCard key={block._id} block={block} actions={actions} {...props} />
       break

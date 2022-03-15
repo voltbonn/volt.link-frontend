@@ -199,7 +199,8 @@ h2,
   font-weight: bold;
 }
 
-h3 {
+h3,
+.type_h3 {
   font-size: calc(var(--font-add) + var(--basis));
   margin: var(--basis_x4) 0 var(--basis) 0;
   text-decoration: inherit;

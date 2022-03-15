@@ -11,7 +11,6 @@ import {
   // LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
   Crop75Sharp as ButtonIcon,
-  TitleSharp as HeadlineIcon,
   NotesSharp as TextIcon,
   Remove as DividerIcon,
   CodeSharp as CodeIcon,
@@ -25,8 +24,6 @@ import { Localized } from '../../fluent/Localized.js'
 
 const blockTypeIcons = {
   button: <ButtonIcon />,
-  headline: <HeadlineIcon />,
-  headline3: <HeadlineIcon />,
   text: <TextIcon />,
   code: <CodeIcon />,
   divider: <DividerIcon />,

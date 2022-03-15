@@ -555,8 +555,6 @@ function ContentEditor({ defaultValue = [], onChange }) {
         types={[
           'button',
           'text',
-          'headline',
-          // 'headline3',
           // 'checkbox',
           // 'code',
           'divider',

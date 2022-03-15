@@ -18,6 +18,8 @@ function InlineEditorBlockTextRaw({
   onMergeFromNextInput,
 
   onAddRowAfter,
+
+  style = {},
 }) {
   const properties = block.properties || {}
   const [text, setText] = useState('')
@@ -38,6 +40,11 @@ function InlineEditorBlockTextRaw({
     }
   }, [onChange, block, text])
 
+  let text_style_class = 'type_text'
+  if (properties.hasOwnProperty('text_style')) {
+    text_style_class = 'type_'+properties.text_style
+  }
+
   return <HtmlInput
     defaultValue={text}
     onChange={setText}
@@ -45,11 +52,12 @@ function InlineEditorBlockTextRaw({
 
     placeholder={getString('placeholder_text')}
     style={{
+      ...style,
       margin: '0',
       backgroundColor: 'transparent',
     }}
     linebreaks={true}
-    className="hide_border type_text"
+    className={`hide_border ${text_style_class}`}
 
     onInputRef={onInputRef}
     onGoToPrevInput={onGoToPrevInput}

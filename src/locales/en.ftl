@@ -59,6 +59,12 @@ action_input_url_placeholder = https://voltdeutschland.org/bonn
 add_content_before = Add Content
 
 block_menu_choose_type_label = Turn into…
+block_menu_choose_text_style_label = Text Style
+block_menu_text_style_label_h1 = Title
+block_menu_text_style_label_h2 = Heading
+block_menu_text_style_label_h3 = Subheading
+block_menu_text_style_label_body = Body
+block_menu_text_style_label_caption = Caption
 
 block_menu_type_label_plural_page = Pages
 block_menu_type_label_plural_automation = Automations
@@ -69,7 +75,6 @@ block_menu_type_label_automation = Automation
 block_menu_type_label_person = Person
 block_menu_type_label_button = Button
 block_menu_type_label_headline = Headline
-block_menu_type_label_headline3 = Headline 3
 block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider

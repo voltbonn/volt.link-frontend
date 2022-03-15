@@ -99,6 +99,21 @@ function PageEditor({
     }
   }, [block, saveBlock, onSaveBlock])
 
+  const saveProperty = useCallback((propertyName, newValue) => {
+    if (
+      typeof propertyName === 'string'
+    ) {
+      const newProperties = { ...properties }
+      if (newValue === null) {
+        delete newProperties[propertyName]
+      } else {
+        newProperties[propertyName] = newValue
+      }
+      
+      saveProperties(newProperties)
+    }
+  }, [properties, saveProperties])
+
   const saveContent = useCallback(newContent => {
     if (newContent !== block.content) {
       const newBlock = {
@@ -207,6 +222,7 @@ function PageEditor({
       {...{
         block,
         setType: saveType,
+        setProperty: saveProperty,
       }}
 
       typeOptions={[

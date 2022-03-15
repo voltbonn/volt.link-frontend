@@ -9,14 +9,53 @@ function ViewerTextCard ({ block }) {
     const text = renderInlineMarkdown(block.properties.text)
     setHtml({ __html: text })
   }, [block, setHtml])
-
-  return <p
-    dir="auto"
-    dangerouslySetInnerHTML={html}
-    style={{
+  
+  const defaultProps = {
+    dir: 'auto',
+    style: {
       whiteSpace: 'pre-wrap',
-    }}
-  ></p>
+    },
+  }
+
+  let text_style = 'body'
+  if (block.properties.hasOwnProperty('text_style')) {
+    text_style = block.properties.text_style
+  }
+
+  let component = null
+  switch (text_style) {
+    case 'h1':
+      component = <h1
+        dangerouslySetInnerHTML={html}
+        {...defaultProps}
+      />
+      break
+    case 'h2':
+      component = <h2
+        dangerouslySetInnerHTML={html}
+        {...defaultProps}
+      />
+      break
+    case 'h3':
+      component = <h3
+        dangerouslySetInnerHTML={html}
+        {...defaultProps}
+      />
+      break
+    case 'caption':
+      component = <caption
+        dangerouslySetInnerHTML={html}
+        {...defaultProps}
+      />
+      break
+    default: // body
+      component = <p
+        dangerouslySetInnerHTML={html}
+        {...defaultProps}
+      />
+  }
+
+  return component
 }
 
 export default ViewerTextCard
