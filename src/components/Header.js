@@ -15,13 +15,14 @@ import ViewerAuto from './view/ViewerAuto.js'
 import PopoverMenu from './PopoverMenu.js'
 
 import { useApolloClient } from '@apollo/client'
-import { getSiblingBlocks_Query, getParentBlocks_Query } from '../graphql/queries'
+import { getBlocks_Query, getParentBlocks_Query } from '../graphql/queries'
 
 export default function Header({ title, block = {}, rightActions, notificationBanner }) {
   const { open, toggleSidebar } = useSidebarContext()
   const apollo_client = useApolloClient()
 
   const blockId = block ? block._id : null
+  const parentId = block ? block.parent : null
 
   const [parentBlocks, setParentBlocks] = useState([])
   const [siblingBlocks, setSiblingBlocks] = useState([])
@@ -47,12 +48,13 @@ export default function Header({ title, block = {}, rightActions, notificationBa
       })
   }, [apollo_client, setParentBlocks])
 
-  const loadSiblingBlocks = useCallback(blockId => {
+  const loadSiblingBlocks = useCallback((parentId, blockId) => {
     apollo_client.query({
-      query: getSiblingBlocks_Query,
+      query: getBlocks_Query,
       variables: {
-        _id: blockId,
-        types: ['page', 'person', 'automation'],
+        roots: [parentId || blockId],
+        types: ['page', 'person', 'redirect'],
+        archived: false,
       },
     })
       .then(async ({ data }) => {
@@ -75,7 +77,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
   useEffect(() => {
     if (blockId) {
       loadParentBlocks(blockId)
-      loadSiblingBlocks(blockId)
+      loadSiblingBlocks(parentId, blockId)
     }
   }, [blockId, loadParentBlocks, loadSiblingBlocks])
 
