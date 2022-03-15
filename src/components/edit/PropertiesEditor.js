@@ -326,7 +326,9 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       : null
     }
 
-    <div className={classes.main_headline}>
+    <div className={classes.main_headline} style={{
+      paddingLeft: 'calc(8 * var(--basis))',
+    }}>
       <HtmlInput
         defaultValue={properties.text}
         onChange={newValue => updateProperty('text', newValue, true)}
@@ -334,7 +336,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
 
         placeholder={getString('placeholder_main_headline')}
         style={{
-          margin: '0 0 0 calc(8 * var(--basis))',
           padding: 'var(--basis) var(--basis_x2)',
         }}
         linebreaks={true}

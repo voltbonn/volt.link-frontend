@@ -662,3 +662,9 @@ div[contenteditable].hide_border{
   margin: 0 var(--basis_x2) !important;
   padding: var(--basis) var(--basis_x2) !important;
 }
+
+div[contentEditable=true].type_h1,
+div[contentEditable=true].type_h2,
+div[contentEditable=true].type_h3 {
+  margin: var(--basis_x4) 0 var(--basis) 0 !important;
+}
