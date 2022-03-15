@@ -18,8 +18,6 @@ function InlineEditorBlockTextRaw({
   onMergeFromNextInput,
 
   onAddRowAfter,
-
-  style = {},
 }) {
   const properties = block.properties || {}
   const [text, setText] = useState('')
@@ -52,7 +50,6 @@ function InlineEditorBlockTextRaw({
 
     placeholder={getString('placeholder_text')}
     style={{
-      ...style,
       margin: '0',
       backgroundColor: 'transparent',
     }}
