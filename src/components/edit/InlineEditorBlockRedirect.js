@@ -99,7 +99,7 @@ function InlineEditorBlockRedirectRaw({
 
   return <div style={{
     ...style,
-    margin: 'var(--basis) 0',
+    margin: '0 0 var(--basis) 0',
     cursor: 'auto',
   }}
   className="clickable_card active"

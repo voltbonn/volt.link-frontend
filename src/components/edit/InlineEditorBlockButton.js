@@ -57,7 +57,7 @@ function InlineEditorBlockButtonRaw({
   }, [onChange, block, text, link])
 
   return <div style={{
-    margin: 'var(--basis) 0',
+    margin: '0 0 var(--basis) 0',
     cursor: 'auto',
   }}
   className="clickable_card active"

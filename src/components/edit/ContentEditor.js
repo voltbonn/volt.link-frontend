@@ -594,6 +594,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
             style={{
               '--input-box-shadow': 'inset var(--basis_x8) 0 0 0 var(--background), inset var(--basis_x8) 0 0 var(--basis_x0_2) var(--on-background-contrast), inset 0 0 0 var(--basis_x0_2) var(--on-background-contrast)',
               boxShadow: 'var(--input-box-shadow)',
+              paddingTop: 'var(--basis)',
               paddingRight: 'var(--basis)',
             }}
           >

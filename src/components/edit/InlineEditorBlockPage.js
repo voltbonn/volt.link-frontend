@@ -35,7 +35,14 @@ function InlineEditorBlockPageRaw({
     }
   }, [onChange, block, text])
 
-  return <div style={{ display: 'flex' }}>
+  return <div
+    style={{
+      display: 'flex',
+      margin: '0 0 var(--basis) 0',
+      cursor: 'auto',
+    }}
+    className="clickable_card active"
+  >
     <PagePlaceholderIcon
       style={{
         margin: 'var(--basis)',
