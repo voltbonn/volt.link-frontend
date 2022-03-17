@@ -290,8 +290,8 @@ function PermissionsEditor({
                   <button onClick={addNewPermissionFromInput} className="green" style={{margin: '0'}}>
                     {
                       newEmails.length > 1
-                      ? <>Add People</>
-                      : <>Add Person</>
+                      ? "Add People"
+                      : "Add Person"
                     }
                   </button>
                 </div>
