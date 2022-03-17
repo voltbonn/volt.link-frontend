@@ -107,3 +107,7 @@ edit_block = Edit
 view_block = View
 
 search = Search…
+
+role_editor = Editor
+role_viewer = Viewer
+role_owner = Owner

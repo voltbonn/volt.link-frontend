@@ -102,3 +102,7 @@ edit_block = Bearbeiten
 view_block = Ansehen
 
 search = Suchen…
+
+role_editor = Bearbeiter
+role_viewer = Betrachter
+role_owner = Besitzer

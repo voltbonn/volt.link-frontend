@@ -35,7 +35,7 @@ function addTmpIds(array) {
 }
 
 function LocalizedRole({ role }) {
-  return <Localized id={'role-'+role} />
+  return <Localized id={'role_'+role} />
 }
 
 function RolesMenu({
