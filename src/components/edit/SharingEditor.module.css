@@ -14,7 +14,7 @@
   padding: var(--basis_x8);
   background: var(--background);
   margin-bottom: var(--basis_x8);
-  /* box-shadow: var(--basis_x2) var(--basis_x2) 0 0 var(--on-background); */
+  box-shadow: var(--basis_x2) var(--basis_x2) 0 0 var(--on-background);
 }
 @media (max-width: 600px) {
   .dialog {
