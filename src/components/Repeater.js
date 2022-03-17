@@ -155,7 +155,7 @@ function Repeater({
     let tmp_defaultValue = {}
     if (typeof addDefaultValue === 'function') {
       const defaultValue = addDefaultValue()
-      if (typeof tmp_defaultValue === 'object' && tmp_defaultValue !== null) {
+      if (typeof defaultValue === 'object' && defaultValue !== null) {
         tmp_defaultValue = defaultValue
       }
     }
