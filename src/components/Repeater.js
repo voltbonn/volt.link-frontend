@@ -157,6 +157,12 @@ function Repeater({
       const defaultValue = addDefaultValue()
       if (typeof defaultValue === 'object' && defaultValue !== null) {
         tmp_defaultValue = defaultValue
+        if (
+          typeof tmp_defaultValue.tmp_id !== 'string'
+          || tmp_defaultValue.tmp_id === ''
+        ) {
+          tmp_defaultValue.tmp_id = uuidv4()
+        }
       }
     }
     return tmp_defaultValue
