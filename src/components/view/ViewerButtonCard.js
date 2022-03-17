@@ -39,17 +39,16 @@ function ViewerButtonCard ({ block, actions = {} }) {
     </a>
   }
 
-  if (hasClickAction === true) {
+  if (hasClickAction === true && typeof actions.click === 'function') {
     return <button
       dir="auto"
       dangerouslySetInnerHTML={html}
-      disabled="disabled"
       className="default square"
       style={{
         margin: '0',
         whiteSpace: 'pre-wrap',
       }}
-      onClick={actions.onclick}
+      onClick={actions.click}
     ></button>
   }
 

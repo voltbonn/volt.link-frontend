@@ -70,6 +70,9 @@ function ViewerLine ({ block, actions = {} }) {
   return <div
     onClick={actions.hasOwnProperty('click') ? actions.click : handleClick}
     className={`clickable_card ${classes.root}`}
+    style={{
+      cursor: actions.hasOwnProperty('click') && typeof actions.click !== 'function' ? 'default' : 'pointer',
+    }}
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>
       {iconComponent}
