@@ -286,6 +286,7 @@ function PermissionsEditor({
                 <hr />
 
                 <div className={classes.actions}>
+                  <div></div>
                   <button onClick={addNewPermissionFromInput} className="green" style={{margin: '0'}}>
                     {
                       newEmails.length > 1
