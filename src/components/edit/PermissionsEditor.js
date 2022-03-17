@@ -172,8 +172,9 @@ function PermissionsEditor({
   }, [ user_email, setPermissions ])
 
   useEffect(() => {
-    if (Array.isArray(defaultPermissions)) {
-      setNewPermission(defaultPermissions)
+    const blockPermissions = defaultPermissions['/']
+    if (Array.isArray(blockPermissions)) {
+      setNewPermission(blockPermissions)
     } else {
       setNewPermission([])
     }
@@ -192,7 +193,7 @@ function PermissionsEditor({
     }
 
     setPermissions(newPermissions)
-    onChange(newPermissions)
+    onChange({ '/': newPermissions })
   }, [permissions, user_email, setPermissions, onChange])
 
   const changeRole = useCallback((email, newRole) => {
@@ -207,7 +208,7 @@ function PermissionsEditor({
     })
 
     setPermissions(newPermissions)
-    onChange(newPermissions)
+    onChange({ '/': newPermissions })
   }, [permissions, setPermissions, onChange])
 
   const addPermissions = useCallback((newEmails, newRole) => {
@@ -226,7 +227,7 @@ function PermissionsEditor({
     }
 
     setPermissions(newPermissions)
-    onChange(newPermissions)
+    onChange({ '/': newPermissions })
   }, [permissions, user_email, setPermissions, onChange])
 
   const addNewPermissionFromInput = useCallback(() => {
