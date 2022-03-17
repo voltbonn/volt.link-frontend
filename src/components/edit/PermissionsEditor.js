@@ -251,13 +251,11 @@ function PermissionsEditor({
       <>
         <div className={classes.backdrop} onClick={onClose}></div>
 
-        <div className={classes.dialogsWrapper}>
-
         <div className={classes.dialog}>
           <h1 style={{ margin: '0 0 var(--basis_x4) 0' }}>Give viewing and editing rights</h1>
           <p>Enter @volteuropa.org addresses to give editing rights.<br/>Groups addresses are not supported.</p>
           <div className={classes.inputWrapper} key={inputRepaintKey}>
-            <FancyInput className={classes.emailInput}>
+            <FancyInput className={classes.input}>
               {({ setError }) => (
                 <EmailInput
                   multiple={true}
@@ -351,12 +349,11 @@ function PermissionsEditor({
                 <hr style={{ opacity: 0.2 }} />
 
                 <div className={classes.actions}>
+                  <div></div>
                   <button onClick={onClose} className="green" style={{margin: '0'}}>Done</button>
                 </div>
               </>
           }
-        </div>
-
         </div>
       </>
     </Modal>
