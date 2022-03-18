@@ -32,11 +32,11 @@ function useSaveBlock() {
   const apollo_client = useApolloClient()
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
-  const handleSaveBlock = useCallback((newBlock) => {
+  const handleSaveBlock = useCallback((initialBlock) => {
     return new Promise(final_resolve => {
       let snackbarKey = null
 
-      newBlock = {...newBlock}
+      let newBlock = {...initialBlock}
       newBlock = removeProperty(newBlock, '__typename')
       if (newBlock.hasOwnProperty('content') && Array.isArray(newBlock.content)) {
         newBlock.content = newBlock.content.map(contentConfig => ({
@@ -74,7 +74,7 @@ function useSaveBlock() {
               }
             } else {
               final_resolve({
-                ...newBlock,
+                ...initialBlock,
                 _id: data.saveBlock,
               })
 

@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 
 import {
   useParams,
@@ -21,11 +21,16 @@ function Editor() {
   const loadedTheBlock = useRef(false)
   let { id = '' } = useParams()
 
-  const [block, setBlock] = useState({
+  const [block, setBlockInternal] = useState({
     type: 'page',
     properties: {},
     content: [],
   })
+
+  const setBlock = useCallback(newBlock => {
+    console.log('Editor-setBlock', newBlock)
+    setBlockInternal(newBlock)
+  }, [ setBlockInternal ])
 
   const type = block.type || 'page'
 
@@ -81,6 +86,8 @@ function Editor() {
   //   ) {
   //   }
   // }, [isFirstRun, initialBlock, block])
+
+  console.log('Editor-block', block)
 
   if (canEdit === false) {
     return <div className={classes.editor}>
