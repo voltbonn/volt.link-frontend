@@ -67,11 +67,21 @@ function ViewerLine ({ block, actions = {} }) {
     iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={title}></div>
   }
 
+  const onClickProps = {}
+
+  if (actions.hasOwnProperty('click')) {
+    if (typeof actions.click === 'function') {
+      onClickProps.onClick = actions.click
+    }
+  } else {
+    onClickProps.onClick = handleClick
+  }
+
   return <div
-    onClick={actions.hasOwnProperty('click') ? actions.click : handleClick}
+    {...onClickProps}
     className={`clickable_card ${classes.root}`}
     style={{
-      cursor: actions.hasOwnProperty('click') && typeof actions.click !== 'function' ? 'default' : 'pointer',
+      cursor: onClickProps.hasOwnProperty('onClick') ? 'pointer' : 'auto',
     }}
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>
