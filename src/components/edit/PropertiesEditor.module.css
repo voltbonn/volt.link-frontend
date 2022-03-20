@@ -17,9 +17,10 @@
   padding: var(--basis_x4);
   border-radius: var(--basis_x2);
 
-  width: 1000px;
-  max-width: calc(100% - var(--basis_x8));
+  width: calc(1000px - calc(8 * var(--basis)));
+  max-width: calc(100% - calc(8 * var(--basis)));
   margin: 0 auto;
+  transform: translate3d(calc(4 * var(--basis)), 0, 0);
 }
 
 .properties_row {
