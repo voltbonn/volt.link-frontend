@@ -6,7 +6,7 @@ function ViewerButtonCard ({ block, actions = {} }) {
   const [html, setHtml] = useState({ __html: '' })
 
   useEffect(() => {
-    const text = renderInlineMarkdown(block.properties.text)
+    const text = renderInlineMarkdown(block.properties.text, { linkify: false })
     setHtml({ __html: text })
   }, [block, setHtml])
 
