@@ -220,7 +220,6 @@ const BlockRow = ({
   // useEffect(() => {
   //   if (typeof onSetSize === 'function') {
   //     const height = rootRef.current.getBoundingClientRect().height
-  //     console.log('onSetSize', height)
   //     onSetSize(index, height)
   //   }
   // }, [ index, onSetSize, windowWidth ])
