@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { renderInlineMarkdown } from '../../markdown.js'
 
-function ViewerTextCard ({ block }) {
+function ViewerTextCard ({ block, style }) {
   const [html, setHtml] = useState({ __html: '' })
 
   useEffect(() => {
@@ -14,6 +14,7 @@ function ViewerTextCard ({ block }) {
     dir: 'auto',
     style: {
       whiteSpace: 'pre-wrap',
+      ...style,
     },
   }
 

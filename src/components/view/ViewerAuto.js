@@ -13,7 +13,7 @@ import classes from './ViewerAuto.module.css'
 import { moveBlock_Mutation } from '../../graphql/mutations.js'
 import useMutation from '../../hooks/useMutation.js'
 
-function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable = false, ...props }) {
+function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false, ...props }) {
   let component = null
 
   const type = block.type || null
@@ -67,7 +67,6 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', style, dragable 
     key={block._id}
     draggable={dragable}
     className={classes.root}
-    style={style}
     onTransmit={() => ({
       data: {
         // 'text/plain': 'Hello world!',
