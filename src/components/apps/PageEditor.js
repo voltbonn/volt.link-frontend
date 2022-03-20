@@ -14,6 +14,11 @@ import {
   MoreHorizSharp as BlockMenuIcon,
 } from '@mui/icons-material'
 
+import MdiIcon from '@mdi/react'
+import {
+  mdiTranslate,
+} from '@mdi/js'
+
 import classes from './PageEditor.module.css'
 
 import { Localized, useLocalization } from '../../fluent/Localized.js'
@@ -22,6 +27,7 @@ import { Localized, useLocalization } from '../../fluent/Localized.js'
 import Header from '../Header.js'
 import BlockMenu from '../edit/BlockMenu.js'
 import SharingEditor from '../edit/SharingEditor.js'
+import TranslationEditor from '../edit/TranslationEditor.js'
 import PermissionsEditor from '../edit/PermissionsEditor.js'
 import PropertiesEditor from '../edit/PropertiesEditor.js'
 import ContentEditor from '../edit/ContentEditor.js'
@@ -55,6 +61,10 @@ function PageEditor({
   const [ isSharingEditorOpen, setIsSharingEditorOpen ] = useState(false)
   const openSharingEditor = useCallback(() => setIsSharingEditorOpen(true), [ setIsSharingEditorOpen ])
   const closeSharingEditor = useCallback(() => setIsSharingEditorOpen(false), [ setIsSharingEditorOpen ])
+
+  const [ isTranslationEditorOpen, setIsTranslationEditorOpen ] = useState(false)
+  const openTranslationEditor = useCallback(() => setIsTranslationEditorOpen(true), [ setIsTranslationEditorOpen ])
+  const closeTranslationEditor = useCallback(() => setIsTranslationEditorOpen(false), [ setIsTranslationEditorOpen ])
 
   const [ isPermissionsEditorOpen, setIsPermissionsEditorOpen ] = useState(false)
   const openPermissionsEditor = useCallback(() => setIsPermissionsEditorOpen(true), [ setIsPermissionsEditorOpen ])
@@ -197,6 +207,30 @@ function PageEditor({
       <ShareIcon className="icon" />
       <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_share" /></span>
     </button>
+
+    {
+      type !== 'divider'
+      ? <>
+        {
+          isTranslationEditorOpen
+          ? <TranslationEditor
+              defaultBlock={block}
+              open={isTranslationEditorOpen}
+              onClose={closeTranslationEditor}
+              onSaveProperty={saveProperty}
+            />
+          : null
+        }
+        <button className="text hasIcon" onClick={openTranslationEditor}>
+          <MdiIcon
+            path={mdiTranslate}
+            className="icon"
+          />
+          <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_translate" /></span>
+        </button>
+      </>
+      : null
+    }
 
     {
       isPermissionsEditorOpen
