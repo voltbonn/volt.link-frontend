@@ -446,6 +446,12 @@ button:focus.choosen:after {
   box-shadow: 0 0 0 var(--basis_x0_5) var(--on-background-contrast);
 }
 
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
 .buttonRow button {
   --margin-right: calc(var(--basis) * 1.5);
   margin: var(--basis) var(--margin-right) calc(var(--basis) * .5) 0;
@@ -460,20 +466,17 @@ button:focus.choosen:after {
   margin-right: 0;
 }
 
+button.hasIcon {
+  display: inline-flex;
+  gap: var(--basis);
+}
 button.hasIcon .icon {
   height: calc(1.25 * var(--body-font-size));
   width: auto;
   vertical-align: middle;
 
-  margin-right: var(--basis);
-  margin-left: calc(-1 * var(--basis));
-
   --bg-color: var(--button-color);
   --fg-color: var(--button-background);
-}
-button.hasIcon .icon:first-child:last-child {
-  margin-right: 0;
-  margin-left: 0;
 }
 button.hasIcon .icon.big {
   height: var(--basis_x8);
