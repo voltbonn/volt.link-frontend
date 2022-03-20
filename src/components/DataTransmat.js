@@ -163,7 +163,7 @@ export function DataBothWays({ onTransmit, onReceive, draggable, style, classNam
 //     height: '200px',
 //     backgroundColor: 'red',
 //   }}
-//   onReceive={data => console.log('received', data)}
+//   onReceive={data => console.info('received', data)}
 // >
 //   DataReceiver
 // </DataReceiver>
