@@ -112,18 +112,18 @@ function Row({
 }
 
 function getIndex(eventOrIndex) {
-  let index = eventOrIndex
+  let index = eventOrIndex // for if it is a number/index
 
-  if (!typeof eventOrIndex === 'number') {
-    if (typeof eventOrIndex === 'object' && !!eventOrIndex.target.dataset.index) {
-      index = parseInt(eventOrIndex.target.dataset.index)
-      if (isNaN(index)) {
-        index = null
-      }
-    } else if (typeof eventOrIndex === 'object' && !!eventOrIndex.dataset.index) {
-      index = parseInt(eventOrIndex.dataset.index)
-      if (isNaN(index)) {
-        index = null
+  if (typeof eventOrIndex === 'object') {
+    if (!!eventOrIndex.target) { // is event
+      eventOrIndex = eventOrIndex.target
+    }
+    if (!!eventOrIndex.dataset) { // is only the dataset
+      if (!!eventOrIndex.dataset.index) {
+        index = parseInt(eventOrIndex.dataset.index)
+        if (isNaN(index)) {
+          index = null
+        }
       }
     }
   }
