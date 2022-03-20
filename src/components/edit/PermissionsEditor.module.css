@@ -4,7 +4,7 @@
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
 
-  width: 600px;
+  width: 700px;
   max-width: calc(100% - var(--basis_x8));
   max-height: calc(100% - var(--basis_x8));
 
@@ -16,7 +16,7 @@
   margin-bottom: var(--basis_x8);
   box-shadow: var(--basis_x2) var(--basis_x2) 0 0 var(--on-background);
 }
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .dialog {
     padding: var(--basis_x4);
   }
