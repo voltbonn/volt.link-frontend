@@ -169,7 +169,9 @@ function SharingEditor({
                 : <div></div>
               }
 
-              <button onClick={onClose} className="green" style={{ marginInlineEnd: '0' }}>Done</button>
+              <button onClick={onClose} className="green" style={{ marginInlineEnd: '0' }}>
+                <Localized id="dialog_done" />
+              </button>
             </div>
         </div>
       </>

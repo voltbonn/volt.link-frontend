@@ -19,6 +19,8 @@ path_editor_status_started_saving = Started saving…
 path_editor_status_saved = Saved!
 path_editor_status_error_while_saving = Error while saving! Please try again later. (The error: "{$error}")
 
+dialog_done = Done
+
 path_editor_translate = Translate
 path_editor_share = Share
 path_editor_permissions = Permissions

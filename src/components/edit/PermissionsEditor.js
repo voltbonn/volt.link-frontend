@@ -352,7 +352,9 @@ function PermissionsEditor({
 
                 <div className={classes.actions}>
                   <div></div>
-                  <button onClick={onClose} className="green" style={{margin: '0'}}>Done</button>
+                  <button onClick={onClose} className="green" style={{margin: '0'}}>
+                    <Localized id="dialog_done" />
+                  </button>
                 </div>
               </>
           }
