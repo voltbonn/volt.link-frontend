@@ -28,7 +28,6 @@ function Editor() {
   })
 
   const setBlock = useCallback(newBlock => {
-    console.log('Editor-setBlock', newBlock)
     setBlockInternal(newBlock)
   }, [ setBlockInternal ])
 
@@ -86,8 +85,6 @@ function Editor() {
   //   ) {
   //   }
   // }, [isFirstRun, initialBlock, block])
-
-  console.log('Editor-block', block)
 
   if (canEdit === false) {
     return <div className={classes.editor}>
