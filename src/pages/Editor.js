@@ -13,7 +13,6 @@ import Header from '../components/Header.js'
 import { ErrorPage } from '../components/ErrorPages.js'
 
 import PageEditor from '../components/apps/PageEditor.js'
-import RedirectEditor from '../components/apps/RedirectEditor.js'
 
 function Editor() {
   const loadBlock = useLoadBlock()
@@ -30,8 +29,6 @@ function Editor() {
   const setBlock = useCallback(newBlock => {
     setBlockInternal(newBlock)
   }, [ setBlockInternal ])
-
-  const type = block.type || 'page'
 
   const [ canEdit, setCanEdit ] = useState(null)
   const blockMatchesRoles = useBlockMatchesRoles()
@@ -100,17 +97,10 @@ function Editor() {
       </div>
     </div>
   } else if (canEdit === true) {
-    if (type === 'redirect') {
-      return <RedirectEditor
-        block={block}
-        onSaveBlock={setBlock}
-      />
-    } else {
-      return <PageEditor
-        block={block}
-        onSaveBlock={setBlock}
-      />
-    }
+    return <PageEditor
+      block={block}
+      onSaveBlock={setBlock}
+    />
   } else {
     return null
   }

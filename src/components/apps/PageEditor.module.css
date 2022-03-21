@@ -31,6 +31,18 @@
   padding: var(--basis_x4);
   transition: opacity var(--timing);
 }
+.editor.type_redirect {
+  --bg-color: var(--background);
+	--dot-color: var(--background-contrast);
+
+	--dot-size: 0.11rem;
+	--dot-space: calc(4 * var(--basis));
+
+	background: linear-gradient(90deg, var(--bg-color) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center, linear-gradient(var(--bg-color) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center, var(--dot-color);
+	background-position: top center;
+	background-size: var(--dot-space) var(--dot-space);
+  /* background-attachment: fixed; */
+}
 .editor.loadingContent {
   opacity: 0.5;
   pointer-events: none;
