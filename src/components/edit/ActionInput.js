@@ -17,6 +17,7 @@ function ActionInput({
   const [properties, setProperties] = useState({})
 
   useEffect(() => {
+    defaultValue.type = 'open_url'
     setProperties(defaultValue)
   }, [
     defaultValue,
@@ -147,6 +148,7 @@ function ActionInput({
       ...style
     }}
   >
+    {/*
     <select
       key={properties.type}
       onChange={event => updateProperty('type', event.target.value)}
@@ -158,9 +160,10 @@ function ActionInput({
       <option value="">No Action</option>
       <option value="open_url">Open URL</option>
       <option value="render_block">Render Block</option>
-      {/* <option value="run_block">Run Block</option> */}
-      {/* <option value="send_payload">Send Payload</option> */}
+      <option value="run_block">Run Block</option>
+      <option value="send_payload">Send Payload</option>
     </select>
+    */}
 
     {morePropsInput}
   </div>
