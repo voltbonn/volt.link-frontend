@@ -169,22 +169,22 @@ function Viewer () {
   const rightHeaderActions = <>
     <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
       {
+        loggedIn
+        && <Link to={`/${block._id}/edit`} style={{ marginRight: 'var(--basis_x2)' }}>
+            <button className="text hasIcon">
+              <EditIcon className="icon" />
+              <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="edit_block" /></span>
+            </button>
+          </Link>
+      }
+
+      {
         possibleLocales.length > 1
         && <LocaleSelect
           onChange={handleLocaleChange}
           defaultValue={locales[0] || userLocales[0] || 'en'}
           options={possibleLocales}
         />
-      }
-
-      {
-        loggedIn
-        && <Link to={`/${block._id}/edit`}>
-            <button className="text hasIcon">
-              <EditIcon className="icon" />
-              <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="edit_block" /></span>
-            </button>
-          </Link>
       }
     </div>
   </>
