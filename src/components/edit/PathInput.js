@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react'
+import { useRef, useCallback, useState, useEffect } from 'react'
 
 import HtmlInput from './HtmlInput.js'
 
@@ -12,6 +12,14 @@ function PathInput({
   placeholder = 'de-bonn',
   ...props
 }) {
+  const mountedRef = useRef(false)
+  useEffect(() => {
+    mountedRef.current = true
+    return () => {
+      mountedRef.current = false
+    }
+  }, [])
+
   const [forbiddenInPath, setForbiddenInPath] = useState({})
   const [text, setText] = useState(defaultValue)
 
@@ -50,11 +58,15 @@ function PathInput({
     })
       .then(response => response.json())
       .then(data => {
-        setForbiddenInPath(data)
+        if (mountedRef.current === true) {
+          setForbiddenInPath(data)
+        }
       })
       .catch(error => {
         console.error('forbidden codes error:', error)
-        setForbiddenInPath({})
+        if (mountedRef.current === true) {
+          setForbiddenInPath({})
+        }
       })
   }, [setForbiddenInPath])
 
