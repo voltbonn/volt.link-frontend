@@ -17,6 +17,7 @@ function TriggerInput({
   const [properties, setProperties] = useState({})
 
   useEffect(() => {
+    defaultValue.type = 'path'
     setProperties(defaultValue)
   }, [
     defaultValue,
@@ -131,6 +132,7 @@ function TriggerInput({
       ...style
     }}
   >
+    {/*
     <select
       key={properties.type}
       onChange={event => updateProperty('type', event.target.value)}
@@ -142,9 +144,10 @@ function TriggerInput({
       <option value="">No Trigger</option>
       <option value="path">Path</option>
       <option value="click">Click</option>
-      {/* <option value="cron">Cron</option> */}
-      {/* <option value="block_change">Block Change</option> */}
+      <option value="cron">Cron</option>
+      <option value="block_change">Block Change</option>
     </select>
+    */}
 
     {morePropsInput}
   </div>
