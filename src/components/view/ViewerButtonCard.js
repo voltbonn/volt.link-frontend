@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
 
 import { renderInlineMarkdown } from '../../markdown.js'
+import { useLocalization } from '../../fluent/Localized.js'
 
-function ViewerButtonCard ({ block, actions = {} }) {
+function ViewerButtonCard ({ block, actions = {}, locales }) {
   const [html, setHtml] = useState({ __html: '' })
 
+  const { getString, translateBlock } = useLocalization()
+  const text = translateBlock(block, locales, getString('placeholder_main_headline'))
+
   useEffect(() => {
-    const text = renderInlineMarkdown(block.properties.text, { linkify: false })
-    setHtml({ __html: text })
-  }, [block, setHtml])
+    const textWithHtml = renderInlineMarkdown(text, { linkify: false })
+    setHtml({ __html: textWithHtml })
+  }, [text, setHtml])
 
   let url = ''
   if (

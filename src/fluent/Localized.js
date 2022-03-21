@@ -61,6 +61,38 @@ function withLocalization(Inner) {
   return WithLocalization
 }
 
+
+function translateBlock (block, userLocales, fallback) {
+  const {
+    properties = {}
+  } = block || {}
+  
+  let locale = properties.locale || 'en'
+  let text = properties.text || fallback || ''
+
+  if (!userLocales || !Array.isArray(userLocales)) {
+    userLocales = [locale]
+  }
+    
+  let translations = properties.translations || []
+  if (Array.isArray(translations)) {
+    translations = [
+      {
+        locale,
+        text,
+      },
+      ...translations,
+    ]
+
+    const correct_translations = fluentBy.fluentByArray(translations, userLocales, 'locale')
+    if (correct_translations.length > 0) {
+      text = correct_translations[0].text
+    }
+  }
+
+  return text
+}
+
 function useLocalization() {
   const l10n = React.useContext(FluentContext)
 
@@ -71,6 +103,7 @@ function useLocalization() {
     ...l10n,
     getString,
     fluentByAny,
+    translateBlock,
   }
 }
 

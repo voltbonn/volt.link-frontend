@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 
 import {
   useParams,
@@ -19,6 +19,8 @@ import { ErrorPage } from '../components/ErrorPages.js'
 import Header from '../components/Header.js'
 import ViewerAuto from '../components/view/ViewerAuto.js'
 
+import LocaleSelect from '../components/edit/LocaleSelect.js'
+
 import classes from './Viewer.module.css'
 
 import {
@@ -29,7 +31,7 @@ import { renderInlineMarkdown } from '../markdown.js'
 
 function Viewer () {
   const loadingTheBlock = useRef(false)
-  const { getString } = useLocalization()
+  const { getString, translateBlock, userLocales } = useLocalization()
 
   const { loggedIn } = useUser()
 
@@ -44,6 +46,12 @@ function Viewer () {
     content: [],
   })
   const [contentBlocks, setContentBlocks] = useState([])
+
+  const [possibleLocales, setPossibleLocales] = useState([])
+  const [locales, setLocales] = useState(block.properties.locale || userLocales || ['en'])
+  const handleLocaleChange = useCallback((newLocale) => {
+    setLocales([newLocale])
+  }, [ setLocales ])
 
   const [canView, setCanView] = useState(null)
   const blockMatchesRoles = useBlockMatchesRoles()
@@ -104,6 +112,21 @@ function Viewer () {
           const blocks = (newLoadedBlock.content || [])
           .map(contentConfig => contentConfig.block)
 
+          const newPossibleLocales = [...new Set(
+            [
+              block,
+              ...blocks,
+            ]
+            .flatMap(thisBlock => [
+              thisBlock.properties.locale,
+              ...(thisBlock.properties.translations || [])
+                .filter(t => t.text && t.text.length > 0)
+                .map(t => t.locale),
+            ])
+            .filter(Boolean)
+          )]
+          setPossibleLocales(newPossibleLocales)
+
           setBlock(newLoadedBlock)
           setContentBlocks(blocks)
           loadingTheBlock.current = false
@@ -112,11 +135,13 @@ function Viewer () {
   }, [
     canView,
     id,
+    block,
     block._id,
     loadBlock,
     setBlock,
     loadBlocks,
     setContentBlocks,
+    setPossibleLocales
   ])
 
   if (canView === false) {
@@ -135,20 +160,34 @@ function Viewer () {
   } else {
   const type = block.type || null
 
-  const title = block.properties.text || getString('placeholder_main_headline')
+  const title = translateBlock(block, locales, getString('placeholder_main_headline'))
   const coverphoto_url = getImageUrl(block.properties.coverphoto)
   const icon_url = getImageUrl(block.properties.icon)
 
   // const pronouns = block.properties.pronouns || ''
   
-  const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
-    <Link to={`/${block._id}/edit`}>
-      <button className="text hasIcon">
-        <EditIcon className="icon" />
-        <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="edit_block" /></span>
-      </button>
-    </Link>
-  </div>
+  const rightHeaderActions = <>
+    <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
+      {
+        possibleLocales.length > 1
+        && <LocaleSelect
+          onChange={handleLocaleChange}
+          defaultValue={locales[0] || userLocales[0] || 'en'}
+          options={possibleLocales}
+        />
+      }
+
+      {
+        loggedIn
+        && <Link to={`/${block._id}/edit`}>
+            <button className="text hasIcon">
+              <EditIcon className="icon" />
+              <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="edit_block" /></span>
+            </button>
+          </Link>
+      }
+    </div>
+  </>
 
   const titleWithRenderedMarkdown = {
     __html: renderInlineMarkdown(title)
@@ -167,7 +206,7 @@ function Viewer () {
           dangerouslySetInnerHTML={titleWithRenderedMarkdown}
         />
       }
-      rightActions={loggedIn ? rightHeaderActions : null}
+      rightActions={rightHeaderActions}
     />
 
     <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
@@ -211,7 +250,7 @@ function Viewer () {
             contentBlocks
             .filter(block => !!block)
             .filter(block => block.properties.active !== false)
-            .map(contentBlock => <ViewerAuto key={contentBlock._id} block={contentBlock} />)
+            .map(contentBlock => <ViewerAuto key={contentBlock._id} block={contentBlock} locales={locales} />)
           }
         </div>
       </main>

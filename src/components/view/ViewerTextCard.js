@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
 
 import { renderInlineMarkdown } from '../../markdown.js'
+import { useLocalization } from '../../fluent/Localized.js'
 
-function ViewerTextCard ({ block, style }) {
+function ViewerTextCard ({ block, style, locales }) {
   const [html, setHtml] = useState({ __html: '' })
 
+  const { translateBlock } = useLocalization()
+  const text = translateBlock(block, locales, '')
+
   useEffect(() => {
-    const text = renderInlineMarkdown(block.properties.text)
-    setHtml({ __html: text })
-  }, [block, setHtml])
+    const textWithHtml = renderInlineMarkdown(text)
+    setHtml({ __html: textWithHtml })
+  }, [text, setHtml])
   
   const defaultProps = {
     dir: 'auto',

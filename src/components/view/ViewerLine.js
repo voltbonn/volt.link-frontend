@@ -12,15 +12,15 @@ import {
 
 import classes from './ViewerLine.module.css'
 
-function ViewerLine ({ block, actions = {} }) {
-  const { getString } = useLocalization()
+function ViewerLine ({ block, actions = {}, locales }) {
+  const { getString, translateBlock } = useLocalization()
 
   const { clickOnBlock } = useClickOnBlock()
   const handleClick = useCallback(() => {
     clickOnBlock({ block })
   }, [ clickOnBlock, block ])
 
-  let title = block.properties.text || ''
+  let title = translateBlock(block, locales, '')
   if (title === '') {
     const triggerProperties = ((block.properties || {}).trigger || {})
     const triggerType = triggerProperties.type
