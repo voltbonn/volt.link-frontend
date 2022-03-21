@@ -247,7 +247,6 @@ ol {
   font-size: var(--body2-font-size);
 }
 
-
 textarea,
 div[contentEditable=true],
 input[type="text"]:not(#react-select-3-input),
