@@ -468,6 +468,7 @@ button:focus.choosen:after {
 button.hasIcon {
   display: inline-flex;
   gap: var(--basis);
+  justify-content: space-between;
 }
 button.hasIcon .icon {
   height: calc(1.1575 * var(--body-font-size));
