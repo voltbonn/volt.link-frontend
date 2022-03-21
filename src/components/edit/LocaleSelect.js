@@ -1,5 +1,16 @@
 import { useState, useCallback } from 'react'
 
+import {
+  MenuItem,
+} from '@mui/material'
+
+import PopoverMenu from '../PopoverMenu.js'
+
+import MdiIcon from '@mdi/react'
+import {
+  mdiTranslate,
+} from '@mdi/js'
+
 const locales = {
   _: '??',
   en: 'English',
@@ -47,8 +58,7 @@ function LocaleSelect({
 
   const [changedLocale, setChangedLocale] = useState(defaultValue)
 
-  const handleLocaleChange = useCallback((event) => {
-    let newLocale = event.target.value
+  const handleLocaleChange = useCallback(newLocale => {
     setChangedLocale(newLocale)
     
     if (newLocale === '_') {
@@ -61,25 +71,64 @@ function LocaleSelect({
   }, [ setChangedLocale, onChange ])
   
   return (
-    <div
-      className="wrapped_select"
-      placeholder={changedLocale === '_' ? locales._ : changedLocale.toUpperCase()}
-      style={{
-        margin: '0 var(--basis) 0 0',
-        flexShrink: 0,
+    <PopoverMenu
+      trigger={(triggerProps, { isOpen }) => (
+        <button
+          {...triggerProps}
+          className="default hasIcon"
+          style={{
+            margin: '0',
+          }}
+        >
+          <span style={{ width: '100%', textAlign: 'start' }}>
+          {
+            changedLocale === '_'
+            ? <MdiIcon
+              path={mdiTranslate}
+              className="icon"
+            />
+            : changedLocale.toUpperCase()
+          }
+          </span>
+          <span style={{
+            marginLeft: 'var(--basis)',
+            lineHeight: '1',
+            verticalAlign: 'text-top',
+          }}>
+            { isOpen ? '▴' : '▾' }
+          </span>
+        </button>
+      )}
+      paperProps={{
+        sx: {
+          maxHeight: '300px',
+        }
       }}
     >
-      <select
-        onChange={handleLocaleChange}
-        defaultValue={defaultValue}
-      >
-        {
-          localesArray
-          .filter(({ code }) => options.includes(code))
-          .map(({ code, nativeName }) => <option key={code} value={code}>{code === '_' ? nativeName : `${code.toUpperCase()} — ${nativeName}`}</option>)
-        }
-      </select>
-    </div>
+      {({ close }) => (
+        <div style={{
+          padding: 'var(--basis_x2) 0',
+        }}>
+          {
+            localesArray
+            .filter(({ code }) => options.includes(code))
+            .map(({ code, nativeName }) => (
+              <MenuItem
+                key={code}
+                onClick={() => {
+                  handleLocaleChange(code)
+                  close()
+                }}
+                className="roundMenuItem"
+                selected={code === changedLocale}
+              >
+                {code === '_' ? nativeName : `${code.toUpperCase()} — ${nativeName}`}
+              </MenuItem>
+            ))
+          }
+        </div>
+      )}
+    </PopoverMenu>    
   )
 }
 
