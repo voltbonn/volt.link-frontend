@@ -277,10 +277,25 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         />
       </div>
     </>
+  } else if (type === 'page' || type === 'person') {
+    propertiesFrameContent = <>
+      <div className={classes.properties_row}>
+        <h3><Localized id="properties_editor_trigger_path_label" /></h3>
+        <TriggerInput
+          onChange={newValue => updateProperty('trigger', newValue)}
+          defaultValue={properties.trigger || {}}
+          style={{
+            marginRight: '0',
+            marginLeft: '0',
+            width: '100%'
+          }}
+        />
+      </div>
+    </>
   } else if (type === 'redirect') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
-        <h3><Localized id="properties_editor_trigger_label" /></h3>
+        <h3><Localized id="properties_editor_trigger_path_label" /></h3>
         <TriggerInput
           onChange={newValue => updateProperty('trigger', newValue)}
           defaultValue={properties.trigger || {}}
@@ -292,7 +307,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         />
       </div>
       <div className={classes.properties_row}>
-        <h3><Localized id="properties_editor_action_label" /></h3>
+        <h3><Localized id="properties_editor_action_url_label" /></h3>
         <ActionInput
           onChange={newValue => updateProperty('action', newValue)}
           defaultValue={properties.action || {}}
@@ -305,6 +320,34 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       </div>
     </>
   }
+  // else if (type === 'automation') {
+  //   propertiesFrameContent = <>
+  //     <div className={classes.properties_row}>
+  //       <h3><Localized id="properties_editor_trigger_label" /></h3>
+  //       <TriggerInput
+  //         onChange={newValue => updateProperty('trigger', newValue)}
+  //         defaultValue={properties.trigger || {}}
+  //         style={{
+  //           marginRight: '0',
+  //           marginLeft: '0',
+  //           width: '100%'
+  //         }}
+  //       />
+  //     </div>
+  //     <div className={classes.properties_row}>
+  //       <h3><Localized id="properties_editor_action_label" /></h3>
+  //       <ActionInput
+  //         onChange={newValue => updateProperty('action', newValue)}
+  //         defaultValue={properties.action || {}}
+  //         style={{
+  //           marginRight: '0',
+  //           marginLeft: '0',
+  //           width: '100%'
+  //         }}
+  //       />
+  //     </div>
+  //   </>
+  // }
 
   return <>
     {
