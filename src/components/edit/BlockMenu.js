@@ -5,8 +5,6 @@ import {
 } from 'react-router-dom'
 
 import {
-  Paper,
-  MenuList,
   MenuItem,
   Divider,
   ListItemIcon,
@@ -21,7 +19,6 @@ import {
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
   // Delete as DeleteIcon,
-  Close as CloseIcon,
   // VerticalAlignTop as VerticalAlignTopIcon,
   // VerticalAlignBottom as VerticalAlignBottomIcon,
   Add as AddIcon,
@@ -50,7 +47,7 @@ import { getBlockColor } from '../../functions.js'
 
 import useArchiveBlock from '../../hooks/useArchiveBlock.js'
 
-import Popover from '../Popover.js'
+import PopoverMenu from '../PopoverMenu.js'
 import SubMenu from '../SubMenu.js'
 import { AddMenuContent } from './AddMenu.js'
 
@@ -191,33 +188,14 @@ function BlockMenu ({
     renderedColor = 'transparent'
   }
 
-  return <>
-  <Popover
+  return <PopoverMenu
     trigger={trigger}
     onToogle={onToogle}
     setOpenBlockMenuRef={setOpenBlockMenuRef}
   >
-    {({closePopover, open, ...popoverProps}) => (
-        <Paper
-          {...popoverProps}
-          sx={{
-            maxWidth: 380,
-            // height: 325,
-            maxHeight: 'calc(100vh - 32px)',
-            overflow: 'auto',
-            background: 'var(--background-contrast)',
-            color: 'var(--on-background)',
-          }}
-          elevation={8}
-        >
-          <MenuList
-            autoFocus={true}
-            style={{
-              width: '100%',
-              maxWidth: '100%',
-              // marginTop: '-8px',
-            }}
-          >
+    {({ open }) => (<>
+
+    <div style={{ height: '8px' }}></div>
 
             {
               (
@@ -463,15 +441,6 @@ function BlockMenu ({
                 : null
             }
 
-            <MenuItem className="roundMenuItem" onClick={closePopover}>
-              <ListItemIcon>
-                <CloseIcon />
-              </ListItemIcon>
-              <Localized id="block_menu_close_menu" />
-            </MenuItem>
-
-            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
-
             {/*
             <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
               <ListItemText
@@ -492,12 +461,8 @@ function BlockMenu ({
                 secondary={_id}
               />
             </ListItem>
-
-          </MenuList>
-        </Paper>
-    )}
-  </Popover>
-  </>
+    </>)}
+  </PopoverMenu>
 }
 
 export default withLocalization(BlockMenu)

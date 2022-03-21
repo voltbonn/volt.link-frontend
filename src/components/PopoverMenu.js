@@ -25,7 +25,7 @@ export default function PopoverMenu ({
     trigger={trigger}
     onToogle={onToogle}
   >
-    {({closePopover, ...popoverProps}) => {
+    {({closePopover, open, ...popoverProps}) => {
       const {
         sx = {},
         ...paperPropsRest
@@ -54,7 +54,7 @@ export default function PopoverMenu ({
               marginTop: '-8px',
             }}
           >
-            {typeof children === 'function' ? children({ close: closePopover }) : children}
+            {typeof children === 'function' ? children({ isOpen: open, close: closePopover }) : children}
 
             <Divider style={{opacity: 0.2, marginBottom:'8px'}}  />
 
