@@ -57,6 +57,7 @@ function SimpleTranslationRepeater({ onSaveProperty, block, isFirst }) {
       display: 'flex',
       alignItems: 'flex-end',
       marginBottom: 'var(--basis)',
+      gap: 'var(--basis)',
     }}>
       <LocaleSelect
         onChange={onBlockLocaleChange}
