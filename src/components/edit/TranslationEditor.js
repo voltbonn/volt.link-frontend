@@ -95,7 +95,6 @@ function SimpleTranslationRepeater({ onSaveProperty, block, isFirst }) {
             locale={locale}
             defaultValue={value}
             style={{
-              maxWidth: 'calc(100% - calc(var(--basis_x4) + var(--basis_x2)))',
               marginBottom: 'var(--basis)',
             }}
             {...other_repeater_props}
