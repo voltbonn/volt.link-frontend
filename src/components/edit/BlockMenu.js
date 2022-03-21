@@ -330,21 +330,12 @@ function BlockMenu ({
                 </MenuItem>
               : null
             }
+            
+            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
 
             {
               typeof _id === 'string' && _id !== ''
-                ? <div>
-                    {
-                      typeof setType === 'function'
-                      // || addRowBefore
-                      // || addRowAfter
-                      || (typeof active === 'boolean' && toggle_active)
-                      || onRemoveRow
-                      || typeof createBlock === 'function'
-                        ? <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px' }} />
-                        : null
-                    }
-
+                ? <>
                     <MenuItem className="roundMenuItem" style={{marginTop:'8px'}} onClick={viewBlock}>
                       <ListItemIcon>
                         <ViewIcon />
@@ -357,11 +348,11 @@ function BlockMenu ({
                       </ListItemIcon>
                       <Localized id="edit_block" />
                     </MenuItem>
-                  </div>
+
+                    <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px' }} />
+                  </>
                 : null
             }
-
-            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
 
             <MenuItem className="roundMenuItem" onClick={closePopover}>
               <ListItemIcon>
