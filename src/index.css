@@ -505,8 +505,10 @@ button.hasIcon span{
   position: relative;
   cursor: pointer;
   padding: calc(0.5 * var(--body-font-size));
+  z-index: 1;
 }
 .clickable_card:before {
+  z-index: -1;
   content: '';
   position: absolute;
   top: 0;
