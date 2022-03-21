@@ -29,9 +29,12 @@ const locales = {
 const localesArray = Object.entries(locales)
 .map(([code, nativeName]) => ({code, nativeName}))
 
+const defaultOptions = Object.keys(locales)
+
 function LocaleSelect({
   defaultValue,
   onChange,
+  options = defaultOptions,
 }) {
   if (
     defaultValue === null
@@ -70,7 +73,11 @@ function LocaleSelect({
         onChange={handleLocaleChange}
         defaultValue={defaultValue}
       >
-        {localesArray.map(({ code, nativeName }) => <option key={code} value={code}>{code === '_' ? nativeName : `${code.toUpperCase()} — ${nativeName}`}</option>)}
+        {
+          localesArray
+          .filter(({ code }) => options.includes(code))
+          .map(({ code, nativeName }) => <option key={code} value={code}>{code === '_' ? nativeName : `${code.toUpperCase()} — ${nativeName}`}</option>)
+        }
       </select>
     </div>
   )
