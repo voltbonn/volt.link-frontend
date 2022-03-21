@@ -470,7 +470,7 @@ button.hasIcon {
   gap: var(--basis);
 }
 button.hasIcon .icon {
-  height: calc(1.25 * var(--body-font-size));
+  height: calc(1.1575 * var(--body-font-size));
   width: auto;
   vertical-align: middle;
 

@@ -43,14 +43,18 @@ function Popover ({
 
   return <>
 
-    {trigger({
-      ref: anchorRef,
-      'aria-describedby': id,
-      onClick: handlePopoverToggleClick,
-      style: {
-        pointerEvents: open ? 'none' : 'all',
-      },
-    })}
+    {trigger(
+      {
+        ref: anchorRef,
+        'aria-describedby': id,
+        onClick: handlePopoverToggleClick,
+        style: {
+          pointerEvents: open ? 'none' : 'all',
+        },
+      }, {
+        isOpen: open,
+      }
+    )}
 
   <Portal>
     <div
