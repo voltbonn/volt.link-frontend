@@ -79,7 +79,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
       loadParentBlocks(blockId)
       loadSiblingBlocks(parentId, blockId)
     }
-  }, [blockId, loadParentBlocks, loadSiblingBlocks])
+  }, [blockId, parentId, loadParentBlocks, loadSiblingBlocks])
 
   const leftActions = <>
     {
