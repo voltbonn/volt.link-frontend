@@ -28,6 +28,7 @@
   width: var(--icon-size);
   height: var(--icon-size);
 }
+/*
 .icon:after {
   content: '';
   position: absolute;
@@ -40,6 +41,7 @@
   background-position: center;
   border-radius: 100%;
 }
+*/
 @media (max-width: 1000px) {
   .icon{
     --icon-size: calc(56 * var(--basis));
