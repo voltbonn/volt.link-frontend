@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 
 import { withLocalization } from '../../fluent/Localized.js'
+import { getBlockColor } from '../../functions.js'
 
 import {
   InsertDriveFile as PagePlaceholderIcon,
@@ -34,12 +35,19 @@ function InlineEditorBlockPageRaw({
       })
     }
   }, [onChange, block, text])
+  
+  const {
+    color = 'inherit',
+    colorRGB = '--on-background-rgb',
+  } = getBlockColor(block)
 
   return <div
     style={{
       display: 'flex',
       margin: '0 0 var(--basis) 0',
       cursor: 'auto',
+      '--on-background-rgb': colorRGB,
+      color: color,
     }}
     className="clickable_card active"
   >
@@ -61,6 +69,7 @@ function InlineEditorBlockPageRaw({
         margin: '0',
         fontWeight: 'bold',
         backgroundColor: 'transparent',
+        color,
       }}
       linebreaks={true}
       className="hide_border type_text"

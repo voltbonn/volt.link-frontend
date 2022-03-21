@@ -41,9 +41,12 @@ import {
   EditSharp as EditIcon,
 
   FormatSizeSharp as TextStyleIcon,
+  PaletteSharp as ColorIcon,
+  CircleSharp as ColorSwatchIcon,
 } from '@mui/icons-material'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
+import { getBlockColor } from '../../functions.js'
 
 import useArchiveBlock from '../../hooks/useArchiveBlock.js'
 
@@ -71,6 +74,36 @@ const defaultTypeOptions = [
   'redirect',
 ]
 
+const colorOptions = {
+  default: 'var(--on-background)',
+  yellow: 'var(--yellow)',
+  green: 'var(--green)',
+  red: 'var(--red)',
+  blue: 'var(--blue)',
+}
+const colorOptionsKeys = Object.keys(colorOptions)
+function getColor (color) {
+  if (colorOptions.hasOwnProperty(color)) {
+    return colorOptions[color]
+  } else {
+    const {
+      color: renderedColor
+    } = getBlockColor({
+      properties: {
+        color,
+      },
+    })
+
+    console.log('renderedColor', renderedColor)
+
+    if (renderedColor) {
+      return renderedColor
+    }
+  }
+  
+  return color
+}
+
 function BlockMenu ({
   block = {},
   getString,
@@ -96,6 +129,7 @@ function BlockMenu ({
   const {
     active = true,
     text_style = null,
+    color = null,
   } = properties
 
   const [archived, setArchived] = useState(properties.archived === true)
@@ -148,6 +182,14 @@ function BlockMenu ({
   }, [ active, setProperty ])
 
   const metadata = block.metadata || {}
+
+  let {
+    color: renderedColor
+  } = getBlockColor(block)
+
+  if (!renderedColor) {
+    renderedColor = 'transparent'
+  }
 
   return <>
   <Popover
@@ -210,6 +252,74 @@ function BlockMenu ({
                       </MenuItem>
                     ))
                   }
+                </SubMenu>
+              : null
+            }
+
+            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
+
+            {
+              typeof setProperty === 'function'
+              ? <SubMenu
+                  parentMenuIsOpen={open}
+                  label={<>
+                    <ListItemIcon>
+                      <ColorIcon
+                        style={{
+                          color: getColor(color),
+                        }}
+                      />
+                    </ListItemIcon>
+                    <Localized id="block_menu_choose_color_label" />
+                  </>}
+                  header={<Localized id="block_menu_choose_color_label" />}
+                >
+                  <>
+                  {
+                    colorOptionsKeys
+                    .map(thisColor => (
+                      <MenuItem
+                        key={thisColor}
+                        selected={thisColor === 'default' ? color === null : color === thisColor}
+                        onClick={() => setProperty('color', thisColor === 'default' ? null : thisColor)}
+                        className="roundMenuItem"
+                      >
+                        <ListItemIcon>
+                          <ColorSwatchIcon
+                            style={{
+                              color: getColor(thisColor),
+                            }}
+                          />
+                        </ListItemIcon>
+                        {thisColor}
+                      </MenuItem>
+                    ))
+                  }
+
+                  <MenuItem
+                    className="roundMenuItem"
+                    selected={color !== null && !colorOptionsKeys.includes(color)}
+                  >
+                    <ListItemIcon>
+                      <ColorSwatchIcon
+                        style={{
+                          color: renderedColor,
+                        }}
+                      />
+                    </ListItemIcon>
+                    <input
+                      key={colorOptionsKeys.includes(color) ? color : 'custom'}
+                      type="text"
+                      placeholder="#FFFFFF"
+                      defaultValue={color}
+                      onBlur={e => setProperty('color', e.target.value)}
+                      style={{
+                        width: '160px',
+                        margin: '0 calc(-1 * var(--basis)) 0 0',
+                      }}
+                    />
+                  </MenuItem>
+                  </>
                 </SubMenu>
               : null
             }

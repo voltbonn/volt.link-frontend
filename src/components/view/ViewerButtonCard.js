@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { renderInlineMarkdown } from '../../markdown.js'
 import { useLocalization } from '../../fluent/Localized.js'
+import { getBlockColor } from '../../functions.js'
 
 function ViewerButtonCard ({ block, actions = {}, locales }) {
   const [html, setHtml] = useState({ __html: '' })
@@ -27,6 +28,17 @@ function ViewerButtonCard ({ block, actions = {}, locales }) {
     url = block.properties.action.url
   }
 
+  const {
+    color,
+    contrastingColor,
+  } = getBlockColor(block)
+
+  const colorStyles = {}
+  if (color) {
+    colorStyles['--button-background'] = color
+    colorStyles['--button-color'] = contrastingColor
+  }
+
   const hasClickAction = actions.hasOwnProperty('click')
 
   if (hasClickAction === false && url !== '') {
@@ -38,6 +50,7 @@ function ViewerButtonCard ({ block, actions = {}, locales }) {
         style={{
           margin: '0',
           whiteSpace: 'pre-wrap',
+          ...colorStyles,
         }}
       ></button>
     </a>
@@ -51,6 +64,7 @@ function ViewerButtonCard ({ block, actions = {}, locales }) {
       style={{
         margin: '0',
         whiteSpace: 'pre-wrap',
+        ...colorStyles,
       }}
       onClick={actions.click}
     ></button>
@@ -64,6 +78,7 @@ function ViewerButtonCard ({ block, actions = {}, locales }) {
     style={{
       margin: '0',
       whiteSpace: 'pre-wrap',
+      ...colorStyles,
     }}
   ></button>
 }

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useLocalization } from '../../fluent/Localized.js'
 
-import { getImageUrl } from '../../functions.js'
+import { getImageUrl, getBlockColor } from '../../functions.js'
 import useClickOnBlock from '../../hooks/useClickOnBlock.js'
 
 import {
@@ -77,11 +77,18 @@ function ViewerLine ({ block, actions = {}, locales }) {
     onClickProps.onClick = handleClick
   }
 
+  const {
+    color = 'inherit',
+    colorRGB = '--on-background-rgb',
+  } = getBlockColor(block)
+
   return <div
     {...onClickProps}
     className={`clickable_card ${classes.root}`}
     style={{
       cursor: onClickProps.hasOwnProperty('onClick') ? 'pointer' : 'auto',
+      color,
+      '--on-background-rgb': colorRGB,
     }}
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>

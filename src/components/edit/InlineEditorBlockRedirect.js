@@ -1,6 +1,7 @@
 import React, { useRef, useCallback } from 'react'
 
 import { withLocalization } from '../../fluent/Localized.js'
+import { getBlockColor } from '../../functions.js'
 
 import {
   // AutoAwesomeSharp as ActionIcon,
@@ -85,15 +86,21 @@ function InlineEditorBlockRedirectRaw({
       onChange(newBlock)
     }
   }, [ onChange, block ])
+  
+  const {
+    color = 'inherit',
+    colorRGB = '--on-background-rgb',
+  } = getBlockColor(block)
 
   return <div style={{
     ...style,
     margin: '0 0 var(--basis) 0',
     cursor: 'auto',
+    '--on-background-rgb': colorRGB,
   }}
   className="clickable_card active"
   >
-    <div style={{ width: '100%', display: 'flex', alignItems: 'center', }}>
+    <div style={{ width: '100%', display: 'flex', alignItems: 'center', color }}>
       <RedirectIcon
         style={{
           margin: 'var(--basis)',
@@ -112,6 +119,7 @@ function InlineEditorBlockRedirectRaw({
           margin: '0',
           fontWeight: 'bold',
           backgroundColor: 'transparent',
+          color,
         }}
         linebreaks={true}
         className="hide_border type_text"

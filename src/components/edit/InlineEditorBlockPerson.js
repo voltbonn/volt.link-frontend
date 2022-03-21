@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react'
 
 import { withLocalization } from '../../fluent/Localized.js'
+import { getBlockColor } from '../../functions.js'
+
 
 import {
   Face as PersonPlaceholderIcon,
@@ -34,8 +36,17 @@ function InlineEditorBlockPersonRaw({
       })
     }
   }, [onChange, block, text])
+  
+  const {
+    color = 'inherit',
+  } = getBlockColor(block)
 
-  return <div style={{ display: 'flex' }}>
+  return <div
+    style={{
+      display: 'flex',
+      color: color,
+    }}
+  >
     <PersonPlaceholderIcon
       style={{
         margin: 'var(--basis)',
@@ -54,6 +65,7 @@ function InlineEditorBlockPersonRaw({
         margin: '0',
         fontWeight: 'bold',
         backgroundColor: 'transparent',
+        color,
       }}
       linebreaks={true}
       className="hide_border type_text"

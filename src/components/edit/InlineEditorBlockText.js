@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
 import { withLocalization } from '../../fluent/Localized.js'
+import { getBlockColor } from '../../functions.js'
 
 import HtmlInput from './HtmlInput.js'
 
@@ -43,6 +44,15 @@ function InlineEditorBlockTextRaw({
     text_style_class = 'type_'+properties.text_style
   }
 
+  const {
+    color,
+  } = getBlockColor(block)
+
+  const colorStyles = {}
+  if (color) {
+    colorStyles.color = color
+  }
+
   return <HtmlInput
     defaultValue={text}
     onChange={setText}
@@ -52,6 +62,7 @@ function InlineEditorBlockTextRaw({
     style={{
       margin: '0',
       backgroundColor: 'transparent',
+      ...colorStyles,
     }}
     linebreaks={true}
     className={`hide_border ${text_style_class}`}

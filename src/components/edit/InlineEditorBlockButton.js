@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 
 import { withLocalization } from '../../fluent/Localized.js'
+import { getBlockColor } from '../../functions.js'
 
 import FancyInput from './FancyInput.js'
 import HtmlInput from './HtmlInput.js'
@@ -55,10 +56,24 @@ function InlineEditorBlockButtonRaw({
       onChange(newBlock)
     }
   }, [onChange, block, text, link])
+  
+  const {
+    color,
+    colorRGB,
+    contrastingColor,
+  } = getBlockColor(block)
+
+  const colorStyles = {}
+  if (color) {
+    colorStyles['--on-background-rgb'] = colorRGB
+    colorStyles['--button-background'] = color
+    colorStyles['--button-color'] = contrastingColor
+  }
 
   return <div style={{
     margin: '0 0 var(--basis) 0',
     cursor: 'auto',
+    ...colorStyles,
   }}
   className="clickable_card active"
   >
@@ -68,7 +83,10 @@ function InlineEditorBlockButtonRaw({
       onBlur={publishChanges}
 
       placeholder={getString('placeholder_button')}
-      style={{ margin: '0' }}
+      style={{
+        margin: '0',
+        ...colorStyles,
+      }}
       linebreaks={true}
       className="hide_border type_button default"
 

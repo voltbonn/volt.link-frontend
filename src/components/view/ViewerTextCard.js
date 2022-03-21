@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import { renderInlineMarkdown } from '../../markdown.js'
 import { useLocalization } from '../../fluent/Localized.js'
 
+import { getBlockColor } from '../../functions.js'
+
 function ViewerTextCard ({ block, style, locales }) {
   const [html, setHtml] = useState({ __html: '' })
 
@@ -20,6 +22,13 @@ function ViewerTextCard ({ block, style, locales }) {
       whiteSpace: 'pre-wrap',
       ...style,
     },
+  }
+
+  const {
+    color,
+  } = getBlockColor(block)
+  if (color) {
+    defaultProps.style.color = color
   }
 
   let text_style = 'body'

@@ -1,3 +1,14 @@
-export default function ViewerDividerLine () {
-  return <hr />
+import { getBlockColor } from '../../functions.js'
+
+export default function ViewerDividerLine ({ block }) {
+  const {
+    color,
+  } = getBlockColor(block)
+
+  const styles = {}
+  if (color) {
+    styles['--on-background'] = color
+  }
+
+  return <hr style={styles} />
 }
