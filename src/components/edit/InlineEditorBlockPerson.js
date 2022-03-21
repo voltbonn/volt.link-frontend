@@ -39,13 +39,18 @@ function InlineEditorBlockPersonRaw({
   
   const {
     color = 'inherit',
+    colorRGB = '--on-background-rgb',
   } = getBlockColor(block)
 
   return <div
     style={{
       display: 'flex',
+      margin: '0 0 var(--basis) 0',
+      cursor: 'auto',
+      '--on-background-rgb': colorRGB,
       color: color,
     }}
+    className="clickable_card active"
   >
     <PersonPlaceholderIcon
       style={{
