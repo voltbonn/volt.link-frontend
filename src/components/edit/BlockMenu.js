@@ -32,7 +32,6 @@ import {
   LinkSharp as RedirectIcon,
   // PersonSharp as PersonIcon,
   Crop75Sharp as ButtonIcon,
-  TitleSharp as HeadlineIcon,
   NotesSharp as TextIcon,
   // CodeSharp as CodeIcon,
   Remove as DividerIcon,
