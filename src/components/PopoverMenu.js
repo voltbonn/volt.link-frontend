@@ -19,12 +19,19 @@ export default function PopoverMenu ({
   trigger,
   children,
   onToogle,
+  paperProps = {},
 }) {
   return <Popover
     trigger={trigger}
     onToogle={onToogle}
   >
-    {({closePopover, ...popoverProps}) => (
+    {({closePopover, ...popoverProps}) => {
+      const {
+        sx = {},
+        ...paperPropsRest
+      } = paperProps || {}
+
+      return (
         <Paper
           {...popoverProps}
           sx={{
@@ -34,8 +41,10 @@ export default function PopoverMenu ({
             overflow: 'auto',
             background: 'var(--background-contrast)',
             color: 'var(--on-background)',
+            ...sx,
           }}
           elevation={8}
+          {...paperPropsRest}
         >
           <MenuList
             autoFocus={true}
@@ -60,6 +69,6 @@ export default function PopoverMenu ({
 
           </MenuList>
         </Paper>
-    )}
+    )}}
   </Popover>
 }
