@@ -54,8 +54,8 @@ path_editor_icon_info = A url to use for the icon. The photo needs to be uploade
 properties_editor_imprint_label = Imprint Link
 properties_editor_privacy_policy_label = Privacy-Policy Link
 properties_editor_checked_label = Checked
-properties_editor_trigger_label = Trigger
-properties_editor_action_label = Action
+properties_editor_trigger_path_label = volt.link/…
+properties_editor_action_url_label = Then go to url…
 properties_editor_pronouns_label = Pronouns
 
 trigger_input_path_placeholder = bonn
