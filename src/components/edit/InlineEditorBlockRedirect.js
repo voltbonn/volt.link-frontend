@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useRef, useCallback } from 'react'
 
 import { withLocalization } from '../../fluent/Localized.js'
 
@@ -11,6 +11,7 @@ import {
 import FancyInput from './FancyInput.js'
 import HtmlInput from './HtmlInput.js'
 import UrlInput from './UrlInput.js'
+import PathInput from './PathInput.js'
 
 
 function InlineEditorBlockRedirectRaw({
@@ -28,16 +29,29 @@ function InlineEditorBlockRedirectRaw({
   style = {},
 }) {
   const properties = block.properties || {}
-  const [text, setText] = useState(properties.text || '')
   const {
     trigger = {},
     action = {}
   } = properties
-  const [triggerPath, setTriggerPath] = useState(trigger.path || '')
-  const [link, setLink] = useState(action.url || '')
+
+  const textRef = useRef(properties.text || '')
+  const text = textRef.current
+  const setText = newValue => textRef.current = newValue
+
+  const triggerPathRef = useRef(trigger.path || '')
+  const triggerPath = triggerPathRef.current
+  const setTriggerPath = newValue => triggerPathRef.current = newValue
+
+  const linkRef = useRef(action.url || '')
+  const link = linkRef.current
+  const setLink = newValue => linkRef.current = newValue
 
   const publishChanges = useCallback(() => {
     if (onChange) {
+      const text = textRef.current
+      const triggerPath = triggerPathRef.current
+      const link = linkRef.current
+
       const newBlock = {
         ...block,
         properties: {
@@ -46,17 +60,22 @@ function InlineEditorBlockRedirectRaw({
         },
       }
 
-      if (link === '') {
+      if (triggerPath === '') {
         if (newBlock.properties.hasOwnProperty('trigger')) {
           delete newBlock.properties.trigger
         }
+      } else {
+        newBlock.properties.trigger = {
+          type: 'path',
+          path: triggerPath,
+        }
+      }
+
+      if (link === '') {
         if(newBlock.properties.hasOwnProperty('action')) {
           delete newBlock.properties.action
         }
       } else {
-        newBlock.properties.trigger = {
-          type: 'click'
-        }
         newBlock.properties.action = {
 				  type: 'open_url',
 				  url: link,
@@ -65,7 +84,7 @@ function InlineEditorBlockRedirectRaw({
 
       onChange(newBlock)
     }
-  }, [onChange, block, text, link])
+  }, [ onChange, block ])
 
   return <div style={{
     ...style,
@@ -110,13 +129,12 @@ function InlineEditorBlockRedirectRaw({
       volt.link/
       <FancyInput style={{ width: '100%', marginInlineStart: 'var(--basis)' }}>
         {({ setError }) => (
-          <UrlInput
+          <PathInput
             onError={setError}
             onChange={setTriggerPath}
             onBlur={publishChanges}
-            type="text"
             defaultValue={triggerPath}
-            placeholder={getString('path_editor_item_link_label')}
+            placeholder={getString('trigger_input_path_placeholder')}
             style={{
               margin: 'var(--basis) 0',
               width: '100%',
