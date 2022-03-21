@@ -213,6 +213,9 @@ function TranslationEditor({
       open={open}
       onClose={onClose}
       hideBackdrop={true}
+      style={{
+        zIndex: '1000',
+      }}
     >
       <>
         <div className={classes.backdrop} onClick={onClose}></div>
