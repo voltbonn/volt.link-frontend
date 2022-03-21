@@ -57,7 +57,7 @@
 .icon {
   display: block;
   position: relative;
-  background-color: var(--background-contrast);
+  /* background-color: var(--background-contrast); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

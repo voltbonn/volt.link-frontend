@@ -183,7 +183,7 @@ function Viewer () {
           && icon_url !== ''
             ? <div
                 style={{
-                  backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=400&h=400&url=${encodeURIComponent(icon_url)})`
+                  backgroundImage: `url(${window.domains.backend}download_url?f=png&w=400&h=400&url=${encodeURIComponent(icon_url)})`
                 }}
                 className={`${classes.icon} ${coverphoto_url === '' ? classes.coverphotoIsNotSet : classes.coverphotoIsSet}`}
               ></div>
