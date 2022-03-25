@@ -54,6 +54,8 @@ export default function PopoverMenu ({
               marginTop: '-8px',
             }}
           >
+            <div>
+
             {typeof children === 'function' ? children({ isOpen: open, close: closePopover }) : children}
 
             <Divider style={{opacity: 0.2, marginBottom:'8px'}}  />
@@ -67,6 +69,7 @@ export default function PopoverMenu ({
               </ListItemText>
             </MenuItem>
 
+            </div>
           </MenuList>
         </Paper>
     )}}
