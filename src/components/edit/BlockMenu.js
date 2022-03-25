@@ -188,7 +188,7 @@ function BlockMenu ({
     onToogle={onToogle}
     setOpenBlockMenuRef={setOpenBlockMenuRef}
   >
-    {({ open }) => (<>
+    {({ open }) => (<div>
 
     <div style={{ height: '8px' }}></div>
 
@@ -458,7 +458,7 @@ function BlockMenu ({
                 secondary={_id}
               />
             </ListItem>
-    </>)}
+    </div>)}
   </PopoverMenu>
 }
 
