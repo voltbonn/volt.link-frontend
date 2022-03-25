@@ -194,8 +194,9 @@ function BlockMenu ({
 
             {
               (
-                typeof setType === 'function'
                 && type !== 'person'
+                canEdit
+                && typeof setType === 'function'
                 && Array.isArray(typeOptions)
                 && typeOptions.length > 0
               )
@@ -232,7 +233,10 @@ function BlockMenu ({
             <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
 
             {
-              typeof setProperty === 'function'
+              (
+                canEdit
+                && typeof setProperty === 'function'
+              )
               ? <SubMenu
                   parentMenuIsOpen={open}
                   label={<>
@@ -299,7 +303,8 @@ function BlockMenu ({
 
             {
               (
-                typeof setProperty === 'function'
+                canEdit
+                && typeof setProperty === 'function'
                 && type === 'text'
               )
               ? <SubMenu
@@ -335,7 +340,13 @@ function BlockMenu ({
               : null
             }
 
-            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
+            {
+              (
+                canEdit
+                && typeof setProperty === 'function'
+              )
+              && <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
+            }
 
             {/*
               addRowBefore
@@ -360,7 +371,8 @@ function BlockMenu ({
             */}
 
             {
-              typeof createBlock === 'function'
+              canEdit
+              && typeof createBlock === 'function'
                 ? <SubMenu
                     parentMenuIsOpen={open}
                     label={<>
@@ -376,7 +388,8 @@ function BlockMenu ({
             }
 
             {
-              typeof setProperty === 'function'
+              canEdit
+              && typeof setProperty === 'function'
                 ? <MenuItem className="roundMenuItem" onClick={toggleActive}>
                     <ListItemIcon>
                       {
@@ -395,7 +408,8 @@ function BlockMenu ({
             }
 
             {
-              typeof onArchivedToggle === 'function'
+              canEdit
+              && typeof onArchivedToggle === 'function'
               ? <MenuItem className="roundMenuItem" onClick={toggleArchiveBlock}>
                   <ListItemIcon>
                     {
@@ -413,7 +427,10 @@ function BlockMenu ({
               : null
             }
             
-            <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
+            {
+              canEdit
+              && <Divider style={{ opacity: 0.2, marginTop: '8px', marginBottom: '8px' }} />
+            }
 
             {
               (typeof _id === 'string' && _id !== '')
