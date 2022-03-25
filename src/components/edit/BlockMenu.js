@@ -433,6 +433,7 @@ function BlockMenu ({
                       </ListItemIcon>
                       <Localized id="edit_block" />
                     </MenuItem>
+                }
 
                 <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px' }} />
               </>
