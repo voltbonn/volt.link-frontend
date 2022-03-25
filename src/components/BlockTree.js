@@ -44,6 +44,7 @@ import {
 import { Localized } from '../fluent/Localized.js'
 
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
+import useUser from '../hooks/useUser.js'
 
 import PopoverMenu from './PopoverMenu.js'
 
@@ -355,6 +356,7 @@ function BlockTree({
   showBlockMenu = true,
 }) {
   const { getString } = useLocalization()
+  const { loggedIn } = useUser()
 
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
@@ -625,20 +627,25 @@ function BlockTree({
             ))
         }
 
-        <Divider style={{opacity: 0.2}} />
+        {
+          loggedIn
+          && <>
+            <Divider style={{ opacity: 0.2 }} />
 
-        <MenuItem
-          className="roundMenuItem"
-          onClick={toggleArchived}
-          selected={archived === true}
-        >
-          <ListItemIcon>
-            <ArchiveIcon className="icon" />
-          </ListItemIcon>
-          <ListItemText>
-            <Localized id={archived ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
-          </ListItemText>
-        </MenuItem>
+            <MenuItem
+              className="roundMenuItem"
+              onClick={toggleArchived}
+              selected={archived === true}
+            >
+              <ListItemIcon>
+                <ArchiveIcon className="icon" />
+              </ListItemIcon>
+              <ListItemText>
+                <Localized id={archived === true ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
+              </ListItemText>
+            </MenuItem>
+          </>
+        }
 
       </PopoverMenu>
 
