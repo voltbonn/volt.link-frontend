@@ -21,6 +21,7 @@ export const getBlock_Query = gql`
             modified_by
           }
           permissions
+          roles
         }
       }
 		  parent
@@ -29,6 +30,7 @@ export const getBlock_Query = gql`
         modified_by
       }
       permissions
+      roles
     }
   }
 `
@@ -48,6 +50,7 @@ export const getBlocks_Query = gql`
         modified_by
       }
       permissions
+      roles
     }
   }
 `

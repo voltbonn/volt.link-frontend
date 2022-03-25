@@ -99,6 +99,9 @@ block_menu_unarchive = Dearchive
 filter_menu_show_archiv = Show Archiv
 filter_menu_showing_archiv = Showing Archiv
 
+filter_menu_show_editing = Only Editable
+filter_menu_showing_editing = Showing Only Editable
+
 block_menu_info_created = Created
 block_menu_info_modified = Last Modified
 block_menu_info_id = ID

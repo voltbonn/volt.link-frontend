@@ -38,7 +38,7 @@ import {
   // TitleSharp as HeadlineIcon,
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
-  // EditSharp as EditIcon,
+  EditSharp as EditIcon,
 } from '@mui/icons-material'
 
 import { Localized } from '../fluent/Localized.js'
@@ -371,6 +371,11 @@ function BlockTree({
   const [searchString, setSearchString] = useState('')
   const prevFetchArguments = useRef({})
 
+  const [onlyShowWithEditPermissions, setOnlyShowWithEditPermissions] = useState(false) // false = show all, true = show only owning
+  function toggleOnlyShowWithEditPermissions() {
+    setOnlyShowWithEditPermissions(oldOnlyShowWithEditPermissions => !oldOnlyShowWithEditPermissions)
+  }
+
   const [types, setTypes] = useState({
     person: true,
     page: true,
@@ -479,34 +484,51 @@ function BlockTree({
   // START Filter + Search
 
   useEffect(() => {
-    const searchStringLower = searchString.toLowerCase()
+    let filtered = treeNodes
 
-    const filtered = treeNodes
-      .filter(node => {
-        if (
+    if (searchString.length > 0) {
+      const searchStringLower = searchString.toLowerCase()
+    
+      filtered = filtered
+        .filter(node => {
+          if (
+            !!node
+            && !!node.block
+            && !!node.block.properties
+            && !!node.block.properties.text
+            && node.block.properties.text.toLowerCase().includes(searchStringLower)
+          ) {
+            return true
+          } else if (
+            !!node
+            && !!node.block
+            && !!node.block.properties
+            && !!node.block.properties.trigger
+            && !!node.block.properties.trigger.path
+            && node.block.properties.trigger.path.toLowerCase().includes(searchStringLower)
+          ) {
+            return true
+          }
+          return false
+        })
+    }
+
+    if (onlyShowWithEditPermissions === true) {
+      filtered = filtered
+        .filter(node => (
           !!node
           && !!node.block
-          && !!node.block.properties
-          && !!node.block.properties.text
-          && node.block.properties.text.toLowerCase().includes(searchStringLower)
-        ) {
-          return true
-        } else if (
-          !!node
-          && !!node.block
-          && !!node.block.properties
-          && !!node.block.properties.trigger
-          && !!node.block.properties.trigger.path
-          && node.block.properties.trigger.path.toLowerCase().includes(searchStringLower)
-        ) {
-          return true
-        }
-        return false
-      })
+          && !!node.block.roles
+          && (
+            node.block.roles.includes('owner')
+            || node.block.roles.includes('editor')
+          )
+        ))
+    }
 
     setTreeNodesFiltered(filtered)
     updateHeight()
-  }, [ searchString, treeNodes, setTreeNodesFiltered, updateHeight ])
+  }, [ searchString, onlyShowWithEditPermissions, treeNodes, setTreeNodesFiltered, updateHeight ])
 
   const handleSearch = useCallback(event => {
     setSearchString(event.target.value || '')
@@ -642,6 +664,19 @@ function BlockTree({
               </ListItemIcon>
               <ListItemText>
                 <Localized id={archived === true ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
+              </ListItemText>
+            </MenuItem>
+
+            <MenuItem
+              className="roundMenuItem"
+              onClick={toggleOnlyShowWithEditPermissions}
+              selected={onlyShowWithEditPermissions === true}
+            >
+              <ListItemIcon>
+                <EditIcon className="icon" />
+              </ListItemIcon>
+              <ListItemText>
+                <Localized id={onlyShowWithEditPermissions === true ? 'filter_menu_showing_editing' : 'filter_menu_show_editing'} />
               </ListItemText>
             </MenuItem>
           </>
