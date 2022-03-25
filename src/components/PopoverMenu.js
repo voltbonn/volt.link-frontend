@@ -56,18 +56,18 @@ export default function PopoverMenu ({
           >
             <div>
 
-            {typeof children === 'function' ? children({ isOpen: open, close: closePopover }) : children}
+              {typeof children === 'function' ? children({ isOpen: open, close: closePopover }) : children}
 
-            <Divider style={{opacity: 0.2, marginBottom:'8px'}}  />
+              <Divider style={{opacity: 0.2, marginBottom:'8px'}}  />
 
-            <MenuItem className="roundMenuItem" onClick={closePopover}>
-              <ListItemIcon>
-                <CloseIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Localized id="block_menu_close_menu" />
-              </ListItemText>
-            </MenuItem>
+              <MenuItem className="roundMenuItem" onClick={closePopover}>
+                <ListItemIcon>
+                  <CloseIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Localized id="block_menu_close_menu" />
+                </ListItemText>
+              </MenuItem>
 
             </div>
           </MenuList>
