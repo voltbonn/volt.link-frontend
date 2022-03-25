@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 
 import {
-  useNavigate,
+  Link,
 } from 'react-router-dom'
 
 import {
@@ -46,6 +46,7 @@ import { Localized, withLocalization } from '../../fluent/Localized.js'
 import { getBlockColor } from '../../functions.js'
 
 import useArchiveBlock from '../../hooks/useArchiveBlock.js'
+import useUser from '../../hooks/useUser.js'
 
 import PopoverMenu from '../PopoverMenu.js'
 import SubMenu from '../SubMenu.js'
@@ -120,14 +121,18 @@ function BlockMenu ({
 
   setOpenBlockMenuRef,
 }) {
-  const navigate = useNavigate()
+  const { loggedIn } = useUser()
 
-  const { _id = '', type = '', properties = {} } = block
+  const { _id = '', type = '', properties = {}, computed = {} } = block
   const {
     active = true,
     text_style = null,
     color = null,
   } = properties
+  const {
+    roles = [],
+  } = (computed === null ? {} : computed)
+  const canEdit = loggedIn && (roles.includes('owner') || roles.includes('editor'))
 
   const [archived, setArchived] = useState(properties.archived === true)
   const archiveBlock = useArchiveBlock()
@@ -144,14 +149,6 @@ function BlockMenu ({
   //     blockId: newBlockId,
   //   })
   // }, [ addRowBefore ])
-
-  const viewBlock = useCallback(() => {
-    navigate(`/${_id}/view`)
-  }, [ _id, navigate ])
-
-  const editBlock = useCallback(() => {
-    navigate(`/${_id}/edit`)
-  }, [ _id, navigate ])
 
   const createChildBlock = useCallback(newBlock => {
     createBlock({
@@ -421,24 +418,26 @@ function BlockMenu ({
             <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
 
             {
-              typeof _id === 'string' && _id !== ''
-                ? <>
-                    <MenuItem className="roundMenuItem" style={{marginTop:'8px'}} onClick={viewBlock}>
+              (typeof _id === 'string' && _id !== '')
+              && <>
+                <MenuItem component={Link} to={`/${_id}/view`} className="roundMenuItem" style={{ marginTop: '8px' }}>
+                  <ListItemIcon>
+                    <EditIcon />
+                  </ListItemIcon>
+                  <Localized id="view_block" />
+                </MenuItem>
+
+                {
+                  canEdit
+                  && <MenuItem component={Link} to={`/${_id}/edit`} className="roundMenuItem">
                       <ListItemIcon>
                         <ViewIcon />
-                      </ListItemIcon>
-                      <Localized id="view_block" />
-                    </MenuItem>
-                    <MenuItem className="roundMenuItem" onClick={editBlock}>
-                      <ListItemIcon>
-                        <EditIcon />
                       </ListItemIcon>
                       <Localized id="edit_block" />
                     </MenuItem>
 
-                    <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px' }} />
-                  </>
-                : null
+                <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px' }} />
+              </>
             }
 
             {/*
