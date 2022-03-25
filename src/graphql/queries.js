@@ -17,7 +17,6 @@ export const getBlock_Query = gql`
           }
           parent
           metadata {
-            created
             modified
             modified_by
           }
@@ -29,7 +28,6 @@ export const getBlock_Query = gql`
       }
 		  parent
 		  metadata {
-        created
         modified
         modified_by
       }
@@ -52,7 +50,6 @@ export const getBlocks_Query = gql`
       }
       parent
       metadata {
-        created
         modified
         modified_by
       }
