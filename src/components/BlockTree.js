@@ -518,10 +518,11 @@ function BlockTree({
         .filter(node => (
           !!node
           && !!node.block
-          && !!node.block.roles
+          && !!node.block.computed
+          && !!node.block.computed.roles
           && (
-            node.block.roles.includes('owner')
-            || node.block.roles.includes('editor')
+            node.block.computed.roles.includes('owner')
+            || node.block.computed.roles.includes('editor')
           )
         ))
     }
@@ -658,6 +659,9 @@ function BlockTree({
               className="roundMenuItem"
               onClick={toggleArchived}
               selected={archived === true}
+              sx={{
+                marginBottom: '2px !important',
+              }}
             >
               <ListItemIcon>
                 <ArchiveIcon className="icon" />

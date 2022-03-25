@@ -21,7 +21,9 @@ export const getBlock_Query = gql`
             modified_by
           }
           permissions
-          roles
+          computed {
+            roles
+          }
         }
       }
 		  parent
@@ -30,7 +32,9 @@ export const getBlock_Query = gql`
         modified_by
       }
       permissions
-      roles
+      computed {
+        roles
+      }
     }
   }
 `
@@ -50,7 +54,9 @@ export const getBlocks_Query = gql`
         modified_by
       }
       permissions
-      roles
+      computed {
+        roles
+      }
     }
   }
 `
@@ -81,7 +87,9 @@ export const getParentBlocks_Query = gql`
       _id
       type
       properties
-      computed
+      computed {
+        sort
+      }
     }
   }
 `
