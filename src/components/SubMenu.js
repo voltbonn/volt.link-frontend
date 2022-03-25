@@ -18,6 +18,7 @@ import { Localized } from '../fluent/Localized.js'
 // INFO: Some code is copied from: https://github.com/azmenak/material-ui-nested-menu-item/blob/master/src/index.tsx
 
 export default function SubMenu ({
+  disabled = false,
   parentMenuIsOpen = true,
   label = '',
   triggerProps = {},
@@ -32,12 +33,14 @@ export default function SubMenu ({
   const open = isSubMenuOpen && parentMenuIsOpen
 
   const toggleSubmenu = useCallback(() => {
-    const newOpen = !open
-    setIsSubMenuOpen(newOpen)
-    if (newOpen === true) {
-      onOpen()
+    if (disabled !== true) {
+      const newOpen = !open
+      setIsSubMenuOpen(newOpen)
+      if (newOpen === true) {
+        onOpen()
+      }
     }
-  }, [ setIsSubMenuOpen, open, onOpen ])
+  }, [ setIsSubMenuOpen, open, onOpen, disabled ])
 
   const closeSubmenu = useCallback(() => {
     setIsSubMenuOpen(false)
@@ -46,6 +49,8 @@ export default function SubMenu ({
   return <>
     <MenuItem
       {...triggerProps}
+
+      disabled={disabled}
 
       ref={triggerRef}
       onClick={toggleSubmenu}
