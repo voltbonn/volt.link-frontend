@@ -92,8 +92,6 @@ function getColor (color) {
       },
     })
 
-    console.log('renderedColor', renderedColor)
-
     if (renderedColor) {
       return renderedColor
     }
