@@ -105,7 +105,7 @@ function getBlockColor(block) {
     contrastingColorRGB: null,
   }
 
-  if (block.properties.hasOwnProperty('color') && !!block.properties.color) {
+  if (block.hasOwnProperty('properties') && block.properties.hasOwnProperty('color') && !!block.properties.color) {
     const defaultColors = ['purple', 'red', 'green', 'blue', 'yellow']
     let newColor = block.properties.color
 
