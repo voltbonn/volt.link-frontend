@@ -116,8 +116,6 @@ function BlockMenu ({
   addRowBefore = null,
   // addRowAfter = null,
   onArchivedToggle = null,
-
-  setOpenBlockMenuRef,
 }) {
   const { loggedIn } = useUser()
 
@@ -186,7 +184,6 @@ function BlockMenu ({
   return <PopoverMenu
     trigger={trigger}
     onToogle={onToogle}
-    setOpenBlockMenuRef={setOpenBlockMenuRef}
   >
     {({ open }) => (<div>
 
