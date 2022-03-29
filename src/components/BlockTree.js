@@ -199,7 +199,6 @@ function getFlatTree(treeRoots){
 
 const BlockRow = ({
   createBlock,
-  onClick,
   index,
   style,
   data,
@@ -256,19 +255,11 @@ const BlockRow = ({
     }
   }, [ refetchData, setOpenBlockMenuRef ])
 
-  const actions = {
-    click: () => {
-      onClick(block)
-      // navigate(`/${block._id}/view`)
-    }
-  }
-
   const rowContent = <>
     <ViewerAuto
       dragable={true}
       size="line"
       block={block}
-      actions={actions}
       style={{
         flexGrow: '1',
         width: '100%',
@@ -351,7 +342,6 @@ const getFilteredTypes = types => Object.entries(types)
 
 function BlockTree({
   createBlock = ()=>{},
-  onClick = ()=>{},
   scrollContainer = window,
   showBlockMenu = true,
 }) {
@@ -580,7 +570,6 @@ function BlockTree({
   const row = (props) => {
     return <BlockRow
       createBlock={createBlock}
-      onClick={onClick}
       toggleOpenById={toggleOpenById}
       refetchData={refetchDataWithFilter}
       // onSetSize={setSize}

@@ -22,7 +22,6 @@ import {
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
-import useClickOnBlock from '../hooks/useClickOnBlock.js'
 
 import { useNavigate, useMatch } from 'react-router-dom'
 
@@ -88,11 +87,6 @@ export default function SidebarContent() {
         console.error(error)
       })
   }, [ saveBlock, navigate ])
-
-  const { clickOnBlock } = useClickOnBlock()
-  const viewBlock = useCallback(block => {
-    clickOnBlock({ block })
-  }, [ clickOnBlock ])
 
   const scrollContainerRef = useRef(null)
 
@@ -182,7 +176,6 @@ export default function SidebarContent() {
       {
         showBlockTree
         ? <BlockTree
-            onClick={viewBlock}
             createBlock={createBlock}
             showBlockMenu={true}
             scrollContainer={scrollContainerRef}
