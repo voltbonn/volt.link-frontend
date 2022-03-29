@@ -174,15 +174,6 @@ pre.hljs {
   margin: var(--basis) 0;
 }
 
-a,
-a:visited {
-  color: var(--on-background);
-}
-a:hover,
-a:focus {
-  color: var(--on-background-contrast);
-}
-
 footer {
   padding: var(--basis_x4);
   text-align: center;
@@ -235,13 +226,32 @@ h3.red {
   color: var(--red);
 }
 
+a,
+a:hover,
+a:visited,
+a:focus {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 p,
 .type_p {
+  color: inherit;
   /* width: calc(var(--basis_x16) + var(--basis_x8)); */
   max-width: 100%;
   margin: var(--basis) 0;
   text-decoration: inherit;
   font-size: calc(var(--font-add) + var(--basis));
+}
+
+p a,
+p a:hover,
+p a:visited,
+p a:focus {
+  text-decoration: underline;
+}
+p a:hover{
+  opacity: var(--alpha-more);
 }
 
 ul,
