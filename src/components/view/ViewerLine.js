@@ -1,8 +1,7 @@
-import { useCallback } from 'react'
 import { useLocalization } from '../../fluent/Localized.js'
 
 import { getImageUrl, getBlockColor } from '../../functions.js'
-import useClickOnBlock from '../../hooks/useClickOnBlock.js'
+import useBlockTrigger from '../../hooks/useBlockTrigger.js'
 
 import {
   InsertDriveFile as PageIcon,
@@ -10,15 +9,14 @@ import {
   LinkSharp as RedirectIcon,
 } from '@mui/icons-material'
 
+import { Link } from 'react-router-dom'
+
 import classes from './ViewerLine.module.css'
 
 function ViewerLine ({ block, actions = {}, locales }) {
   const { getString, translateBlock } = useLocalization()
 
-  const { clickOnBlock } = useClickOnBlock()
-  const handleClick = useCallback(() => {
-    clickOnBlock({ block })
-  }, [ clickOnBlock, block ])
+  const { link } = useBlockTrigger({ block })
 
   let title = translateBlock(block, locales, '')
   if (title === '') {
@@ -67,14 +65,19 @@ function ViewerLine ({ block, actions = {}, locales }) {
     iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=png&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={title}></div>
   }
 
-  const onClickProps = {}
 
-  if (actions.hasOwnProperty('click')) {
-    if (typeof actions.click === 'function') {
-      onClickProps.onClick = actions.click
+
+  let cardOnClick = null
+  let cardLink = link
+
+  if (actions.hasOwnProperty('link')) {
+    if (typeof actions.link === 'string') {
+      cardLink = actions.link
     }
-  } else {
-    onClickProps.onClick = handleClick
+  } else if (actions.hasOwnProperty('click')) {
+    if (typeof actions.click === 'function') {
+      cardOnClick = actions.click
+    }
   }
 
   const {
@@ -82,20 +85,43 @@ function ViewerLine ({ block, actions = {}, locales }) {
     colorRGB = '--on-background-rgb',
   } = getBlockColor(block)
 
-  return <div
-    {...onClickProps}
-    className={`clickable_card ${classes.root}`}
-    style={{
-      cursor: onClickProps.hasOwnProperty('onClick') ? 'pointer' : 'auto',
-      color,
-      '--on-background-rgb': colorRGB,
-    }}
-  >
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      {iconComponent}
-      <span dir="auto" className={classes.title}>{title}</span>
+  if (typeof cardLink === 'string' && cardLink.length > 0) {
+    return <Link
+      to={cardLink}
+      className={`clickable_card ${classes.root}`}
+      style={{
+        display: 'block',
+        cursor: 'pointer',
+        color,
+        '--on-background-rgb': colorRGB,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {iconComponent}
+        <span dir="auto" className={classes.title}>{title}</span>
+      </div>
+    </Link>
+  } else {
+    const onClickProps = {}
+    if (typeof cardOnClick === 'function') {
+      onClickProps.onClick = cardOnClick
+    }
+
+    return <div
+      {...onClickProps}
+      className={`clickable_card ${classes.root}`}
+      style={{
+        cursor: typeof cardOnClick === 'function' ? 'pointer' : 'auto',
+        color,
+        '--on-background-rgb': colorRGB,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {iconComponent}
+        <span dir="auto" className={classes.title}>{title}</span>
+      </div>
     </div>
-  </div>
+  }
 }
 
 export default ViewerLine
