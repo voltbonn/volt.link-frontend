@@ -120,3 +120,5 @@ search = Search…
 role_editor = Editor
 role_viewer = Viewer
 role_owner = Owner
+
+blocktree_no_nodes_to_show = Nothing to show. Maybe check the filter menu.

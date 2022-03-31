@@ -445,11 +445,8 @@ function BlockTree({
             isOpen: false,
           }))
 
-          if (nodes.length > 0) {
-            // TODO: This prevents from displaying empty trees.
-            setNodes(nodes)
-            updateTree(nodes)
-          }
+          setNodes(nodes)
+          updateTree(nodes)
         })
         .catch(error => console.error(error))
     }
@@ -711,7 +708,15 @@ function BlockTree({
         </FixedSizeList>
       )}
     </AutoSizer>
-  </div>
+      {
+        treeNodesFiltered.length === 0
+          ? <p style={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+          }}><Localized id="blocktree_no_nodes_to_show" /></p>
+          : null
+      }
+    </div>
   </>
 }
 
