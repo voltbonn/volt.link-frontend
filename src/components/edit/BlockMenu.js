@@ -364,7 +364,7 @@ function BlockMenu ({
       {
         (
           canEdit
-          && typeof createBlock === 'function'
+          && typeof createChildBlock === 'function'
         )
         && <SubMenu
           parentMenuIsOpen={open}
