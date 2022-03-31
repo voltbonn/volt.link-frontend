@@ -8,7 +8,7 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import BlockMenu from './edit/BlockMenu.js'
 import ViewerAuto from './view/ViewerAuto.js'
 
-import { useLocalization } from '../fluent/Localized.js'
+import { Localized, useLocalization } from '../fluent/Localized.js'
 
 import classes from './BlockTree.module.css'
 
@@ -40,8 +40,6 @@ import {
   // Remove as DividerIcon,
   EditSharp as EditIcon,
 } from '@mui/icons-material'
-
-import { Localized } from '../fluent/Localized.js'
 
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
