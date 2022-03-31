@@ -240,18 +240,13 @@ const BlockRow = ({
     }
   }, [ setBlockMenuIsOpen ])
 
-  const setOpenBlockMenuRef = useRef(null)
   const onArchiveToggle = useCallback(newArchivedValue => {
-    if (
-      typeof setOpenBlockMenuRef.current === 'function'
-      && typeof refetchData === 'function'
-    ) {
-      setOpenBlockMenuRef.current(false)
+    if (typeof refetchData === 'function') {
       setTimeout(() => {
         refetchData({ force: true })
       }, 200) // The fade-out animation is 200ms. Only rerender after it, for it not to loose the element.
     }
-  }, [ refetchData, setOpenBlockMenuRef ])
+  }, [ refetchData ])
 
   const rowContent = <>
     <ViewerAuto
@@ -271,7 +266,6 @@ const BlockRow = ({
           <BlockMenu
             onToogle={onBlockMenuToogle}
             onArchivedToggle={onArchiveToggle}
-            setOpenBlockMenuRef={setOpenBlockMenuRef}
             {...{
               block,
               createBlock,
