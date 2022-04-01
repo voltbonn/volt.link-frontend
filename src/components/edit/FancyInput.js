@@ -13,7 +13,7 @@ function FancyInput({ children, className, style, ...props }) {
     {
       error
       ? <div className={classes.error}>
-          {error.split('\n').map(e => <p>{e}</p>)}
+          {error.split('\n').map(error => <p key={error}>{error}</p>)}
         </div>
       : null
     }
