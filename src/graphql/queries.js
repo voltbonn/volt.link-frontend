@@ -99,3 +99,12 @@ export const blockMatchesRoles_Query = gql`
     blockMatchesRoles (_id: $_id, roles: $roles)
   }
 `
+
+export const checkPath_Query = gql`
+  query checkPath ($path: String!) {
+    checkPath (path: $path) {
+      isOkay
+      errors
+    }
+  }
+`
