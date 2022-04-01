@@ -222,7 +222,6 @@ function HtmlInput({
       value = value.replace(/<\/? ?br ?\/?>/g, '\n')
     }
 
-    value = value.trim()
     setText(value)
 
     if (onChange) {
