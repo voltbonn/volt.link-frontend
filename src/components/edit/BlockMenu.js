@@ -147,10 +147,12 @@ function BlockMenu ({
   // }, [ addRowBefore ])
 
   const createChildBlock = useCallback(newBlock => {
-    createBlock({
-      ...newBlock,
-      parent: _id,
-    })
+    if (typeof createBlock === 'function') {
+      createBlock({
+        ...newBlock,
+        parent: _id,
+      })
+    }
   }, [ createBlock, _id ])
 
   const toggleArchiveBlock = useCallback(() => {
@@ -364,7 +366,7 @@ function BlockMenu ({
       {
         (
           canEdit
-          && typeof createChildBlock === 'function'
+          && typeof createBlock === 'function' // It should be createBlock not createChildBlock as createBlock is the external function. createChildBlock does alsways exists.
         )
         && <SubMenu
           parentMenuIsOpen={open}
