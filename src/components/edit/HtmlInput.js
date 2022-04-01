@@ -169,7 +169,10 @@ function HtmlInput({
   ...props
 }) {
   const inputRef = useRef(null)
-  const [text, setText] = useState('')
+
+  const textRef = useRef('')
+  const textRefValue = textRef.current
+  
   const [fakeDefaultValue, setFakeDefaultValue] = useState({ __html: '' })
 
   const updateText = useCallback(defaultValue => {
@@ -188,24 +191,23 @@ function HtmlInput({
     // //     // .replace(/\n/g, '<br />')
     // }
 
+    textRef.current = defaultValue
+
     if (fakeDefaultValue.__html !== newHtmlValue) {
       return setFakeDefaultValue({__html: newHtmlValue})
     }
-
-    setText(defaultValue)
   }, [
     // type,
     fakeDefaultValue,
-    setText,
     setFakeDefaultValue,
   ])
 
   useEffect(() => {
-    if (text !== defaultValue) {
+    if (textRefValue !== defaultValue) {
       updateText(defaultValue)
     }
   }, [
-    text,
+    textRefValue,
     defaultValue,
     updateText,
   ])
@@ -222,18 +224,19 @@ function HtmlInput({
       value = value.replace(/<\/? ?br ?\/?>/g, '\n')
     }
 
-    setText(value)
+    value = value.trim()
+    textRef.current = value
 
     if (onChange) {
       onChange(value)
     }
-  }, [onChange, setText, linebreaks])
+  }, [onChange, linebreaks])
 
   const handleTextBlur = useCallback(() => {
     if (onBlur) {
-      onBlur(text)
+      onBlur(textRefValue)
     }
-  }, [onBlur, text])
+  }, [onBlur, textRefValue])
 
   const keyDownHandler = useCallback(event => {
     if (event.key === 'Enter' && event.shiftKey === true) {
@@ -368,7 +371,7 @@ function HtmlInput({
     onInput={handleTextChange}
     onBlur={handleTextBlur}
     onPaste={handlePaste}
-    className={`${classes.rebuild_textarea} ${text.length === 0 ? classes.show_placeholder : ''} ${className}`}
+    className={`${classes.rebuild_textarea} ${textRefValue.length === 0 ? classes.show_placeholder : ''} ${className}`}
     contentEditable={true}
     dangerouslySetInnerHTML={fakeDefaultValue}
     style={style}
