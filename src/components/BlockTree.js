@@ -240,7 +240,7 @@ const BlockRow = ({
     }
   }, [ setBlockMenuIsOpen ])
 
-  const onArchiveToggle = useCallback(newArchivedValue => {
+  const onReloadContext = useCallback(() => {
     if (typeof refetchData === 'function') {
       setTimeout(() => {
         refetchData({ force: true })
@@ -265,7 +265,7 @@ const BlockRow = ({
         <div className={classes.blockRowActions}>
           <BlockMenu
             onToogle={onBlockMenuToogle}
-            onArchivedToggle={onArchiveToggle}
+            onReloadContext={onReloadContext}
             {...{
               block,
               createBlock,

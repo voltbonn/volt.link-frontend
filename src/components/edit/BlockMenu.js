@@ -116,6 +116,7 @@ function BlockMenu ({
   addRowBefore = null,
   // addRowAfter = null,
   onArchivedToggle = null,
+  onReloadContext = null,
 }) {
   const { loggedIn } = useUser()
 
@@ -152,8 +153,11 @@ function BlockMenu ({
         ...newBlock,
         parent: _id,
       })
+      if (typeof onReloadContext === 'function') {
+        onReloadContext()
+      }
     }
-  }, [ createBlock, _id ])
+  }, [createBlock, _id, onReloadContext])
 
   const toggleArchiveBlock = useCallback(() => {
     const newArchived = !archived
@@ -163,9 +167,12 @@ function BlockMenu ({
         if (typeof onArchivedToggle === 'function') {
           onArchivedToggle(newArchived)
         }
+        if (typeof onReloadContext === 'function') {
+          onReloadContext()
+        }
       })
       .catch(console.error)
-  }, [ archiveBlock, setArchived, archived, block, onArchivedToggle ])
+  }, [archiveBlock, setArchived, archived, block, onArchivedToggle, onReloadContext])
 
   const toggleActive = useCallback(() => {
     if (typeof setProperty === 'function') {
