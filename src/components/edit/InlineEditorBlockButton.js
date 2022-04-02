@@ -106,7 +106,7 @@ function InlineEditorBlockButtonRaw({
           onBlur={publishChanges}
           type="text"
           defaultValue={link}
-          placeholder={getString('path_editor_item_link_label')}
+          placeholder={getString('action_input_url_placeholder')}
           style={{
             margin: 'var(--basis) 0 0 0',
             width: '100%',
