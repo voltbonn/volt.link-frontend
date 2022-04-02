@@ -27,7 +27,7 @@ window.process = {} // BUGFIX for CRA4 error-page after hot-reloading.
 
 window.env = 'prod' // dev / prod
 window.domains = {
-  // frontend: 'http://localhost:3000/',
+  // frontend: 'http://localhost:4003/',
   backend: 'https://api.volt.link/',
   // backend: 'http://localhost:4004/',
   frontend: 'https://beta.volt.link/',
