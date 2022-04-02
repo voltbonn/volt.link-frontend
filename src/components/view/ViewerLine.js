@@ -88,6 +88,7 @@ function ViewerLine ({ block, actions = {}, locales }) {
   if (typeof cardLink === 'string' && cardLink.length > 0) {
     return <Link
       to={cardLink}
+      title={title}
       className={`clickable_card ${classes.root}`}
       style={{
         display: 'block',
@@ -109,6 +110,7 @@ function ViewerLine ({ block, actions = {}, locales }) {
 
     return <div
       {...onClickProps}
+      title={title}
       className={`clickable_card ${classes.root}`}
       style={{
         cursor: typeof cardOnClick === 'function' ? 'pointer' : 'auto',
