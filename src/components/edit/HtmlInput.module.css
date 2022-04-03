@@ -1,0 +1,14 @@
+.rebuild_textarea {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  /* background: transparent !important; */
+}
+
+.rebuild_textarea.show_placeholder:before {
+  position: absolute;
+  content: attr(placeholder);
+  color: inherit;
+  cursor: text;
+  opacity: var(--alpha-less);
+}

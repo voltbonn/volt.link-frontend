@@ -1,117 +1,159 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import classes from './App.module.css'
 
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-
 import {
-  Switch,
+  Routes,
   Route,
-  useRouteMatch,
+  useLocation,
+  useMatch,
+  // useNavigate,
 } from 'react-router-dom'
 
-import { withLocalization } from '../fluent/Localized.js'
-import { useHistory } from 'react-router-dom'
-
-import Localized from '../fluent/Localized.js'
-import useUser from '../hooks/useUser.js'
-import Header from '../components/Header.js'
-import Chooser from './Chooser.js'
-import Shortcode from './Shortcode.js'
+import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Sidebar.js'
+// import Shortcode from './Shortcode.js'
 import Editor from './Editor.js'
+import Viewer from './Viewer.js'
 
-import MultiButton from '../components/MultiButton.js'
+// function useScrollMemory() {
+//   // const navigate = useNavigate()
+//   const location = useLocation()
+//
+//   const pathRef = useRef(null)
+//
+//   useEffect(() => {
+//     console.log('location', location)
+//     pathRef.current = location.pathname
+//   }, [location])
+//
+//   useEffect(() => {
+//     // Listen for location changes and set the scroll position accordingly.
+//     const setFromHistoryState = state => {
+//       console.log('popstate-state', state)
+//       let scrollY = 0
+//       if (state && state.scrollY) {
+//         scrollY = state.scrollY
+//       }
+//       console.log('A-popstate-scrollY', scrollY)
+//       if (scrollY < 100) {
+//         scrollY = 0
+//       }
+//
+//       console.log('B-popstate-scrollY', scrollY)
+//       window.scrollTo(0, scrollY)
+//       setTimeout(()=>{
+//         window.scrollTo(0, scrollY)
+//       }, 500)
+//     }
+//
+//     setFromHistoryState(window.history.state)
+//     const popstateListener = event => {
+//       if (event.type === 'popstate') {
+//         setFromHistoryState(event.state)
+//       }
+//     }
+//     window.addEventListener('popstate', popstateListener)
+//
+//     const scrollListener = () => {
+//       const newScrollY = window.scrollY
+//       console.log(' ')
+//       console.log('scrollListener-window.history.state', window.history.state)
+//       console.log('scrollListener-newScrollY', newScrollY)
+//       console.log('pathRef.current', pathRef.current)
+//
+//       if (typeof pathRef.current === 'string') {
+//         window.history.replaceState(
+//           {
+//             ...(window.history.state || {}),
+//             scrollY: newScrollY,
+//           },
+//           '',
+//           pathRef.current
+//         )
+//         console.log('window.history.state', window.history.state)
+//
+//         // navigate(pathRef.current, {
+//         //   replace: true,
+//         //   state: {
+//         //     // ...(window.history.state || {}),
+//         //     scrollY: newScrollY,
+//         //   },
+//         // })
+//       }
+//     }
+//     window.addEventListener('scroll', scrollListener)
+//
+//     // Unregister listener when component unmounts.
+//     return () => {
+//       console.log('Unregister')
+//       window.removeEventListener('popstate', popstateListener)
+//       window.removeEventListener('scroll', scrollListener)
+//     }
+//   }, [])
+// }
 
-function App({ getString }) {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+function App() {
+  // useScrollMemory()
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
-    [prefersDarkMode],
-  )
+  const matchesStartpage = useMatch('/')
+  const location = useLocation()
 
+  const [customLocation, setCustomLocation] = useState({})
 
-  const [, loggedIn] = useUser()
+  useEffect(() => {
+    //    /slug=id/suffix
+    //    /slugOrId/suffix
 
-  const history = useHistory()
-  const menuRouteMatch = useRouteMatch("/:slug")
-  const selected_route = menuRouteMatch ? menuRouteMatch.params.slug : ''
+    const slugAndIdRegex = /^\/([^=/]*)(?:=?)([^=/]*)(.*)/
 
-  const handleMenu = new_selected => {
-    switch (new_selected) {
-      case 'shortcode':
-        history.push('/shortcode')
-        break
-      case 'list':
-        window.open(`${window.domains.backend}list`,'_blank')
-        break
-      default:
-        history.push('/')
+    const slugAndIdMatch = location.pathname.match(slugAndIdRegex)
+    const slugOrId = slugAndIdMatch[1]
+    let id = slugAndIdMatch[2]
+    let suffix = slugAndIdMatch[3]
+
+    if (!id && slugOrId) {
+      id = slugOrId
     }
-  }
 
-  const loginLogoutButton = (
-    loggedIn
-      ? <>
-        <MultiButton
-          onChange={handleMenu}
-          ariaLabel={getString('main_menu')}
-          defaultValue={selected_route}
-          items={[
-            { value: '', title: getString('menu_micropages') },
-            { value: 'shortcode', title: getString('menu_url_shortener') },
-            { value: 'list', title: getString('menu_list') },
-          ]}
-        />
-        <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-          <button className="red" style={{ marginRight: '0' }}><Localized id="logout"/></button>
-        </a>
-      </>
-      : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-        <button style={{ marginRight: '0' }}><Localized id="login"/></button>
-      </a>
-  )
+    if (
+      id !== ''
+      && suffix !== '/edit'
+      && suffix !== '/view'
+    ) {
+      suffix = '/view'
+    }
+
+    const newPathname = `/${id}${suffix}`
+    if (customLocation.pathname !== newPathname) {
+      // TODO: save scroll position
+      
+
+
+      setCustomLocation({
+        pathname: newPathname,
+      })
+    }
+  }, [ location, customLocation, setCustomLocation ])
 
   return (<>
-  <ThemeProvider theme={theme}>
-    <div className={classes.app}>
-      {
-        !loggedIn
-          ? <div>
-            <Header
-              title="edit.volt.link"
-              rightActions={loginLogoutButton}
-            />
-            <p><Localized id="login_prompt"/></p>
-          </div>
-          : <>
-              <Switch>
-                <Route path="/edit/:code">
-                  <Editor />
-                </Route>
-                <Route path="/shortcode">
-                  <Shortcode rightHeaderActions={loginLogoutButton} />
-                </Route>
-                <Route path="/">
-                  <Chooser rightHeaderActions={loginLogoutButton} />
-                </Route>
-              </Switch>
-            </>
-      }
+    <div className={`${classes.app} ${matchesStartpage ? classes.isStartpage : ''}`}>
+      <SidebarProvider>
+        {
+          matchesStartpage
+          ? null
+          : <Sidebar />
+        }
+        <Main>
+          <Routes location={customLocation}>
+            <Route path="/:id/view" element={<Viewer />} />
+            <Route path="/:id/edit" element={<Editor />} />
+            {/* <Route path="/shortcode" element={<Shortcode />} /> */}
+            <Route path="/" element={<SidebarContent />} />
+          </Routes>
+        </Main>
+      </SidebarProvider>
     </div>
-    <footer>
-      <a href="mailto:thomas.rosen@volteuropa.org"><Localized id="contact" /></a>
-      &nbsp; • &nbsp;
-      <a href="https://github.com/voltbonn/edit.volt.link" target="_blank" rel="noopener noreferrer"><Localized id="source_code" /></a>
-    </footer>
-    </ThemeProvider>
   </>)
 }
 
-export default withLocalization(App)
+export default App

@@ -6,6 +6,7 @@ import {
 import { negotiateLanguages } from '@fluent/langneg'
 
 import { FluentContext } from '../../node_modules/@fluent/react/esm/context.js'
+import fluentBy from './fluentBy.js'
 
 const Localized = props => (
   <LocalizedOriginal
@@ -60,10 +61,58 @@ function withLocalization(Inner) {
   return WithLocalization
 }
 
+
+function translateBlock (block, userLocales, fallback) {
+  const {
+    properties = {}
+  } = block || {}
+  
+  let locale = properties.locale || 'en'
+  let text = properties.text || fallback || ''
+
+  if (!userLocales || !Array.isArray(userLocales)) {
+    userLocales = [locale]
+  }
+    
+  let translations = properties.translations || []
+  if (Array.isArray(translations)) {
+    translations = [
+      {
+        locale,
+        text,
+      },
+      ...translations,
+    ]
+
+    const correct_translations = fluentBy.fluentByArray(translations, userLocales, 'locale')
+    if (correct_translations.length > 0) {
+      text = correct_translations[0].text
+    }
+  }
+
+  return text
+}
+
+function useLocalization() {
+  const l10n = React.useContext(FluentContext)
+
+  const getString = (id, args, fallback) => l10n.getString(id, args, fallback || ' ')
+  const fluentByAny = (any = [], fallback = '') => fluentBy.fluentByAny(any, l10n.userLocales, fallback)
+
+  return {
+    ...l10n,
+    getString,
+    fluentByAny,
+    translateBlock,
+  }
+}
+
 export {
+  negotiateLanguages,
   withLocalization,
   Localized,
   Localized as default,
+  useLocalization,
 }
 
 /*

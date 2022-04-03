@@ -1,5 +1,36 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+
+  min-height: 100vh;
+}
+.app.spine_aligned {
+  text-align: unset;
+  align-items: flex-start;
+}
+.app.spine_aligned:dir(rtl) {
+  align-items: flex-start;
+}
+
+.app .contentWrapper{
+  width: 1000px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: var(--basis_x16);
+}
+@media (max-width: 800px) {
+  .app .contentWrapper{
+    width: 100%;
+  }
+}
+
 .editor {
-  transition: opacity .2s ease;
+  min-height: 100vh;
+  padding: var(--basis_x4);
+  transition: opacity var(--timing);
 }
 .editor.loadingContent {
   opacity: 0.5;

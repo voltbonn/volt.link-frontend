@@ -1,0 +1,36 @@
+.coverphoto {
+  display: block;
+  height: var(--basis_x16);
+  width: var(--basis_x64);
+  max-width: 100%;
+  background-position: center;
+  background-size: cover;
+  margin-bottom: var(--basis);
+}
+
+.icon {
+  display: inline-block;
+  height: var(--body-font-size);
+  width: var(--body-font-size);
+  vertical-align: middle;
+  background-position: center;
+  background-size: cover;
+  margin-right: var(--basis);
+  flex-shrink: 0;
+}
+.title {
+  vertical-align: middle;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: var(--basis);
+  font-size: calc(0.9 * var(--body-font-size));
+}
+
+.iconLine {
+  display: flex;
+  align-items: flex-start;
+}
+.iconLine p {
+  margin: 0;
+  word-break: break-all;
+}

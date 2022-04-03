@@ -1,5 +1,4 @@
 .row {
-  margin-top: var(--basis);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -30,7 +29,7 @@
 
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--timing);
 }
 .row .middleActions:hover .content{
   opacity: 1;
@@ -57,6 +56,12 @@
 }
 .row .inlineRowButton:last-child {
   margin-right: 0;
+}
+
+.row .dragHandleButton {
+  padding: var(--basis);
+  line-height: 0;
+  margin-inline-end: var(--basis_x4);
 }
 
 .addRowButton{

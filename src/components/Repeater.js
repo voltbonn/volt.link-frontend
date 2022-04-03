@@ -2,7 +2,11 @@ import { useState, useCallback, useEffect } from 'react'
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
+import { v4 as uuidv4 } from 'uuid'
+
 import classes from './Repeater.module.css'
+
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator'
 
 function reorder(list, startIndex, endIndex) {
   const result = Array.from(list)
@@ -24,11 +28,11 @@ function Row({
   reorderLabel,
   showActionButton,
   hasOnlyOneRow,
-  addEmptyRowByIndex,
+  addRowByIndex,
 }) {
   return <Draggable
-      key={subDefaultValue._id}
-      draggableId={subDefaultValue._id}
+      key={subDefaultValue.tmp_id}
+      draggableId={subDefaultValue.tmp_id}
       index={index}
       isDragDisabled={isReorderable === true ? false : true}
       disableInteractiveElementBlocking={true}
@@ -39,10 +43,10 @@ function Row({
           ref={provided.innerRef}
           {...provided.draggableProps}
 
-          key={subDefaultValue._id}
+          key={subDefaultValue.tmp_id}
           className={classes.row}
         >
-          {
+          {/*
             index !== 0
             ? <div className={classes.middleActions}>
               <div className={classes.trigger}></div>
@@ -51,28 +55,40 @@ function Row({
               </div>
             </div>
             : null
-          }
+          */}
 
         <div className={classes.form}>
           {
             isReorderable === true && showReorderControls === true
-              ? <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>
+              ? <button
+                  aria-label={reorderLabel}
+                  className={`text ${classes.inlineRowButton} ${classes.dragHandleButton}`}
+                  {...provided.dragHandleProps}
+                >
+                  <DragIndicatorIcon />
+                </button>
               : null
           }
           {
             render({
-              key: subDefaultValue._id,
+              key: subDefaultValue.tmp_id,
               defaultValue: subDefaultValue,
               className: classes.item,
               dataset: {
                 'data-index': index,
-                'data-id': subDefaultValue._id,
+                'data-id': subDefaultValue.tmp_id,
               },
               onChange: handleRowChange,
               onRemoveRow: () => handleRemoveRow(index),
-              addRowBefore: () => addEmptyRowByIndex(index, 0),
-              addRowAfter: () => addEmptyRowByIndex(index, 1),
-              reorderHandle: <button aria-label={reorderLabel} className={`text ${classes.inlineRowButton}`} {...provided.dragHandleProps}>☰</button>,
+              addRowBefore: (newValue) => addRowByIndex(index, 0, newValue),
+              addRowAfter: (newValue) => addRowByIndex(index, 1, newValue),
+              reorderHandle: <button
+                  aria-label={reorderLabel}
+                  className={`text ${classes.inlineRowButton} ${classes.dragHandleButton}`}
+                  {...provided.dragHandleProps}
+                >
+                  <DragIndicatorIcon />
+                </button>,
               actionButton: (
                 hasOnlyOneRow
                   ? <button className={`green ${classes.inlineRowButton}`} onClick={handleAddRow}>+</button>
@@ -96,34 +112,75 @@ function Row({
 }
 
 function getIndex(eventOrIndex) {
-  let index = eventOrIndex
+  let index = eventOrIndex // for if it is a number/index
 
-  if (typeof eventOrIndex !== 'number') {
-    index = eventOrIndex.target.dataset.index
-  } else if (!!eventOrIndex.target.dataset.index) {
-    index = parseInt(eventOrIndex.target.dataset.index)
-    if (isNaN(index)) {
-      index = null
+  if (typeof eventOrIndex === 'object') {
+    if (!!eventOrIndex.target) { // is event
+      eventOrIndex = eventOrIndex.target
+    }
+    if (!!eventOrIndex.dataset) { // is only the dataset
+      if (!!eventOrIndex.dataset.index) {
+        index = parseInt(eventOrIndex.dataset.index)
+        if (isNaN(index)) {
+          index = null
+        }
+      }
     }
   }
 
   return index
 }
 
-function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel = 'Reorder', render, style, onChange, prependNewItems, showReorderControls = true, showActionButton = true, isReorderable = false }) {
+function Repeater({
+  defaultValue,
+  addDefaultValue,
+  addButtonText,
+  hideAddButton = false,
+  reorderLabel = 'Reorder',
+  render,
+  style,
+  onChange,
+  prependNewItems,
+  showReorderControls = false,
+  showActionButton = true,
+  isReorderable = false
+}) {
   if (!(!!addButtonText)) {
     addButtonText = 'Add Row'
   }
 
   const [rows, setRows] = useState([])
 
+  const internalAddDefaultValue = useCallback(() => {
+    let tmp_defaultValue = {}
+    if (typeof addDefaultValue === 'function') {
+      const defaultValue = addDefaultValue()
+      if (typeof defaultValue === 'object' && defaultValue !== null) {
+        tmp_defaultValue = defaultValue
+        if (
+          typeof tmp_defaultValue.tmp_id !== 'string'
+          || tmp_defaultValue.tmp_id === ''
+        ) {
+          tmp_defaultValue.tmp_id = uuidv4()
+        }
+      }
+    }
+    return tmp_defaultValue
+  }, [addDefaultValue])
+
   useEffect(() => {
     let tmp_defaultValue = defaultValue
     if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
-      tmp_defaultValue = [addDefaultValue()]
+      tmp_defaultValue = [internalAddDefaultValue()]
     }
+    tmp_defaultValue = tmp_defaultValue.map(item => {
+      if (!item.tmp_id) {
+        return { ...item, tmp_id: uuidv4() }
+      }
+      return item
+    })
     setRows(tmp_defaultValue)
-  }, [defaultValue, addDefaultValue, setRows])
+  }, [defaultValue, internalAddDefaultValue, setRows])
 
   const handleRemoveRow = useCallback(eventOrIndex => {
     const index = getIndex(eventOrIndex)
@@ -138,19 +195,19 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
   }, [rows, setRows, onChange])
 
   const handleRowChange = useCallback(event => {
-    const index = event.target.dataset.index
-    const _id = event.target.dataset.id
-    const newValue = event.target.value
+    const index = event.dataset.index || event.dataset['data-index']
+    const tmp_id = event.dataset.id || event.dataset['data-id']
+    const newValue = event.value
 
     const new_rows = [...rows]
     if (typeof newValue !== 'object' || newValue === null || Array.isArray(newValue)) {
       new_rows[index] = {
-        _id,
+        tmp_id,
         value: newValue
       }
     } else if (typeof newValue === 'object') {
       new_rows[index] = {
-        _id,
+        tmp_id,
         ...newValue
       }
     }
@@ -158,8 +215,15 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
     onChange(new_rows)
   }, [rows, setRows, onChange])
 
-  const addEmptyRowByIndex = useCallback((index, offset = 0) => {
-    const newValue = addDefaultValue()
+  const addRowByIndex = useCallback((index, offset = 0, newValue) => {
+    if (typeof newValue === 'object') {
+      newValue = {
+        ...(internalAddDefaultValue()),
+        ...newValue,
+      }
+    } else {
+      newValue = newValue || internalAddDefaultValue()
+    }
 
     let new_rows = null
     if (index !== null && index >= 0) {
@@ -169,10 +233,10 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
 
     setRows(new_rows)
     onChange(new_rows)
-  }, [rows, addDefaultValue, setRows, onChange])
+  }, [rows, internalAddDefaultValue, setRows, onChange])
 
   const handleAddRow = useCallback(eventOrIndex => {
-    const newValue = addDefaultValue()
+    const newValue = internalAddDefaultValue()
 
     const index = getIndex(eventOrIndex)
 
@@ -190,7 +254,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
 
     setRows(new_rows)
     onChange(new_rows)
-  }, [rows, addDefaultValue, setRows, onChange, prependNewItems])
+  }, [rows, internalAddDefaultValue, setRows, onChange, prependNewItems])
 
   function onDragEnd(result) {
     if (!result.destination) {
@@ -217,7 +281,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
   </div>
 
   return <div style={style}>
-    {!hasOnlyOneRow && prependNewItems ? <div style={{ marginBottom: 'var(--basis)' }}>{addButton}</div> : null}
+    {hideAddButton === false && (!hasOnlyOneRow && prependNewItems) ? <div style={{ marginBottom: 'var(--basis)' }}>{addButton}</div> : null}
 
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable
@@ -228,10 +292,10 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {
               rows
-              .filter(subDefaultValue => subDefaultValue._id)
+              .filter(subDefaultValue => subDefaultValue.tmp_id)
               .map(
                 (subDefaultValue, index) => <Row
-                  key={subDefaultValue._id}
+                  key={subDefaultValue.tmp_id}
                   {...{
                     subDefaultValue,
                     index,
@@ -244,7 +308,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
                     reorderLabel,
                     showActionButton,
                     hasOnlyOneRow,
-                    addEmptyRowByIndex,
+                    addRowByIndex,
                   }}
                 />
               )
@@ -255,7 +319,7 @@ function Repeater({ defaultValue, addDefaultValue, addButtonText, reorderLabel =
       </Droppable>
     </DragDropContext>
 
-    {!hasOnlyOneRow && !prependNewItems ? addButton : null}
+    {hideAddButton === false && (!hasOnlyOneRow && !prependNewItems) ? addButton : null}
   </div>
 }
 

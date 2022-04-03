@@ -1,0 +1,70 @@
+.coverphoto {
+  position: relative;
+
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+
+  background-color: var(--background-contrast);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: var(--basis_x4);
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  height: 20rem;
+}
+@media (max-width: 1000px) {
+  .coverphoto{
+    height: 17rem;
+  }
+}
+@media (max-width: 800px) {
+  .coverphoto{
+    height: 11rem;
+  }
+}
+@media (max-width: 500px) {
+  .coverphoto{
+    height: 8rem;
+  }
+}
+
+.root.coverphotoIsNotSet {
+  height: auto;
+  background-color: transparent;
+}
+
+.button_wrapper {
+  width: 1000px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.root.coverphotoIsSet.iconIsSet .button_wrapper {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.root.coverphotoIsSet .button_wrapper {
+  width: 100%;
+}
+.root.coverphotoIsNotSet .coverphoto {
+  height: auto;
+  background-color: transparent;
+}
+
+@media (any-hover: hover) {
+  @media (min-width: 800px) {
+    .changeCoverphotoButton {
+      opacity: 0;
+      transition: transform var(--timing), opacity var(--timing);
+    }
+    .root.coverphotoIsNotSet .changeCoverphotoButton,
+    .coverphoto:hover .changeCoverphotoButton {
+      opacity: 1;
+    }
+  }
+}

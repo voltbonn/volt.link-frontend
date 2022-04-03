@@ -1,91 +1,113 @@
+locale_menu_choose_locale_label = Sprache wählen
+locale_menu_hide_translation_help_label = Übersetzungshilfe verbergen
+locale_menu_show_translation_help_label = Übersetzungshilfe anzeigen
+
 default_locale = de
 
 login = Anmelden
 logout = Abmelden
-
-login_prompt = Meld Dich in der oberen rechten Ecke an, um volt.link Urls zu bearbeiten.
-
-contact = Kontakt
+help_page = Hilfe / Tutorial
+contact = Kontakt / Feedback
 source_code = Quellcode
-
-type_a_path = Geben Sie einen Pfad ein...
-edit_path_button = Bearbeiten
-create_path_button = Erstellen
-
-path_editor_add_translation = Übersetzung hinzufügen
 
 path_editor_edit_permission_error = Du darfst diesen Link nicht bearbeiten.
 
-path_editor_save = Speichern
-path_editor_status_started_saving = Es wird gespeichert…
+path_editor_status_started_loading = Am laden…
+
+path_editor_publish = Speichern
+path_editor_status_started_saving = Am speichern…
 path_editor_status_saved = Gespeichert!
-path_editor_status_error_while_saving = Fehler beim Speichern! Bitte versuch es später noch einmal. (Der Fehler: "{$error}")
+path_editor_status_error_while_saving = Fehler beim Speichern! Bitte versuche es später noch einmal. (Der Fehler: "{$error}")
 
+path_editor_translate = Übersetzen
 path_editor_share = Teilen
-path_editor_qrcode = QR-Code
-path_editor_statistics = Statistik
+path_editor_permissions = Berechtigungen
+sharing_qrcode = QR-Code
+sharing_statistics = Statistiken
+sharing_copy_url = URL kopieren
 
-path_editor_title_label = Titel
-path_editor_title_placeholder = Volt Bonn
-
-path_editor_description_label = Kurze Beschreibung
-path_editor_description_placeholder = Zukunft Made in Europe
+path_editor_tags_placeholder = #hashtag1 #europa #social_equality
+path_editor_tags_label = Tags
 
 path_editor_permissions_edit_label = Wer darf diesen Link bearbeiten?
-path_editor_permissions_edit_info = Geb die Volt Europa Email-Adressen an, die diesen Link bearbeiten dürfen. Verwende eine eigene Zeile pro Adresse.
 path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
-path_editor_permissions_edit_add_button_label = Person hinzufügen
-
-path_editor_permissions_view_label = Wer darf diesen Link anschauen?
-path_editor_permissions_view_info = Hier kannst du entscheiden, ob die Weiterleitung / Linkliste öffentlich oder nur mit einem Volt Europa Account einsehbar sein soll.
-path_editor_permissions_view_public = Öffentlich
-path_editor_permissions_view_volteuropa = Nur Volt Europa
-
-path_editor_use_as_label = Verwenden als
-path_editor_use_as_info = Wählen Sie "Nichts / Deaktiviert", um den Link nicht mehr zu verwenden.
-path_editor_use_as_value_redirect = Weiterleitung
-path_editor_use_as_value_linklist = Miniseite
-path_editor_use_as_value_nothing = Nichts / Deaktiviert
 
 path_editor_belongs_to_team_label = Team
-path_editor_belongs_to_team_info = Zu welchem Team gehört dieser Link? Du kannst aus den Teams aus der volt.team Datenbank auswählen.
-path_editor_belongs_to_team_search_placeholder = Nach Team Namen suchen
+path_editor_belongs_to_team_info = Zu welchem Team gehört diese Seite? Du kannst aus den Teams aus der volt.team Datenbank wählen.
+path_editor_belongs_to_team_search_placeholder = Nach Team Name suchen
 
-path_editor_layout_label = Layout
-path_editor_layout_info = Hier kannst du das Layout der Miniseite ändern. Die Layouts unterscheiden sich nur im Titelbild. Das für Personen ist rund und hat einen Profil Rahmen.
-path_editor_layout_value_default = Normal
-path_editor_layout_value_person = Person
-
-path_editor_redirect_label = Url zum weiterleiten
+path_editor_redirect_label = URL-Weiterleitung zu
 path_editor_redirect_placeholder = https://voltdeutschland.org/bonn
 
 path_editor_coverphoto_label = Titelbild
-path_editor_coverphoto_info = Eine Url, die für das Coverfoto verwendet werden soll. Das Foto muss an anderer Stelle hochgeladen werden. Zum Beispiel auf der Volt Europa Website. Es sollte mindestens {$width} breit und {$height} hoch sein.
-path_editor_coverphoto_placeholder = https://
+path_editor_coverphoto_info = Eine URL für das Titelbild. Das Bild muss wo anders hochgeladen werden. Hier gibt es eine Hilfe für Google Drive: https://sites.google.com/site/gdocs2direct/
+path_editor_no_coverphoto = Kein Titelbild
 
-path_editor_imprint_overwrite_label = Eigener Impressum Link
-path_editor_imprint_overwrite_info = (Leer lassen für Volt Europa Impressum.)
-path_editor_imprint_overwrite_placeholder = https://
+path_editor_icon_label = Icon
+path_editor_icon_info = Eine URL fürs Icon. Das Bild muss wo anders hochgeladen werden. Hier gibt es eine Hilfe für Google Drive: https://sites.google.com/site/gdocs2direct/
 
-path_editor_privacy_policy_overwrite_label = Eigener Datenschutz Link
-path_editor_privacy_policy_overwrite_info = (Leer lassen für Volt Europa Datenschutzbestimmungen.)
-path_editor_privacy_policy_overwrite_placeholder = https://
+properties_editor_imprint_label = Impressums Link
+properties_editor_privacy_policy_label = Datenschutzerkläungs Link
+properties_editor_checked_label = Abgehakt
+properties_editor_trigger_label = Auslöser
+properties_editor_action_label = Aktion
+properties_editor_pronouns_label = Pronomen
 
-path_editor_add_row = Zeile hinzufügen
-path_editor_reorder = Umordnen
+trigger_input_path_placeholder = bonn
+action_input_url_placeholder = https://voltdeutschland.org/bonn
 
-path_editor_item_choose_type_label = Wähl einen Elementtyp aus
-path_editor_item_choose_type_value_link = Link
-path_editor_item_choose_type_value_headline = Überschrift
-path_editor_item_choose_type_value_headline3 = Überschrift 3
-path_editor_item_choose_type_value_text = Text
-path_editor_item_title_label = Titel
-path_editor_item_text_label = Text
-path_editor_item_link_label = Link (https://… oder mailto: oder tel:)
-path_editor_item_close_menu = Menü schließen
-path_editor_item_delete = Zeile löschen
-path_editor_item_add_row_before = Zeile vorher hinzufügen
-path_editor_item_add_row_after = Zeile danach hinzufügen
+add_content_before = Inhalt hinzufügen
 
-path_editor_item_hide_row = Zeile verbergen
-path_editor_item_show_row = Zeile anzeigen
+block_menu_choose_type_label = Umwandeln in…
+
+block_menu_type_label_plural_page = Seiten
+block_menu_type_label_plural_redirect = Weiterleitungen
+block_menu_type_label_plural_person = Personen
+
+block_menu_type_label_page = Seite
+block_menu_type_label_redirect = Weiterleitung
+block_menu_type_label_person = Person
+block_menu_type_label_button = Button
+block_menu_type_label_headline = Überschrift
+block_menu_type_label_headline3 = Überschrift 3
+block_menu_type_label_text = Text
+block_menu_type_label_code = Code
+block_menu_type_label_divider = Trennlinie
+block_menu_type_label_checkbox = Checkbox
+
+block_menu_close_menu = Menü schließen
+block_menu_add_before = Davor hinzufügen
+block_menu_add_after = Danach hinzufügen
+block_menu_create_child_block = Kind-Seite hinzufügen…
+block_menu_hide = Ausblenden
+block_menu_show = Anzeigen
+
+block_menu_archive = Archivieren / Entfernen
+block_menu_unarchive = Dearchivieren
+
+filter_menu_show_archiv = Archiv anzeigen
+filter_menu_showing_archiv = Zeigt Archiv
+
+filter_menu_show_editing = Nur Bearbeitbares
+filter_menu_showing_editing = Zeigt nur Bearbeitbares
+
+block_menu_info_created = Erstellt  am
+block_menu_info_modified = Zuletzt geändert am
+block_menu_info_id = ID
+
+placeholder_main_headline = Ohne Titel
+placeholder_headline = Überschrift
+placeholder_button = Button
+placeholder_text = Text
+placeholder_code = Code
+
+edit_block = Bearbeiten
+view_block = Ansehen
+
+search = Suchen…
+
+role_editor = Bearbeiter
+role_viewer = Betrachter
+role_owner = Besitzer
+
+blocktree_no_nodes_to_show = Nichts anzuzeigen. Vielleicht das Filtermenü kontrollieren.
