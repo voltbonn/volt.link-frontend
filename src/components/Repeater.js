@@ -200,7 +200,7 @@ function Repeater({
     const newValue = event.value
 
     const new_rows = [...rows]
-    if (typeof newValue !== 'object' || Array.isArray(newValue)) {
+    if (typeof newValue !== 'object' || newValue === null || Array.isArray(newValue)) {
       new_rows[index] = {
         tmp_id,
         value: newValue
