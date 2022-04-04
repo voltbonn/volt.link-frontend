@@ -158,7 +158,7 @@ export default function SidebarContent() {
           </MenuItem>
         </a>
 
-        <a href="https://github.com/voltbonn/edit.volt.link" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/voltbonn/" target="_blank" rel="noopener noreferrer">
           <MenuItem className="roundMenuItem">
             <ListItemIcon>
               <SourceCodeIcon />
