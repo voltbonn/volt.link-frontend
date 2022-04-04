@@ -90,8 +90,9 @@ block_menu_close_menu = Close Menu
 block_menu_add_before = Add Before
 block_menu_add_after = Add After
 block_menu_create_child_block = Add page inside…
-block_menu_hide = Hide
-block_menu_show = Show
+block_menu_hide = Hide from page
+block_menu_show = Show in page
+block_menu_hide_show_description = It'll still show in the menus.<br />This is not a privacy-feature.
 
 block_menu_archive = Archive / Remove
 block_menu_unarchive = Dearchive
