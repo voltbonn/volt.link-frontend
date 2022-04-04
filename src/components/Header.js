@@ -39,7 +39,10 @@ export default function Header({ title, block = {}, rightActions, notificationBa
           console.error(data.error)
           setParentBlocks([])
         }else{
-          setParentBlocks(data.blocks || [])
+          const parentBlocksSorted = (data.blocks || [])
+            .sort((a, b) => b.computed.sort - a.computed.sort)
+
+          setParentBlocks(parentBlocksSorted)
         }
       })
       .catch(async error => {
