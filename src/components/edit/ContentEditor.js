@@ -118,7 +118,7 @@ function reorder(list, startIndex, endIndex) {
   return result
 }
 
-function ContentEditor({ defaultValue = [], onChange }) {
+function ContentEditor({ parentId, defaultValue = [], onChange }) {
   // const [contentConfigs, setContentConfigs] = useState([])
   const contentConfigs_Ref = useRef([])
   const contentConfigs = contentConfigs_Ref.current
@@ -308,6 +308,16 @@ function ContentEditor({ defaultValue = [], onChange }) {
         .catch(console.error)
     }
   }, [contentConfigs, contentConfigs_Ref, saveBlock, onChange])
+
+  const createBlockByType = useCallback(({ type }) => {
+    const newBlock = { type }
+
+    if (typeof parentId === 'string' && parentId.length > 0) { // a valid parentId should be 24 char long
+      newBlock.parent = parentId
+    }
+
+    addRowByIndex(0, 0, { block: newBlock })
+  }, [addRowByIndex, parentId])
 
   const onMergeToPrevInput = useCallback(keys => {
     const {
@@ -561,7 +571,7 @@ function ContentEditor({ defaultValue = [], onChange }) {
           'page',
           'redirect',
         ]}
-        createBlock={({ type }) => addRowByIndex(0, 0, { block: { type: type } })}
+        createBlock={createBlockByType}
         trigger={triggerProps => 
           <button
             {...triggerProps}

@@ -296,6 +296,7 @@ function PageEditor({
     />
 
     <ContentEditor
+      parentId={block._id || null}
       onChange={saveContent}
       defaultValue={content}
     />
