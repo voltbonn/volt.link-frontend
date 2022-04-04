@@ -176,7 +176,6 @@ export default function SidebarContent() {
       {
         showBlockTree
         ? <BlockTree
-            createBlock={createBlock}
             showBlockMenu={true}
             scrollContainer={scrollContainerRef}
           />

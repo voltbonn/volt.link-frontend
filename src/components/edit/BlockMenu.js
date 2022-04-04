@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 
 import {
   Link,
+  useNavigate,
 } from 'react-router-dom'
 
 import {
@@ -51,6 +52,9 @@ import useUser from '../../hooks/useUser.js'
 import PopoverMenu from '../PopoverMenu.js'
 import SubMenu from '../SubMenu.js'
 import { AddMenuContent } from './AddMenu.js'
+
+import { saveBlock_Mutation, moveBlock_Mutation } from '../../graphql/mutations.js'
+import useMutation from '../../hooks/useMutation.js'
 
 const typeIcons = {
   button: <ButtonIcon />,
@@ -110,7 +114,6 @@ function BlockMenu ({
   setProperty,
   setType,
   typeOptions = defaultTypeOptions,
-  createBlock,
 
   onRemoveRow = null,
   addRowBefore = null,
@@ -147,17 +150,37 @@ function BlockMenu ({
   //   })
   // }, [ addRowBefore ])
 
-  const createChildBlock = useCallback(newBlock => {
-    if (typeof createBlock === 'function') {
-      createBlock({
-        ...newBlock,
-        parent: _id,
-      })
-      if (typeof onReloadContext === 'function') {
-        onReloadContext()
+
+  const mutationFunction = useMutation()
+  const navigate = useNavigate()
+  const createChildBlock = useCallback(async newBlock => {
+    try {
+      if (newBlock) {
+        const { saveBlock: newBlockId } = await mutationFunction({
+          mutation: saveBlock_Mutation,
+          variables: {
+            block: newBlock,
+          },
+        })
+        if (newBlockId !== null) {
+          await mutationFunction({
+            mutation: moveBlock_Mutation,
+            variables: {
+              movingBlockId: newBlockId,
+              newParentId: _id,
+              newIndex: 0,
+            },
+          })
+          if (typeof onReloadContext === 'function') {
+            onReloadContext()
+          }
+          navigate(`/${newBlockId}/edit`)
+        }
       }
+    } catch (error) {
+      console.error(error)
     }
-  }, [createBlock, _id, onReloadContext])
+  }, [ mutationFunction, _id, onReloadContext, navigate ])
 
   const toggleArchiveBlock = useCallback(() => {
     const newArchived = !archived
@@ -371,10 +394,7 @@ function BlockMenu ({
       */}
 
       {
-        (
-          canEdit
-          && typeof createBlock === 'function' // It should be createBlock not createChildBlock as createBlock is the external function. createChildBlock does alsways exists.
-        )
+        canEdit
         && <SubMenu
           parentMenuIsOpen={open}
           label={<>
