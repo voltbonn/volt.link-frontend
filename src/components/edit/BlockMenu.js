@@ -494,14 +494,14 @@ function BlockMenu ({
       */}
       <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
         <ListItemText
-          primary={<Localized id="block_menu_info_modified" />}
-          secondary={(metadata.modified || '').replace(/[TZ]/g, ' ')}
+          primary={<span><Localized id="block_menu_info_modified" /></span>}
+          secondary={<span>{(metadata.modified || '').replace(/[TZ]/g, ' ')}</span>}
         />
       </ListItem>
       <ListItem sx={{ paddingTop: '0', paddingBottom: '0' }}>
         <ListItemText
-          primary={<Localized id="block_menu_info_id" />}
-          secondary={_id}
+          primary={<span><Localized id="block_menu_info_id" /></span>}
+          secondary={<span>{_id}</span>}
         />
       </ListItem>
 
