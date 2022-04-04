@@ -540,7 +540,7 @@ button.hasIcon span{
 hr {
   margin: var(--basis_x4) 0;
   border: none;
-  height: var(--basis);
+  height: var(--basis_x0_5);
   background: var(--on-background);
 }
 
