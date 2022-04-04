@@ -15,6 +15,8 @@ import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Si
 import Editor from './Editor.js'
 import Viewer from './Viewer.js'
 
+import { Helmet } from 'react-helmet'
+
 // function useScrollMemory() {
 //   // const navigate = useNavigate()
 //   const location = useLocation()
@@ -148,7 +150,12 @@ function App() {
             <Route path="/:id/view" element={<Viewer />} />
             <Route path="/:id/edit" element={<Editor />} />
             {/* <Route path="/shortcode" element={<Shortcode />} /> */}
-            <Route path="/" element={<SidebarContent />} />
+            <Route path="/" element={<>
+              <Helmet>
+                <title>VoltLink</title>
+              </Helmet>
+              <SidebarContent />
+            </>} />
           </Routes>
         </Main>
       </SidebarProvider>
