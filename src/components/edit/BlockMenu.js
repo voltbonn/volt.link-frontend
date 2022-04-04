@@ -421,11 +421,16 @@ function BlockMenu ({
               : <VisibilityIcon />
             }
           </ListItemIcon>
-          {
-            active
-            ? <Localized id="block_menu_hide" />
-            : <Localized id="block_menu_show" />
-          }
+
+          <ListItemText
+            primary={<span>{
+              active
+              ? <Localized id="block_menu_hide" />
+              : <Localized id="block_menu_show" />
+            }</span>}
+            secondary={<span style={{ whiteSpace: 'normal' }}><Localized id="block_menu_hide_show_description" /></span>}
+          />
+          
         </MenuItem>
       }
 

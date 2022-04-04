@@ -81,6 +81,7 @@ block_menu_add_after = Danach hinzufügen
 block_menu_create_child_block = Kind-Seite hinzufügen…
 block_menu_hide = Ausblenden
 block_menu_show = Anzeigen
+block_menu_hide_show_description = Er wird weiterhin in den Menüs angezeigt.<br />Dies ist keine Privatsphäre-Funktion.
 
 block_menu_archive = Archivieren / Entfernen
 block_menu_unarchive = Dearchivieren
