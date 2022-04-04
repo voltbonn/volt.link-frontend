@@ -116,7 +116,7 @@ export default function SidebarContent() {
 
       <MenuList style={{ maxWidth: '100%' }}>
 
-        {
+        {/*
           loggedIn
             ? <a href={`${window.domains.frontend}help`}>
                 <MenuItem className="roundMenuItem">
@@ -127,7 +127,7 @@ export default function SidebarContent() {
                 </MenuItem>
               </a>
             : null
-        }
+        */}
 
         {
           loggedIn
