@@ -127,7 +127,7 @@ function* treeWalker(treeRoots) {
   const stack = []
  
   const treeRootsSorted = treeRoots
-    .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified)
+    .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified ? 1 : -1)
 
       
   // Remember all the necessary data of the first node in the stack.
@@ -160,7 +160,7 @@ function* treeWalker(treeRoots) {
       // first to the end of the stack.
 
       const childrenSorted = children
-        .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified)
+        .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified ? 1 : -1)
 
       for (let i = childrenSorted.length - 1; i >= 0; i--) {
         stack.push({
