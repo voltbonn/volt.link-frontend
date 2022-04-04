@@ -126,8 +126,12 @@ function buildTree(nodes){
 function* treeWalker(treeRoots) {
   const stack = []
  
+  const treeRootsSorted = treeRoots
+    .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified)
+
+      
   // Remember all the necessary data of the first node in the stack.
-  for (const root of treeRoots) {
+  for (const root of treeRootsSorted) {
     stack.unshift({
       nestingLevel: 0,
       node: root,
@@ -154,10 +158,14 @@ function* treeWalker(treeRoots) {
     if (children.length !== 0 && isOpen) {
       // Since it is a stack structure, we need to put nodes we want to render
       // first to the end of the stack.
-      for (let i = children.length - 1; i >= 0; i--) {
+
+      const childrenSorted = children
+        .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified)
+
+      for (let i = childrenSorted.length - 1; i >= 0; i--) {
         stack.push({
           nestingLevel: nestingLevel + 1,
-          node: children[i],
+          node: childrenSorted[i],
         });
       }
     }
