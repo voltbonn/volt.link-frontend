@@ -89,6 +89,7 @@ function ViewerLine ({ block, actions = {}, locales }) {
     if (cardLink.includes(':')) {
       return <a
         href={cardLink}
+        target="_blank" rel="noreferrer"
         title={title}
         className={`clickable_card ${classes.root}`}
         style={{

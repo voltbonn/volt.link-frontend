@@ -42,7 +42,10 @@ function ViewerButtonCard ({ block, actions = {}, locales }) {
   const hasClickAction = actions.hasOwnProperty('click')
 
   if (hasClickAction === false && url !== '') {
-    return <a href={url}>
+    return <a
+        href={url}
+        target="_blank" rel="noreferrer"
+      >
       <button
         dir="auto"
         dangerouslySetInnerHTML={html}
