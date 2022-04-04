@@ -18,7 +18,7 @@ import {
   Login as LoginIcon,
   Logout as LogoutIcon,
 
-  Help as HelpIcon,
+  // Help as HelpIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
