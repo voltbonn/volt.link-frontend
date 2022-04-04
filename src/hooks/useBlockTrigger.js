@@ -3,12 +3,14 @@ import { useState, useEffect } from 'react' // useCallback
 
 export default function useBlockTrigger({ block = null }) {
   const [link, setLink] = useState(null)
+  const [path, setPath] = useState(null)
   // const [onClick, setOnClick] = useState(null)
 
   // let navigate = useNavigate()
 
   useEffect(() => {
     let newLink = null
+    let newPath = null
     // let newOnClick = null
 
     if (block !== null) {
@@ -31,6 +33,7 @@ export default function useBlockTrigger({ block = null }) {
         ) {
           const url = actionProperties.url || ''
           newLink = url
+          newPath = null // `/${triggerProperties.path}`
           // newOnClick = () => window.open(newLink, '_blank')
         } else if (
           actionType === 'render_block'
@@ -41,26 +44,31 @@ export default function useBlockTrigger({ block = null }) {
             typeof actionProperties.blockId === 'string'
             && actionProperties.blockId.length > 0
           ) {
-            newLink = `/${triggerProperties.path}=${actionProperties.blockId}`
+            newLink = `${window.domains.frontend}${triggerProperties.path}=${actionProperties.blockId}`
+            newPath = `/${triggerProperties.path}=${actionProperties.blockId}`
             // newOnClick = () => navigate(newLink)
           } else {
-            newLink = `/${triggerProperties.path}=${blockId}`
+            newLink = `${window.domains.frontend}${triggerProperties.path}=${blockId}`
+            newPath = `/${triggerProperties.path}=${blockId}`
             // newOnClick = () => navigate(newLink)
           }
         } else {
           newLink = `/${blockId}/view`
+          newPath = `/${blockId}`
           // newOnClick = () => navigate(newLink)
         }
         // TODO: add support for other trigger types (run_script, ...)
       } else {
-        newLink = `/${blockId}/view`
+        newLink = `${window.domains.frontend}${blockId}/view`
+        newPath = `/${blockId}`
         // newOnClick = () => navigate(newLink)
       }
     }
 
     setLink(newLink)
+    setPath(newPath)
     // setOnClick(newOnClick)
-  }, [block, setLink]) // setOnClick, navigate
+  }, [block, setLink, setPath]) // setOnClick, navigate
 
-  return { link } // onClick
+  return { link, path } // onClick
 }

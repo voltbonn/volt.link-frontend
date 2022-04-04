@@ -16,7 +16,7 @@ import classes from './ViewerLine.module.css'
 function ViewerLine ({ block, actions = {}, locales }) {
   const { getString, translateBlock } = useLocalization()
 
-  const { link } = useBlockTrigger({ block })
+  const { link, path } = useBlockTrigger({ block })
 
   let title = translateBlock(block, locales, '')
   if (title === '') {
@@ -68,7 +68,7 @@ function ViewerLine ({ block, actions = {}, locales }) {
 
 
   let cardOnClick = null
-  let cardLink = link
+  let cardLink = path || link
 
   if (actions.hasOwnProperty('link')) {
     if (typeof actions.link === 'string') {
@@ -86,7 +86,25 @@ function ViewerLine ({ block, actions = {}, locales }) {
   } = getBlockColor(block)
 
   if (typeof cardLink === 'string' && cardLink.length > 0) {
-    return <Link
+    if (cardLink.includes(':')) {
+      return <a
+        href={cardLink}
+        title={title}
+        className={`clickable_card ${classes.root}`}
+        style={{
+          display: 'block',
+          cursor: 'pointer',
+          color,
+          '--on-background-rgb': colorRGB,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {iconComponent}
+          <span dir="auto" className={classes.title}>{title}</span>
+        </div>
+      </a>
+    } else {
+      return <Link
       to={cardLink}
       title={title}
       className={`clickable_card ${classes.root}`}
@@ -102,6 +120,7 @@ function ViewerLine ({ block, actions = {}, locales }) {
         <span dir="auto" className={classes.title}>{title}</span>
       </div>
     </Link>
+    }
   } else {
     const onClickProps = {}
     if (typeof cardOnClick === 'function') {
