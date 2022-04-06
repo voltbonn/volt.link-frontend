@@ -126,9 +126,20 @@ function buildTree(nodes){
 function* treeWalker(treeRoots) {
   const stack = []
  
-  const treeRootsSorted = treeRoots
+  let treeRootsSorted = treeRoots
     .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified ? 1 : -1)
 
+  // find the index of the root with block._id === '6249c879fcaf12b124914396' (this is the id of volt europa)
+  const europaIndex = treeRootsSorted.findIndex(root => root.block._id === '6249c879fcaf12b124914396') // TODO: make this independet of the id
+
+  // remove the root at index europaIndex
+  if (europaIndex > -1) {
+    treeRootsSorted = [
+      treeRootsSorted[europaIndex],
+      ...treeRootsSorted.slice(0, europaIndex),
+      ...treeRootsSorted.slice(europaIndex + 1)
+    ]
+  }
       
   // Remember all the necessary data of the first node in the stack.
   for (const root of treeRootsSorted) {
