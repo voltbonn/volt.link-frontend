@@ -425,10 +425,16 @@ function BlockTree({
 
   const updateTree = useCallback(nodes => {
     if (nodes.length > 0) {
+      let defaultOpenState = false
+      if (searchString.length > 0) {
+        defaultOpenState = true
+      }
+
       nodes = nodes.map(node => ({
         ...node,
-        isOpen: openById[node._id] || false,
+        isOpen: openById.hasOwnProperty(node._id) ? openById[node._id] : defaultOpenState,
       }))
+      
       const treeRoots = buildTree(JSON.parse(JSON.stringify(nodes)))
       const flatTree = getFlatTree(treeRoots)
       setTreeNodes(flatTree)
@@ -436,7 +442,7 @@ function BlockTree({
       setTreeNodes([])
     }
     updateHeight()
-  }, [ setTreeNodes, updateHeight, openById ])
+  }, [ searchString, setTreeNodes, updateHeight, openById ])
 
   const loadBlocks = useLoadBlocks()
   const refetchData = useCallback(options => {
@@ -486,29 +492,67 @@ function BlockTree({
 
     if (searchString.length > 0) {
       const searchStringLower = searchString.toLowerCase()
-    
-      filtered = filtered
-        .filter(node => {
-          if (
-            !!node
-            && !!node.block
-            && !!node.block.properties
-            && !!node.block.properties.text
-            && node.block.properties.text.toLowerCase().includes(searchStringLower)
-          ) {
-            return true
-          } else if (
-            !!node
-            && !!node.block
-            && !!node.block.properties
-            && !!node.block.properties.trigger
-            && !!node.block.properties.trigger.path
-            && node.block.properties.trigger.path.toLowerCase().includes(searchStringLower)
-          ) {
-            return true
+
+      for (let i=0; i<filtered.length; i+=1) {
+        const node = filtered[i]
+
+        let showNode = false
+
+        if (
+          !!node
+          && !!node.block
+          && !!node.block.properties
+          && !!node.block.properties.text
+          && node.block.properties.text.toLowerCase().includes(searchStringLower)
+        ) {
+          showNode = true
+        } else if (
+          !!node
+          && !!node.block
+          && !!node.block.properties
+          && !!node.block.properties.trigger
+          && !!node.block.properties.trigger.path
+          && node.block.properties.trigger.path.toLowerCase().includes(searchStringLower)
+        ) {
+          showNode = true
+        }
+
+        filtered[i].showNode = showNode
+      }
+
+
+      // show sibling and parent nodes
+      let smallestNestingLevel = 0
+      let currentNestingLevel = 0
+      for (let i=filtered.length-1; i>=0; i-=1) {
+        const node = filtered[i]
+
+        if (currentNestingLevel !== 0) {
+          if (currentNestingLevel > node.nestingLevel) {
+            currentNestingLevel = node.nestingLevel
+            filtered[i].showNode = true // show parent node
+          } else if (currentNestingLevel < node.nestingLevel) {
+            currentNestingLevel = smallestNestingLevel
           }
-          return false
-        })
+        } else {
+          if (node.showNode === true) {
+            currentNestingLevel = node.nestingLevel
+          }
+        }
+
+        if (smallestNestingLevel === 0 || currentNestingLevel < smallestNestingLevel) {
+          smallestNestingLevel = currentNestingLevel
+        }
+      }
+
+      /*
+      isLeaf: true
+      isOpen: false
+      nestingLevel: 0
+      showNode: true
+      */
+
+      filtered = filtered.filter(node => node.showNode === true)
     }
 
     if (onlyShowWithEditPermissions === true) {
