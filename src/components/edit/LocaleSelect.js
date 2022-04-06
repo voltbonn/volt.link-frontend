@@ -78,6 +78,7 @@ function LocaleSelect({
           className="default hasIcon"
           style={{
             margin: '0',
+            flexShrink: '0',
           }}
         >
           <span style={{ width: '100%', textAlign: 'start' }}>
