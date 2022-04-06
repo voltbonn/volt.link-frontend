@@ -5,19 +5,19 @@ import LocaleSelect from './LocaleSelect.js'
 
 function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, children, style, onChange, onBlur, className, dataset = {}, ...props }) {
   const [changedLocale, setChangedLocale] = useState(locale)
-  const [changedValue, setChangedValue] = useState(defaultValue)
+  const [changedText, setChangedText] = useState(defaultValue)
 
   const handleBlur = useCallback(() => {
     if (onBlur) {
       onBlur({
         value: {
           locale: changedLocale,
-          value: changedValue,
+          text: changedText,
         },
         dataset,
       })
     }
-  }, [ onBlur, changedLocale, changedValue, dataset ])
+  }, [ onBlur, changedLocale, changedText, dataset ])
 
   const handleLocaleChange = useCallback(newLocale => {
     setChangedLocale(newLocale)
@@ -25,7 +25,7 @@ function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, chi
     const changes = {
       value: {
         locale: newLocale,
-        value: changedValue,
+        text: changedText,
       },
       dataset,
     }
@@ -36,29 +36,29 @@ function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, chi
     if (onBlur) {
       onBlur(changes)
     }
-  }, [setChangedLocale, onChange, changedValue, dataset, onBlur])
+  }, [setChangedLocale, onChange, changedText, dataset, onBlur])
 
-  const handleTextChange = useCallback((event_or_value) => {
-    let value = event_or_value
+  const handleTextChange = useCallback((event_or_text) => {
+    let text = event_or_text
     if (
-      !!event_or_value
-      && !!event_or_value.target
-      && !!event_or_value.target.value
+      !!event_or_text
+      && !!event_or_text.target
+      && !!event_or_text.target.value
     ) {
-      value = event_or_value.target.value
+      text = event_or_text.target.value
     }
 
-    setChangedValue(value)
+    setChangedText(text)
     if (onChange) {
       onChange({
         value: {
           locale: changedLocale,
-          value,
+          text,
         },
         dataset,
       })
     }
-  }, [setChangedValue, onChange, changedLocale, dataset])
+  }, [setChangedText, onChange, changedLocale, dataset])
 
   return <div
     className={classes.input_with_local+' '+className}
@@ -73,7 +73,7 @@ function InputWithLocal({ reorderHandle, actionButton, locale, defaultValue, chi
         ? children({
           onChange: handleTextChange,
           onBlur: handleBlur,
-          defaultValue: defaultValue,
+          defaultValue,
           style: {
             flexGrow: '1',
           }

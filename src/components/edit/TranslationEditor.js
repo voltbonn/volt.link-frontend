@@ -21,7 +21,7 @@ function SimpleTranslationRepeater({ onSaveProperty, block, isFirst }) {
 
   const addDefaultValue = () => ({
     locale: null,
-    value: '',
+    text: '',
   })
 
   let translations = block.properties.translations || []
@@ -32,8 +32,8 @@ function SimpleTranslationRepeater({ onSaveProperty, block, isFirst }) {
   const onRepeaterChange = useCallback(newTranslations => {
     newTranslations = newTranslations
       .map(translation => ({
-        ...translation,
-        text: translation.value || '',
+        locale: translation.locale || null,
+        text: translation.text || '',
       }))
 
     onSaveProperty('translations', newTranslations)
@@ -89,11 +89,11 @@ function SimpleTranslationRepeater({ onSaveProperty, block, isFirst }) {
           } = repeater_props
 
           const locale = defaultValue.locale
-          const value = defaultValue.text
+          const text = defaultValue.text
           return <InputWithLocal
             onBlur={onChange}
             locale={locale}
-            defaultValue={value}
+            defaultValue={text}
             style={{
               marginBottom: 'var(--basis)',
             }}
