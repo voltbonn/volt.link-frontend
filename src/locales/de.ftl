@@ -26,6 +26,9 @@ sharing_qrcode = QR-Code
 sharing_statistics = Statistiken
 sharing_copy_url = URL kopieren
 
+translate_dialog_title = Übersetzen
+translate_dialog_description = Wähl die Sprachen der Texte aus und füge Übersetzungen hinzu.<br/><br/>Bleibt die Übersetzung in jeder Sprache gleich, ist es nicht nötig, den Text zu übersetzen (zB. "Instagram", "Twitter", ...)
+
 path_editor_tags_placeholder = #hashtag1 #europa #social_equality
 path_editor_tags_label = Tags
 
