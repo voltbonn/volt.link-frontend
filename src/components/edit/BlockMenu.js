@@ -121,7 +121,7 @@ function BlockMenu ({
   onArchivedToggle = null,
   onReloadContext = null,
 }) {
-  const { loggedIn } = useUser()
+  const { loggedIn, userroles } = useUser()
 
   const { _id = '', type = '', properties = {}, computed = {} } = block
   const {
@@ -132,7 +132,7 @@ function BlockMenu ({
   const {
     roles = [],
   } = (computed === null ? {} : computed)
-  const canEdit = loggedIn && (roles.includes('owner') || roles.includes('editor'))
+  const canEdit = loggedIn && (userroles.includes('admin') || roles.includes('owner') || roles.includes('editor'))
 
   const [archived, setArchived] = useState(properties.archived === true)
   const archiveBlock = useArchiveBlock()

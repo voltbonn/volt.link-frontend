@@ -3,6 +3,10 @@ import { useState, useEffect, useRef } from 'react'
 import { useApolloClient } from '@apollo/client'
 import { getSelf_Query } from '../graphql/queries'
 
+const defaultUser = {
+  userroles: [],
+}
+
 export default function useUser(forceRefetch = false) {
   const mountedRef = useRef(false)
   useEffect(() => {
@@ -12,7 +16,7 @@ export default function useUser(forceRefetch = false) {
     }
   }, [])
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(defaultUser)
   const [loggedIn, setLoggedIn] = useState(false)
 
   const apollo_client = useApolloClient()
@@ -23,11 +27,14 @@ export default function useUser(forceRefetch = false) {
     })
       .then(async ({ data }) => {
         if (mountedRef.current === true) {
-          if (data.hasOwnProperty('self')) {
-            setUser(data.self)
+          if (data.hasOwnProperty('self') && data.self !== null) {
+            setUser({
+              ...data.self,
+              userroles: data.self.userroles || [],
+            })
             setLoggedIn(data.self.logged_in)
           } else {
-            setUser({})
+            setUser(defaultUser)
             setLoggedIn(false)
           }
         }
@@ -35,7 +42,7 @@ export default function useUser(forceRefetch = false) {
       .catch(error => {
         console.error(error)
         if (mountedRef.current === true) {
-          setUser({})
+          setUser(defaultUser)
           setLoggedIn(false)
         }
       })
