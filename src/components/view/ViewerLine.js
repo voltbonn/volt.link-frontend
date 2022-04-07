@@ -14,11 +14,11 @@ import { Link } from 'react-router-dom'
 import classes from './ViewerLine.module.css'
 
 function ViewerLine ({ block, actions = {}, locales }) {
-  const { getString, translateBlock } = useLocalization()
+  const { getString, translateBlock, userLocales } = useLocalization()
 
   const { link, path } = useBlockTrigger({ block })
 
-  let title = translateBlock(block, locales, '')
+  let title = translateBlock(block, locales || userLocales, '')
   if (title === '') {
     const triggerProperties = ((block.properties || {}).trigger || {})
     const triggerType = triggerProperties.type
