@@ -7,6 +7,7 @@ default_locale = en
 login = Login
 logout = Logout
 help_page = Help / Tutorial
+workplace_group = VoltLink Workplace Group
 contact = Contact / Feedback
 source_code = Source Code
 

@@ -18,7 +18,7 @@ import {
   Login as LoginIcon,
   Logout as LogoutIcon,
 
-  // Help as HelpIcon,
+  Help as HelpIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -116,19 +116,6 @@ export default function SidebarContent() {
 
       <MenuList style={{ maxWidth: '100%' }}>
 
-        {/*
-          loggedIn
-            ? <a href={`${window.domains.frontend}help`}>
-                <MenuItem className="roundMenuItem">
-                  <ListItemIcon>
-                    <HelpIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={<Localized id="help_page" />} />
-                </MenuItem>
-              </a>
-            : null
-        */}
-
         {
           loggedIn
             ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
@@ -147,6 +134,22 @@ export default function SidebarContent() {
                   <ListItemText primary={<Localized id="login" />} />
                 </MenuItem>
               </a>
+        }
+
+        {
+          loggedIn
+            ? <MenuItem
+                component="a"
+                target="_blank"
+                href='https://volteuropa.workplace.com/groups/voltlink'
+                className="roundMenuItem"
+              >
+                <ListItemIcon>
+                  <HelpIcon />
+                </ListItemIcon>
+                <ListItemText primary={<Localized id="workplace_group" />} />
+              </MenuItem>
+            : null
         }
 
         <a href="mailto:thomas.rosen@volteuropa.org">
