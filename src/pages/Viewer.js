@@ -213,7 +213,7 @@ function Viewer () {
       {
       (type === 'page' || type === 'person' || type === 'redirect')
       && coverphoto_url !== ''
-          ? <div style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=1400&h=400&url=${encodeURIComponent(coverphoto_url)})` }} className={classes.coverphoto}></div>
+          ? <div style={{ backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(coverphoto_url)})` }} className={classes.coverphoto}></div>
           : null
       }
       <main className={`${classes.contentWrapper}`}>
@@ -222,7 +222,7 @@ function Viewer () {
           && icon_url !== ''
             ? <div
                 style={{
-                  backgroundImage: `url(${window.domains.backend}download_url?f=png&w=400&h=400&url=${encodeURIComponent(icon_url)})`
+                  backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=400&h=400&url=${encodeURIComponent(icon_url)})`
                 }}
                 className={`${classes.icon} ${coverphoto_url === '' ? classes.coverphotoIsNotSet : classes.coverphotoIsSet}`}
               ></div>

@@ -153,7 +153,7 @@ function ViewerRedirectCard ({ block = {}, actions = {} }) {
       {
         icon_url === ''
           ? <ActionIcon className={classes.icon} />
-          : <div className={classes.icon} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=jpg&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={text}></div>
+          : <div className={classes.icon} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={text}></div>
       }
 
       <div className={classes.content}>

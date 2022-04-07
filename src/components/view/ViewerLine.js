@@ -62,7 +62,7 @@ function ViewerLine ({ block, actions = {}, locales }) {
       iconComponent = <PageIcon className={classes.icon} />
     }
   } else {
-    iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=png&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={title}></div>
+    iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={title}></div>
   }
 
 
