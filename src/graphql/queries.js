@@ -67,6 +67,7 @@ export const getSelf_Query = gql`
 		  logged_in
 		  user
 		  blockId
+      userroles
     }
   }
 `
