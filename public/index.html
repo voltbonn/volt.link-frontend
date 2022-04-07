@@ -67,4 +67,23 @@
       display: none;
     }
   </style>
+
+  <script src="%PUBLIC_URL%/modernizr.js"></script>
+  <script>
+    window.imageFormat = 'jpg'
+    Modernizr.on('webp', result => {
+      if (result) {
+        window.imageFormat = 'webp'
+      }
+    })
+  </script>
+  <style>
+    body {
+      --image-format: jpg;
+    }
+  
+    body.modernizr-webp {
+      --image-format: webp;
+    }
+  </style>
 </html>
