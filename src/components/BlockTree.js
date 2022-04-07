@@ -510,6 +510,19 @@ function BlockTree({
           !!node
           && !!node.block
           && !!node.block.properties
+          && !!node.block.properties.translations
+        ) {
+          const translations = node.block.properties.translations
+          for (const { text } of translations) {
+            if (text.toLowerCase().includes(searchStringLower)) {
+              showNode = true
+              break
+            }
+          }
+        } else if (
+          !!node
+          && !!node.block
+          && !!node.block.properties
           && !!node.block.properties.trigger
           && !!node.block.properties.trigger.path
           && node.block.properties.trigger.path.toLowerCase().includes(searchStringLower)
