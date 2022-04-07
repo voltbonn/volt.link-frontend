@@ -22,30 +22,39 @@ export default function useUser(forceRefetch = false) {
   const apollo_client = useApolloClient()
 
   useEffect(() => {
-    apollo_client.query({
-      query: getSelf_Query,
-    })
-      .then(async ({ data }) => {
-        if (mountedRef.current === true) {
-          if (data.hasOwnProperty('self') && data.self !== null) {
-            setUser({
-              ...data.self,
-              userroles: data.self.userroles || [],
-            })
-            setLoggedIn(data.self.logged_in)
-          } else {
+    if (forceRefetch !== true && window.hasOwnProperty('user')) {
+      setUser({
+        ...window.user,
+        userroles: window.user.userroles || [],
+      })
+      setLoggedIn(window.user.logged_in)
+    } else {
+      apollo_client.query({
+        query: getSelf_Query,
+      })
+        .then(async ({ data }) => {
+          if (mountedRef.current === true) {
+            if (data.hasOwnProperty('self') && data.self !== null) {
+              window.user = data.self
+              setUser({
+                ...data.self,
+                userroles: data.self.userroles || [],
+              })
+              setLoggedIn(data.self.logged_in)
+            } else {
+              setUser(defaultUser)
+              setLoggedIn(false)
+            }
+          }
+        })
+        .catch(error => {
+          console.error(error)
+          if (mountedRef.current === true) {
             setUser(defaultUser)
             setLoggedIn(false)
           }
-        }
-      })
-      .catch(error => {
-        console.error(error)
-        if (mountedRef.current === true) {
-          setUser(defaultUser)
-          setLoggedIn(false)
-        }
-      })
+        })
+    }
   }, [forceRefetch, setUser, setLoggedIn, apollo_client])
 
   return {
