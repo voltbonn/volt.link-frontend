@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { Suspense, lazy, useState, useEffect } from 'react'
 
 import classes from './App.module.css'
 
@@ -12,10 +12,10 @@ import {
 
 import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Sidebar.js'
 // import Shortcode from './Shortcode.js'
-import Editor from './Editor.js'
-import Viewer from './Viewer.js'
-
 import { Helmet } from 'react-helmet'
+
+const Viewer = lazy(() => import('./Viewer.js'))
+const Editor = lazy(() => import('./Editor.js'))
 
 // function useScrollMemory() {
 //   // const navigate = useNavigate()
@@ -147,8 +147,16 @@ function App() {
         }
         <Main>
           <Routes location={customLocation}>
-            <Route path="/:id/view" element={<Viewer />} />
-            <Route path="/:id/edit" element={<Editor />} />
+            <Route path="/:id/view" element={
+              <Suspense>
+                <Viewer />
+              </Suspense>
+            } />
+            <Route path="/:id/edit" element={
+              <Suspense>
+                <Editor />
+              </Suspense>
+            } />
             {/* <Route path="/shortcode" element={<Shortcode />} /> */}
             <Route path="/" element={<>
               <Helmet>

@@ -1,4 +1,6 @@
 import React, {
+  Suspense,
+  lazy,
   useState,
   useCallback,
   createContext,
@@ -12,9 +14,10 @@ import {
 import { useMatch } from 'react-router-dom'
 
 import useMediaQuery from '../hooks/useMediaQuery.js'
-import SidebarContent from './SidebarContent.js'
 
 import classes from './Sidebar.module.css'
+
+const LazySidebarContent = lazy(() => import('./SidebarContent.js'))
 
 const SidebarContext = createContext({})
 
@@ -78,11 +81,19 @@ function Sidebar() {
         }
       }}
     >
-      <SidebarContent />
+      <Suspense>
+        <SidebarContent />
+      </Suspense>
     </SwipeableDrawer>
   }
 
   return null
+}
+
+function SidebarContent() {
+  return <Suspense>
+    <LazySidebarContent />
+  </Suspense>
 }
 function Main({ children }) {
   const { open } = useSidebarContext()
