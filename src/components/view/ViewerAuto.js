@@ -10,6 +10,7 @@ import ViewerLine from './ViewerLine.js'
 
 import classes from './ViewerAuto.module.css'
 
+// saveBlock_Mutation
 import { moveBlock_Mutation, saveProperty_Mutation } from '../../graphql/mutations.js'
 import useMutation from '../../hooks/useMutation.js'
 import useUser from '../../hooks/useUser.js'
@@ -122,6 +123,19 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false
         )
       ) {
         const pressedKeys = getPressedKeys()
+        // TODO: handle alt-key to duplicate block (child-blocks also need to be duplicated)
+        // if (pressedKeys.has('alt')) {
+        //   // duplicate block
+        //   delete movingBlock._id
+        //   const save_result = await mutationFunction({
+        //     mutation: saveBlock_Mutation,
+        //     variables: {
+        //       block: movingBlock,
+        //     },
+        //   })
+        //
+        //   movingBlock._id = save_result.saveBlock
+        // }
 
         let everything_updated = false
 
