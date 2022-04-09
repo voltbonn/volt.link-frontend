@@ -79,6 +79,7 @@ export function DataBothWays({ onTransmit, onReceive, draggable, style, classNam
   useEffect(() => {
     const unlistenTransmit = addListeners(bothwayRef.current, 'transmit', async event => {
       const transmat = new Transmat(event)
+
       if (typeof onTransmit === 'function') {
         const options = await onTransmit(transmat)
         if (
