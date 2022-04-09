@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 
 import { Transmat, addListeners, TransmatObserver } from 'transmat'
+
 import classes from './DataTransmat.module.css'
 
 export function DataReceiver({ onReceive, style, className, children }){
