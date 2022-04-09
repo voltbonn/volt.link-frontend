@@ -114,7 +114,7 @@ function Viewer () {
 
           const newPossibleLocales = [...new Set(
             [
-              block,
+              loadedBlock,
               ...blocks,
             ]
             .flatMap(thisBlock => [
