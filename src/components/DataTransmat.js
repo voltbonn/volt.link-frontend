@@ -4,16 +4,42 @@ import { Transmat, addListeners, TransmatObserver } from 'transmat'
 
 import classes from './DataTransmat.module.css'
 
-export function DataReceiver({ onReceive, style, className, children }){
+function getTransmatOptions(transmat, mimetypes) {
+  let data = {}
+  for (const mimetype of mimetypes) {
+    if (transmat.hasType(mimetype)) {
+      if (mimetype === 'application/json') {
+        data[mimetype] = JSON.parse(transmat.getData(mimetype))
+      } else {
+        data[mimetype] = transmat.getData(mimetype)
+      }
+    }
+  }
+
+  const options = {
+    data,
+    transmat,
+  }
+
+  return options
+}
+
+export function DataReceiver({ onReceive, style, className, children, checkEntry, mimetypes = ['application/json'] }){
   const receiverRef = useRef(null)
 
   useEffect(() => {
     const unlisten = addListeners(receiverRef.current, 'receive', event => {
       const transmat = new Transmat(event)
-      if (transmat.hasType('application/json') && transmat.accept()) {
-        const payload = transmat.getData('application/json')
+      const options = getTransmatOptions(transmat, mimetypes)
+      
+      let isOkay = false
+      if (typeof checkEntry === 'function') {
+        isOkay = checkEntry(options)
+      }
+
+      if (isOkay && transmat.accept()) {
         if (typeof onReceive === 'function') {
-          onReceive({ data: JSON.parse(payload) })
+          onReceive(options)
         }
         event.preventDefault()
       }
@@ -22,7 +48,15 @@ export function DataReceiver({ onReceive, style, className, children }){
     const obs = new TransmatObserver(entries => {
       for (const entry of entries) {
         const transmat = new Transmat(entry.event)
-        if (transmat.hasType('application/json')) { // TODO: accept more than just json
+
+        const options = getTransmatOptions(transmat, mimetypes)
+      
+        let isOkay = false
+        if (typeof checkEntry === 'function') {
+          isOkay = checkEntry(options)
+        }
+
+        if (isOkay) {
           entry.target.classList.toggle(classes.drag_over, entry.isTarget)
           entry.target.classList.toggle(classes.drag_active, entry.isActive)
         }
@@ -34,7 +68,7 @@ export function DataReceiver({ onReceive, style, className, children }){
       unlisten()
       obs.disconnect()
     }
-  }, [ onReceive ])
+  }, [ onReceive, checkEntry, mimetypes ])
 
   return <div ref={receiverRef} style={style} className={className}>
     {children}
@@ -73,7 +107,7 @@ export function DataTransmiter({ onTransmit, draggable, style, className, childr
   </div>
 }
 
-export function DataBothWays({ onTransmit, onReceive, draggable, style, className, children }){
+export function DataBothWays({ onTransmit, onReceive, checkEntry, draggable, style, className, children, mimetypes = ['application/json'] }){
   const bothwayRef = useRef(null)
 
   useEffect(() => {
@@ -102,10 +136,18 @@ export function DataBothWays({ onTransmit, onReceive, draggable, style, classNam
 
     const unlistenReceive = addListeners(bothwayRef.current, 'receive', event => {
       const transmat = new Transmat(event)
-      if (transmat.hasType('application/json') && transmat.accept()) {
-        const payload = transmat.getData('application/json')
-        if (typeof onReceive === 'function') {
-          onReceive({ data: JSON.parse(payload) })
+      const options = getTransmatOptions(transmat, mimetypes)
+      
+      let isOkay = false
+      if (typeof checkEntry === 'function') {
+        isOkay = checkEntry(options)
+      }
+
+      if (true && transmat.accept()) { // accept everything so wrong stuff like images does not get displayed in the browser
+        if (isOkay) {
+          if (typeof onReceive === 'function') {
+            onReceive(options)
+          }
         }
         event.preventDefault()
       }
@@ -114,7 +156,14 @@ export function DataBothWays({ onTransmit, onReceive, draggable, style, classNam
     const obs = new TransmatObserver(entries => {
       for (const entry of entries) {
         const transmat = new Transmat(entry.event)
-        if (transmat.hasType('application/json')) { // TODO: accept more than just json
+        const options = getTransmatOptions(transmat, mimetypes)
+
+        let isOkay = false
+        if (typeof checkEntry === 'function') {
+          isOkay = checkEntry(options)
+        }
+
+        if (isOkay) {
           entry.target.classList.toggle(classes.drag_over, entry.isTarget)
           entry.target.classList.toggle(classes.drag_active, entry.isActive)
         }
@@ -127,7 +176,7 @@ export function DataBothWays({ onTransmit, onReceive, draggable, style, classNam
       unlistenReceive()
       obs.disconnect()
     }
-  }, [ onTransmit, onReceive ])
+  }, [ onTransmit, onReceive, checkEntry, mimetypes ])
 
   return <div
     ref={bothwayRef}
