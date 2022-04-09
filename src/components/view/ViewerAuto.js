@@ -69,7 +69,7 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false
     className={classes.root}
     onTransmit={() => ({
       data: {
-        // 'text/plain': 'Hello world!',
+        'text/plain': block.properties.text || '',
         // 'text/html': '<h1>Hello world!</h1>',
         // 'text/uri-list': 'http://example.com',
         'application/json': block,
