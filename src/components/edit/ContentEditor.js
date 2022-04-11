@@ -470,11 +470,13 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
     }
 
     const secondBlock = {
-      type: block.type,
+      ...block,
       properties: {
+        ...block.properties,
         text: texts[1],
       },
     }
+    delete secondBlock._id
 
     saveBlock(firstBlock)
       .then(savedFirstBlock => {
