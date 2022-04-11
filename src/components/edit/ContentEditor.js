@@ -459,7 +459,7 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
 
     const newContentConfigs = [...contentConfigs]
 
-    const block = (newContentConfigs.find(block => block.tmp_id === tmp_id)).block || {}
+    const block = (newContentConfigs.find(block => block.tmp_id === tmp_id)).block || {}
 
     const firstBlock = {
       ...block,
