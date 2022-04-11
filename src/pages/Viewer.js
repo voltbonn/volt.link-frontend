@@ -169,7 +169,7 @@ function Viewer () {
   const rightHeaderActions = <>
     <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
       {
-        loggedIn
+        (loggedIn && !!block._id)
         && <Link to={`/${block._id}/edit`} style={{ marginRight: 'var(--basis_x2)' }}>
             <button className="text hasIcon">
               <EditIcon className="icon" />
