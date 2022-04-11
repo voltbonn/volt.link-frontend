@@ -66,12 +66,15 @@ function RolesMenu({
       MenuListProps={{
         style: {
           maxWidth: '100%',
+          background: 'var(--background-contrast)',
+          color: 'var(--on-background)',
         },
       }}
     >
       <MenuItem
         disabled={role === 'viewer'}
         onClick={() => changeRole('viewer')}
+        className="roundMenuItem"
       >
         <ListItemIcon>
           <ViewerIcon />
@@ -83,6 +86,7 @@ function RolesMenu({
       <MenuItem
         disabled={role === 'editor'}
         onClick={() => changeRole('editor')}
+        className="roundMenuItem"
       >
         <ListItemIcon>
           <EditorIcon />
@@ -94,6 +98,7 @@ function RolesMenu({
       <MenuItem
         disabled={role === 'no_access'}
         onClick={() => changeRole('no_access')}
+        className="roundMenuItem"
       >
         <ListItemIcon>
           <NoAccessIcon />
@@ -109,6 +114,7 @@ function RolesMenu({
             <Divider style={{ opacity: 0.2 }} />
             <MenuItem
               onClick={removePermission}
+              className="roundMenuItem"
             >
               <ListItemIcon>
                 <DeleteIcon />
@@ -123,7 +129,10 @@ function RolesMenu({
 
         <Divider style={{opacity: 0.2}} />
 
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          className="roundMenuItem"
+        >
           <ListItemIcon>
             <CloseIcon />
           </ListItemIcon>
