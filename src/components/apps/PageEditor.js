@@ -9,7 +9,6 @@ import { Helmet } from 'react-helmet'
 import {
   // TranslateSharp as TranslateIcon,
   IosShareSharp as ShareIcon,
-  LockSharp as PermissionsIcon,
   SaveSharp as SaveIcon,
   MoreHorizSharp as BlockMenuIcon,
 } from '@mui/icons-material'
@@ -17,6 +16,9 @@ import {
 import MdiIcon from '@mdi/react'
 import {
   mdiTranslate,
+  mdiLockAlert, // mdiLock
+  mdiAccountLockOpen, // mdiAccountGroup
+  mdiEarth, // mdiLockOpen mdiEarth mdiLockOpenVariant
 } from '@mdi/js'
 
 import classes from './PageEditor.module.css'
@@ -175,6 +177,40 @@ function PageEditor({
   //   }
   // }, [isFirstRun, initialBlock, block])
 
+
+
+  // START permissions icon
+  let PermissionsIcon = mdiLockAlert
+  if (
+    !!block
+    && !!block.computed
+    && !!block.computed.inherited_block_permissions
+    && Array.isArray(block.computed.inherited_block_permissions)
+  ) {
+    const inherited_block_permissions_obj = block.computed.inherited_block_permissions
+      .reduce((acc, curr) => {
+        acc[curr.email] = curr.role
+        return acc
+      }, {})
+
+    if (
+      inherited_block_permissions_obj['@public'] === 'viewer'
+      || inherited_block_permissions_obj['@public'] === 'editor'
+      || inherited_block_permissions_obj['@public'] === 'owner'
+    ) {
+      PermissionsIcon = mdiEarth
+    } else if (
+      inherited_block_permissions_obj['@volteuropa.org'] === 'viewer'
+      || inherited_block_permissions_obj['@volteuropa.org'] === 'editor'
+      || inherited_block_permissions_obj['@volteuropa.org'] === 'owner'
+    ) {
+      PermissionsIcon = mdiAccountLockOpen
+    }
+  }
+  // END permissions icon
+
+
+
   const rightHeaderActions = <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
     {/* <button className="text"><Localized id="path_editor_share"/></button> */}
 
@@ -243,7 +279,10 @@ function PageEditor({
       : null
     }
     <button className="text hasIcon" onClick={openPermissionsEditor}>
-      <PermissionsIcon className="icon" />
+      <MdiIcon
+        path={PermissionsIcon}
+        className="icon"
+      />
       <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}><Localized id="path_editor_permissions" /></span>
     </button>
 

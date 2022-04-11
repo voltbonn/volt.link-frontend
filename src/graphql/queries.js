@@ -23,6 +23,7 @@ export const getBlock_Query = gql`
           permissions
           computed {
             roles
+            inherited_block_permissions
           }
         }
       }
@@ -34,6 +35,7 @@ export const getBlock_Query = gql`
       permissions
       computed {
         roles
+        inherited_block_permissions
       }
     }
   }
@@ -56,6 +58,7 @@ export const getBlocks_Query = gql`
       permissions
       computed {
         roles
+        inherited_block_permissions
       }
     }
   }
