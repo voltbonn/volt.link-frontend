@@ -63,6 +63,7 @@ function PermissionInput({ reorderHandle, actionButton, defaultValue, children, 
     >
       <option key="editor" value="editor">Editor</option>
       <option key="viewer" value="viewer">Viewer</option>
+      <option key="no_access" value="no_access">Explicit No Access</option>
     </select>
   </div>
 }

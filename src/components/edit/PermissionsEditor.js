@@ -14,6 +14,7 @@ import {
   Close as CloseIcon,
   Visibility as ViewerIcon,
   Edit as EditorIcon,
+  Lock as NoAccessIcon,
 } from '@mui/icons-material'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -68,26 +69,40 @@ function RolesMenu({
         },
       }}
     >
-        {
-          role === 'editor'
-          ? <MenuItem onClick={() => changeRole('viewer')}>
-              <ListItemIcon>
-                <ViewerIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <LocalizedRole role="viewer" />
-              </ListItemText>
-            </MenuItem>
-          : <MenuItem onClick={() => changeRole('editor')}>
-              <ListItemIcon>
-                <EditorIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <LocalizedRole role="editor" />
-              </ListItemText>
-            </MenuItem>
-        }
-
+      <MenuItem
+        disabled={role === 'viewer'}
+        onClick={() => changeRole('viewer')}
+      >
+        <ListItemIcon>
+          <ViewerIcon />
+        </ListItemIcon>
+        <ListItemText>
+          <LocalizedRole role="viewer" />
+        </ListItemText>
+      </MenuItem>
+      <MenuItem
+        disabled={role === 'editor'}
+        onClick={() => changeRole('editor')}
+      >
+        <ListItemIcon>
+          <EditorIcon />
+        </ListItemIcon>
+        <ListItemText>
+          <LocalizedRole role="editor" />
+        </ListItemText>
+      </MenuItem>
+      <MenuItem
+        disabled={role === 'no_access'}
+        onClick={() => changeRole('no_access')}
+      >
+        <ListItemIcon>
+          <NoAccessIcon />
+        </ListItemIcon>
+        <ListItemText>
+          <LocalizedRole role="no_access" />
+        </ListItemText>
+      </MenuItem>
+      
         {
           typeof removePermission === 'function'
           ? <MenuItem onClick={removePermission}>

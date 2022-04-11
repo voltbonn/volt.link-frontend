@@ -114,5 +114,6 @@ search = Suchen…
 role_editor = Bearbeiter
 role_viewer = Betrachter
 role_owner = Besitzer
+role_no_access = Kein Zugriff
 
 blocktree_no_nodes_to_show = Nichts anzuzeigen. Vielleicht das Filtermenü kontrollieren.
