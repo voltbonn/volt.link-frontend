@@ -33,6 +33,14 @@ translate_dialog_description = Wähl die Sprachen der Texte aus und füge Übers
 path_editor_tags_placeholder = #hashtag1 #europa #social_equality
 path_editor_tags_label = Tags
 
+role_editor = Bearbeiter
+role_viewer = Betrachter
+role_owner = Besitzer
+role_no_access = Kein Zugriff
+
+permissions_dialog_title = Berechtigungen
+permissions_dialog_description = Gib @volteuropa.org Adressen ein, um Bearbeitungsrechte zu vergeben.<br/>Google-Gruppen Adressen sind nicht möglich.<br/><br/>Berechtigungen werden von den übergeordneten Seiten geerbt. Berechtigungen, die Sie hier definieren, überschreiben die geerbten. Verwenden Sie "Kein Zugriff", um die Vererbung explizit zu verhindern, ohne weitere Rechte zu vergeben.
+
 path_editor_permissions_edit_label = Wer darf diesen Link bearbeiten?
 path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
 
@@ -110,10 +118,5 @@ edit_block = Bearbeiten
 view_block = Ansehen
 
 search = Suchen…
-
-role_editor = Bearbeiter
-role_viewer = Betrachter
-role_owner = Besitzer
-role_no_access = Kein Zugriff
 
 blocktree_no_nodes_to_show = Nichts anzuzeigen. Vielleicht das Filtermenü kontrollieren.

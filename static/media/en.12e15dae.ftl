@@ -35,6 +35,14 @@ translate_dialog_description = Select the languages of the texts and add transla
 path_editor_tags_placeholder = #hashtag1 #europa #social_equality
 path_editor_tags_label = Tags
 
+role_editor = Editor
+role_viewer = Viewer
+role_owner = Owner
+role_no_access = No Access
+
+permissions_dialog_title = View and Edit Permissions
+permissions_dialog_description = Enter @volteuropa.org addresses to give editing rights.<br/>Google-Groups addresses are not supported.<br/><br/>Permissions are inherited from the parent-pages. Permissions you define here overwrite inherited one’s. Use „No Access“ to explicitly prevent inheritance without giving any other rights.
+
 path_editor_permissions_edit_label = Who is allowed to edit this link?
 path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
 
@@ -118,10 +126,5 @@ edit_block = Edit
 view_block = View
 
 search = Search…
-
-role_editor = Editor
-role_viewer = Viewer
-role_owner = Owner
-role_no_access = No Access
 
 blocktree_no_nodes_to_show = Nothing to show. Maybe check the filter menu.
