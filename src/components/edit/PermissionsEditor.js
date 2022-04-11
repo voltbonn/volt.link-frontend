@@ -282,8 +282,12 @@ function PermissionsEditor({
         <div className={classes.backdrop} onClick={onClose}></div>
 
         <div className={classes.dialog}>
-          <h1 style={{ margin: '0 0 var(--basis_x4) 0' }}>Give viewing and editing rights</h1>
-          <p>Enter @volteuropa.org addresses to give editing rights.<br/>Groups addresses are not supported.</p>
+          <h1 style={{ margin: '0 0 var(--basis_x4) 0' }}>
+            <Localized id="permissions_dialog_title" />
+          </h1>
+          <p>
+            <Localized id="permissions_dialog_description" />
+          </p>
           <div className={classes.inputWrapper} key={inputRepaintKey}>
             <FancyInput className={classes.input}>
               {({ setError }) => (

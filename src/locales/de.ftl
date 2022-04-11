@@ -33,6 +33,9 @@ translate_dialog_description = Wähl die Sprachen der Texte aus und füge Übers
 path_editor_tags_placeholder = #hashtag1 #europa #social_equality
 path_editor_tags_label = Tags
 
+permissions_dialog_title = Berechtigungen
+permissions_dialog_description = Gib @volteuropa.org Adressen ein, um Bearbeitungsrechte zu vergeben.<br/>Google-Gruppen Adressen sind nicht möglich.
+
 path_editor_permissions_edit_label = Wer darf diesen Link bearbeiten?
 path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
 
