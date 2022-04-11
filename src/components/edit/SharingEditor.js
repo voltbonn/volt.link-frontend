@@ -114,6 +114,7 @@ function SharingEditor({
 
   const copyUrl = () => {
     copyTextToClipboard(`https://volt.link/${path}`)
+    alert('Copied to clipboard 👍')
   }
 
   if (!open) {
