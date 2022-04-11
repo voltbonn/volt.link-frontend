@@ -34,7 +34,7 @@ path_editor_tags_placeholder = #hashtag1 #europa #social_equality
 path_editor_tags_label = Tags
 
 permissions_dialog_title = Berechtigungen
-permissions_dialog_description = Gib @volteuropa.org Adressen ein, um Bearbeitungsrechte zu vergeben.<br/>Google-Gruppen Adressen sind nicht möglich.
+permissions_dialog_description = Gib @volteuropa.org Adressen ein, um Bearbeitungsrechte zu vergeben.<br/>Google-Gruppen Adressen sind nicht möglich.<br/><br/>Berechtigungen werden von den übergeordneten Seiten geerbt. Berechtigungen, die Sie hier definieren, überschreiben die geerbten. Verwenden Sie "Kein Zugriff", um die Vererbung explizit zu verhindern, ohne weitere Rechte zu vergeben.
 
 path_editor_permissions_edit_label = Wer darf diesen Link bearbeiten?
 path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
