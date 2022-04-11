@@ -37,7 +37,7 @@ const default_types = [
   'redirect',
 ]
 
-function AddMenuContent({ createBlock, types }) {
+function AddMenuContent({ createBlock, types, close = null }) {
   if (!types || !Array.isArray(types)) {
     types = default_types
   }
@@ -46,7 +46,7 @@ function AddMenuContent({ createBlock, types }) {
     {
       types
         .map(type => (
-          <MenuItem className="roundMenuItem" key={type} onClick={() => createBlock({ type })}>
+          <MenuItem className="roundMenuItem" key={type} onClick={() => createBlock({ type, close })}>
             <ListItemIcon>
               {blockTypeIcons[type]}
             </ListItemIcon>
@@ -64,8 +64,12 @@ function AddMenu ({ trigger, createBlock, types }) {
 
   if (loggedIn) {
     return <PopoverMenu trigger={trigger}>
-      <div style={{ marginTop: '8px' }}></div>
-      <AddMenuContent createBlock={createBlock} types={types} />
+      {
+        ({ close }) => <>
+          <div style={{ marginTop: '8px' }}></div>
+          <AddMenuContent createBlock={createBlock} types={types} close={close} />
+        </>
+      }
     </PopoverMenu>
   }
 

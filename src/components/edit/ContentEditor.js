@@ -309,7 +309,7 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
     }
   }, [contentConfigs, contentConfigs_Ref, saveBlock, onChange])
 
-  const createBlockByType = useCallback(({ type }) => {
+  const createBlockByType = useCallback(({ type, close }) => {
     const newBlock = { type }
 
     if (typeof parentId === 'string' && parentId.length > 0) { // a valid parentId should be 24 char long
@@ -317,6 +317,10 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
     }
 
     addRowByIndex(0, 0, { block: newBlock })
+
+    if (typeof close === 'function') {
+      close()
+    }
   }, [addRowByIndex, parentId])
 
   const onMergeToPrevInput = useCallback(keys => {
