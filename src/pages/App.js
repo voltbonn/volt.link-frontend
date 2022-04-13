@@ -137,6 +137,9 @@ function App() {
     }
   }, [ location, customLocation, setCustomLocation ])
 
+  const fallback_title = 'VoltLink'
+  const fallback_description = 'VoltLink is an information-hub about Volt Europa.'
+
   return (<>
     <div className={`${classes.app} ${matchesStartpage ? classes.isStartpage : ''}`}>
       <SidebarProvider>
@@ -160,7 +163,14 @@ function App() {
             {/* <Route path="/shortcode" element={<Shortcode />} /> */}
             <Route path="/" element={<>
               <Helmet>
-                <title>VoltLink</title>
+                <title>{fallback_title}</title>
+                <meta name="title" content={fallback_title} />
+                <meta name="og:title" content={fallback_title} />
+                <meta name="twitter:title" content={fallback_title} />
+
+                <meta name="description" content={fallback_description} />
+                <meta name="og:description" content={fallback_description} />
+                <meta name="twitter:description" content={fallback_description} />
               </Helmet>
               <SidebarContent />
             </>} />

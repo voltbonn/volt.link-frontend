@@ -193,9 +193,22 @@ function Viewer () {
     __html: renderInlineMarkdown(title)
   }
 
+  let metadata_image_url = ''
+  if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
+    metadata_image_url = `${window.domains.backend}download_url?f=jpg&w=1000&h=1000&url=${encodeURIComponent(coverphoto_url)}`
+  }
+
   return <div className={classes.viewer}>
     <Helmet>
       <title>{title}</title>
+      <meta name="title" content={title} />
+      <meta name="og:title" content={title} />
+      <meta name="twitter:title" content={title} />
+
+      <meta property="og:image" content={metadata_image_url} />
+      <meta name="twitter:image" content={metadata_image_url} />
+
+      <meta property="twitter:card" content="summary" />
     </Helmet>
 
     <Header

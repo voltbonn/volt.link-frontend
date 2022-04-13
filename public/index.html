@@ -6,10 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#502379" media="(prefers-color-scheme: dark)" />
     <meta name="background-color" content="#502379" media="(prefers-color-scheme: dark)" />
-    <meta
-      name="description"
-      content="VoltLink is an information-hub for Volt Europa."
-    />
+
+    <title data-react-helmet="true">__META_TITLE__</title>
+    <meta property="title" content="__META_TITLE__" data-react-helmet="true" />
+    <meta property="og:title" content="__META_TITLE__" data-react-helmet="true" />
+    <meta name="twitter:title" content="__META_TITLE__" data-react-helmet="true" />
+
+    <meta name="description" content="__META_DESCRIPTION__" data-react-helmet="true" />
+    <meta property="og:description" content="__META_DESCRIPTION__" data-react-helmet="true" />
+    <meta name="twitter:description" content="__META_DESCRIPTION__" data-react-helmet="true" />
+
+    <meta property="og:image" content="__META_COVERPHOTO__" data-react-helmet="true" />
+    <meta name="twitter:image" content="__META_COVERPHOTO__" data-react-helmet="true" />
+
+    <meta property="twitter:card" content="summary" data-react-helmet="true" />
+
+    <!--
+    <script>
+      try {
+        window.SERVER_DATA = __SERVER_DATA__;
+      } catch (e) {}
+    </script>
+    -->
+
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/volt-logo-white-192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -25,7 +44,6 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>VoltLink</title>
 
     <script>
       // Just to make the console a bit queer.
