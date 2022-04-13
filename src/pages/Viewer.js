@@ -205,6 +205,10 @@ function Viewer () {
       <meta name="og:title" content={title} />
       <meta name="twitter:title" content={title} />
 
+      <meta name="description" content="" />
+      <meta property="og:description" content="" />
+      <meta name="twitter:description" content="" />
+
       <meta property="og:image" content={metadata_image_url} />
       <meta name="twitter:image" content={metadata_image_url} />
 
