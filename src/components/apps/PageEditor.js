@@ -315,10 +315,23 @@ function PageEditor({
   </div>
 
   const title = block.properties.text || getString('placeholder_main_headline')
+  const helmet_title = `✍️ ${title}`
 
   return <div key={block._id} className={`hasHeader ${classes.editor} ${typeof type === 'string' && type !== '' ? classes['type_'+type] : ''}`}>
     <Helmet>
-      <title>✍️ {title}</title>
+      <title>{helmet_title}</title>
+      <meta name="title" content={helmet_title} />
+      <meta name="og:title" content={helmet_title} />
+      <meta name="twitter:title" content={helmet_title} />
+
+      <meta name="description" content="" />
+      <meta property="og:description" content="" />
+      <meta name="twitter:description" content="" />
+
+      <meta property="og:image" content="" />
+      <meta name="twitter:image" content="" />
+
+      <meta property="twitter:card" content="summary" />
     </Helmet>
     
     <Header
