@@ -296,18 +296,24 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
       && !isNaN(index)
     ) {
       saveBlock(newBlock)
-        .then(newBlock => {
-          newContentConfig.block = newBlock
-          newContentConfig.blockId = newBlock._id
+        .then(async gottenBlock => {
+          const loadedBlocks = await loadBlocks({ ids: [gottenBlock._id] })
 
-          let new_rows = [...contentConfigs]
-          new_rows.splice(index + offset, 0, newContentConfig)
-          contentConfigs_Ref.current = new_rows
-          onChange(new_rows)
+          if (loadedBlocks.length > 0) {
+            const loadedBlock = loadedBlocks[0]
+
+            newContentConfig.block = loadedBlock
+            newContentConfig.blockId = loadedBlock._id
+
+            let new_rows = [...contentConfigs]
+            new_rows.splice(index + offset, 0, newContentConfig)
+            contentConfigs_Ref.current = new_rows
+            onChange(new_rows)
+          }
         })
         .catch(console.error)
     }
-  }, [contentConfigs, contentConfigs_Ref, saveBlock, onChange])
+  }, [contentConfigs, contentConfigs_Ref, saveBlock, loadBlocks, onChange])
 
   const createBlockByType = useCallback(({ type, close }) => {
     const newBlock = { type }
