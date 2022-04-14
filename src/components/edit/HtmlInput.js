@@ -276,7 +276,7 @@ function HtmlInput({
     } else if (event.key === 'ArrowRight') {
       if (onGoToNextInput) {
         const caret = getCaretPosition(inputRef.current)
-        if (caret.inLastLine && caret.positionFromEnd <= 1) {
+        if (caret.inLastLine && caret.positionFromEnd === 0) {
           caret.positionFromLineStart = 0
           onGoToNextInput({ caret })
           event.preventDefault()
