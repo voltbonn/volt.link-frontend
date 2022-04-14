@@ -343,11 +343,21 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
       const this_block = clonedContentConfigs[index].block
       const prev_block = clonedContentConfigs[prev_index].block
 
+      let prev_text = ''
+      if (prev_block && prev_block.hasOwnProperty('properties')) {
+        prev_text = prev_block.properties.text || ''
+      }
+
+      let this_text = ''
+      if (this_block && this_block.hasOwnProperty('properties')) {
+        this_text = this_block.properties.text || ''
+      }
+
       const new_prev_block = {
         ...prev_block,
         properties: {
           ...prev_block.properties,
-          text: prev_block.properties.text + this_block.properties.text,
+          text: prev_text + this_text,
         },
       }
 
@@ -404,11 +414,21 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
       const this_block = clonedContentConfigs[index].block
       const next_block = clonedContentConfigs[next_index].block
 
+      let this_text = ''
+      if (this_block && this_block.hasOwnProperty('properties')) {
+        this_text = this_block.properties.text || ''
+      }
+
+      let next_text = ''
+      if (next_block && next_block.hasOwnProperty('properties')) {
+        next_text = next_block.properties.text || ''
+      }
+
       const new_block = {
         ...this_block,
         properties: {
           ...this_block.properties,
-          text: this_block.properties.text + next_block.properties.text,
+          text: this_text + next_text,
         },
       }
 
