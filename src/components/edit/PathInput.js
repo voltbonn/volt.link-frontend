@@ -23,7 +23,13 @@ function PathInput({
 
   const checkPath = useCheckPath()
 
-  const [text, setText] = useState(defaultValue)
+  const [text, setText] = useState('')
+
+  useEffect(() => {
+    if (mountedRef.current) {
+      setText(defaultValue)
+    }
+  }, [setText, defaultValue])
 
   const handleTextChange = useCallback(async newText => {
     newText = newText.toLowerCase()
