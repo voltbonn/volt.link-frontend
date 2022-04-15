@@ -11,11 +11,11 @@ import { negotiateLanguages } from '@fluent/langneg'
 export const locales = {
   de: 'Deutsch',
   en: 'English',
-  // es: 'Español',
+  nl: 'Dutch',
+  es: 'Español',
   // pt: 'Português',
   fr: 'Français',
-  // it: 'Italiano',
-  // nl: 'Dutch',
+  it: 'Italiano',
   // pl: 'Polska',
   // ru: 'Pусский',
 }
