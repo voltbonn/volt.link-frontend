@@ -47,7 +47,7 @@ path_editor_permissions_edit_label = Who is allowed to edit this link?
 path_editor_permissions_edit_placeholder = thomas.rosen@volteuropa.org
 
 path_editor_belongs_to_team_label = Team
-path_editor_belongs_to_team_info = To which team does this page belong to? You can choose from the teams in the volt.team databse.
+path_editor_belongs_to_team_info = To which team does this page belong to? You can choose from the teams in the volt.team database.
 path_editor_belongs_to_team_search_placeholder = Search by Team Name
 
 path_editor_redirect_label = Url to redirect to
@@ -106,8 +106,8 @@ block_menu_hide_show_description = It'll still show in the menus.<br />This is n
 block_menu_archive = Archive / Remove
 block_menu_unarchive = Dearchive
 
-filter_menu_show_archiv = Show Archiv
-filter_menu_showing_archiv = Showing Archiv
+filter_menu_show_archiv = Show Archive
+filter_menu_showing_archiv = Showing Archive
 
 filter_menu_show_editing = Only Editable
 filter_menu_showing_editing = Showing Only Editable
