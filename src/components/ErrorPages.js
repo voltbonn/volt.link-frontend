@@ -60,7 +60,7 @@ export function ErrorPage ({ errorName }) {
   
   return <>
     <h1>{title}</h1>
-    <p>{description}</p>
+    <div className="type_p">{description}</div>
     {buttons}
 
     <br/> {/* Spacing */}
