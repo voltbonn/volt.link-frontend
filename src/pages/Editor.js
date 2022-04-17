@@ -55,9 +55,11 @@ function Editor() {
     ) {
       loadBlock(id)
         .then(loadedBlock => {
-          loadedTheBlock.current = true
+          if (typeof loadedBlock === 'object' && loadedBlock !== null) {
+            loadedTheBlock.current = true
 
-          setBlock(loadedBlock)
+            setBlock(loadedBlock)
+          }
         })
     }
   }, [
