@@ -243,12 +243,6 @@ const BlockRow = ({
 
   const [blockMenuIsOpen, setBlockMenuIsOpen] = useState(false)
 
-  const toggleOpen = useCallback(() => {
-    if (typeof toggleOpenById === 'function') {
-      toggleOpenById(_id)
-    }
-  }, [ toggleOpenById, _id ])
-
   const onBlockMenuToogle = useCallback(newValue => {
     if (newValue === false) {
       setTimeout(() => {
@@ -259,6 +253,12 @@ const BlockRow = ({
     }
   }, [ setBlockMenuIsOpen ])
 
+  const toggleOpen = useCallback(() => {
+    if (typeof toggleOpenById === 'function') {
+      toggleOpenById(_id)
+    }
+  }, [toggleOpenById, _id])
+  
   const onReloadContext = useCallback(() => {
     if (typeof refetchData === 'function') {
       setTimeout(() => {
