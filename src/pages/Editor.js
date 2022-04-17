@@ -10,7 +10,7 @@ import useLoadBlock from '../hooks/useLoadBlock.js'
 import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
 
 import Header from '../components/Header.js'
-import { ErrorPage } from '../components/ErrorPages.js'
+import ErrorPage from '../components/ErrorPage.js'
 
 import PageEditor from '../components/apps/PageEditor.js'
 

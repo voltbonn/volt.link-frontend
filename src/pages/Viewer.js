@@ -15,7 +15,8 @@ import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
 import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
 
-import { ErrorPage } from '../components/ErrorPages.js'
+import ErrorPage from '../components/ErrorPage.js'
+
 import Header from '../components/Header.js'
 import ViewerAuto from '../components/view/ViewerAuto.js'
 

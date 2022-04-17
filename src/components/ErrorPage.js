@@ -5,21 +5,7 @@ import {
 
 import Localized from '../fluent/Localized.js'
 
-export default function LoginScreen () {
-  return <>
-    <h1>Login to view content</h1>
-    <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-      <button className="text hasIcon" style={{ margin: 'var(--basis_x4) 0 0 0' }}>
-        <LoginIcon className="icon" />
-        <span>
-          <Localized id="login" />
-        </span>
-      </button>
-    </a>
-  </>
-}
-
-export function ErrorPage ({ errorName }) {
+export default function ErrorPage ({ errorName }) {
   let title = 'Unknown Error'
   let description = ''
   let buttons = ''
