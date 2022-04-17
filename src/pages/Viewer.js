@@ -18,8 +18,6 @@ import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
 import Header from '../components/Header.js'
 import ViewerAuto from '../components/view/ViewerAuto.js'
 
-import LocaleSelect from '../components/edit/LocaleSelect.js'
-
 import classes from './Viewer.module.css'
 
 import {
@@ -29,6 +27,7 @@ import {
 import { renderInlineMarkdown } from '../markdown.js'
 
 const ErrorPage = lazy(() => import('../components/ErrorPage.js'))
+const LocaleSelect = lazy(() => import('../components/edit/LocaleSelect.js'))
 
 function Viewer () {
   const loadingTheBlock = useRef(false)
@@ -183,11 +182,14 @@ function Viewer () {
 
       {
         possibleLocales.length > 1
-        && <LocaleSelect
-          onChange={handleLocaleChange}
-          defaultValue={locales[0] || userLocales[0] || 'en'}
-          options={possibleLocales}
-        />
+          ? <Suspense>
+              <LocaleSelect
+                onChange={handleLocaleChange}
+                defaultValue={locales[0] || userLocales[0] || 'en'}
+                options={possibleLocales}
+              />
+            </Suspense>
+          : null
       }
     </div>
   </>
