@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom'
 
 import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Sidebar.js'
-// import Shortcode from './Shortcode.js'
 import { Helmet } from 'react-helmet'
 
 import Viewer from './Viewer.js'
@@ -156,7 +155,6 @@ function App() {
                 <Editor />
               </Suspense>
             } />
-            {/* <Route path="/shortcode" element={<Shortcode />} /> */}
             <Route path="/" element={<>
               <Helmet>
                 <title>{fallback_title}</title>
