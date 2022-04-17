@@ -199,7 +199,7 @@ h2,
 
 h3,
 .type_h3 {
-  font-size: calc(var(--font-add) + var(--basis));
+  font-size: calc(var(--font-add) + (1.5 * var(--basis)));
   margin: var(--basis_x4) 0 var(--basis) 0;
   text-decoration: inherit;
   font-weight: bold;
