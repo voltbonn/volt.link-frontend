@@ -109,6 +109,7 @@ function InlineEditorBlockTextRaw({
       placeholder={getString('placeholder_text')}
       style={{
         ...colorStyles,
+        flexGrow: 1,
         margin: '0',
         padding: '0',
         backgroundColor: 'transparent',
