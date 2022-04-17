@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 
 import {
-  Portal,
   Fade,
   Popper,
 } from '@mui/material'
@@ -56,7 +55,6 @@ function Popover ({
       }
     )}
 
-  <Portal>
     <div
       onClick={closePopover}
       style={{
@@ -112,7 +110,6 @@ function Popover ({
       )}
     </Popper>
 
-    </Portal>
   </>
 }
 
