@@ -13,7 +13,6 @@ import { Localized, useLocalization } from '../fluent/Localized.js'
 import useLoadBlock from '../hooks/useLoadBlock.js'
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
-import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
 
 import Header from '../components/Header.js'
 import ViewerAuto from '../components/view/ViewerAuto.js'
@@ -54,22 +53,10 @@ function Viewer () {
   }, [ setLocales ])
 
   const [canView, setCanView] = useState(null)
-  const blockMatchesRoles = useBlockMatchesRoles()
-  useEffect(() => {
-    blockMatchesRoles(id, ['viewer', 'owner'])
-      .then(matchesRoles => {
-        setCanView(matchesRoles)
-      })
-      .catch(error => {
-        console.error(error)
-        setCanView(false)
-      })
-  }, [ id, blockMatchesRoles, setCanView ])
 
   useEffect(() => {
     if (
-      canView
-      && loadingTheBlock.current === false
+      loadingTheBlock.current === false
       && typeof id === 'string'
       && id !== ''
       && id !== block._id
@@ -77,63 +64,85 @@ function Viewer () {
       loadingTheBlock.current = true
       loadBlock(id)
         .then(async loadedBlock => {
+          if (typeof loadedBlock !== 'object' || loadedBlock === null) {
+            setCanView(false)
+            loadingTheBlock.current = false
+          } else {
+            let newLoadedBlock = loadedBlock
 
-          let newLoadedBlock = loadedBlock
+            if (
+              Array.isArray(loadedBlock.content)
+              && loadedBlock.content.length > 0
+            ) {
+              let newContentConfigs = [...loadedBlock.content]
 
-          if (
-            Array.isArray(loadedBlock.content)
-            && loadedBlock.content.length > 0
-          ) {
-            let newContentConfigs = [...loadedBlock.content]
+              const ids2load = loadedBlock.content
+                .filter(contentConfig => !contentConfig.hasOwnProperty('block'))
+                .map(contentConfig => contentConfig.blockId)
 
-            const ids2load = loadedBlock.content
-              .filter(contentConfig => !contentConfig.hasOwnProperty('block'))
-              .map(contentConfig => contentConfig.blockId)
+              let loadedContentBlocks = []
+              if (ids2load.length > 0) {
+                loadedContentBlocks = await loadBlocks({ ids: ids2load })
+              }
 
-            let loadedContentBlocks = []
-            if (ids2load.length > 0) {
-              loadedContentBlocks = await loadBlocks({ ids: ids2load })
+              newContentConfigs = newContentConfigs
+                .map(contentConfig => {
+                  if (!contentConfig.hasOwnProperty('block')) {
+                    contentConfig.block = loadedContentBlocks.find(block => block._id === contentConfig.blockId)
+                  }
+                  return contentConfig
+                })
+
+              newLoadedBlock = {
+                ...newLoadedBlock,
+                content: newContentConfigs,
+              }
             }
-          
-            newContentConfigs = newContentConfigs
-              .map(contentConfig => {
-                if (!contentConfig.hasOwnProperty('block')) {
-                  contentConfig.block = loadedContentBlocks.find(block => block._id === contentConfig.blockId)
-                }
-                return contentConfig
-              })
 
-            newLoadedBlock = {
-              ...newLoadedBlock,
-              content: newContentConfigs,
+            const blocks = (newLoadedBlock.content || [])
+              .map(contentConfig => contentConfig.block)
+
+            const newPossibleLocales = [...new Set(
+              [
+                loadedBlock,
+                ...blocks,
+              ]
+                .flatMap(thisBlock => [
+                  thisBlock.properties.locale,
+                  ...(thisBlock.properties.translations || [])
+                    .filter(t => t.text && t.text.length > 0)
+                    .map(t => t.locale),
+                ])
+                .filter(Boolean)
+            )]
+            setPossibleLocales(newPossibleLocales)
+
+            let newCanView = false
+            if (
+              newLoadedBlock.hasOwnProperty('computed')
+              && newLoadedBlock.computed.hasOwnProperty('roles')
+              && (
+                newLoadedBlock.computed.roles.includes('viewer')
+                || newLoadedBlock.computed.roles.includes('editor')
+                || newLoadedBlock.computed.roles.includes('owner')
+              )
+            ) {
+              newCanView = true
             }
+
+            setCanView(newCanView)
+            setBlock(newLoadedBlock)
+            setContentBlocks(blocks)
+            loadingTheBlock.current = false
           }
-
-          const blocks = (newLoadedBlock.content || [])
-          .map(contentConfig => contentConfig.block)
-
-          const newPossibleLocales = [...new Set(
-            [
-              loadedBlock,
-              ...blocks,
-            ]
-            .flatMap(thisBlock => [
-              thisBlock.properties.locale,
-              ...(thisBlock.properties.translations || [])
-                .filter(t => t.text && t.text.length > 0)
-                .map(t => t.locale),
-            ])
-            .filter(Boolean)
-          )]
-          setPossibleLocales(newPossibleLocales)
-
-          setBlock(newLoadedBlock)
-          setContentBlocks(blocks)
+        })
+        .catch(error => {
+          console.error(error)
+          setCanView(false)
           loadingTheBlock.current = false
         })
     }
   }, [
-    canView,
     id,
     block,
     block._id,
@@ -141,7 +150,8 @@ function Viewer () {
     setBlock,
     loadBlocks,
     setContentBlocks,
-    setPossibleLocales
+    setPossibleLocales,
+    setCanView,
   ])
 
   if (canView === false) {
