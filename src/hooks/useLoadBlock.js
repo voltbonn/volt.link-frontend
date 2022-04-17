@@ -39,27 +39,27 @@ function useLoadBlock() {
               _id,
             },
           })
-            .then(async ({ data }) => {
+            .then(async ({ errors, data }) => {
               resolve('got-data')
 
               if (snackbarKey !== null) {
                 closeSnackbar(snackbarKey)
               }
 
-              if (typeof data.error === 'string' || !data.block) {
-                if (data.error === 'no_edit_permission') {
-                  enqueueSnackbar(getString('path_editor_edit_permission_error'), {
-                    variant: 'error',
-                    preventDuplicate: true,
-                    autoHideDuration: 5000,
-                  })
-                } else {
-                  enqueueSnackbar('' + data.error, {
-                    variant: 'error',
-                    preventDuplicate: true,
-                    autoHideDuration: 5000,
-                  })
-                }
+              if (Array.isArray(errors)) {
+                enqueueSnackbar(errors.map(e => e.message).join('\n'), {
+                  variant: 'error',
+                  preventDuplicate: true,
+                  autoHideDuration: 5000,
+                })
+                final_resolve(null)
+              } else if (data.block === null) {
+                enqueueSnackbar(`Could not load the content.`, {
+                  variant: 'error',
+                  preventDuplicate: true,
+                  autoHideDuration: 5000,
+                })
+                final_resolve(null)
               } else {
                 const loadedBlock = data.block
                 final_resolve(loadedBlock)
