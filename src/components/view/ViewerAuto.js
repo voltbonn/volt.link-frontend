@@ -5,7 +5,6 @@ import { DataBothWays } from '../DataTransmat.js'
 import ViewerTextCard from './ViewerTextCard.js'
 import ViewerButtonCard from './ViewerButtonCard.js'
 import ViewerDividerLine from './ViewerDividerLine.js'
-import ViewerCheckboxCard from './ViewerCheckboxCard.js'
 import ViewerLine from './ViewerLine.js'
 
 import classes from './ViewerAuto.module.css'
@@ -80,9 +79,6 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false
       break
     case 'divider':
       component = <ViewerDividerLine key={block._id} block={block} actions={actions} {...props} />
-      break
-    case 'checkbox':
-      component = <ViewerCheckboxCard key={block._id} block={block} actions={actions} {...props} />
       break
     case 'page':
       component = <ViewerLine key={block._id} block={block} actions={actions} {...props} />
