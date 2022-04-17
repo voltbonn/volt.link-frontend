@@ -71,6 +71,13 @@ action_input_url_placeholder = https://voltdeutschland.org/bonn
 add_content_before = Inhalt hinzufügen
 
 block_menu_choose_type_label = Umwandeln in…
+block_menu_choose_color_label = Farbe
+block_menu_choose_text_style_label = Text Stil
+block_menu_text_style_label_h1 = Titel
+block_menu_text_style_label_h2 = Überschrift
+block_menu_text_style_label_h3 = Unterüberschrift
+block_menu_text_style_label_body = Text
+block_menu_text_style_label_caption = Untertitel
 
 block_menu_type_label_plural_page = Seiten
 block_menu_type_label_plural_redirect = Weiterleitungen
