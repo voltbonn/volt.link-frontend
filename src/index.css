@@ -187,6 +187,7 @@ h1,
   margin: var(--basis_x4) 0 var(--basis) 0;
   text-decoration: inherit;
   font-weight: bold;
+  --prefix-icon-size: calc(var(--font-add) + var(--basis_x4));
 }
 
 h2,
@@ -195,6 +196,7 @@ h2,
   margin: var(--basis_x4) 0 var(--basis) 0;
   text-decoration: inherit;
   font-weight: bold;
+  --prefix-icon-size: calc(var(--font-add) + var(--basis_x2));
 }
 
 h3,
@@ -203,6 +205,7 @@ h3,
   margin: var(--basis_x4) 0 var(--basis) 0;
   text-decoration: inherit;
   font-weight: bold;
+  --prefix-icon-size: calc(var(--font-add) + (1.5 * var(--basis)));
 }
 
 h1.yellow,
@@ -242,6 +245,7 @@ p,
   margin: var(--basis) 0;
   text-decoration: inherit;
   font-size: calc(var(--font-add) + var(--basis));
+  --prefix-icon-size: calc(var(--font-add) + var(--basis));
 }
 
 p a,

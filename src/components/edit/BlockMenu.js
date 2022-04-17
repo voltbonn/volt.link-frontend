@@ -39,8 +39,11 @@ import {
   EditSharp as EditIcon,
 
   FormatSizeSharp as TextStyleIcon,
+  TextFormatSharp as TextDecorationsIcon,
   PaletteSharp as ColorIcon,
   CircleSharp as ColorSwatchIcon,
+
+  CheckSharp as SelectedIcon,
 } from '@mui/icons-material'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
@@ -124,11 +127,17 @@ function BlockMenu ({
   const { loggedIn, userroles } = useUser()
 
   const { _id = '', type = '', properties = {}, computed = {} } = block
-  const {
+  let {
     active = true,
     text_style = null,
+    text_decorations = [],
     color = null,
   } = properties
+
+  if (!Array.isArray(text_decorations)) {
+    text_decorations = []
+  }
+
   const {
     roles = [],
   } = (computed === null ? {} : computed)
@@ -212,6 +221,18 @@ function BlockMenu ({
   if (!renderedColor) {
     renderedColor = 'transparent'
   }
+
+  const toggleTextDecoration = useCallback(thisDecoration => {
+    let newTextDecorations = [...new Set(text_decorations)]
+
+    if (text_decorations.includes(thisDecoration)) {
+      newTextDecorations = newTextDecorations.filter(decoration => decoration !== thisDecoration)
+    } else {
+      newTextDecorations.push(thisDecoration)
+    }
+
+    setProperty('text_decorations', newTextDecorations)
+  }, [text_decorations, setProperty])
 
   return <PopoverMenu
     trigger={trigger}
@@ -361,6 +382,48 @@ function BlockMenu ({
                 {getString(`block_menu_text_style_label_${thisStyle}`, thisStyle)}
               </MenuItem>
             ))
+          }
+        </SubMenu>
+      }
+
+      {
+        (
+          canEdit
+          && typeof setProperty === 'function'
+          && type === 'text'
+        )
+        && <SubMenu
+          parentMenuIsOpen={open}
+          label={<>
+            <ListItemIcon>
+              <TextDecorationsIcon />
+            </ListItemIcon>
+            <Localized id="block_menu_choose_text_decorations_label" />
+          </>}
+          header={<Localized id="block_menu_choose_text_decorations_label" />}
+        >
+          {
+            [
+              'checkbox',
+            ]
+              .map(thisDecoration => {
+                const selected = text_decorations.includes(thisDecoration)
+                return <MenuItem
+                  key={thisDecoration}
+                  selected={selected}
+                  onClick={() => toggleTextDecoration(thisDecoration)}
+                  className="roundMenuItem"
+                >
+                  <ListItemIcon>
+                    {
+                      selected
+                        ? <SelectedIcon />
+                        : <SelectedIcon style={{ opacity: 0 }} />
+                    }
+                  </ListItemIcon>
+                  {getString(`block_menu_text_decoration_label_${thisDecoration}`, thisDecoration)}
+                </MenuItem>
+              })
           }
         </SubMenu>
       }

@@ -224,6 +224,7 @@ function InlineEditorBlockRaw({
         block={block}
         onChange={handleBlockChange}
         onSaveBlock={handleSaveBlock}
+        saveProperty={saveProperty}
 
         onInputRef={onInputRef}
         onGoToPrevInput={onGoToPrevInput}

@@ -6,7 +6,7 @@ import {
 } from '@mui/icons-material'
 
 function CheckboxInput({
-  defaultValue = '',
+  defaultValue = false,
   onChange,
   onBlur,
   style,
@@ -15,49 +15,45 @@ function CheckboxInput({
 }) {
   // TODO: make ARIA compatible
 
-  const [ checked, setChecked ] = useState(Boolean(defaultValue))
+  const [checked, setChecked] = useState(Boolean(defaultValue))
 
-  const publishChanges = useCallback(() => {
+  const toggleChecked = useCallback(() => {
+    if (disabled === true) {
+      return
+    }
+
+    const newChecked = !checked
+
+    setChecked(newChecked)
     if (onChange) {
-      onChange(checked)
+      onChange(newChecked)
     }
     if (onBlur) {
-      onBlur(checked)
+      onBlur(newChecked)
     }
-  }, [ onChange, onBlur, checked ])
+  }, [disabled, checked, setChecked, onChange, onBlur])
 
-  const checkBlock = useCallback(() => {
-    if (disabled === true) {
-      return
-    }
-    publishChanges()
-    setChecked(true)
-  }, [ disabled, publishChanges, setChecked ])
-
-  const uncheckBlock = useCallback(() => {
-    if (disabled === true) {
-      return
-    }
-    publishChanges()
-    setChecked(false)
-  }, [ disabled, publishChanges, setChecked ])
-
-  return <div
-    style={{
+  const iconProps = {
+    className: className,
+    onClick: toggleChecked,
+    style: {
       display: 'inline-block',
-      padding: 'var(--basis)',
+      margin: 'var(--basis)',
       cursor: disabled === true ? 'default' : 'pointer',
-      verticalAlign: 'middle',
+      // verticalAlign: 'middle',
+      // backgroundColor: 'red',
+      lineHeight: 0,
+      height: 'var(--prefix-icon-size)',
+      width: 'var(--prefix-icon-size)',
       ...style,
-    }}
-    className={className}
-  >
-    {
-      checked
-      ? <CheckBoxIcon onClick={uncheckBlock} />
-      : <CheckBoxOutlineBlankIcon onClick={checkBlock} />
     }
-  </div>
+  }
+
+  if (checked) {
+    return <CheckBoxIcon {...iconProps} />
+  } else {
+    return <CheckBoxOutlineBlankIcon {...iconProps} />
+  }
 }
 
 export default CheckboxInput
