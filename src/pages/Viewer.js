@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { lazy, Suspense, useRef, useState, useEffect, useCallback } from 'react'
 
 import {
   useParams,
@@ -15,8 +15,6 @@ import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
 import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
 
-import ErrorPage from '../components/ErrorPage.js'
-
 import Header from '../components/Header.js'
 import ViewerAuto from '../components/view/ViewerAuto.js'
 
@@ -29,6 +27,8 @@ import {
 } from '@mui/icons-material'
 
 import { renderInlineMarkdown } from '../markdown.js'
+
+const ErrorPage = lazy(() => import('../components/ErrorPage.js'))
 
 function Viewer () {
   const loadingTheBlock = useRef(false)
@@ -154,7 +154,9 @@ function Viewer () {
       />
       <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
         <main className={`${classes.contentWrapper}`}>
-          <ErrorPage errorName="no_access" />
+          <Suspense>
+            <ErrorPage errorName="no_access" />
+          </Suspense>
         </main>
       </div>
     </div>
