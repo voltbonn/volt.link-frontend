@@ -80,6 +80,8 @@ block_menu_text_style_label_h2 = Heading
 block_menu_text_style_label_h3 = Subheading
 block_menu_text_style_label_body = Body
 block_menu_text_style_label_caption = Caption
+block_menu_choose_text_decorations_label = Text Decorations
+block_menu_text_decoration_label_checkbox = Checkbox
 
 block_menu_type_label_plural_page = Pages
 block_menu_type_label_plural_redirect = Redirects
@@ -93,7 +95,6 @@ block_menu_type_label_headline = Headline
 block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider
-block_menu_type_label_checkbox = Checkbox
 
 block_menu_close_menu = Close Menu
 block_menu_add_before = Add Before
