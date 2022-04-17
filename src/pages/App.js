@@ -14,7 +14,7 @@ import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Si
 // import Shortcode from './Shortcode.js'
 import { Helmet } from 'react-helmet'
 
-const Viewer = lazy(() => import('./Viewer.js'))
+import Viewer from './Viewer.js'
 const Editor = lazy(() => import('./Editor.js'))
 
 // function useScrollMemory() {
@@ -150,11 +150,7 @@ function App() {
         }
         <Main>
           <Routes location={customLocation}>
-            <Route path="/:id/view" element={
-              <Suspense>
-                <Viewer />
-              </Suspense>
-            } />
+            <Route path="/:id/view" element={<Viewer />} />
             <Route path="/:id/edit" element={
               <Suspense>
                 <Editor />
