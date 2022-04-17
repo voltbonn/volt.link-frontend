@@ -23,52 +23,63 @@ function useLoadBlock() {
       })
     } else {
       const loadingDataPromise = new Promise(resolve => {
-        apollo_client.query({
-          query: getBlock_Query,
-          variables: {
-            _id,
-          },
-        })
-          .then(async ({ data }) => {
-            resolve('got-data')
+        const preloaded_block = window.SERVER_DATA.preloaded_block || null
+        if (
+          typeof preloaded_block === 'object'
+          && preloaded_block !== null
+          && preloaded_block.hasOwnProperty('_id')
+          && preloaded_block._id === _id
+        ) {
+          window.SERVER_DATA.preloaded_block = null 
+          final_resolve(preloaded_block)
+        } else {
+          apollo_client.query({
+            query: getBlock_Query,
+            variables: {
+              _id,
+            },
+          })
+            .then(async ({ data }) => {
+              resolve('got-data')
 
-            if (snackbarKey !== null) {
-              closeSnackbar(snackbarKey)
-            }
-
-            if (typeof data.error === 'string' || !data.block) {
-              if (data.error === 'no_edit_permission') {
-                enqueueSnackbar(getString('path_editor_edit_permission_error'), {
-                  variant: 'error',
-                  preventDuplicate: true,
-                  autoHideDuration: 5000,
-                })
-              } else {
-                enqueueSnackbar('' + data.error, {
-                  variant: 'error',
-                  preventDuplicate: true,
-                  autoHideDuration: 5000,
-                })
+              if (snackbarKey !== null) {
+                closeSnackbar(snackbarKey)
               }
-            }else{
-              const loadedBlock = data.block
-              final_resolve(loadedBlock)
-            }
-          })
-          .catch(async error => {
-            console.error('error', error)
-            resolve('got-error')
 
-            if (snackbarKey !== null) {
-              closeSnackbar(snackbarKey)
-            }
-
-            enqueueSnackbar('[could not load data] '+error.message, {
-              variant: 'error',
-              preventDuplicate: true,
-              autoHideDuration: 2000,
+              if (typeof data.error === 'string' || !data.block) {
+                if (data.error === 'no_edit_permission') {
+                  enqueueSnackbar(getString('path_editor_edit_permission_error'), {
+                    variant: 'error',
+                    preventDuplicate: true,
+                    autoHideDuration: 5000,
+                  })
+                } else {
+                  enqueueSnackbar('' + data.error, {
+                    variant: 'error',
+                    preventDuplicate: true,
+                    autoHideDuration: 5000,
+                  })
+                }
+              } else {
+                const loadedBlock = data.block
+                final_resolve(loadedBlock)
+              }
             })
-          })
+            .catch(async error => {
+              console.error('error', error)
+              resolve('got-error')
+
+              if (snackbarKey !== null) {
+                closeSnackbar(snackbarKey)
+              }
+
+              enqueueSnackbar('[could not load data] ' + error.message, {
+                variant: 'error',
+                preventDuplicate: true,
+                autoHideDuration: 2000,
+              })
+            })
+        }
       })
 
       // Show a loading-info-snackbar if loading the data takes too long.
