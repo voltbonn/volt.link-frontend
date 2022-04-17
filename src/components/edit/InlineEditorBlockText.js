@@ -39,7 +39,7 @@ function InlineEditorBlockTextRaw({
     }
   }, [onChange, block, text])
 
-  let text_style_class = 'type_text'
+  let text_style_class = 'type_p'
   if (properties.hasOwnProperty('text_style')) {
     text_style_class = 'type_'+properties.text_style
   }
