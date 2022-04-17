@@ -133,7 +133,7 @@ function InlineEditorBlockRaw({
   const saveProperty = useCallback((propertyName, newValue) => {
     if (typeof propertyName === 'string') {
       const newProperties = { ...block.properties }
-      if (newValue === null) {
+      if (newValue === null || newValue === undefined || newValue === '' || newValue === false) {
         delete newProperties[propertyName]
       } else {
         newProperties[propertyName] = newValue
