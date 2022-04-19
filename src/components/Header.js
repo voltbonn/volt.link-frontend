@@ -55,7 +55,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
     apollo_client.query({
       query: getBlocks_Query,
       variables: {
-        roots: [parentId || blockId],
+        roots: [blockId],
         types: ['page', 'person', 'redirect'],
         archived: false,
       },
