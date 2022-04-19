@@ -30,7 +30,7 @@ function useLoadBlock() {
           && preloaded_block.hasOwnProperty('_id')
           && preloaded_block._id === _id
         ) {
-          window.SERVER_DATA.preloaded_block = null 
+          window.SERVER_DATA.preloaded_block = null
           final_resolve(preloaded_block)
         } else {
           apollo_client.query({
