@@ -160,7 +160,7 @@ export default function SidebarContent() {
                 <ListItemIcon>
                   <StatisticsIcon />
                 </ListItemIcon>
-                <ListItemText primary={<Localized id="statistics" />} />
+                <ListItemText primary={<Localized id="volt_link_statistics" />} />
               </MenuItem>
             </>
             : null
