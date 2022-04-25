@@ -95,7 +95,6 @@ function InlineEditorBlockButtonRaw({
           onError={setError}
           onChange={setUrl}
           onBlur={publishChanges}
-          type="text"
           defaultValue={url}
           placeholder={getString('action_input_url_placeholder')}
           style={{
