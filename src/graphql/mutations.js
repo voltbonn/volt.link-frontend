@@ -6,12 +6,6 @@ export const saveBlock_Mutation = gql`
   }
 `
 
-export const saveProperty_Mutation = gql`
-  mutation saveProperty ($_id: ObjectID!, $key: String!, $value: JSON) {
-    saveProperty (_id: $_id, key: $key, value: $value)
-  }
-`
-
 export const archiveBlock_Mutation = gql`
   mutation archiveBlock ($_id: ObjectID!) {
     archiveBlock (_id: $_id)

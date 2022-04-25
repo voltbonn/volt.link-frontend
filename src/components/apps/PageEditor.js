@@ -50,6 +50,31 @@ import ContentEditor from '../edit/ContentEditor.js'
 //   },
 // })
 
+function flattenObject(obj, parentKey = null, res = {}) {
+  // source: https://jeffdevslife.com/p/flatten-object-with-javascript/
+  for (let key in obj) {
+    const propName = parentKey ? parentKey + '.' + key : key
+    if (typeof (obj[key]) === 'object' && !Array.isArray(obj[key])) {
+      flattenObject(obj[key], propName, res)
+    } else {
+      res[propName] = obj[key]
+    }
+  }
+  return res
+}
+
+function unflattenObject(obj) {
+  // source: https://jeffdevslife.com/p/unflatten-object-with-javascript/
+  let res = {}
+  for (let key in obj) {
+    const keys = key.split('.')
+    keys.reduce((acc, value, index) => {
+      return acc[value] || (acc[value] = keys.length - 1 === index ? obj[key] : {})
+    }, res)
+  }
+  return res
+}
+
 function PageEditor({
   block,
   onSaveBlock,
@@ -99,37 +124,61 @@ function PageEditor({
 
   const saveProperties = useCallback(newProperties => {
     if (newProperties !== block.properties) {
-      const newBlock = {
-        ...block,
-        properties: newProperties,
+      const oldPropertiesFlattend = flattenObject(block.properties)
+      const newPropertiesFlattend = flattenObject(newProperties)
+
+      let divergingProperties = {}
+
+      for (const key in newPropertiesFlattend) {
+        if (newPropertiesFlattend.hasOwnProperty(key)) {
+          if (oldPropertiesFlattend[key] !== newPropertiesFlattend[key]) {
+            divergingProperties[key] = newPropertiesFlattend[key]
+          }
+        }
       }
 
-      saveBlock(newBlock)
+      for (const key in oldPropertiesFlattend) {
+        if (
+          oldPropertiesFlattend.hasOwnProperty(key)
+          && !newPropertiesFlattend.hasOwnProperty(key)
+          && !divergingProperties.hasOwnProperty(key)
+        ) {
+          divergingProperties[key] = null
+        }
+      }
+
+      divergingProperties = unflattenObject(divergingProperties)
+
+      if (Object.keys(divergingProperties).length > 0) {
+        saveBlock({
+          _id: block._id,
+          properties: divergingProperties,
+        })
+          .then(gottenBlock => {
+            onSaveBlock(gottenBlock)
+          })
+      }
+    }
+  }, [block, saveBlock, onSaveBlock])
+
+  const saveProperty = useCallback((propertyName, newValue) => {
+    if (typeof propertyName === 'string') {
+      saveBlock({
+        _id: block._id,
+        properties: {
+          [propertyName]: newValue
+        }
+      })
         .then(gottenBlock => {
           onSaveBlock(gottenBlock)
         })
     }
   }, [block, saveBlock, onSaveBlock])
 
-  const saveProperty = useCallback((propertyName, newValue) => {
-    if (
-      typeof propertyName === 'string'
-    ) {
-      const newProperties = { ...properties }
-      if (newValue === null) {
-        delete newProperties[propertyName]
-      } else {
-        newProperties[propertyName] = newValue
-      }
-      
-      saveProperties(newProperties)
-    }
-  }, [properties, saveProperties])
-
   const saveContent = useCallback(newContent => {
     if (newContent !== block.content) {
       const newBlock = {
-        ...block,
+        _id: block._id,
         content: newContent,
       }
 
@@ -143,7 +192,7 @@ function PageEditor({
   const savePermissions = useCallback(newPermissions => {
     if (newPermissions !== block.permissions) {
       const newBlock = {
-        ...block,
+        _id: block._id,
         permissions: newPermissions,
       }
 
@@ -294,8 +343,8 @@ function PageEditor({
     <BlockMenu
       {...{
         block,
-        setType: saveType,
-        setProperty: saveProperty,
+        saveType,
+        saveProperty,
       }}
 
       typeOptions={[

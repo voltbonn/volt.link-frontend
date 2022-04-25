@@ -353,10 +353,9 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
         this_text = this_block.properties.text || ''
       }
 
-      const new_prev_block = {
-        ...prev_block,
+      const prev_block_properties2update = {
+        _id: prev_block._id,
         properties: {
-          ...prev_block.properties,
           text: prev_text + this_text,
         },
       }
@@ -364,7 +363,7 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
       const thisRef = inputRefs_Ref.current[prev_tmp_id]
       const textLength = thisRef.current.textContent.length
 
-      saveBlock(new_prev_block)
+      saveBlock(prev_block_properties2update)
         .then(savedPrevBlock => {
           const new_tmp_id = uuidv4()
           handleRowChange({
@@ -424,10 +423,9 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
         next_text = next_block.properties.text || ''
       }
 
-      const new_block = {
-        ...this_block,
+      const this_block_properties2update = {
+        _id: this_block._id,
         properties: {
-          ...this_block.properties,
           text: this_text + next_text,
         },
       }
@@ -435,7 +433,7 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
       const thisRef = inputRefs_Ref.current[tmp_id]
       const textLength = thisRef.current.textContent.length
 
-      saveBlock(new_block)
+      saveBlock(this_block_properties2update)
         .then(savedBlock => {
           const new_tmp_id = uuidv4()
           handleRowChange(keys, {

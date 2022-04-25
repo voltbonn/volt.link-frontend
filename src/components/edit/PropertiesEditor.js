@@ -78,21 +78,21 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
           if (newPropertyValue.length > 0) {
             newProperties[propertyKey] = newPropertyValue
           } else if (newProperties.hasOwnProperty(propertyKey)) {
-            delete newProperties[propertyKey]
+            newProperties[propertyKey] = null
           }
         break
         case 'string':
           if (newPropertyValue !== '') {
             newProperties[propertyKey] = newPropertyValue
           } else if (newProperties.hasOwnProperty(propertyKey)) {
-            delete newProperties[propertyKey]
+            newProperties[propertyKey] = null
           }
         break
         case 'boolean':
           if (newPropertyValue === true) {
             newProperties[propertyKey] = true
           } else if (newProperties.hasOwnProperty(propertyKey)) {
-            delete newProperties[propertyKey]
+            newProperties[propertyKey] = null
           }
         break
         case 'object':
@@ -103,7 +103,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
           ) {
             newProperties[propertyKey] = newPropertyValue
           } else if (newProperties.hasOwnProperty(propertyKey)) {
-            delete newProperties[propertyKey]
+            newProperties[propertyKey] = null
           }
         break
         default:
