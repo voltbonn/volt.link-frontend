@@ -8,6 +8,7 @@ login = Login
 logout = Logout
 help_page = Help / Tutorial
 workplace_group = VoltLink Workplace Group
+statistics = Statistics
 contact = Contact / Feedback
 source_code = Source Code
 

@@ -19,6 +19,7 @@ import {
   Logout as LogoutIcon,
 
   Help as HelpIcon,
+  BarChartSharp as StatisticsIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -138,7 +139,8 @@ export default function SidebarContent() {
 
         {
           loggedIn
-            ? <MenuItem
+            ? <>
+              <MenuItem
                 component="a"
                 target="_blank"
                 href='https://volteuropa.workplace.com/groups/voltlink'
@@ -149,6 +151,18 @@ export default function SidebarContent() {
                 </ListItemIcon>
                 <ListItemText primary={<Localized id="workplace_group" />} />
               </MenuItem>
+              <MenuItem
+                component="a"
+                target="_blank"
+                href='https://umami.qiekub.org/share/s0ZHBZbb/01%20volt.link'
+                className="roundMenuItem"
+              >
+                <ListItemIcon>
+                  <StatisticsIcon />
+                </ListItemIcon>
+                <ListItemText primary={<Localized id="statistics" />} />
+              </MenuItem>
+            </>
             : null
         }
 
