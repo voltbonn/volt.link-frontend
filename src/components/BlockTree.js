@@ -288,7 +288,7 @@ const BlockRow = ({
             {...{
               block,
               createBlock,
-              // setType: saveType,
+              // saveType,
             }}
             trigger={props => (
               <button

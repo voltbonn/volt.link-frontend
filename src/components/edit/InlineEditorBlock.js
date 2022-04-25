@@ -121,7 +121,7 @@ function InlineEditorBlockRaw({
       })
   }, [block, onChange, saveBlock])
 
-  const changeType = useCallback(newValue => {
+  const saveType = useCallback(newValue => {
     const newBlock = {
       ...block,
       type: newValue,
@@ -199,7 +199,7 @@ function InlineEditorBlockRaw({
     <BlockMenu
       {...{
         block,
-        setType: changeType,
+        saveType,
         saveProperty,
         onRemoveRow,
         addRowBefore,

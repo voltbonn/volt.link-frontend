@@ -114,7 +114,7 @@ function BlockMenu ({
   trigger,
   onToogle,
 
-  setType,
+  saveType,
   saveProperty,
   typeOptions = defaultTypeOptions,
 
@@ -246,7 +246,7 @@ function BlockMenu ({
       {
         (
           canEdit
-          && typeof setType === 'function'
+          && typeof saveType === 'function'
           && Array.isArray(typeOptions)
           && typeOptions.length > 0
         )
@@ -268,7 +268,7 @@ function BlockMenu ({
                 <MenuItem
                   key={typeName}
                   selected={typeName === type}
-                  onClick={() => setType(typeName)}
+                  onClick={() => saveType(typeName)}
                   className="roundMenuItem"
                 >
                   <ListItemIcon>
