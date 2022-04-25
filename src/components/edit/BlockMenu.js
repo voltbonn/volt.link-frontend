@@ -162,20 +162,21 @@ function BlockMenu ({
 
   const mutationFunction = useMutation()
   const navigate = useNavigate()
-  const createChildBlock = useCallback(async newBlock => {
+  const createChildBlock = useCallback(async newChildBlock => {
     try {
-      if (newBlock) {
-        const { saveBlock: newBlockId } = await mutationFunction({
+      if (newChildBlock) {
+        const { saveBlock: newChildBlockId } = await mutationFunction({
           mutation: saveBlock_Mutation,
           variables: {
-            block: newBlock,
+            block: newChildBlock,
           },
         })
-        if (newBlockId !== null) {
+
+        if (newChildBlockId !== null) {
           await mutationFunction({
             mutation: moveBlock_Mutation,
             variables: {
-              movingBlockId: newBlockId,
+              movingBlockId: newChildBlockId,
               newParentId: _id,
               newIndex: 0,
             },
@@ -183,7 +184,7 @@ function BlockMenu ({
           if (typeof onReloadContext === 'function') {
             onReloadContext()
           }
-          navigate(`/${newBlockId}/edit`)
+          navigate(`/${newChildBlockId}/edit`)
         }
       }
     } catch (error) {
