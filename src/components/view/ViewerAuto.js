@@ -9,8 +9,7 @@ import ViewerLine from './ViewerLine.js'
 
 import classes from './ViewerAuto.module.css'
 
-// saveBlock_Mutation
-import { moveBlock_Mutation, saveProperty_Mutation } from '../../graphql/mutations.js'
+import { moveBlock_Mutation, saveBlock_Mutation } from '../../graphql/mutations.js'
 import useMutation from '../../hooks/useMutation.js'
 import useUser from '../../hooks/useUser.js'
 
@@ -148,11 +147,14 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false
           if (pressedKeys.has('shift')) {
             // auto hide the block        
             await mutationFunction({
-              mutation: saveProperty_Mutation,
+              mutation: saveBlock_Mutation,
               variables: {
-                _id: movingBlock._id,
-                key: 'active',
-                value: false,
+                block: {
+                  _id: movingBlock._id,
+                  properties: {
+                    'active': false,
+                  },
+                },
               },
             })
           }
