@@ -190,7 +190,7 @@ function BlockMenu ({
     } catch (error) {
       console.error(error)
     }
-  }, [ mutationFunction, _id, onReloadContext, navigate ])
+  }, [mutationFunction, _id, onReloadContext, navigate])
 
   const toggleArchiveBlock = useCallback(() => {
     const newArchived = !archived
