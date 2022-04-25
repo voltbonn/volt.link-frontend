@@ -200,7 +200,7 @@ function InlineEditorBlockRaw({
       {...{
         block,
         setType: changeType,
-        setProperty: saveProperty,
+        saveProperty,
         onRemoveRow,
         addRowBefore,
         addRowAfter,

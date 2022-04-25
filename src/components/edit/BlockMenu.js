@@ -114,8 +114,8 @@ function BlockMenu ({
   trigger,
   onToogle,
 
-  setProperty,
   setType,
+  saveProperty,
   typeOptions = defaultTypeOptions,
 
   onRemoveRow = null,
@@ -208,10 +208,10 @@ function BlockMenu ({
   }, [archiveBlock, setArchived, archived, block, onArchivedToggle, onReloadContext])
 
   const toggleActive = useCallback(() => {
-    if (typeof setProperty === 'function') {
-      setProperty('active', !active)
+    if (typeof saveProperty === 'function') {
+      saveProperty('active', !active)
     }
-  }, [ active, setProperty ])
+  }, [active, saveProperty])
 
   const metadata = block.metadata || {}
 
@@ -232,8 +232,8 @@ function BlockMenu ({
       newTextDecorations.push(thisDecoration)
     }
 
-    setProperty('text_decorations', newTextDecorations)
-  }, [text_decorations, setProperty])
+    saveProperty('text_decorations', newTextDecorations)
+  }, [text_decorations, saveProperty])
 
   return <PopoverMenu
     trigger={trigger}
@@ -286,7 +286,7 @@ function BlockMenu ({
       {
         (
           canEdit
-          && typeof setProperty === 'function'
+          && typeof saveProperty === 'function'
         )
         && <SubMenu
           parentMenuIsOpen={open}
@@ -308,7 +308,7 @@ function BlockMenu ({
               <MenuItem
                 key={thisColor}
                 selected={thisColor === 'default' ? color === null : color === thisColor}
-                onClick={() => setProperty('color', thisColor === 'default' ? null : thisColor)}
+                onClick={() => saveProperty('color', thisColor === 'default' ? null : thisColor)}
                 className="roundMenuItem"
               >
                 <ListItemIcon>
@@ -339,7 +339,7 @@ function BlockMenu ({
               type="text"
               placeholder="#FFFFFF"
               defaultValue={color}
-              onBlur={e => setProperty('color', e.target.value)}
+              onBlur={e => saveProperty('color', e.target.value)}
               style={{
                 width: '160px',
                 margin: '0 calc(-1 * var(--basis)) 0 0',
@@ -352,7 +352,7 @@ function BlockMenu ({
       {
         (
           canEdit
-          && typeof setProperty === 'function'
+          && typeof saveProperty === 'function'
           && type === 'text'
         )
         && <SubMenu
@@ -377,7 +377,7 @@ function BlockMenu ({
               <MenuItem
                 key={thisStyle}
                 selected={thisStyle === 'body' ? text_style === null : text_style === thisStyle}
-                onClick={() => setProperty('text_style', thisStyle === 'body' ? null : thisStyle)}
+                onClick={() => saveProperty('text_style', thisStyle === 'body' ? null : thisStyle)}
                 className="roundMenuItem"
               >
                 {getString(`block_menu_text_style_label_${thisStyle}`, thisStyle)}
@@ -390,7 +390,7 @@ function BlockMenu ({
       {
         (
           canEdit
-          && typeof setProperty === 'function'
+          && typeof saveProperty === 'function'
           && type === 'text'
         )
         && <SubMenu
@@ -432,7 +432,7 @@ function BlockMenu ({
       {
         (
           canEdit
-          && typeof setProperty === 'function'
+          && typeof saveProperty === 'function'
         )
         && <Divider style={{opacity: 0.2, marginTop:'8px', marginBottom:'8px'}} />
       }
@@ -475,7 +475,7 @@ function BlockMenu ({
       {
         (
           canEdit
-          && typeof setProperty === 'function'
+          && typeof saveProperty === 'function'
         )
         && <MenuItem className="roundMenuItem" onClick={toggleActive}>
           <ListItemIcon>
