@@ -1,7 +1,7 @@
 import { useRef, useCallback, useState, useEffect } from 'react'
 
 import HtmlInput from './HtmlInput.js'
-import useCheckPath from '../../hooks/useCheckPath.js'
+import useCheckSlug from '../../hooks/useCheckSlug.js'
 
 function SlugInput({
   defaultValue = '',
@@ -21,7 +21,7 @@ function SlugInput({
     }
   }, [])
 
-  const checkPath = useCheckPath()
+  const checkSlug = useCheckSlug()
 
   const [text, setText] = useState('')
 
@@ -41,7 +41,7 @@ function SlugInput({
       const {
         isOkay,
         errors
-      } = (await checkPath(newText)) || {}
+      } = (await checkSlug(newText)) || {}
       
       isSubmittable = isOkay
       error = errors.join('\n')
@@ -56,7 +56,7 @@ function SlugInput({
     }
   }, [
     setText,
-    checkPath,
+    checkSlug,
     onChange,
     onError,
   ])

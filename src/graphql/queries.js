@@ -104,9 +104,9 @@ export const blockMatchesRoles_Query = gql`
   }
 `
 
-export const checkPath_Query = gql`
-  query checkPath ($path: String!) {
-    checkPath (path: $path) {
+export const checkSlug_Query = gql`
+  query checkSlug ($slug: String!) {
+    checkSlug (slug: $slug) {
       isOkay
       errors
     }

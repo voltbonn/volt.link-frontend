@@ -1,22 +1,22 @@
 import { useCallback } from 'react'
 
 import { useApolloClient } from '@apollo/client'
-import { checkPath_Query } from '../graphql/queries'
+import { checkSlug_Query } from '../graphql/queries'
 
-export default function useCheckPath() {
+export default function useCheckSlug() {
   const apollo_client = useApolloClient()
 
-  const handleCheckPath = useCallback((path = '') => {
+  const handleCheckSlug = useCallback((slug = '') => {
     return new Promise(resolve => {
       apollo_client.query({
-        query: checkPath_Query,
+        query: checkSlug_Query,
         variables: {
-          path,
+          slug,
         },
       })
         .then(async ({ data }) => {
-          if (data.hasOwnProperty('checkPath')) {
-            resolve(data.checkPath)
+          if (data.hasOwnProperty('checkSlug')) {
+            resolve(data.checkSlug)
           } else {
             resolve(null)
           }
@@ -28,5 +28,5 @@ export default function useCheckPath() {
     })
   }, [apollo_client])
 
-  return handleCheckPath
+  return handleCheckSlug
 }
