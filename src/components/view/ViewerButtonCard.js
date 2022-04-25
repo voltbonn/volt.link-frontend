@@ -19,13 +19,9 @@ function ViewerButtonCard ({ block, actions = {}, locales }) {
   if (
     block
     && block.properties
-    && block.properties.trigger
-    && block.properties.action
-    && block.properties.action.url
-    && block.properties.trigger.type === 'click'
-    && block.properties.action.type === 'open_url'
+    && block.properties.url
   ) {
-    url = block.properties.action.url
+    url = block.properties.url
   }
 
   const {

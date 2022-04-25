@@ -4,7 +4,6 @@ import { withLocalization } from '../../fluent/Localized.js'
 import { getBlockColor } from '../../functions.js'
 
 import {
-  // AutoAwesomeSharp as ActionIcon,
   LinkSharp as RedirectIcon,
   ArrowForward as ToIcon,
 } from '@mui/icons-material'
@@ -12,7 +11,7 @@ import {
 import FancyInput from './FancyInput.js'
 import HtmlInput from './HtmlInput.js'
 import UrlInput from './UrlInput.js'
-import PathInput from './PathInput.js'
+import SlugInput from './SlugInput.js'
 
 
 function InlineEditorBlockRedirectRaw({
@@ -31,27 +30,27 @@ function InlineEditorBlockRedirectRaw({
 }) {
   const properties = block.properties || {}
   const {
-    trigger = {},
-    action = {}
+    slug: og_slug = '',
+    url: og_url = ''
   } = properties
 
   const textRef = useRef(properties.text || '')
   const text = textRef.current
   const setText = newValue => textRef.current = newValue
 
-  const triggerPathRef = useRef(trigger.path || '')
-  const triggerPath = triggerPathRef.current
-  const setTriggerPath = newValue => triggerPathRef.current = newValue
+  const slugRef = useRef(og_slug || '')
+  const slug = slugRef.current
+  const setSlug = newValue => slugRef.current = newValue
 
-  const linkRef = useRef(action.url || '')
-  const link = linkRef.current
-  const setLink = newValue => linkRef.current = newValue
+  const urlRef = useRef(og_url || '')
+  const url = urlRef.current
+  const setUrl = newValue => urlRef.current = newValue
 
   const publishChanges = useCallback(() => {
     if (onChange) {
       const text = textRef.current
-      const triggerPath = triggerPathRef.current
-      const link = linkRef.current
+      const slug = slugRef.current
+      const url = urlRef.current
 
       const newBlock = {
         ...block,
@@ -61,26 +60,20 @@ function InlineEditorBlockRedirectRaw({
         },
       }
 
-      if (triggerPath === '') {
-        if (newBlock.properties.hasOwnProperty('trigger')) {
-          delete newBlock.properties.trigger
+      if (slug === '') {
+        if (newBlock.properties.hasOwnProperty('slug')) {
+          delete newBlock.properties.slug
         }
       } else {
-        newBlock.properties.trigger = {
-          type: 'path',
-          path: triggerPath,
-        }
+        newBlock.properties.slug = slug
       }
 
-      if (link === '') {
-        if(newBlock.properties.hasOwnProperty('action')) {
-          delete newBlock.properties.action
+      if (url === '') {
+        if (newBlock.properties.hasOwnProperty('url')) {
+          delete newBlock.properties.url
         }
       } else {
-        newBlock.properties.action = {
-				  type: 'open_url',
-				  url: link,
-			  }
+        newBlock.properties.url = url
       }
 
       onChange(newBlock)
@@ -137,11 +130,11 @@ function InlineEditorBlockRedirectRaw({
       volt.link/
       <FancyInput style={{ width: '100%', marginInlineStart: 'var(--basis)' }}>
         {({ setError }) => (
-          <PathInput
+          <SlugInput
             onError={setError}
-            onChange={setTriggerPath}
+            onChange={setSlug}
             onBlur={publishChanges}
-            defaultValue={triggerPath}
+            defaultValue={slug}
             placeholder={getString('trigger_input_path_placeholder')}
             style={{
               margin: 'var(--basis) 0',
@@ -164,11 +157,11 @@ function InlineEditorBlockRedirectRaw({
         {({ setError }) => (
           <UrlInput
             onError={setError}
-            onChange={setLink}
+            onChange={setUrl}
             onBlur={publishChanges}
             type="text"
-            defaultValue={link}
-            placeholder={getString('path_editor_item_link_label')}
+            defaultValue={url}
+            placeholder={getString('action_input_url_placeholder')}
             style={{
               margin: 'var(--basis) 0',
               width: '100%',

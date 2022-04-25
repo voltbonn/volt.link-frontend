@@ -523,9 +523,8 @@ function BlockTree({
           !!node
           && !!node.block
           && !!node.block.properties
-          && !!node.block.properties.trigger
-          && !!node.block.properties.trigger.path
-          && node.block.properties.trigger.path.toLowerCase().includes(searchStringLower)
+          && !!node.block.properties.slug
+          && node.block.properties.slug.toLowerCase().includes(searchStringLower)
         ) {
           showNode = true
         }

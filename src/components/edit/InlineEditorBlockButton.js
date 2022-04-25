@@ -22,9 +22,9 @@ function InlineEditorBlockButtonRaw({
   const properties = block.properties || {}
   const [text, setText] = useState(properties.text || '')
   const {
-    action = {}
+    url: og_url = ''
   } = properties
-  const [link, setLink] = useState(action.url || '')
+  const [url, setUrl] = useState(og_url)
 
   const publishChanges = useCallback(() => {
     if (onChange) {
@@ -36,26 +36,17 @@ function InlineEditorBlockButtonRaw({
         },
       }
 
-      if (link === '') {
-        if (newBlock.properties.hasOwnProperty('trigger')) {
-          delete newBlock.properties.trigger
-        }
-        if(newBlock.properties.hasOwnProperty('action')) {
-          delete newBlock.properties.action
+      if (url === '') {
+        if(newBlock.properties.hasOwnProperty('url')) {
+          delete newBlock.properties.url
         }
       } else {
-        newBlock.properties.trigger = {
-          type: 'click'
-        }
-        newBlock.properties.action = {
-				  type: 'open_url',
-				  url: link,
-			  }
+        newBlock.properties.url = url
       }
 
       onChange(newBlock)
     }
-  }, [onChange, block, text, link])
+  }, [onChange, block, text, url])
   
   const {
     color,
@@ -102,10 +93,10 @@ function InlineEditorBlockButtonRaw({
       {({ setError }) => (
         <UrlInput
           onError={setError}
-          onChange={setLink}
+          onChange={setUrl}
           onBlur={publishChanges}
           type="text"
-          defaultValue={link}
+          defaultValue={url}
           placeholder={getString('action_input_url_placeholder')}
           style={{
             margin: 'var(--basis) 0 0 0',

@@ -20,23 +20,10 @@ function ViewerLine ({ block, actions = {}, locales }) {
 
   let title = translateBlock(block, locales || userLocales, '')
   if (title === '') {
-    const triggerProperties = ((block.properties || {}).trigger || {})
-    const triggerType = triggerProperties.type
+    const slug = (block.properties || {}).slug || ''
 
-    if (triggerType === 'path') {
-      title = '/'+triggerProperties.path
-    } else if (block.type === 'redirect') {
-      if (triggerType === 'click') {
-        title = triggerProperties.blockId
-      } else if (triggerType === 'cron') {
-        title = triggerProperties.cron
-      } else if (triggerType === 'block_change') {
-        title = triggerProperties.blockId
-      } else if (Object.keys(triggerProperties).length > 0) {
-        title = JSON.stringify(triggerProperties)
-      } else {
-        title = getString('placeholder_main_headline')
-      }
+    if (typeof slug === 'string' && slug.length !== '') {
+      title = '/'+slug
     } else {
       title = getString('placeholder_main_headline')
     }

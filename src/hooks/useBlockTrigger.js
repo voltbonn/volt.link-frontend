@@ -15,53 +15,30 @@ export default function useBlockTrigger({ block = null }) {
 
     if (block !== null) {
       const blockId = block._id
-
-      const triggerProperties = ((block.properties || {}).trigger || {})
-      const triggerType = triggerProperties.type
-
-      const actionProperties = ((block.properties || {}).action || {})
-      const actionType = actionProperties.type
+      const type = block.type
+      const properties = block.properties || {}
+      const slug = properties.slug || ''
+      const url = properties.url || ''
 
       if (
-        triggerType === 'path'
-        || triggerType === 'click'
+        type === 'redirect'
+        && typeof url === 'string'
+        && url.length > 0
       ) {
-        if (
-          actionType === 'open_url'
-          && typeof actionProperties.url === 'string'
-          && actionProperties.url.length > 0
-        ) {
-          const url = actionProperties.url || ''
-          newLink = url
-          newPath = null // `/${triggerProperties.path}`
-          // newOnClick = () => window.open(newLink, '_blank')
-        } else if (
-          actionType === 'render_block'
-          && typeof triggerProperties.path === 'string'
-          && triggerProperties.path.length > 0
-        ) {
-          if (
-            typeof actionProperties.blockId === 'string'
-            && actionProperties.blockId.length > 0
-          ) {
-            newLink = `${window.domains.frontend}${triggerProperties.path}=${actionProperties.blockId}`
-            newPath = `/${triggerProperties.path}=${actionProperties.blockId}`
-            // newOnClick = () => navigate(newLink)
-          } else {
-            newLink = `${window.domains.frontend}${triggerProperties.path}=${blockId}`
-            newPath = `/${triggerProperties.path}=${blockId}`
-            // newOnClick = () => navigate(newLink)
-          }
-        } else {
-          newLink = `/${blockId}/view`
-          newPath = `/${blockId}`
-          // newOnClick = () => navigate(newLink)
-        }
-        // TODO: add support for other trigger types (run_script, ...)
+        newLink = url
+        newPath = null // `/${properties.slug}`
+        // newOnClick = () => window.open(newLink, '_blank')
+      } else if (
+        typeof slug === 'string'
+        && slug.length > 0
+      ) {
+        newLink = `${window.domains.frontend}${slug}=${blockId}`
+        newPath = `/${slug}=${blockId}`
+        // newOnClick = () => navigate(newPath)
       } else {
         newLink = `${window.domains.frontend}${blockId}/view`
         newPath = `/${blockId}`
-        // newOnClick = () => navigate(newLink)
+        // newOnClick = () => navigate(newPath)
       }
     }
 

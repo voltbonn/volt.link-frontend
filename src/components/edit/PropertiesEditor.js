@@ -5,14 +5,12 @@ import { useState, useCallback, useEffect } from 'react'
 import classes from './PropertiesEditor.module.css'
 
 import { Localized, withLocalization } from '../../fluent/Localized.js'
-// import UrlInput from './UrlInput.js'
-import CheckboxInput from './CheckboxInput.js'
 import HtmlInput from './HtmlInput.js'
-// import FancyInput from './FancyInput.js'
+import FancyInput from './FancyInput.js'
 import CoverphotoPicker from './CoverphotoPicker.js'
 import IconPicker from './IconPicker.js'
-import TriggerInput from './TriggerInput.js'
-import ActionInput from './ActionInput.js'
+import SlugInput from './SlugInput.js'
+import UrlInput from './UrlInput.js'
 
 // function stripTmpIds(array){
 //   return [...array].map(obj => {
@@ -65,8 +63,8 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       privacy_policy: 'string',
       tags: 'string',
       checked: 'boolean',
-      trigger: 'object',
-      action: 'object',
+      slug: 'string',
+      url: 'string',
       pronouns: 'string',
     }
 
@@ -204,30 +202,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   //     </div>
   //     </div>
   //   </>
-  // // } else if (type === 'redirect') {
-  // //   propertiesFrameContent = <>
-  // //     <div className={classes.properties_row}>
-  // //     <h3><Localized id="path_editor_redirect_label" /></h3>
-  // //     <FancyInput>
-  // //       {({ setError }) => (
-  // //         <UrlInput
-  // //           onError={setError}
-  // //           onBlur={newValue => updateProperty('link', newValue)}
-  // //           type="text"
-  // //           placeholder={getString('path_editor_redirect_placeholder')}
-  // //           aria-label={getString('path_editor_redirect_label')}
-  // //           defaultValue={properties.link}
-  // //           style={{
-  // //             marginRight: '0',
-  // //             marginLeft: '0',
-  // //             width: '100%'
-  // //           }}
-  // //           className="show_border_on_active"
-  // //         />
-  // //       )}
-  // //     </FancyInput>
-  // //     </div>
-  // //   </>
   // } else if (type === 'person') {
   //   propertiesFrameContent = <>
   //     <div className={classes.properties_row}>
@@ -248,6 +222,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   //   </>
   // } else
   if (type === 'checkbox') {
+  if (type === 'button' || type === 'redirect') {
     propertiesFrameContent = <>
       <div className={classes.properties_row}>
         <h3><Localized id="properties_editor_checked_label" /></h3>
@@ -262,92 +237,27 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         />
       </div>
     </>
-  } else if (type === 'button') {
-    propertiesFrameContent = <>
-      <div className={classes.properties_row}>
-        <h3><Localized id="properties_editor_action_label" /></h3>
-        <ActionInput
-          onChange={newValue => updateProperty('action', newValue)}
-          defaultValue={properties.action || {}}
-          style={{
-            marginRight: '0',
-            marginLeft: '0',
-            width: '100%'
-          }}
-        />
-      </div>
-    </>
-  } else if (type === 'page' || type === 'person') {
-    propertiesFrameContent = <>
-      <div className={classes.properties_row}>
-        <h3><Localized id="properties_editor_trigger_path_label" /></h3>
-        <TriggerInput
-          onChange={newValue => updateProperty('trigger', newValue)}
-          defaultValue={properties.trigger || {}}
-          style={{
-            marginRight: '0',
-            marginLeft: '0',
-            width: '100%'
-          }}
-        />
-      </div>
-    </>
-  } else if (type === 'redirect') {
-    propertiesFrameContent = <>
-      <div className={classes.properties_row}>
-        <h3><Localized id="properties_editor_trigger_path_label" /></h3>
-        <TriggerInput
-          onChange={newValue => updateProperty('trigger', newValue)}
-          defaultValue={properties.trigger || {}}
-          style={{
-            marginRight: '0',
-            marginLeft: '0',
-            width: '100%'
-          }}
-        />
-      </div>
       <div className={classes.properties_row}>
         <h3><Localized id="properties_editor_action_url_label" /></h3>
-        <ActionInput
-          onChange={newValue => updateProperty('action', newValue)}
-          defaultValue={properties.action || {}}
-          style={{
-            marginRight: '0',
-            marginLeft: '0',
-            width: '100%'
-          }}
-        />
+        <FancyInput style={{ width: '100%' }}>
+          {({ setError }) => (
+            <UrlInput
+              onError={setError}
+              onChange={newValue => updateProperty('url', newValue)}
+              type="text"
+              defaultValue={properties.url || ''}
+              placeholder={getString('path_editor_item_link_label')}
+              style={{
+                marginRight: '0',
+                marginLeft: '0',
+                width: '100%'
+              }}
+            />
+          )}
+        </FancyInput>
       </div>
     </>
   }
-  // else if (type === 'automation') {
-  //   propertiesFrameContent = <>
-  //     <div className={classes.properties_row}>
-  //       <h3><Localized id="properties_editor_trigger_label" /></h3>
-  //       <TriggerInput
-  //         onChange={newValue => updateProperty('trigger', newValue)}
-  //         defaultValue={properties.trigger || {}}
-  //         style={{
-  //           marginRight: '0',
-  //           marginLeft: '0',
-  //           width: '100%'
-  //         }}
-  //       />
-  //     </div>
-  //     <div className={classes.properties_row}>
-  //       <h3><Localized id="properties_editor_action_label" /></h3>
-  //       <ActionInput
-  //         onChange={newValue => updateProperty('action', newValue)}
-  //         defaultValue={properties.action || {}}
-  //         style={{
-  //           marginRight: '0',
-  //           marginLeft: '0',
-  //           width: '100%'
-  //         }}
-  //       />
-  //     </div>
-  //   </>
-  // }
 
   return <>
     {
@@ -386,11 +296,38 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       />
     </div>
 
-    <div className={classes.propertiesFrame} style={
-      propertiesFrameContent === null
-        ? { display: 'none' }
-        : null
-    }>
+    <div
+      className={classes.propertiesFrame}
+      // style={
+      //   propertiesFrameContent === null
+      //     ? { display: 'none' }
+      //     : null
+      // }
+    >
+      <div className={classes.properties_row}>
+        <h3><Localized id="properties_editor_trigger_path_label" /></h3>
+        <FancyInput
+          style={{
+            flexGrow: '1',
+          }}
+        >
+          {({ setError }) => (
+            <SlugInput
+              onError={setError}
+              placeholder={getString('trigger_input_path_placeholder')}
+              defaultValue={properties.slug || ''}
+              onBlur={newValue => updateProperty('slug', newValue)}
+              style={{
+                marginRight: '0',
+                marginLeft: '0',
+                width: '100%'
+              }}
+            // className="show_border_on_active"
+            />
+          )}
+        </FancyInput>
+      </div>
+      
       {propertiesFrameContent}
 
       {/* <div className={classes.properties_row}>

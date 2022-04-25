@@ -3,7 +3,7 @@ import { useRef, useCallback, useState, useEffect } from 'react'
 import HtmlInput from './HtmlInput.js'
 import useCheckPath from '../../hooks/useCheckPath.js'
 
-function PathInput({
+function SlugInput({
   defaultValue = '',
   onChange,
   onBlur,
@@ -77,4 +77,4 @@ function PathInput({
   />
 }
 
-export default PathInput
+export default SlugInput

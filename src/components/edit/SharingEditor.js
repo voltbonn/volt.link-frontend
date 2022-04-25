@@ -59,46 +59,37 @@ function SharingEditor({
   onChange,
   onClose,
 }) {
-  const [ path, setPath ] = useState('')
+  const [ slug, setSlug ] = useState('')
 
   useEffect(() => {
     const properties = defaultBlock.properties || {}
-    const initialPath = (properties.trigger || {}).path || ''
+    const initialSlug = properties.slug || ''
 
-    setPath(initialPath)
-  }, [ defaultBlock, setPath ])
+    setSlug(initialSlug)
+  }, [defaultBlock, setSlug ])
 
-  const savePath = useCallback(newPath => {
+  const saveSlug = useCallback(newSlug => {
     const newProperties = {...(defaultBlock.properties || {})}
 
-    if (newPath === '') {
-      if (newProperties.hasOwnProperty('trigger')) {
-        delete newProperties.trigger
-      }
-      if (newProperties.hasOwnProperty('action')) {
-        delete newProperties.action
+    if (newSlug === '') {
+      if (newProperties.hasOwnProperty('slug')) {
+        delete newProperties.slug
       }
     } else {
-      newProperties.trigger = {
-		  	type: 'path',
-		  	path: newPath,
-		  }
-		  newProperties.action = {
-		  	type: 'render_block',
-		  }
+      newProperties.slug = newSlug
     }
 
-    setPath(newPath)
+    setSlug(newSlug)
     onChange(newProperties)
   }, [
     defaultBlock,
     onChange,
-    setPath,
+    setSlug,
   ])
 
   const viewStatistics = () => {
     const a = document.createElement('a')
-    a.href = `https://umami.qiekub.org/share/s0ZHBZbb/volt.link?url=%2F${path}`
+    a.href = `https://umami.qiekub.org/share/s0ZHBZbb/volt.link?url=%2F${slug}`
     a.target = '_blank'
     a.rel = 'noreferrer'
     a.click()
@@ -106,14 +97,14 @@ function SharingEditor({
 
   const gotoQrcodePage = () => {
     const a = document.createElement('a')
-    a.href = `https://qrcode.volt.link/?c=volt.link/${path}`
+    a.href = `https://qrcode.volt.link/?c=volt.link/${slug}`
     a.target = '_blank'
     a.rel = 'noreferrer'
     a.click()
   }
 
   const copyUrl = () => {
-    copyTextToClipboard(`https://volt.link/${path}`)
+    copyTextToClipboard(`https://volt.link/${slug}`)
     alert('Copied to clipboard 👍')
   }
 
@@ -140,8 +131,8 @@ function SharingEditor({
             <div className={classes.inputWrapper}>
              <span style={{ paddingRight: 'var(--basis)' }}>volt.link/</span>
              <HtmlInput
-                defaultValue={path}
-                onBlur={savePath}
+                defaultValue={slug}
+                onBlur={saveSlug}
                 linebreak={false}
                 className={classes.input}
                 style={{ margin: '0' }}
@@ -152,7 +143,7 @@ function SharingEditor({
 
             <div className={classes.actions}>
               {
-                path !== ''
+                slug !== ''
                 ? <div>
                     <button className="text hasIcon" onClick={gotoQrcodePage} style={{ marginInlineStart: '0' }}>
                       <QrCodeIcon className="icon" />
