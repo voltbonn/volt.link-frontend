@@ -35,6 +35,8 @@ const locales = {
   sl: 'slovenščina', // Slovenian
   // uk: 'украї́нська мо́ва', // Ukrainian
   // cy: 'Cymraeg', // Welsh
+  sv: 'svenska', // Swedish
+  se: 'davvisámegiella (Northern Sami)', // Northern Sami
 }
 
 const localesArray = Object.entries(locales)
