@@ -110,7 +110,7 @@ function RolesMenu({
       
         {
           typeof removePermission === 'function'
-          ? <>
+          ? <div>
             <Divider style={{ opacity: 0.2 }} />
             <MenuItem
               onClick={removePermission}
@@ -123,7 +123,7 @@ function RolesMenu({
                 Remove
               </ListItemText>
             </MenuItem>
-          </>
+          </div>
           : null
         }
 

@@ -139,7 +139,7 @@ export default function SidebarContent() {
 
         {
           loggedIn
-            ? <>
+            ? <div>
               <MenuItem
                 component="a"
                 target="_blank"
@@ -162,7 +162,7 @@ export default function SidebarContent() {
                 </ListItemIcon>
                 <ListItemText primary={<Localized id="volt_link_statistics" />} />
               </MenuItem>
-            </>
+            </div>
             : null
         }
 
