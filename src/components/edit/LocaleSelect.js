@@ -24,7 +24,7 @@ const locales = {
   sv: 'Svenska', // Swedish
   nb: 'Norsk bokmål', // Norwegian
   fi: 'Suomi', // Finish
-  se: 'davvisámegiella (Northern Sami)', // Northern Sami
+  se: 'Davvisámegiella (Northern Sami)', // Northern Sami
   mt: 'Malti', // Maltese
   pl: 'Język polski', // Polish
   ru: 'русский язык', // Russian
