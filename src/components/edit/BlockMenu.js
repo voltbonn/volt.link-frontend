@@ -126,6 +126,17 @@ function BlockMenu ({
 }) {
   const { loggedIn, userroles } = useUser()
 
+  if (
+    !(
+      block.hasOwnProperty('properties')
+      && typeof block.properties === 'object'
+      && block.properties !== null
+      && !Array.isArray(block.properties)
+    )
+  ) {
+    block.properties = {}
+  }
+
   const { _id = '', type = '', properties = {}, computed = {} } = block
   let {
     active = true,

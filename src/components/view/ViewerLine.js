@@ -16,11 +16,16 @@ import classes from './ViewerLine.module.css'
 function ViewerLine ({ block, actions = {}, locales }) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
+  if (block.properties === null) {
+    block.properties = {}
+  }
+  const properties = block.properties
+  
   const { link, path } = useBlockTrigger({ block })
 
   let title = translateBlock(block, locales || userLocales, '')
   if (title === '') {
-    const slug = (block.properties || {}).slug || ''
+    const slug = properties.slug || ''
 
     if (typeof slug === 'string' && slug.length !== '') {
       title = '/'+slug
@@ -30,10 +35,10 @@ function ViewerLine ({ block, actions = {}, locales }) {
   }
   
   let isSquareIcon = false
-  let icon_url = getImageUrl(block.properties.icon)
+  let icon_url = getImageUrl(properties.icon)
   if (!icon_url) {
     isSquareIcon = true
-    icon_url = getImageUrl(block.properties.coverphoto)
+    icon_url = getImageUrl(properties.coverphoto)
   }
 
   let iconComponent = null
