@@ -173,13 +173,13 @@ function BlockMenu ({
 
   const mutationFunction = useMutation()
   const navigate = useNavigate()
-  const createChildBlock = useCallback(async newChildBlock => {
+  const createChildBlock = useCallback(async ({ type }) => {
     try {
-      if (newChildBlock) {
+      if (typeof type === 'string' && type.length > 0) {
         const { saveBlock: newChildBlockId } = await mutationFunction({
           mutation: saveBlock_Mutation,
           variables: {
-            block: newChildBlock,
+            block: { type },
           },
         })
 

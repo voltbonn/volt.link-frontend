@@ -79,15 +79,19 @@ export default function SidebarContent() {
   const saveBlock = useSaveBlock()
   const navigate = useNavigate()
 
-  const createBlock = useCallback(newBlock => {
-    saveBlock(newBlock)
-      .then(gottenBlock => {
-        navigate(`/${gottenBlock._id}/edit`)
+  const createBlock = useCallback(({ type }) => {
+    if (typeof type === 'string' && type.length > 0) {
+      saveBlock({
+        type,
       })
-      .catch(error => {
-        console.error(error)
-      })
-  }, [ saveBlock, navigate ])
+        .then(gottenBlock => {
+          navigate(`/${gottenBlock._id}/edit`)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+  }, [saveBlock, navigate])
 
   const scrollContainerRef = useRef(null)
 
