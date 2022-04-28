@@ -18,6 +18,7 @@ export const locales = {
   it: 'Italiano',
   // pl: 'Polska',
   // ru: 'Pусский',
+  se: 'Davvisámegiella (Northern Sami)',
 }
 
 const _supportedLocales_ = Object.keys(locales)
