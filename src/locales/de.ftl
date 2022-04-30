@@ -116,7 +116,7 @@ filter_menu_showing_archiv = Zeigt Archiv
 filter_menu_show_editing = Nur Bearbeitbares
 filter_menu_showing_editing = Zeigt nur Bearbeitbares
 
-block_menu_info_created = Erstellt  am
+block_menu_info_created = Erstellt am
 block_menu_info_modified = Zuletzt geändert am
 block_menu_info_id = ID
 
