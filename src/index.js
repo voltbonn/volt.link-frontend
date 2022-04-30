@@ -108,8 +108,10 @@ function Start() {
       const newLocale = detail.locale || null
 
       if (newLocale === null) {
-        setUserLocales(navigator.languages)
-        window.localStorage.removeItem('locale')
+        if (!!userLocales && Array.isArray(userLocales) && userLocales.length > 0) { // check that userLocales is not an empty array
+          setUserLocales(navigator.languages)
+          window.localStorage.removeItem('locale')
+        }
       } else {
         setUserLocales([newLocale])
         window.localStorage.setItem('locale', newLocale)
@@ -120,7 +122,7 @@ function Start() {
     return () => {
       window.removeEventListener('change_locale', change_locale)
     }
-  }, [setUserLocales])
+  }, [userLocales, setUserLocales])
 
 
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')

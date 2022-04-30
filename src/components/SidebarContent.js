@@ -220,7 +220,7 @@ export default function SidebarContent() {
       <Divider style={{ opacity: 0.2 }} />
       <br />
 
-      <div style={{ display: 'none' }}>
+      <div>
         <span style={{
           marginInlineEnd: 'var(--basis_x4)',
         }}>
@@ -232,14 +232,14 @@ export default function SidebarContent() {
           options={ui_locales}
         />
       </div>
-      {/*
+      {
         typeof choose_locale_information_string === 'string'
         && choose_locale_information_string !== ''
           ? <p style={{ marginBottom: '0' }}>
             <Localized id="choose_locale_information" />
           </p>
           : null
-      */}
+      }
 
       <br />
       <Divider style={{ opacity: 0.2 }} />
