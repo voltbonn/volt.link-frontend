@@ -11,7 +11,7 @@ workplace_group = Gruppo Workplace di VoltLink
 contact = Contattami / Feedback
 source_code = Codice Sorgente
 
-choose_locale = Scegli la lingua:
+choose_locale = Cambio di lingua:
 
 path_editor_edit_permission_error = Non hai l'autorizzazione per modificare questo link.
 

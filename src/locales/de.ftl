@@ -12,7 +12,7 @@ volt_link_statistics = volt.link Statistiken
 contact = Kontakt / Feedback
 source_code = Quellcode
 
-choose_locale = Sprache wählen:
+choose_locale = Sprachen Wechsler:
 
 path_editor_edit_permission_error = Du darfst diesen Link nicht bearbeiten.
 
