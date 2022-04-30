@@ -54,7 +54,11 @@ function LocaleSelect({
     || defaultValue === ''
     || locales.hasOwnProperty(defaultValue) === false
   ) {
-    defaultValue = '_'
+    if (options.length > 0) {
+      defaultValue = options[0]
+    } else {
+      defaultValue = '_'
+    }
   }
 
   const [changedLocale, setChangedLocale] = useState(defaultValue)

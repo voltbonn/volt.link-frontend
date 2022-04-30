@@ -228,7 +228,7 @@ export default function SidebarContent() {
         </span>
         <LocaleSelect
           onChange={handleLocaleChange}
-          defaultValue={userLocales[0] || ui_locales[0]}
+          defaultValue={userLocales[0]}
           options={ui_locales}
         />
       </div>
