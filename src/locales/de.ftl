@@ -1,3 +1,6 @@
+### More information about the file structure can be found on projectfluent.org
+### Or in more detail on https://projectfluent.org/fluent/guide/
+
 locale_menu_choose_locale_label = Sprache wählen
 locale_menu_hide_translation_help_label = Übersetzungshilfe verbergen
 locale_menu_show_translation_help_label = Übersetzungshilfe anzeigen
