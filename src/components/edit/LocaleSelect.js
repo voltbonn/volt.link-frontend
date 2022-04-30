@@ -64,6 +64,8 @@ function LocaleSelect({
   const [changedLocale, setChangedLocale] = useState(defaultValue)
 
   const handleLocaleChange = useCallback(newLocale => {
+    // TODO: get best match with fluent
+
     setChangedLocale(newLocale)
     
     if (newLocale === '_') {
