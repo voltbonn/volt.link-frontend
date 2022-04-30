@@ -97,7 +97,6 @@ block_menu_type_label_page = Page
 block_menu_type_label_redirect = Redirect
 block_menu_type_label_person = Person
 block_menu_type_label_button = Button
-block_menu_type_label_headline = Headline
 block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider

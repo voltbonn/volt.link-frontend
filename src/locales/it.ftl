@@ -94,7 +94,9 @@ block_menu_type_label_page = Pagina
 block_menu_type_label_redirect = Reindirizza
 block_menu_type_label_person = Persone
 block_menu_type_label_button = Tasto
-block_menu_type_label_headline = Titolo
+
+# block_menu_type_label_headline = Titolo
+
 block_menu_type_label_text = Testo
 block_menu_type_label_code = Codice
 block_menu_type_label_divider = Divisore

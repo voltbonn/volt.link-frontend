@@ -73,7 +73,9 @@ block_menu_type_label_page = Báiki
 block_menu_type_label_redirect = Joatkke sádden
 block_menu_type_label_person = Olmmoš
 block_menu_type_label_button = Boallu
-block_menu_type_label_headline = Namahus
+
+# block_menu_type_label_headline = Namahus
+
 block_menu_type_label_text = Teavstta
 block_menu_type_label_code = Koda
 block_menu_type_label_divider = Earolinnjá
