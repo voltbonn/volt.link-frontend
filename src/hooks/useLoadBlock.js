@@ -23,14 +23,22 @@ function useLoadBlock() {
       })
     } else {
       const loadingDataPromise = new Promise(resolve => {
-        const preloaded_block = window.SERVER_DATA.preloaded_block || null
+        let preloaded_block = null
+        if (
+          typeof window.SERVER_DATA === 'object'
+          && window.SERVER_DATA !== null
+          && !Array.isArray(window.SERVER_DATA)
+        ) {
+          preloaded_block = window.SERVER_DATA.preloaded_block || null
+        }
+
         if (
           typeof preloaded_block === 'object'
           && preloaded_block !== null
           && preloaded_block.hasOwnProperty('_id')
           && preloaded_block._id === _id
         ) {
-          window.SERVER_DATA.preloaded_block = null
+          window.SERVER_DATA = { preloaded_block: null }
           resolve('got-preloaded-data')
           final_resolve(preloaded_block)
         } else {
