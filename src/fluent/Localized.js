@@ -103,6 +103,7 @@ function useLocalization() {
 
   return {
     ...l10n,
+    userLocales: l10n.userLocales || [],
     getString,
     fluentByAny,
     translateBlock,

@@ -60,7 +60,10 @@ export default function SidebarContent() {
     }
   }, [])
 
-  const { getString, userLocales } = useLocalization()
+  const {
+    getString,
+    userLocales = [],
+  } = useLocalization()
 
   const [showBlockTree, setShowBlockTree] = useState(false)
   var efficientSetShowBlockTree = useCallback(()=>{
