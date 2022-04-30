@@ -27,7 +27,7 @@ function withLocalization(Inner) {
   function WithLocalization(props) {
     const l10n = React.useContext(FluentContext)
 
-    const getString = (id, args, fallback) => l10n.getString(id, args, fallback || ' ')
+    const getString = (id, args, fallback) => l10n.getString(id, args, fallback || '')
 
     const fluentByObject = (object, fallback) => {
       if (!(!!fallback)) {
