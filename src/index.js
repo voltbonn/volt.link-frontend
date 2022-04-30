@@ -107,7 +107,6 @@ function Start() {
       const detail = event.detail || {}
       const newLocale = detail.locale || null
 
-      console.log('newLocale', newLocale)
       if (newLocale === null) {
         setUserLocales(navigator.languages)
         window.localStorage.removeItem('locale')
