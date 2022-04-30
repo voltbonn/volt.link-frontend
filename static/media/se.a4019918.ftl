@@ -1,3 +1,6 @@
+### More information about the file structure can be found on projectfluent.org
+### Or in more detail on https://projectfluent.org/fluent/guide/
+
 locale_menu_choose_locale_label = Valljet Báikki
 locale_menu_hide_translation_help_label = Čiega Jorgalusveahki
 locale_menu_show_translation_help_label = Čájet Jorgalusveahki
@@ -70,7 +73,9 @@ block_menu_type_label_page = Báiki
 block_menu_type_label_redirect = Joatkke sádden
 block_menu_type_label_person = Olmmoš
 block_menu_type_label_button = Boallu
-block_menu_type_label_headline = Namahus
+
+# block_menu_type_label_headline = Namahus
+
 block_menu_type_label_text = Teavstta
 block_menu_type_label_code = Koda
 block_menu_type_label_divider = Earolinnjá

@@ -1,3 +1,6 @@
+### More information about the file structure can be found on projectfluent.org
+### Or in more detail on https://projectfluent.org/fluent/guide/
+
 locale_menu_choose_locale_label = Sprache wählen
 locale_menu_hide_translation_help_label = Übersetzungshilfe verbergen
 locale_menu_show_translation_help_label = Übersetzungshilfe anzeigen
@@ -92,8 +95,6 @@ block_menu_type_label_page = Seite
 block_menu_type_label_redirect = Weiterleitung
 block_menu_type_label_person = Person
 block_menu_type_label_button = Button
-block_menu_type_label_headline = Überschrift
-block_menu_type_label_headline3 = Überschrift 3
 block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Trennlinie
