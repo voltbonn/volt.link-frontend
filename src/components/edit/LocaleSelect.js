@@ -74,7 +74,7 @@ function LocaleSelect({
       onChange(newLocale)
     }
   }, [ setChangedLocale, onChange ])
-  
+
   return (
     <PopoverMenu
       trigger={(triggerProps, { isOpen }) => (
