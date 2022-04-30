@@ -26,11 +26,14 @@ import useSaveBlock from '../hooks/useSaveBlock.js'
 
 import { useNavigate, useMatch } from 'react-router-dom'
 
-import { Localized } from '../fluent/Localized.js'
+import { Localized, useLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
+
+import LocaleSelect from './edit/LocaleSelect.js'
+import { locales } from '../fluent/l10n.js'
 
 function debounce(func, wait, immediate) {
   // Source: underscore.js
@@ -56,6 +59,8 @@ export default function SidebarContent() {
       mounted.current = false
     }
   }, [])
+
+  const { getString, userLocales } = useLocalization()
 
   const [showBlockTree, setShowBlockTree] = useState(false)
   var efficientSetShowBlockTree = useCallback(()=>{
@@ -94,6 +99,24 @@ export default function SidebarContent() {
   }, [saveBlock, navigate])
 
   const scrollContainerRef = useRef(null)
+
+  const handleLocaleChange = useCallback(newLocale => {
+    const newEvent = new CustomEvent('change_locale', {
+      detail: {
+        locale: newLocale,
+      },
+      bubbles: true,
+      cancelable: false,
+    })
+    document.dispatchEvent(newEvent)
+  }, [])
+
+  const ui_locales = [
+    '_',
+    ...Object.keys(locales),
+  ]
+
+  const choose_locale_information_string = getString('choose_locale_information')
 
   return <div ref={scrollContainerRef} className={classes.scrollContainer}>
     <div className={classes.content}>
@@ -190,7 +213,32 @@ export default function SidebarContent() {
 
       </MenuList>
 
-      <br/>
+      <br />
+      <Divider style={{ opacity: 0.2 }} />
+      <br />
+
+      <div>
+        <span style={{
+          marginInlineEnd: 'var(--basis_x4)',
+        }}>
+          <Localized id="choose_locale" />
+        </span>
+        <LocaleSelect
+          onChange={handleLocaleChange}
+          defaultValue={userLocales[0] || '_'}
+          options={ui_locales}
+        />
+      </div>
+      {
+        typeof choose_locale_information_string === 'string'
+        && choose_locale_information_string !== ''
+          ? <p style={{ marginBottom: '0' }}>
+            <Localized id="choose_locale_information" />
+          </p>
+          : null
+      }
+
+      <br />
       <Divider style={{ opacity: 0.2 }} />
       <br/>
 

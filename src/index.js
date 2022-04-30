@@ -64,9 +64,18 @@ const client = new ApolloClient({
 //   .then(result => console.info(result));
 
 function Start() {
-  // const [userLocales, setUserLocales] = useState(['de'])
   const [userLocales, setUserLocales] = useState(navigator.languages)
   const [currentLocale, setCurrentLocale] = useState(null)
+
+  useEffect(() => {
+    // get saved locale from localStorage
+    const savedLocale = window.localStorage.getItem('locale') || null
+    if (typeof savedLocale === 'string' && savedLocale !== '') {
+      setUserLocales([savedLocale])
+    } else {
+      setUserLocales(navigator.languages)
+    }
+  }, [setUserLocales])
 
   useEffect(() => {
     if (!!window.umami) {
@@ -92,6 +101,27 @@ function Start() {
   const handleCurrentLocalesChange = useCallback(currentLocales => {
     setCurrentLocale(currentLocales.length > 0 ? currentLocales[0] : '')
   }, [setCurrentLocale])
+
+  useEffect(() => {
+    const change_locale = event => {
+      const detail = event.detail || {}
+      const newLocale = detail.locale || null
+
+      console.log('newLocale', newLocale)
+      if (newLocale === null) {
+        setUserLocales(navigator.languages)
+        window.localStorage.removeItem('locale')
+      } else {
+        setUserLocales([newLocale])
+        window.localStorage.setItem('locale', newLocale)
+      }
+    }
+
+    window.addEventListener('change_locale', change_locale)
+    return () => {
+      window.removeEventListener('change_locale', change_locale)
+    }
+  }, [setUserLocales])
 
 
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')

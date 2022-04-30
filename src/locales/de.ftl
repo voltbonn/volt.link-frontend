@@ -12,6 +12,8 @@ volt_link_statistics = volt.link Statistiken
 contact = Kontakt / Feedback
 source_code = Quellcode
 
+choose_locale = Sprache wählen:
+
 path_editor_edit_permission_error = Du darfst diesen Link nicht bearbeiten.
 
 path_editor_status_started_loading = Am laden…
