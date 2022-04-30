@@ -39,9 +39,21 @@ translate_dialog_description = Wähl die Sprachen der Texte aus und füge Übers
 path_editor_tags_placeholder = #hashtag1 #europa #social_equality
 path_editor_tags_label = Tags
 
-role_editor = Bearbeiter
-role_viewer = Betrachter
-role_owner = Besitzer
+role_editor = { $gender ->
+   [male] Bearbeiter
+   [female] Bearbeiterin
+  *[other] Bearbeiter*in
+}
+role_viewer = { $gender ->
+   [male] Betrachter
+   [female] Betrachterin
+  *[other] Betrachter*in
+}
+role_owner = { $gender ->
+   [male] Besitzer
+   [female] Besitzerin
+  *[other] Besitzer*in
+}
 role_no_access = Kein Zugriff
 
 permissions_dialog_title = Berechtigungen
