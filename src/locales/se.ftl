@@ -2,6 +2,7 @@
 ### Or in more detail on https://projectfluent.org/fluent/guide/
 
 default_locale = se
+translator_names = Ben Wald
 
 locale_menu_choose_locale_label = Valljet Báikki
 locale_menu_hide_translation_help_label = Čiega Jorgalusveahki

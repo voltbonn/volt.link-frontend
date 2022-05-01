@@ -3,6 +3,7 @@
 
 default_locale = de
 gender_options = male,female,other
+translator_names = Thomas Rosen
 
 locale_menu_choose_locale_label = Sprache wählen
 locale_menu_hide_translation_help_label = Übersetzungshilfe verbergen

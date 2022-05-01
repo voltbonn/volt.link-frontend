@@ -2,6 +2,7 @@
 ### Or in more detail on https://projectfluent.org/fluent/guide/
 
 default_locale = it
+translator_names = Lorenzo Stefani
 
 locale_menu_choose_locale_label = Scegli
 locale_menu_hide_translation_help_label = Nascondi suggerimenti di traduzione

@@ -3,6 +3,7 @@
 
 default_locale = fr
 gender_options = male,female
+translator_names = DeepL, Google Translate
 
 locale_menu_choose_locale_label = Choisir le lieu
 locale_menu_hide_translation_help_label = Cacher l'aide à la traduction
