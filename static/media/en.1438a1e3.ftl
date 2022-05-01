@@ -1,6 +1,9 @@
 ### More information about the file structure can be found on projectfluent.org
 ### Or in more detail on https://projectfluent.org/fluent/guide/
 
+# choose_locale_information_not_avaibable_en = VoltLink is currently not avaible in this language.
+# choose_locale_information_automatic_translation_en = This is an automatic translation by VoltLink.
+
 locale_menu_choose_locale_label = Choose Locale
 locale_menu_hide_translation_help_label = Hide Translation Help
 locale_menu_show_translation_help_label = Show Translation Help
