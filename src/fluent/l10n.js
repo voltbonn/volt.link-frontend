@@ -15,8 +15,8 @@ export const locales = {
   se: 'Davvisámegiella (Northern Sami)',
 
   fr: 'Français (French)',
+  es: 'Español (Spanish)',
   // nl: 'Dutch (Nederlands)',
-  // es: 'Español (Spanish)',
   // pt: 'Português (Portuguese)',
 
   // pl: 'Polska (Polish)',
