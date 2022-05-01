@@ -4,11 +4,11 @@
 # choose_locale_information_not_avaibable_en = VoltLink is currently not avaible in this language.
 # choose_locale_information_automatic_translation_en = This is an automatic translation by VoltLink.
 
+default_locale = en
+
 locale_menu_choose_locale_label = Choose Locale
 locale_menu_hide_translation_help_label = Hide Translation Help
 locale_menu_show_translation_help_label = Show Translation Help
-
-default_locale = en
 
 login = Login
 logout = Logout
