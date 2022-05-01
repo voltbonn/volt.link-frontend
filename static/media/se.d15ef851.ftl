@@ -1,10 +1,13 @@
 ### More information about the file structure can be found on projectfluent.org
 ### Or in more detail on https://projectfluent.org/fluent/guide/
 
+default_locale = se
+translator_names = Ben Wald
+
 locale_menu_choose_locale_label = Valljet Báikki
 locale_menu_hide_translation_help_label = Čiega Jorgalusveahki
 locale_menu_show_translation_help_label = Čájet Jorgalusveahki
-default_locale = se
+
 login = Sisačáliheapmi
 logout = Olggosčáliheapmi
 help_page = Veahkki / Álgoveahkki

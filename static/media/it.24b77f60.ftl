@@ -1,11 +1,12 @@
 ### More information about the file structure can be found on projectfluent.org
 ### Or in more detail on https://projectfluent.org/fluent/guide/
 
+default_locale = it
+translator_names = Lorenzo Stefani
+
 locale_menu_choose_locale_label = Scegli
 locale_menu_hide_translation_help_label = Nascondi suggerimenti di traduzione
 locale_menu_show_translation_help_label = Mostra suggerimenti di traduzione
-
-default_locale = it
 
 login = Login
 logout = Logout

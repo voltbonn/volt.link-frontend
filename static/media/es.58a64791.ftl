@@ -1,12 +1,13 @@
 ### More information about the file structure can be found on projectfluent.org
 ### Or in more detail on https://projectfluent.org/fluent/guide/
 
+default_locale = es
+gender_options = male,female
+translator_names = DeepL, Google Translate
+
 locale_menu_choose_locale_label = Elija el idioma
 locale_menu_hide_translation_help_label = Ocultar la ayuda a la traducción
 locale_menu_show_translation_help_label = Mostrar ayuda a la traducción
-
-default_locale = es
-gender_options = male,female
 
 login = Inicio de sesión
 logout = Cierre de sesión
