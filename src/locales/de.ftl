@@ -6,6 +6,7 @@ locale_menu_hide_translation_help_label = Übersetzungshilfe verbergen
 locale_menu_show_translation_help_label = Übersetzungshilfe anzeigen
 
 default_locale = de
+gender_options = male,female,other
 
 login = Anmelden
 logout = Abmelden
