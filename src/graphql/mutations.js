@@ -2,7 +2,42 @@ import { gql } from '@apollo/client'
 
 export const saveBlock_Mutation = gql`
   mutation saveBlock ($block: InputBlock!) {
-    saveBlock (block: $block)
+    saveBlock (block: $block) {
+		  _id
+		  type
+		  properties
+		  content {
+        blockId
+        block {
+          _id
+          type
+          properties
+          content {
+            blockId
+          }
+          parent
+          metadata {
+            modified
+            modified_by
+          }
+          permissions
+          computed {
+            roles
+            inherited_block_permissions
+          }
+        }
+      }
+		  parent
+		  metadata {
+        modified
+        modified_by
+      }
+      permissions
+      computed {
+        roles
+        inherited_block_permissions
+      }
+    }
   }
 `
 

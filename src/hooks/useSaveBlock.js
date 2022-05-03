@@ -4,7 +4,6 @@ import { useLocalization } from '../fluent/Localized.js'
 
 import { useApolloClient } from '@apollo/client'
 import { saveBlock_Mutation } from '../graphql/mutations.js'
-import useLoadBlock from './useLoadBlock.js'
 
 import { useSnackbar } from 'notistack'
 
@@ -29,8 +28,6 @@ function removeProperty(obj, prop) {
 
 function useSaveBlock() {
   const { getString } = useLocalization()
-
-  const loadBlock = useLoadBlock()
 
   const apollo_client = useApolloClient()
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
@@ -76,25 +73,17 @@ function useSaveBlock() {
                 })
               }
             } else {
-              const blockId = data.saveBlock
-              loadBlock(blockId)
-                .then(loadedBlock => {
-                  final_resolve(loadedBlock)
+              const block = data.saveBlock
 
-                  enqueueSnackbar(getString('path_editor_status_saved'), {
-                    variant: 'success',
-                    preventDuplicate: false,
-                    autoHideDuration: 2000,
-                  })
-                })
-                .catch(error => {
-                  console.error(error)
-                  enqueueSnackbar('' + error, {
-                    variant: 'error',
-                    preventDuplicate: true,
-                    autoHideDuration: 2000,
-                  })
-                })
+              console.log('data.saveBlock', data.saveBlock)
+
+              final_resolve(block)
+
+              enqueueSnackbar(getString('path_editor_status_saved'), {
+                variant: 'success',
+                preventDuplicate: false,
+                autoHideDuration: 2000,
+              })
             }
           })
           .catch(async error => {
@@ -140,7 +129,6 @@ function useSaveBlock() {
     closeSnackbar,
     apollo_client,
     getString,
-    loadBlock,
   ])
 
   return handleSaveBlock
