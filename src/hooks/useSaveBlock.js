@@ -121,7 +121,7 @@ function useSaveBlock() {
             })
           }
         })
-        .catch(error => console.error)
+        .catch(console.error)
 
     })
   }, [
