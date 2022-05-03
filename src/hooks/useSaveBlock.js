@@ -75,8 +75,6 @@ function useSaveBlock() {
             } else {
               const block = data.saveBlock
 
-              console.log('data.saveBlock', data.saveBlock)
-
               final_resolve(block)
 
               enqueueSnackbar(getString('path_editor_status_saved'), {
