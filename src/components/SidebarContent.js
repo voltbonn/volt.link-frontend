@@ -32,6 +32,8 @@ import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
 
+import ViewerAuto from './view/ViewerAuto.js'
+
 import LocaleSelect from './edit/LocaleSelect.js'
 import { locales } from '../fluent/l10n.js'
 
@@ -245,6 +247,11 @@ export default function SidebarContent() {
       <Divider style={{ opacity: 0.2 }} />
       <br/>
 
+      {/* Glossar: */}
+      {/* TODO: The ID should not be hard-coded. */}
+      <ViewerAuto blockId="6270fb12daa76251eb6c0391" />
+
+      {/* All blocks: */}
       {
         showBlockTree
         ? <BlockTree
