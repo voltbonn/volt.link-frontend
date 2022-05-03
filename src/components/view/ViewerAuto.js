@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 
 import { DataBothWays } from '../DataTransmat.js'
 
@@ -11,6 +11,7 @@ import classes from './ViewerAuto.module.css'
 
 import { moveBlock_Mutation, saveBlock_Mutation } from '../../graphql/mutations.js'
 import useMutation from '../../hooks/useMutation.js'
+import useLoadBlock from '../../hooks/useLoadBlock.js'
 import useUser from '../../hooks/useUser.js'
 
 function usePressedKeys({ keys = [] }) { // keys needs to lowercase
@@ -61,35 +62,66 @@ function removeProperty(obj, prop) {
   return obj
 }
 
-function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false, ...props }) {
+function ViewerAuto ({ blockId = null, block = {}, actions = {}, size = 'card', dragable = false, ...props }) {
   let component = null
+
+  const [loadedBlock, setLoadedBlock] = useState(block)
+  const loadingBlockRef = useRef(false)
 
   const { userroles } = useUser()
   const { getPressedKeys } = usePressedKeys({ keys: ['shift'] }) // returns a Set !!!
 
-  const type = block.type || null
+  const loadBlock = useLoadBlock()
+
+  useEffect(() => {
+    if (
+      !!blockId
+      && (!loadedBlock.hasOwnProperty('_id') || blockId !== loadedBlock._id)
+      && loadingBlockRef.current === false
+    ) {
+      loadingBlockRef.current = true
+
+      loadBlock(blockId)
+        .then(async loadedBlock => {
+          if (typeof loadedBlock !== 'object' || loadedBlock === null) {
+            throw new Error('ViewerAuto: loadBlock returned no object')
+          } else {
+            if (loadedBlock.type !== null) {
+              setLoadedBlock(loadedBlock)
+            }
+          }
+          loadingBlockRef.current = false
+        })
+        .catch(error => {
+          console.error(error)
+          loadingBlockRef.current = false
+        })
+    }
+  }, [blockId, loadedBlock, loadBlock, setLoadedBlock])
+
+  const type = loadedBlock.type || null
 
   switch (type) {
     case 'text':
-      component = <ViewerTextCard key={block._id} block={block} actions={actions} {...props} />
+      component = <ViewerTextCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
       break
     case 'button':
-      component = <ViewerButtonCard key={block._id} block={block} actions={actions} {...props} />
+      component = <ViewerButtonCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
       break
     case 'divider':
-      component = <ViewerDividerLine key={block._id} block={block} actions={actions} {...props} />
+      component = <ViewerDividerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
       break
     case 'page':
-      component = <ViewerLine key={block._id} block={block} actions={actions} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
       break
     case 'person':
-      component = <ViewerLine key={block._id} block={block} actions={actions} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
       break
     case 'redirect':
-      component = <ViewerLine key={block._id} block={block} actions={actions} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
       break
     default:
-      component = JSON.stringify(block) // <ViewerTextCard key={block._id} block={block} actions={actions} {...props} />
+      component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
   }
 
   const mutationFunction = useMutation()
@@ -104,11 +136,11 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false
 
       movingBlock = removeProperty(movingBlock, '__typename')
 
-      const block_roles = block.computed.roles || []
+      const block_roles = loadedBlock.computed.roles || []
       const movingBlock_roles = movingBlock.computed.roles || []
 
       if (
-        movingBlock._id !== block._id
+        movingBlock._id !== loadedBlock._id
         && (
           userroles.includes('admin')
           || (
@@ -139,7 +171,7 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false
             mutation: moveBlock_Mutation,
             variables: {
               movingBlockId: movingBlock._id,
-              newParentId: block._id,
+              newParentId: loadedBlock._id,
               newIndex: 0,
             },
           })
@@ -170,7 +202,7 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false
         }
       }
     } 
-  }, [mutationFunction, block, getPressedKeys, userroles])
+  }, [mutationFunction, loadedBlock, getPressedKeys, userroles])
 
   const handleCheckEntry = useCallback(({ data = {} }) => {
     const {
@@ -195,15 +227,15 @@ function ViewerAuto ({ block = {}, actions = {}, size = 'card', dragable = false
   }, [userroles])
 
   return <DataBothWays
-    key={block._id}
+    key={loadedBlock._id}
     draggable={dragable}
     className={classes.root}
     onTransmit={() => ({
       data: {
-        'text/plain': block.properties.text || '',
+        'text/plain': loadedBlock.properties.text || '',
         // 'text/html': '<h1>Hello world!</h1>',
         // 'text/uri-list': 'http://example.com',
-        'application/json': block,
+        'application/json': loadedBlock,
       }
     })}
     onReceive={onReceive}
