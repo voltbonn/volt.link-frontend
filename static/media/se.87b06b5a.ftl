@@ -15,6 +15,9 @@ workplace_group = VoltLink Workplace Joavku
 volt_link_statistics = Statistihkka volt.link birra
 contact = Oktavuohta / Álggahanávaštusa
 source_code = Gáldokoda
+
+choose_locale = Gielat:
+
 path_editor_edit_permission_error = Dus eai leat vuoigatvuođat rievdadit liŋka.
 path_editor_status_started_loading = Viežžamin…
 path_editor_publish = Vurke
