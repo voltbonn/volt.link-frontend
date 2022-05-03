@@ -216,6 +216,10 @@ export default function SidebarContent() {
           </MenuItem>
         </a>
 
+        {/* Glossar: */}
+        {/* TODO: The ID should not be hard-coded. */}
+        <ViewerAuto blockId="6270fb12daa76251eb6c0391" />
+
       </MenuList>
 
       <br />
@@ -246,10 +250,6 @@ export default function SidebarContent() {
       <br />
       <Divider style={{ opacity: 0.2 }} />
       <br/>
-
-      {/* Glossar: */}
-      {/* TODO: The ID should not be hard-coded. */}
-      <ViewerAuto blockId="6270fb12daa76251eb6c0391" />
 
       {/* All blocks: */}
       {
