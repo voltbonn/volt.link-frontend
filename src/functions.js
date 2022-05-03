@@ -97,13 +97,15 @@ function colorToHex(color) {
 
 
 
-function getBlockColor(block) {
+function getBlockColor(block = {}) {
   const colors = {
     color: null,
     colorRGB: null,
     contrastingColor: null,
     contrastingColorRGB: null,
   }
+
+  block.properties = block.properties || {}
 
   if (block.hasOwnProperty('properties') && block.properties.hasOwnProperty('color') && !!block.properties.color) {
     const defaultColors = ['purple', 'red', 'green', 'blue', 'yellow']

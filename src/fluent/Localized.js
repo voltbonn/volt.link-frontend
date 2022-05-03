@@ -64,10 +64,7 @@ function withLocalization(Inner) {
 
 function translateBlock (block, userLocales, fallback) {
 
-  if (block.properties === null) {
-    block.properties = {}
-  }
-  const properties = block.properties
+  const properties = block.properties || {}
   
   let locale = properties.locale || 'en'
   let text = properties.text || fallback || ''

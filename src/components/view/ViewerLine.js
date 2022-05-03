@@ -16,10 +16,7 @@ import classes from './ViewerLine.module.css'
 function ViewerLine ({ block, actions = {}, locales }) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
-  if (block.properties === null) {
-    block.properties = {}
-  }
-  const properties = block.properties
+  const properties = block.properties || {}
   
   const { link, path } = useBlockTrigger({ block })
 
