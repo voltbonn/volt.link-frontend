@@ -134,7 +134,7 @@ function InlineEditorBlockRaw({
     if (typeof propertyName === 'string') {
       const newProperties = { ...block.properties }
       if (newValue === null || newValue === undefined) {
-        delete newProperties[propertyName]
+        newProperties[propertyName] = null
       } else {
         newProperties[propertyName] = newValue
       }
