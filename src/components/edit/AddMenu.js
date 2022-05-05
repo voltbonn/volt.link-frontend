@@ -13,7 +13,7 @@ import {
   NotesSharp as TextIcon,
   Remove as DividerIcon,
   CodeSharp as CodeIcon,
-  CheckBox as CheckboxIcon,
+  CheckBoxSharp as CheckboxIcon,
   // EditSharp as EditIcon,
 } from '@mui/icons-material'
 
