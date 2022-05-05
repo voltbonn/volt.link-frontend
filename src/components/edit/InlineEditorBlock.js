@@ -43,25 +43,25 @@ function InlineEditorBlockInbetweenComponent({ type = 'text', ...props }){
   switch (type) {
     case 'button':
       component = <InlineEditorBlockButton {...props} />
-    break;
+      break;
     case 'redirect':
       component = <InlineEditorBlockRedirect {...props} />
-    break;
+      break;
     case 'divider':
       component = <InlineEditorBlockDivider {...props} />
-    break;
+      break;
     case 'checkbox':
       component = <InlineEditorBlockCheckbox {...props} />
-    break;
+      break;
     case 'person':
       component = <InlineEditorBlockPerson {...props} />
-    break;
+      break;
     case 'page':
       component = <InlineEditorBlockPage {...props} />
-    break;
+      break;
     // case 'code':
     //   component = <InlineEditorBlockCode {...props} />
-    // break;
+    //   break;
     default:
       component = <InlineEditorBlockText {...props} />
   }
