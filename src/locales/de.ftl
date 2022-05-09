@@ -142,6 +142,7 @@ placeholder_text = Text
 placeholder_code = Code
 placeholder_image_alt_text = Bild Beschreibung
 placeholder_image_url = https://assets.volteuropa.org/pfad/zum/bild.jpg
+inline_editor_image_block_explainer_title = Bild:
 
 edit_block = Bearbeiten
 view_block = Ansehen

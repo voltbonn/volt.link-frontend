@@ -91,7 +91,7 @@ function InlineEditorBlockImageRaw({
             maxHeight: '100px',
           }}
         />
-        : <p>Image:</p>
+        : getString('inline_editor_image_block_explainer_title')
     }
 
     <FancyInput>
