@@ -248,6 +248,16 @@ p,
   --prefix-icon-size: calc(var(--font-add) + var(--basis));
 }
 
+.type_caption {
+  color: inherit;
+  max-width: 100%;
+  margin: var(--basis) 0;
+  text-decoration: inherit;
+  font-size: var(--font-add);
+  --prefix-icon-size: calc(var(--font-add) + var(--basis));
+  opacity: var(--alpha-more);
+}
+
 p a,
 p a:hover,
 p a:visited,

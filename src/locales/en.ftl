@@ -104,6 +104,7 @@ block_menu_type_label_button = Button
 block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider
+block_menu_type_label_image = Image
 
 block_menu_close_menu = Close Menu
 block_menu_add_before = Add Before
@@ -131,6 +132,8 @@ placeholder_headline = Headline
 placeholder_button = Button
 placeholder_text = Text
 placeholder_code = Code
+placeholder_image_alt_text = Image Alt Text
+placeholder_image_url = https://assets.volteuropa.org/path/to/image.jpg
 
 edit_block = Edit
 view_block = View

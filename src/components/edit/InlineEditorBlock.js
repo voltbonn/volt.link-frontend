@@ -12,6 +12,7 @@ import InlineEditorBlockDivider from './InlineEditorBlockDivider.js'
 import InlineEditorBlockCheckbox from './InlineEditorBlockCheckbox.js'
 import InlineEditorBlockPerson from './InlineEditorBlockPerson.js'
 import InlineEditorBlockPage from './InlineEditorBlockPage.js'
+import InlineEditorBlockImage from './InlineEditorBlockImage.js'
 // import InlineEditorBlockCode from './InlineEditorBlockCode.js'
 
 import classes from './InlineEditorBlock.module.css'
@@ -58,6 +59,9 @@ function InlineEditorBlockInbetweenComponent({ type = 'text', ...props }){
       break;
     case 'page':
       component = <InlineEditorBlockPage {...props} />
+      break;
+    case 'image':
+      component = <InlineEditorBlockImage {...props} />
       break;
     // case 'code':
     //   component = <InlineEditorBlockCode {...props} />
