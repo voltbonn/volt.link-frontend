@@ -81,6 +81,9 @@ function InlineEditorBlockImageRaw({
   }}
   className="clickable_card active"
   >
+    <div style={{
+      marginBottom: 'var(--basis)',
+    }}>
     {
       url !== ''
         ? <img
@@ -89,10 +92,12 @@ function InlineEditorBlockImageRaw({
           style={{
             maxWidth: '150px',
             maxHeight: '100px',
+            boxShadow: 'inset 0 0 0 1px rgba(var(--on-background-rgb), var(--alpha-less))',
           }}
         />
         : getString('inline_editor_image_block_explainer_title')
     }
+    </div>
 
     <FancyInput>
       {({ setError }) => (
