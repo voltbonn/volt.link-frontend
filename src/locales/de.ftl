@@ -112,6 +112,7 @@ block_menu_type_label_button = Button
 block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Trennlinie
+block_menu_type_label_image = Bild
 
 block_menu_close_menu = Menü schließen
 block_menu_add_before = Davor hinzufügen
@@ -139,6 +140,8 @@ placeholder_headline = Überschrift
 placeholder_button = Button
 placeholder_text = Text
 placeholder_code = Code
+placeholder_image_alt_text = Bild Beschreibung
+placeholder_image_url = https://assets.volteuropa.org/pfad/zum/bild.jpg
 
 edit_block = Bearbeiten
 view_block = Ansehen
