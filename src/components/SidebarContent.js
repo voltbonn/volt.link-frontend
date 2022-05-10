@@ -19,7 +19,6 @@ import {
   Logout as LogoutIcon,
 
   Help as HelpIcon,
-  BarChartSharp as StatisticsIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
