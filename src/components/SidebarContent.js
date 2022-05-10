@@ -222,6 +222,10 @@ export default function SidebarContent() {
           {({ block }) => <ViewerAuto block={block} />}
         </BlockLoader>
 
+        {/* Tools: */}
+        <BlockLoader slug="tools">
+          {({ block }) => <ViewerAuto block={block} />}
+        </BlockLoader>
       </MenuList>
 
       <br />
