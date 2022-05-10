@@ -31,6 +31,7 @@ import useUser from '../hooks/useUser.js'
 import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
+import BlockLoader from './BlockLoader.js'
 
 import ViewerAuto from './view/ViewerAuto.js'
 
@@ -217,8 +218,9 @@ export default function SidebarContent() {
         </a>
 
         {/* Glossar: */}
-        {/* TODO: The ID should not be hard-coded. */}
-        <ViewerAuto blockId="6270fb12daa76251eb6c0391" />
+        <BlockLoader slug="glossary">
+          {({ block }) => <ViewerAuto block={block} />}
+        </BlockLoader>
 
       </MenuList>
 
