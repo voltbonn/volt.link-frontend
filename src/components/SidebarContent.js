@@ -172,8 +172,7 @@ export default function SidebarContent() {
 
         {
           loggedIn
-            ? <div>
-              <MenuItem
+            ? <MenuItem
                 component="a"
                 target="_blank"
                 href='https://volteuropa.workplace.com/groups/voltlink'
@@ -184,18 +183,6 @@ export default function SidebarContent() {
                 </ListItemIcon>
                 <ListItemText primary={<Localized id="workplace_group" />} />
               </MenuItem>
-              <MenuItem
-                component="a"
-                target="_blank"
-                href='https://umami.qiekub.org/share/s0ZHBZbb/01%20volt.link'
-                className="roundMenuItem"
-              >
-                <ListItemIcon>
-                  <StatisticsIcon />
-                </ListItemIcon>
-                <ListItemText primary={<Localized id="volt_link_statistics" />} />
-              </MenuItem>
-            </div>
             : null
         }
 
@@ -226,6 +213,17 @@ export default function SidebarContent() {
         <BlockLoader slug="tools">
           {({ block }) => <ViewerAuto block={block} />}
         </BlockLoader>
+
+        {/* Statistics about volt.link: */}
+        {
+          loggedIn
+            ? <BlockLoader slug="stats">
+                {({ block }) => <ViewerAuto block={block} />}
+              </BlockLoader>
+            : null
+        }
+        
+
       </MenuList>
 
       <br />
