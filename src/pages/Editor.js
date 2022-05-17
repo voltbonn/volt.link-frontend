@@ -41,7 +41,7 @@ function Editor() {
         console.error(error)
         setCanEdit(false)
       })
-  }, [ id, blockMatchesRoles, setCanEdit ])
+  }, [id, blockMatchesRoles, setCanEdit])
 
   useEffect(() => {
     if (
