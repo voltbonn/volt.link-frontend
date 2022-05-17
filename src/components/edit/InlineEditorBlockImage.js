@@ -89,6 +89,7 @@ function InlineEditorBlockImageRaw({
         ? <img
           src={url}
           alt={text}
+          title={text}
           style={{
             maxWidth: '150px',
             maxHeight: '100px',

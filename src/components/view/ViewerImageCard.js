@@ -39,6 +39,7 @@ function ViewerImageCard({ block, actions = {}, locales }) {
       <img
         src={image_url}
         alt={text}
+        title={text}
         style={{
           maxWidth: '100%',
           margin: '0 auto',
