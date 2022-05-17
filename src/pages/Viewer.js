@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 
 import { Helmet } from 'react-helmet'
+import Twemoji from '../components/Twemoji.js'
 
 import { getImageUrl } from '../functions.js'
 
@@ -215,7 +216,6 @@ function Viewer () {
 
   const title = translateBlock(block, locales, getString('placeholder_main_headline'))
   const coverphoto_url = getImageUrl(properties.coverphoto)
-  const icon_url = getImageUrl(properties.icon)
 
   // const pronouns = properties.pronouns || ''
   
@@ -252,6 +252,37 @@ function Viewer () {
   let metadata_image_url = ''
   if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
     metadata_image_url = `${window.domains.backend}download_url?f=jpg&w=1000&h=1000&url=${encodeURIComponent(coverphoto_url)}`
+  }
+
+
+  let iconComponent = null
+
+  if (
+    // TODO: is the check overkill ? 😅
+    properties.hasOwnProperty('icon')
+    && typeof properties.icon === 'object'
+    && properties.icon !== null
+    && !Array.isArray(properties.icon)
+    && properties.icon.hasOwnProperty('type')
+    && typeof properties.icon.type === 'string'
+    && properties.icon.type === 'emoji'
+    && properties.icon.hasOwnProperty('emoji')
+    && typeof properties.icon.emoji === 'string'
+    && properties.icon.emoji.length !== 0
+  ) {
+    iconComponent = <Twemoji className={`${classes.icon} ${coverphoto_url === '' ? '' : classes.coverphotoIsSet}`} emoji={properties.icon.emoji} />
+  }
+
+  if (iconComponent === null) {
+    let icon_url = getImageUrl(properties.icon)
+    if (typeof icon_url === 'string' && icon_url.length !== 0) {
+      iconComponent = <div
+        style={{
+          backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=400&h=400&url=${encodeURIComponent(icon_url)})`
+        }}
+        className={`${classes.icon} ${coverphoto_url === '' ? '' : classes.coverphotoIsSet}`}
+      ></div>
+    }
   }
 
   return <div className={classes.viewer}>
@@ -292,13 +323,7 @@ function Viewer () {
       <main className={`${classes.contentWrapper}`}>
         {
           (type === 'page' || type === 'person' || type === 'redirect')
-          && icon_url !== ''
-            ? <div
-                style={{
-                  backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=400&h=400&url=${encodeURIComponent(icon_url)})`
-                }}
-                className={`${classes.icon} ${coverphoto_url === '' ? classes.coverphotoIsNotSet : classes.coverphotoIsSet}`}
-              ></div>
+            ? iconComponent
             : null
         }
         {

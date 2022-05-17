@@ -2,6 +2,7 @@ import { useLocalization } from '../../fluent/Localized.js'
 
 import { getImageUrl, getBlockColor } from '../../functions.js'
 import useBlockTrigger from '../../hooks/useBlockTrigger.js'
+import Twemoji from '../Twemoji.js'
 
 import {
   InsertDriveFile as PageIcon,
@@ -31,15 +32,40 @@ function ViewerLine ({ block, actions = {}, locales, forceId }) {
     }
   }
   
-  let isSquareIcon = false
-  let icon_url = getImageUrl(properties.icon)
-  if (!icon_url) {
-    isSquareIcon = true
-    icon_url = getImageUrl(properties.coverphoto)
+  let iconComponent = null
+
+  if (
+    // TODO: is the check overkill ? 😅
+    properties.hasOwnProperty('icon')
+    && typeof properties.icon === 'object'
+    && properties.icon !== null
+    && !Array.isArray(properties.icon)
+    && properties.icon.hasOwnProperty('type')
+    && typeof properties.icon.type === 'string'
+    && properties.icon.type === 'emoji'
+    && properties.icon.hasOwnProperty('emoji')
+    && typeof properties.icon.emoji === 'string'
+    && properties.icon.emoji.length !== 0
+  ) {
+    iconComponent = <Twemoji className={classes.icon} emoji={properties.icon.emoji} /> 
   }
 
-  let iconComponent = null
-  if (icon_url === '') {
+  if (iconComponent === null) {
+    let isSquareIcon = false
+    let icon_url = getImageUrl(properties.icon)
+    
+    if (!icon_url) {
+      // coverphoto fallback
+      isSquareIcon = true
+      icon_url = getImageUrl(properties.coverphoto)
+    }
+
+    if (typeof icon_url === 'string' && icon_url.length !== 0) {
+      iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={title}></div>
+    }
+  }
+
+  if (iconComponent === null) {
     switch (block.type) {
       case 'person':
         iconComponent = <PersonIcon className={classes.icon} />
@@ -49,9 +75,7 @@ function ViewerLine ({ block, actions = {}, locales, forceId }) {
         break
       default:
       iconComponent = <PageIcon className={classes.icon} />
-    }
-  } else {
-    iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={title}></div>
+    }    
   }
 
 

@@ -69,6 +69,10 @@
   width: var(--icon-size);
   height: var(--icon-size);
 }
+.icon img {
+  width: 100% !important;
+  height: 100% !important;
+}
 /*
 .icon:after {
   content: '';
