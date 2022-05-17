@@ -44,10 +44,11 @@ function Viewer () {
     properties: {},
     content: [],
   })
+  const properties = block.properties || {}
   const [contentBlocks, setContentBlocks] = useState([])
 
   const [possibleLocales, setPossibleLocales] = useState([])
-  const [locales, setLocales] = useState(block.properties.locale || userLocales || ['en'])
+  const [locales, setLocales] = useState(properties.locale || userLocales || ['en'])
   const handleLocaleChange = useCallback((newLocale) => {
     setLocales([newLocale])
   }, [ setLocales ])
@@ -192,10 +193,10 @@ function Viewer () {
   const type = block.type || null
 
   const title = translateBlock(block, locales, getString('placeholder_main_headline'))
-  const coverphoto_url = getImageUrl(block.properties.coverphoto)
-  const icon_url = getImageUrl(block.properties.icon)
+  const coverphoto_url = getImageUrl(properties.coverphoto)
+  const icon_url = getImageUrl(properties.icon)
 
-  // const pronouns = block.properties.pronouns || ''
+  // const pronouns = properties.pronouns || ''
   
   const rightHeaderActions = <>
     <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
