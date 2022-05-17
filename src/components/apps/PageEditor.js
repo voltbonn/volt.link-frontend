@@ -327,7 +327,7 @@ function PageEditor({
         />
       : null
     }
-    <button className="text hasIcon" onClick={openPermissionsEditor}>
+    <button className="red hasIcon" onClick={openPermissionsEditor}>
       <MdiIcon
         path={PermissionsIcon}
         className="icon"
