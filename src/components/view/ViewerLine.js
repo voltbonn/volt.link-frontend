@@ -13,12 +13,12 @@ import { Link } from 'react-router-dom'
 
 import classes from './ViewerLine.module.css'
 
-function ViewerLine ({ block, actions = {}, locales }) {
+function ViewerLine ({ block, actions = {}, locales, forceId }) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
   const properties = block.properties || {}
   
-  const { link, path } = useBlockTrigger({ block })
+  const { link, path } = useBlockTrigger({ block, forceId })
 
   let title = translateBlock(block, locales || userLocales, '')
   if (title === '') {

@@ -29,6 +29,9 @@ path_editor_status_started_saving = J'ai commencé à économiser…
 path_editor_status_saved = Sauvé!
 path_editor_status_error_while_saving = Erreur lors de la sauvegarde ! Veuillez réessayer plus tard. (L'erreur : "{$error}")
 
+error_300_title = Plusieurs pages trouvées pour cette URL
+error_300_description = Cette URL est utilisée par plusieurs pages. Veuillez choisir l'une des pages suivantes :
+
 dialog_done = Terminé
 
 path_editor_translate = Traduire

@@ -29,6 +29,9 @@ path_editor_status_started_saving = Empezó a guardar...
 path_editor_status_saved = Guardado!
 path_editor_status_error_while_saving = ¡Error al guardar! Por favor, inténtelo de nuevo más tarde. (El error: "{$error}")
 
+error_300_title = Se han encontrado varias páginas para esta URL
+error_300_description = Esta URL es utilizada por varias páginas. Por favor, elija una de las siguientes páginas:
+
 dialog_done = Hecho
 
 path_editor_translate = Traducir

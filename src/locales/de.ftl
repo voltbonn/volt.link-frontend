@@ -28,6 +28,9 @@ path_editor_status_started_saving = Am speichern…
 path_editor_status_saved = Gespeichert!
 path_editor_status_error_while_saving = Fehler beim Speichern! Bitte versuche es später noch einmal. (Der Fehler: "{$error}")
 
+error_300_title = Mehrere Seiten für diese URL gefunden
+error_300_description = Diese URL wird von mehreren Seiten verwendet. Bitte wähle eine der folgenden Seiten:
+
 path_editor_translate = Übersetzen
 path_editor_share = Teilen
 path_editor_permissions = Berechtigungen

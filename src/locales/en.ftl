@@ -30,6 +30,9 @@ path_editor_status_started_saving = Started saving…
 path_editor_status_saved = Saved!
 path_editor_status_error_while_saving = Error while saving! Please try again later. (The error: "{$error}")
 
+error_300_title = Multiple Pages Found for this URL
+error_300_description = This URL is used by multiple pages. Please choose one of the following pages:
+
 dialog_done = Done
 
 path_editor_translate = Translate
@@ -142,3 +145,4 @@ view_block = View
 search = Search…
 
 blocktree_no_nodes_to_show = Nothing to show. Maybe check the filter menu.
+

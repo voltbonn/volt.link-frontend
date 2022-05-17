@@ -39,6 +39,13 @@ function Viewer () {
 
   let { id: slugOrId = '' } = useParams()
 
+  let slugOrId_to_use = slugOrId
+
+  if (slugOrId.includes('=')) {
+    const [, id] = slugOrId.split('=')
+    slugOrId_to_use = id
+  }
+
   const [block, setBlock] = useState({
     type: 'page',
     properties: {},
@@ -53,25 +60,30 @@ function Viewer () {
     setLocales([newLocale])
   }, [ setLocales ])
 
-  const [canView, setCanView] = useState(null)
-  const [errorCode, setErrorCode] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
+    const properties = block.properties || {}
+
     if (
       loadingTheBlock.current === false
-      && typeof slugOrId === 'string'
-      && slugOrId !== ''
+      && typeof slugOrId_to_use === 'string'
+      && slugOrId_to_use !== ''
+      && slugOrId_to_use !== block._id
+      && slugOrId_to_use !== properties.slug
       && (
-        slugOrId !== block._id
-        && slugOrId !== block.properties.slug
+        error === null
+        || error.for_slugOrId !== slugOrId_to_use
       )
     ) {
       loadingTheBlock.current = true
-      loadPage(slugOrId)
-        .then(async loadedBlock => {
+      loadPage(slugOrId_to_use)
+        .then(async loadedBlock => { 
           if (typeof loadedBlock !== 'object' || loadedBlock === null) {
-            setCanView(false)
-            setErrorCode('error_404')
+            setError({
+              code: 'error_404',
+              for_slugOrId: slugOrId_to_use,
+            })
             loadingTheBlock.current = false
           } else {
             let newLoadedBlock = loadedBlock
@@ -113,31 +125,21 @@ function Viewer () {
                 loadedBlock,
                 ...blocks,
               ]
-                .flatMap(thisBlock => [
-                  thisBlock.properties.locale,
-                  ...(thisBlock.properties.translations || [])
-                    .filter(t => t.text && t.text.length > 0)
-                    .map(t => t.locale),
-                ])
+                .flatMap(thisBlock => {
+                  const properties = thisBlock.properties || {}
+
+                  return [
+                    properties.locale || null,
+                    ...(properties.translations || [])
+                      .filter(t => t.text && t.text.length > 0)
+                      .map(t => t.locale),
+                  ]
+                })
                 .filter(Boolean)
             )]
             setPossibleLocales(newPossibleLocales)
 
-            let newCanView = false
-            if (
-              newLoadedBlock.hasOwnProperty('computed')
-              && newLoadedBlock.computed.hasOwnProperty('roles')
-              && (
-                newLoadedBlock.computed.roles.includes('viewer')
-                || newLoadedBlock.computed.roles.includes('editor')
-                || newLoadedBlock.computed.roles.includes('owner')
-              )
-            ) {
-              newCanView = true
-            }
-
-            setErrorCode(null)
-            setCanView(newCanView)
+            setError(null)
             setBlock(newLoadedBlock)
             setContentBlocks(blocks)
             loadingTheBlock.current = false
@@ -145,13 +147,16 @@ function Viewer () {
         })
         .catch(error => {
           console.error(error)
-          setErrorCode(error)
-          setCanView(false)
+          setError({
+            ...error,
+            for_slugOrId: slugOrId_to_use,
+          })
           loadingTheBlock.current = false
         })
     }
   }, [
-    slugOrId,
+    error,
+    slugOrId_to_use,
     block,
     block._id,
     loadPage,
@@ -159,11 +164,10 @@ function Viewer () {
     loadBlocks,
     setContentBlocks,
     setPossibleLocales,
-    setCanView,
-    setErrorCode,
+    setError,
   ])
 
-  if (error !== null) {
+  if (error !== null && error.for_slugOrId === slugOrId_to_use) {
     return <div className={classes.viewer}>
       <Header
         block={null}
@@ -172,6 +176,23 @@ function Viewer () {
       />
       <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
         <main className={`${classes.contentWrapper}`}>
+          {
+            error.code === 'error_300'
+              ? <>
+                <h1>
+                  <Localized id="error_300_title" />
+                </h1>
+                <br />
+                <p>
+                  <Localized id="error_300_description" />
+                </p>
+                <br />
+                {
+                  error.blocks.map(block => <ViewerAuto key={block._id} block={block} forceId={true} />)
+                }
+              </>
+              : null
+          }
           {
             error.code === 'error_403'
               ? <Suspense>
