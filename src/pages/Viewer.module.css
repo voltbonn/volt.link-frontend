@@ -87,7 +87,7 @@
 }
 */
 .icon.coverphotoIsSet{
-  margin-top: calc(calc(-0.5 * var(--icon-size-multiplier)) * var(--basis)) !important;
+  margin-top: calc((-2 + (-0.5 * var(--icon-size-multiplier))) * var(--basis)) !important;
 }
 @media (max-width: 800px) {
   .icon{
