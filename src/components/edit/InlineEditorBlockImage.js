@@ -74,6 +74,11 @@ function InlineEditorBlockImageRaw({
     colorStyles['--button-color'] = contrastingColor
   }
 
+  let image_url = ''
+  if (typeof url === 'string' && url.length > 0) {
+    image_url = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=150&h=100&url=${encodeURIComponent(url)}`
+  }
+
   return <div style={{
     margin: '0 0 var(--basis) 0',
     cursor: 'auto',
@@ -85,9 +90,9 @@ function InlineEditorBlockImageRaw({
       marginBottom: 'var(--basis)',
     }}>
     {
-      url !== ''
+      image_url !== ''
         ? <img
-          src={url}
+          src={image_url}
           alt={text}
           title={text}
           style={{
