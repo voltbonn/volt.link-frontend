@@ -61,6 +61,9 @@ function Editor() {
             setBlock(loadedBlock)
           }
         })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }, [
     canEdit,
