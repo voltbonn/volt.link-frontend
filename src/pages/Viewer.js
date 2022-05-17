@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet'
 import { getImageUrl } from '../functions.js'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
-import useLoadBlock from '../hooks/useLoadBlock.js'
+import useLoadPage from '../hooks/useLoadPage.js'
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
 
@@ -34,10 +34,10 @@ function Viewer () {
 
   const { loggedIn } = useUser()
 
-  const loadBlock = useLoadBlock()
+  const loadPage = useLoadPage()
   const loadBlocks = useLoadBlocks()
 
-  let { id = '' } = useParams()
+  let { id: slugOrId = '' } = useParams()
 
   const [block, setBlock] = useState({
     type: 'page',
@@ -53,19 +53,24 @@ function Viewer () {
   }, [ setLocales ])
 
   const [canView, setCanView] = useState(null)
+  const [errorCode, setErrorCode] = useState(null)
 
   useEffect(() => {
     if (
       loadingTheBlock.current === false
-      && typeof id === 'string'
-      && id !== ''
-      && id !== block._id
+      && typeof slugOrId === 'string'
+      && slugOrId !== ''
+      && (
+        slugOrId !== block._id
+        && slugOrId !== block.properties.slug
+      )
     ) {
       loadingTheBlock.current = true
-      loadBlock(id)
+      loadPage(slugOrId)
         .then(async loadedBlock => {
           if (typeof loadedBlock !== 'object' || loadedBlock === null) {
             setCanView(false)
+            setErrorCode('error_404')
             loadingTheBlock.current = false
           } else {
             let newLoadedBlock = loadedBlock
@@ -130,6 +135,7 @@ function Viewer () {
               newCanView = true
             }
 
+            setErrorCode(null)
             setCanView(newCanView)
             setBlock(newLoadedBlock)
             setContentBlocks(blocks)
@@ -138,23 +144,25 @@ function Viewer () {
         })
         .catch(error => {
           console.error(error)
+          setErrorCode(error)
           setCanView(false)
           loadingTheBlock.current = false
         })
     }
   }, [
-    id,
+    slugOrId,
     block,
     block._id,
-    loadBlock,
+    loadPage,
     setBlock,
     loadBlocks,
     setContentBlocks,
     setPossibleLocales,
     setCanView,
+    setErrorCode,
   ])
 
-  if (canView === false) {
+  if (error !== null) {
     return <div className={classes.viewer}>
       <Header
         block={null}
@@ -163,9 +171,20 @@ function Viewer () {
       />
       <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
         <main className={`${classes.contentWrapper}`}>
-          <Suspense>
-            <ErrorPage errorName="no_access" />
-          </Suspense>
+          {
+            error.code === 'error_403'
+              ? <Suspense>
+                  <ErrorPage errorName="no_access" />
+              </Suspense>
+              : null
+          }
+          {
+            error.code === 'error_404'
+              ? <Suspense>
+                <ErrorPage errorName="not_found" />
+              </Suspense>
+              : null
+          }
         </main>
       </div>
     </div>

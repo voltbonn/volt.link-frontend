@@ -150,6 +150,12 @@ export const checkSlug_Query = gql`
     checkSlug (slug: $slug) {
       isOkay
       errors
+      existsAsSlug
+      existsAsId
+    }
+  }
+`
+
     }
   }
 `
