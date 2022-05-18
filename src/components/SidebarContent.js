@@ -13,12 +13,8 @@ import {
   MenuOpen as MenuOpenIcon,
   Add as AddIcon,
 
-  Email as ContactIcon,
-  GitHub as SourceCodeIcon,
   Login as LoginIcon,
   Logout as LogoutIcon,
-
-  Help as HelpIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
