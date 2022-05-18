@@ -11,9 +11,6 @@ locale_menu_show_translation_help_label = Mostra suggerimenti di traduzione
 login = Login
 logout = Logout
 help_page = Aiuto / Tutorial
-workplace_group = Gruppo Workplace di VoltLink
-contact = Contattami / Feedback
-source_code = Codice Sorgente
 
 choose_locale = Cambio di lingua:
 

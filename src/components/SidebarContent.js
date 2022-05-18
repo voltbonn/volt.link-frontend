@@ -30,7 +30,7 @@ import useUser from '../hooks/useUser.js'
 import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
-import BlockLoader from './BlockLoader.js'
+import BlocksLoader from './BlocksLoader.js'
 
 import ViewerAuto from './view/ViewerAuto.js'
 
@@ -169,59 +169,28 @@ export default function SidebarContent() {
               </a>
         }
 
-        {
-          loggedIn
-            ? <MenuItem
-                component="a"
-                target="_blank"
-                href='https://volteuropa.workplace.com/groups/voltlink'
-                className="roundMenuItem"
-              >
-                <ListItemIcon>
-                  <HelpIcon />
-                </ListItemIcon>
-                <ListItemText primary={<Localized id="workplace_group" />} />
-              </MenuItem>
-            : null
-        }
+        <br />
 
-        <a href="mailto:thomas.rosen@volteuropa.org">
-          <MenuItem className="roundMenuItem">
-            <ListItemIcon>
-              <ContactIcon />
-            </ListItemIcon>
-            <ListItemText primary={<Localized id="contact" />} />
-          </MenuItem>
-        </a>
-
-        <a href="https://github.com/voltbonn/" target="_blank" rel="noopener noreferrer">
-          <MenuItem className="roundMenuItem">
-            <ListItemIcon>
-              <SourceCodeIcon />
-            </ListItemIcon>
-            <ListItemText primary={<Localized id="source_code" />} />
-          </MenuItem>
-        </a>
-
-        {/* Glossar: */}
-        <BlockLoader slug="glossary">
-          {({ block }) => <ViewerAuto block={block} />}
-        </BlockLoader>
-
-        {/* Tools: */}
-        <BlockLoader slug="tools">
-          {({ block }) => <ViewerAuto block={block} />}
-        </BlockLoader>
-
-        {/* Statistics about volt.link: */}
-        {
-          loggedIn
-            ? <BlockLoader slug="stats">
-                {({ block }) => <ViewerAuto block={block} />}
-              </BlockLoader>
-            : null
-        }
-        
+        <BlocksLoader slugs={[
+          'glossary',
+          'tools',
+          'stats',
+          'volt_link_workplace_group',
+          'volt_link_source_code',
+          'volt_link_contact',
+        ]}>
+          {({ blocks, slugs }) => {
+            return slugs
+              .map(slug => {
+                const block = blocks.find(block => block?.properties?.slug === slug)
+                if (block) {
+                  return <ViewerAuto key={block._id} block={block} />
+                }
+                return null
+              })
+              .filter(Boolean)
+          }}
+        </BlocksLoader>
 
       </MenuList>
 

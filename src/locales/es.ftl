@@ -12,10 +12,6 @@ locale_menu_show_translation_help_label = Mostrar ayuda a la traducción
 login = Inicio de sesión
 logout = Cierre de sesión
 help_page = Ayuda / Tutorial
-workplace_group = Grupo VoltLink Workplace
-volt_link_statistics = Estadísticas sobre volt.link
-contact = Contacto / Comentarios
-source_code = Código fuente
 
 choose_locale = Cambiador de idiomas:
 choose_locale_information_automatic_translationen = Esta es una traducción automática de VoltLink.
