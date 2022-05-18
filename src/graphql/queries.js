@@ -196,7 +196,3 @@ export const checkSlug_Query = gql`
     }
   }
 `
-
-    }
-  }
-`
