@@ -14,10 +14,6 @@ locale_menu_show_translation_help_label = Show Translation Help
 login = Login
 logout = Logout
 help_page = Help / Tutorial
-workplace_group = VoltLink Workplace Group
-volt_link_statistics = Statistics about volt.link
-contact = Contact / Feedback
-source_code = Source Code
 
 choose_locale = Languages Changer:
 

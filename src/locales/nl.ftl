@@ -13,10 +13,6 @@ locale_menu_show_translation_help_label = Vertaalhulp tonen
 login = Inloggen
 logout = Uitloggen
 help_page = Help / Handleiding
-workplace_group = VoltLink Workplace Groep
-volt_link_statistics = Statistieken over volt.link
-contact = Contact / Terugkoppeling
-source_code = Broncode
 
 choose_locale = Talen wisselaar:
 

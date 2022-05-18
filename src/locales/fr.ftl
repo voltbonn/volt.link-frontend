@@ -12,10 +12,6 @@ locale_menu_show_translation_help_label = Afficher l'aide à la traduction
 login = Connexion
 logout = Se déconnecter
 help_page = Aide / Tutoriel
-workplace_group = VoltLink Workplace Groupe
-volt_link_statistics = Statistiques sur volt.link
-contact = Contactez-nous / Commentaires
-source_code = Code source
 
 choose_locale = Langues Changeur:
 choose_locale_information = Il s'agit d'une traduction automatique par VoltLink.

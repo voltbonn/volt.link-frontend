@@ -169,45 +169,15 @@ export default function SidebarContent() {
               </a>
         }
 
-        {
-          loggedIn
-            ? <MenuItem
-                component="a"
-                target="_blank"
-                href='https://volteuropa.workplace.com/groups/voltlink'
-                className="roundMenuItem"
-              >
-                <ListItemIcon>
-                  <HelpIcon />
-                </ListItemIcon>
-                <ListItemText primary={<Localized id="workplace_group" />} />
-              </MenuItem>
-            : null
-        }
-
-        <a href="mailto:thomas.rosen@volteuropa.org">
-          <MenuItem className="roundMenuItem">
-            <ListItemIcon>
-              <ContactIcon />
-            </ListItemIcon>
-            <ListItemText primary={<Localized id="contact" />} />
-          </MenuItem>
-        </a>
-
-        <a href="https://github.com/voltbonn/" target="_blank" rel="noopener noreferrer">
-          <MenuItem className="roundMenuItem">
-            <ListItemIcon>
-              <SourceCodeIcon />
-            </ListItemIcon>
-            <ListItemText primary={<Localized id="source_code" />} />
-          </MenuItem>
-        </a>
+        <br />
 
         <BlocksLoader slugs={[
           'glossary',
           'tools',
-          'volt_link_workplace_group',
           'stats',
+          'volt_link_workplace_group',
+          'volt_link_source_code',
+          'volt_link_contact',
         ]}>
           {({ blocks, slugs }) => {
             return slugs
@@ -221,7 +191,6 @@ export default function SidebarContent() {
               .filter(Boolean)
           }}
         </BlocksLoader>
-        
 
       </MenuList>
 
