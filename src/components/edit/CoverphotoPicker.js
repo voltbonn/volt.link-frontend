@@ -69,9 +69,16 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
     && !Array.isArray(iconValue)
   ) {
     if (
-      iconValue.type === 'url'
-      && typeof iconValue.url === 'string'
-      && isAbsoluteUrlRegexp.test(iconValue.url)
+      (
+        iconValue.type === 'url'
+        && typeof iconValue.url === 'string'
+        && isAbsoluteUrlRegexp.test(iconValue.url)
+      )
+      || (
+        iconValue.type === 'emoji'
+        && typeof iconValue.emoji === 'string'
+        && iconValue.emoji.length > 0
+      )
     ) {
       iconIsSet = true
     }
@@ -95,7 +102,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
           }}
         >
           <div className={classes.button_wrapper}>
-            <button {...triggerProps} className={`text hasIcon ${classes.changeCoverphotoButton}`}>
+            <button {...triggerProps} className={`hasIcon ${coverphotoIsSet ? 'default' : 'text'} ${classes.changeCoverphotoButton}`}>
               <CoverphotoIcon className="icon" />
               <span style={{ marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>Set Coverphoto</span>
             </button>

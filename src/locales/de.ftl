@@ -28,6 +28,9 @@ path_editor_status_started_saving = Am speichern…
 path_editor_status_saved = Gespeichert!
 path_editor_status_error_while_saving = Fehler beim Speichern! Bitte versuche es später noch einmal. (Der Fehler: "{$error}")
 
+error_300_title = Mehrere Seiten für diese URL gefunden
+error_300_description = Diese URL wird von mehreren Seiten verwendet. Bitte wähle eine der folgenden Seiten:
+
 path_editor_translate = Übersetzen
 path_editor_share = Teilen
 path_editor_permissions = Berechtigungen
@@ -112,6 +115,7 @@ block_menu_type_label_button = Button
 block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Trennlinie
+block_menu_type_label_image = Bild
 
 block_menu_close_menu = Menü schließen
 block_menu_add_before = Davor hinzufügen
@@ -139,6 +143,9 @@ placeholder_headline = Überschrift
 placeholder_button = Button
 placeholder_text = Text
 placeholder_code = Code
+placeholder_image_alt_text = Bild Beschreibung
+placeholder_image_url = https://assets.volteuropa.org/pfad/zum/bild.jpg
+inline_editor_image_block_explainer_title = Bild:
 
 edit_block = Bearbeiten
 view_block = Ansehen

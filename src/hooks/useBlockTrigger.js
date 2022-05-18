@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react' // useCallback
 // import { useNavigate } from 'react-router-dom'
 
-export default function useBlockTrigger({ block = null }) {
+export default function useBlockTrigger({ block = null, forceId = false }) {
   const [link, setLink] = useState(null)
   const [path, setPath] = useState(null)
   // const [onClick, setOnClick] = useState(null)
@@ -32,8 +32,13 @@ export default function useBlockTrigger({ block = null }) {
         typeof slug === 'string'
         && slug.length > 0
       ) {
-        newLink = `${window.domains.frontend}${slug}=${blockId}`
-        newPath = `/${slug}=${blockId}`
+        if (forceId === true) {
+          newLink = `${window.domains.frontend}${slug}=${blockId}`
+          newPath = `/${slug}=${blockId}`
+        } else {
+          newLink = `${window.domains.frontend}${slug}`
+          newPath = `/${slug}`
+        }
         // newOnClick = () => navigate(newPath)
       } else {
         newLink = `${window.domains.frontend}${blockId}/view`
@@ -45,7 +50,7 @@ export default function useBlockTrigger({ block = null }) {
     setLink(newLink)
     setPath(newPath)
     // setOnClick(newOnClick)
-  }, [block, setLink, setPath]) // setOnClick, navigate
+  }, [block, forceId, setLink, setPath]) // setOnClick, navigate
 
   return { link, path } // onClick
 }

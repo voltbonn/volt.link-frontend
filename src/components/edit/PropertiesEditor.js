@@ -229,10 +229,10 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
           {({ setError }) => (
             <UrlInput
               onError={setError}
-              onChange={newValue => updateProperty('url', newValue)}
+              onBlur={newValue => updateProperty('url', newValue)}
               type="text"
               defaultValue={properties.url || ''}
-              placeholder={getString('path_editor_item_link_label')}
+              placeholder={getString('action_input_url_placeholder')}
               style={{
                 marginRight: '0',
                 marginLeft: '0',

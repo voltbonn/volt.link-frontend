@@ -31,6 +31,7 @@ import {
   // PersonSharp as PersonIcon,
   Crop75Sharp as ButtonIcon,
   NotesSharp as TextIcon,
+  ImageSharp as ImageIcon,
   // CodeSharp as CodeIcon,
   Remove as DividerIcon,
   // CheckBox as CheckboxIcon,
@@ -62,6 +63,7 @@ import useMutation from '../../hooks/useMutation.js'
 const typeIcons = {
   button: <ButtonIcon />,
   text: <TextIcon />,
+  image: <ImageIcon />,
   // checkbox: <CheckboxIcon />,
   // code: <CodeIcon />,
   divider: <DividerIcon />,
@@ -72,6 +74,7 @@ const typeIcons = {
 const defaultTypeOptions = [
   'button',
   'text',
+  'image',
   // 'checkbox',
   // 'code',
   'divider',

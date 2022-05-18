@@ -6,11 +6,12 @@ import {
 } from 'react-router-dom'
 
 import { Helmet } from 'react-helmet'
+import Twemoji from '../components/Twemoji.js'
 
 import { getImageUrl } from '../functions.js'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
-import useLoadBlock from '../hooks/useLoadBlock.js'
+import useLoadPage from '../hooks/useLoadPage.js'
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
 
@@ -34,38 +35,56 @@ function Viewer () {
 
   const { loggedIn } = useUser()
 
-  const loadBlock = useLoadBlock()
+  const loadPage = useLoadPage()
   const loadBlocks = useLoadBlocks()
 
-  let { id = '' } = useParams()
+  let { id: slugOrId = '' } = useParams()
+
+  let slugOrId_to_use = slugOrId
+
+  if (slugOrId.includes('=')) {
+    const [, id] = slugOrId.split('=')
+    slugOrId_to_use = id
+  }
 
   const [block, setBlock] = useState({
     type: 'page',
     properties: {},
     content: [],
   })
+  const properties = block.properties || {}
   const [contentBlocks, setContentBlocks] = useState([])
 
   const [possibleLocales, setPossibleLocales] = useState([])
-  const [locales, setLocales] = useState(block.properties.locale || userLocales || ['en'])
+  const [locales, setLocales] = useState(properties.locale || userLocales || ['en'])
   const handleLocaleChange = useCallback((newLocale) => {
     setLocales([newLocale])
   }, [ setLocales ])
 
-  const [canView, setCanView] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
+    const properties = block.properties || {}
+
     if (
       loadingTheBlock.current === false
-      && typeof id === 'string'
-      && id !== ''
-      && id !== block._id
+      && typeof slugOrId_to_use === 'string'
+      && slugOrId_to_use !== ''
+      && slugOrId_to_use !== block._id
+      && slugOrId_to_use !== properties.slug
+      && (
+        error === null
+        || error.for_slugOrId !== slugOrId_to_use
+      )
     ) {
       loadingTheBlock.current = true
-      loadBlock(id)
-        .then(async loadedBlock => {
+      loadPage(slugOrId_to_use)
+        .then(async loadedBlock => { 
           if (typeof loadedBlock !== 'object' || loadedBlock === null) {
-            setCanView(false)
+            setError({
+              code: 'error_404',
+              for_slugOrId: slugOrId_to_use,
+            })
             loadingTheBlock.current = false
           } else {
             let newLoadedBlock = loadedBlock
@@ -107,30 +126,21 @@ function Viewer () {
                 loadedBlock,
                 ...blocks,
               ]
-                .flatMap(thisBlock => [
-                  thisBlock.properties.locale,
-                  ...(thisBlock.properties.translations || [])
-                    .filter(t => t.text && t.text.length > 0)
-                    .map(t => t.locale),
-                ])
+                .flatMap(thisBlock => {
+                  const properties = thisBlock.properties || {}
+
+                  return [
+                    properties.locale || null,
+                    ...(properties.translations || [])
+                      .filter(t => t.text && t.text.length > 0)
+                      .map(t => t.locale),
+                  ]
+                })
                 .filter(Boolean)
             )]
             setPossibleLocales(newPossibleLocales)
 
-            let newCanView = false
-            if (
-              newLoadedBlock.hasOwnProperty('computed')
-              && newLoadedBlock.computed.hasOwnProperty('roles')
-              && (
-                newLoadedBlock.computed.roles.includes('viewer')
-                || newLoadedBlock.computed.roles.includes('editor')
-                || newLoadedBlock.computed.roles.includes('owner')
-              )
-            ) {
-              newCanView = true
-            }
-
-            setCanView(newCanView)
+            setError(null)
             setBlock(newLoadedBlock)
             setContentBlocks(blocks)
             loadingTheBlock.current = false
@@ -138,23 +148,27 @@ function Viewer () {
         })
         .catch(error => {
           console.error(error)
-          setCanView(false)
+          setError({
+            ...error,
+            for_slugOrId: slugOrId_to_use,
+          })
           loadingTheBlock.current = false
         })
     }
   }, [
-    id,
+    error,
+    slugOrId_to_use,
     block,
     block._id,
-    loadBlock,
+    loadPage,
     setBlock,
     loadBlocks,
     setContentBlocks,
     setPossibleLocales,
-    setCanView,
+    setError,
   ])
 
-  if (canView === false) {
+  if (error !== null && error.for_slugOrId === slugOrId_to_use) {
     return <div className={classes.viewer}>
       <Header
         block={null}
@@ -163,9 +177,37 @@ function Viewer () {
       />
       <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
         <main className={`${classes.contentWrapper}`}>
-          <Suspense>
-            <ErrorPage errorName="no_access" />
-          </Suspense>
+          {
+            error.code === 'error_300'
+              ? <>
+                <h1>
+                  <Localized id="error_300_title" />
+                </h1>
+                <br />
+                <p>
+                  <Localized id="error_300_description" />
+                </p>
+                <br />
+                {
+                  error.blocks.map(block => <ViewerAuto key={block._id} block={block} forceId={true} />)
+                }
+              </>
+              : null
+          }
+          {
+            error.code === 'error_403'
+              ? <Suspense>
+                  <ErrorPage errorName="no_access" />
+              </Suspense>
+              : null
+          }
+          {
+            error.code === 'error_404'
+              ? <Suspense>
+                <ErrorPage errorName="not_found" />
+              </Suspense>
+              : null
+          }
         </main>
       </div>
     </div>
@@ -173,10 +215,9 @@ function Viewer () {
   const type = block.type || null
 
   const title = translateBlock(block, locales, getString('placeholder_main_headline'))
-  const coverphoto_url = getImageUrl(block.properties.coverphoto)
-  const icon_url = getImageUrl(block.properties.icon)
+  const coverphoto_url = getImageUrl(properties.coverphoto)
 
-  // const pronouns = block.properties.pronouns || ''
+  // const pronouns = properties.pronouns || ''
   
   const rightHeaderActions = <>
     <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
@@ -211,6 +252,37 @@ function Viewer () {
   let metadata_image_url = ''
   if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
     metadata_image_url = `${window.domains.backend}download_url?f=jpg&w=1000&h=1000&url=${encodeURIComponent(coverphoto_url)}`
+  }
+
+
+  let iconComponent = null
+
+  if (
+    // TODO: is the check overkill ? 😅
+    properties.hasOwnProperty('icon')
+    && typeof properties.icon === 'object'
+    && properties.icon !== null
+    && !Array.isArray(properties.icon)
+    && properties.icon.hasOwnProperty('type')
+    && typeof properties.icon.type === 'string'
+    && properties.icon.type === 'emoji'
+    && properties.icon.hasOwnProperty('emoji')
+    && typeof properties.icon.emoji === 'string'
+    && properties.icon.emoji.length !== 0
+  ) {
+    iconComponent = <Twemoji className={`${classes.icon} ${coverphoto_url === '' ? '' : classes.coverphotoIsSet}`} emoji={properties.icon.emoji} />
+  }
+
+  if (iconComponent === null) {
+    let icon_url = getImageUrl(properties.icon)
+    if (typeof icon_url === 'string' && icon_url.length !== 0) {
+      iconComponent = <div
+        style={{
+          backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=400&h=400&url=${encodeURIComponent(icon_url)})`
+        }}
+        className={`${classes.icon} ${coverphoto_url === '' ? '' : classes.coverphotoIsSet}`}
+      ></div>
+    }
   }
 
   return <div className={classes.viewer}>
@@ -251,13 +323,7 @@ function Viewer () {
       <main className={`${classes.contentWrapper}`}>
         {
           (type === 'page' || type === 'person' || type === 'redirect')
-          && icon_url !== ''
-            ? <div
-                style={{
-                  backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=400&h=400&url=${encodeURIComponent(icon_url)})`
-                }}
-                className={`${classes.icon} ${coverphoto_url === '' ? classes.coverphotoIsNotSet : classes.coverphotoIsSet}`}
-              ></div>
+            ? iconComponent
             : null
         }
         {

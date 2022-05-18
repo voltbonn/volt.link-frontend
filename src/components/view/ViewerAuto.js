@@ -6,6 +6,7 @@ import ViewerTextCard from './ViewerTextCard.js'
 import ViewerButtonCard from './ViewerButtonCard.js'
 import ViewerDividerLine from './ViewerDividerLine.js'
 import ViewerLine from './ViewerLine.js'
+import ViewerImageCard from './ViewerImageCard.js'
 
 import classes from './ViewerAuto.module.css'
 
@@ -119,6 +120,9 @@ function ViewerAuto ({ blockId = null, block = {}, actions = {}, size = 'card', 
       break
     case 'redirect':
       component = <ViewerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      break
+    case 'image':
+      component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
       break
     default:
       component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />

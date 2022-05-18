@@ -105,30 +105,27 @@ function App() {
     //    /slug=id/suffix
     //    /slugOrId/suffix
 
-    const slugAndIdRegex = /^\/([^=/]*)(?:=?)([^=/]*)(.*)/
+    let newPathname = ''
 
-    const slugAndIdMatch = location.pathname.match(slugAndIdRegex)
-    const slugOrId = slugAndIdMatch[1]
-    let id = slugAndIdMatch[2]
-    let suffix = slugAndIdMatch[3]
+    const parts = location.pathname.split('/')
+      .filter(part => part.length > 0)
 
-    if (!id && slugOrId) {
-      id = slugOrId
+    if (parts.length > 0) {
+      const last = parts.pop()
+
+      let idOrSlug = last
+      let suffix = 'view'
+
+      if ((last === 'edit' || last === 'view') && parts.length > 0) {
+        suffix = last
+        idOrSlug = parts.pop()      
+      }
+
+      newPathname = `/${idOrSlug}/${suffix}`
     }
 
-    if (
-      id !== ''
-      && suffix !== '/edit'
-      && suffix !== '/view'
-    ) {
-      suffix = '/view'
-    }
-
-    const newPathname = `/${id}${suffix}`
     if (customLocation.pathname !== newPathname) {
       // TODO: save scroll position
-      
-
 
       setCustomLocation({
         pathname: newPathname,

@@ -26,6 +26,9 @@ path_editor_status_started_saving = Salvataggio in corso…
 path_editor_status_saved = Salvato!
 path_editor_status_error_while_saving = Errore di salvataggio! Per favore riprova più tardi. (The error: "{$error}")
 
+error_300_title = Più pagine trovate per questo URL
+error_300_description = Questo URL è utilizzato da più pagine. Scegliere una delle seguenti pagine:
+
 dialog_done = Fatto!
 
 path_editor_translate = Traduci

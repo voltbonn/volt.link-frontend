@@ -20,6 +20,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "caret-pos": "^2.0.0",
+    "emoji-picker-react": "^3.5.1",
     "graphql": "^15.5.3",
     "highlight.js": "^11.3.1",
     "intl-pluralrules": "^1.2.2",
@@ -46,9 +47,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build_modernizr": "node build_modernizr.js",
-    "build": "yarn build_modernizr; react-scripts build",
+    "start": "cpus=`node cpus.js`; UV_THREADPOOL_SIZE=$cpus react-scripts start",
+    "build_modernizr": "cpus=`node cpus.js`; UV_THREADPOOL_SIZE=$cpus node build_modernizr.js",
+    "build_react": "cpus=`node cpus.js`; UV_THREADPOOL_SIZE=$cpus react-scripts build",
+    "build": "yarn build_modernizr; yarn build_react",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "analyze": "source-map-explorer 'build/static/js/*.js'"

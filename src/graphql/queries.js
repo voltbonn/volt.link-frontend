@@ -42,8 +42,8 @@ export const getBlock_Query = gql`
 `
 
 export const getBlocks_Query = gql`
-  query getBlocks ($ids: [ObjectID], $types: [String], $archived: Boolean, $roots: [ObjectID]) {
-    blocks (ids: $ids, types: $types, archived: $archived, roots: $roots) {
+  query getBlocks ($ids: [String], $slugs: [String], $types: [String], $archived: Boolean, $roots: [ObjectID]) {
+    blocks (ids: $ids, slugs: $slugs, types: $types, archived: $archived, roots: $roots) {
       _id
       type
       properties
@@ -52,6 +52,88 @@ export const getBlocks_Query = gql`
       }
       parent
       metadata {
+        modified
+        modified_by
+      }
+      permissions
+      computed {
+        roles
+        inherited_block_permissions
+      }
+    }
+  }
+`
+
+export const getBlocksWithContent_Query = gql`
+  query getBlocks ($ids: [String], $slugs: [String], $types: [String], $archived: Boolean, $roots: [ObjectID]) {
+    blocks (ids: $ids, slugs: $slugs, types: $types, archived: $archived, roots: $roots) {
+		  _id
+		  type
+		  properties
+		  content {
+        blockId
+        block {
+          _id
+          type
+          properties
+          content {
+            blockId
+          }
+          parent
+          metadata {
+            modified
+            modified_by
+          }
+          permissions
+          computed {
+            roles
+            inherited_block_permissions
+          }
+        }
+      }
+		  parent
+		  metadata {
+        modified
+        modified_by
+      }
+      permissions
+      computed {
+        roles
+        inherited_block_permissions
+      }
+    }
+  }
+`
+
+export const getBlockBySlug_Query = gql`
+  query getBlockBySlug ($slug: String!) {
+    block: blockBySlug (slug: $slug) {
+		  _id
+		  type
+		  properties
+		  content {
+        blockId
+        block {
+          _id
+          type
+          properties
+          content {
+            blockId
+          }
+          parent
+          metadata {
+            modified
+            modified_by
+          }
+          permissions
+          computed {
+            roles
+            inherited_block_permissions
+          }
+        }
+      }
+		  parent
+		  metadata {
         modified
         modified_by
       }
@@ -109,6 +191,12 @@ export const checkSlug_Query = gql`
     checkSlug (slug: $slug) {
       isOkay
       errors
+      existsAsSlug
+      existsAsId
+    }
+  }
+`
+
     }
   }
 `

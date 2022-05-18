@@ -16,7 +16,7 @@ export const locales = {
 
   fr: 'Français (French)',
   es: 'Español (Spanish)',
-  // nl: 'Dutch (Nederlands)',
+  nl: 'Dutch (Nederlands)',
   // pt: 'Português (Portuguese)',
 
   // pl: 'Polska (Polish)',

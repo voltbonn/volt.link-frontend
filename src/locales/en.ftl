@@ -30,6 +30,9 @@ path_editor_status_started_saving = Started saving…
 path_editor_status_saved = Saved!
 path_editor_status_error_while_saving = Error while saving! Please try again later. (The error: "{$error}")
 
+error_300_title = Multiple Pages Found for this URL
+error_300_description = This URL is used by multiple pages. Please choose one of the following pages:
+
 dialog_done = Done
 
 path_editor_translate = Translate
@@ -104,6 +107,7 @@ block_menu_type_label_button = Button
 block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider
+block_menu_type_label_image = Image
 
 block_menu_close_menu = Close Menu
 block_menu_add_before = Add Before
@@ -131,6 +135,9 @@ placeholder_headline = Headline
 placeholder_button = Button
 placeholder_text = Text
 placeholder_code = Code
+placeholder_image_alt_text = Image Alt Text
+placeholder_image_url = https://assets.volteuropa.org/path/to/image.jpg
+inline_editor_image_block_explainer_title = Image:
 
 edit_block = Edit
 view_block = View
@@ -138,3 +145,4 @@ view_block = View
 search = Search…
 
 blocktree_no_nodes_to_show = Nothing to show. Maybe check the filter menu.
+

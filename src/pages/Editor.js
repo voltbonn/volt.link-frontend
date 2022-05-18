@@ -41,7 +41,7 @@ function Editor() {
         console.error(error)
         setCanEdit(false)
       })
-  }, [ id, blockMatchesRoles, setCanEdit ])
+  }, [id, blockMatchesRoles, setCanEdit])
 
   useEffect(() => {
     if (
@@ -60,6 +60,9 @@ function Editor() {
 
             setBlock(loadedBlock)
           }
+        })
+        .catch(error => {
+          console.error(error)
         })
     }
   }, [

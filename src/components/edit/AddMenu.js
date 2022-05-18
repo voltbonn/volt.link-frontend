@@ -13,8 +13,9 @@ import {
   NotesSharp as TextIcon,
   Remove as DividerIcon,
   CodeSharp as CodeIcon,
-  CheckBox as CheckboxIcon,
+  CheckBoxSharp as CheckboxIcon,
   // EditSharp as EditIcon,
+  ImageSharp as ImageIcon,
 } from '@mui/icons-material'
 
 import useUser from '../../hooks/useUser.js'
@@ -30,6 +31,7 @@ const blockTypeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   redirect: <RedirectIcon />,
+  image: <ImageIcon />,
 }
 
 const default_types = [

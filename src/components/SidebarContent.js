@@ -19,7 +19,6 @@ import {
   Logout as LogoutIcon,
 
   Help as HelpIcon,
-  BarChartSharp as StatisticsIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -31,6 +30,7 @@ import useUser from '../hooks/useUser.js'
 import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
+import BlockLoader from './BlockLoader.js'
 
 import ViewerAuto from './view/ViewerAuto.js'
 
@@ -171,8 +171,7 @@ export default function SidebarContent() {
 
         {
           loggedIn
-            ? <div>
-              <MenuItem
+            ? <MenuItem
                 component="a"
                 target="_blank"
                 href='https://volteuropa.workplace.com/groups/voltlink'
@@ -183,18 +182,6 @@ export default function SidebarContent() {
                 </ListItemIcon>
                 <ListItemText primary={<Localized id="workplace_group" />} />
               </MenuItem>
-              <MenuItem
-                component="a"
-                target="_blank"
-                href='https://umami.qiekub.org/share/s0ZHBZbb/01%20volt.link'
-                className="roundMenuItem"
-              >
-                <ListItemIcon>
-                  <StatisticsIcon />
-                </ListItemIcon>
-                <ListItemText primary={<Localized id="volt_link_statistics" />} />
-              </MenuItem>
-            </div>
             : null
         }
 
@@ -217,8 +204,24 @@ export default function SidebarContent() {
         </a>
 
         {/* Glossar: */}
-        {/* TODO: The ID should not be hard-coded. */}
-        <ViewerAuto blockId="6270fb12daa76251eb6c0391" />
+        <BlockLoader slug="glossary">
+          {({ block }) => <ViewerAuto block={block} />}
+        </BlockLoader>
+
+        {/* Tools: */}
+        <BlockLoader slug="tools">
+          {({ block }) => <ViewerAuto block={block} />}
+        </BlockLoader>
+
+        {/* Statistics about volt.link: */}
+        {
+          loggedIn
+            ? <BlockLoader slug="stats">
+                {({ block }) => <ViewerAuto block={block} />}
+              </BlockLoader>
+            : null
+        }
+        
 
       </MenuList>
 
