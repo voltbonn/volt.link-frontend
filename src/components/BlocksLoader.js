@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from 'react'
 
 import { useApolloClient } from '@apollo/client'
-import { getBlockBySlug_Query } from '../graphql/queries'
+import { getBlocks_Query } from '../graphql/queries'
 
-export default function BlockLoader({ slug = null, children, ...props }) {
+export default function BlocksLoader({ slugs = [], children, ...props }) {
   const mountedRef = useRef(false)
   useEffect(() => {
     mountedRef.current = true
@@ -12,36 +12,37 @@ export default function BlockLoader({ slug = null, children, ...props }) {
     }
   }, [])
 
-  const [block, setBlock] = useState(null)
+  const [blocks, setBlocks] = useState([])
 
   const apollo_client = useApolloClient()
 
   useEffect(() => {
-    if (!!slug && slug !== null) {
+    if (Array.isArray(slugs) && slugs.length > 0) {
       apollo_client.query({
-        query: getBlockBySlug_Query,
+        query: getBlocks_Query,
         variables: {
-          slug,
+          slugs,
         },
       })
         .then(async ({ errors, data }) => {
           if (mountedRef.current === true) {
-            if (Array.isArray(errors) || data.block === null) {
+            if (Array.isArray(errors) || !Array.isArray(data.blocks)) {
               throw new Error(errors.map(e => e.message).join('\n'))
             } else {
-              const loadedBlock = data.block
-              console.log('loadedBlock', loadedBlock)
-              setBlock(loadedBlock)
+              setBlocks(data.blocks)
             }
           }
         })
         .catch(async error => {
           console.error('error', error)
+          setBlocks([])
         })
+    } else {
+      setBlocks([])
     }
-  }, [slug, apollo_client, setBlock])
+  }, [slugs, apollo_client])
 
-  if (block === null) {
+  if (blocks === null || blocks.length === 0) {
     return null
   }
 
@@ -49,5 +50,5 @@ export default function BlockLoader({ slug = null, children, ...props }) {
     return null
   }
 
-  return children({...props, block})
+  return children({...props, blocks, slugs})
 }

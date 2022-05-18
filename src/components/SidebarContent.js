@@ -30,7 +30,7 @@ import useUser from '../hooks/useUser.js'
 import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
-import BlockLoader from './BlockLoader.js'
+import BlocksLoader from './BlocksLoader.js'
 
 import ViewerAuto from './view/ViewerAuto.js'
 
@@ -203,24 +203,24 @@ export default function SidebarContent() {
           </MenuItem>
         </a>
 
-        {/* Glossar: */}
-        <BlockLoader slug="glossary">
-          {({ block }) => <ViewerAuto block={block} />}
-        </BlockLoader>
-
-        {/* Tools: */}
-        <BlockLoader slug="tools">
-          {({ block }) => <ViewerAuto block={block} />}
-        </BlockLoader>
-
-        {/* Statistics about volt.link: */}
-        {
-          loggedIn
-            ? <BlockLoader slug="stats">
-                {({ block }) => <ViewerAuto block={block} />}
-              </BlockLoader>
-            : null
-        }
+        <BlocksLoader slugs={[
+          'glossary',
+          'tools',
+          'volt_link_workplace_group',
+          'stats',
+        ]}>
+          {({ blocks, slugs }) => {
+            return slugs
+              .map(slug => {
+                const block = blocks.find(block => block?.properties?.slug === slug)
+                if (block) {
+                  return <ViewerAuto key={block._id} block={block} />
+                }
+                return null
+              })
+              .filter(Boolean)
+          }}
+        </BlocksLoader>
         
 
       </MenuList>
