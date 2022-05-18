@@ -31,7 +31,7 @@ function ViewerImageCard({ block, actions = {}, locales }) {
 
   let image_url = ''
   if (typeof og_image_url === 'string' && og_image_url.length > 0) {
-    image_url = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=500&h=500&url=${encodeURIComponent(og_image_url)}`
+    image_url = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1000&h=1000&url=${encodeURIComponent(og_image_url)}`
   }
 
   if (image_url !== '') {
