@@ -24,7 +24,7 @@ function useLoadPage() {
           && window.SERVER_DATA !== null
           && !Array.isArray(window.SERVER_DATA)
         ) {
-          preloaded_blocks = window.SERVER_DATA.preloaded_block || []
+          preloaded_blocks = window.SERVER_DATA.preloaded_blocks || []
         }
 
         console.log('preloaded_blocks', preloaded_blocks)
