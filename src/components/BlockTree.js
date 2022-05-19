@@ -129,8 +129,8 @@ function* treeWalker(treeRoots) {
   let treeRootsSorted = treeRoots
     .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified ? 1 : -1)
 
-  // find the index of the root with block._id === '6249c879fcaf12b124914396' (this is the id of volt europa)
-  const europaIndex = treeRootsSorted.findIndex(root => root.block._id === '6249c879fcaf12b124914396') // TODO: make this independet of the id
+  // find the index of the root with block.properties.slug === 'europa'
+  const europaIndex = treeRootsSorted.findIndex(root => root.block.properties.slug === 'europa')
 
   // remove the root at index europaIndex
   if (europaIndex > -1) {
