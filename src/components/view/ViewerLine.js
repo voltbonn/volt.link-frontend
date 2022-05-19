@@ -14,6 +14,66 @@ import { Link } from 'react-router-dom'
 
 import classes from './ViewerLine.module.css'
 
+function BlockIcon({ block }){
+  const properties = block.properties || {}
+
+  let iconComponent = null
+
+  if (
+    // TODO: is the check overkill ? 😅
+    properties.hasOwnProperty('icon')
+    && typeof properties.icon === 'object'
+    && properties.icon !== null
+    && !Array.isArray(properties.icon)
+    && properties.icon.hasOwnProperty('type')
+    && typeof properties.icon.type === 'string'
+    && properties.icon.type === 'emoji'
+    && properties.icon.hasOwnProperty('emoji')
+    && typeof properties.icon.emoji === 'string'
+    && properties.icon.emoji.length !== 0
+  ) {
+    iconComponent = <Twemoji
+      key={properties.icon.emoji}
+      className={classes.icon}
+      emoji={properties.icon.emoji}
+    />
+  }
+
+  if (iconComponent === null) {
+    let isSquareIcon = false
+    let icon_url = getImageUrl(properties.icon)
+
+    if (!icon_url) {
+      // coverphoto fallback
+      isSquareIcon = true
+      icon_url = getImageUrl(properties.coverphoto)
+    }
+
+    if (typeof icon_url === 'string' && icon_url.length !== 0) {
+      iconComponent = <div
+        className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`}
+        style={{ backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }}
+        alt=""
+      />
+    }
+  }
+
+  if (iconComponent === null) {
+    switch (block.type) {
+      case 'person':
+        iconComponent = <PersonIcon className={classes.icon} />
+        break
+      case 'redirect':
+        iconComponent = <RedirectIcon className={classes.icon} />
+        break
+      default:
+        iconComponent = <PageIcon className={classes.icon} />
+    }
+  }
+
+  return iconComponent
+}
+
 function ViewerLine({ block, clickable = true, onClick, locales, forceId }) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
@@ -32,51 +92,7 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId }) {
     }
   }
   
-  let iconComponent = null
 
-  if (
-    // TODO: is the check overkill ? 😅
-    properties.hasOwnProperty('icon')
-    && typeof properties.icon === 'object'
-    && properties.icon !== null
-    && !Array.isArray(properties.icon)
-    && properties.icon.hasOwnProperty('type')
-    && typeof properties.icon.type === 'string'
-    && properties.icon.type === 'emoji'
-    && properties.icon.hasOwnProperty('emoji')
-    && typeof properties.icon.emoji === 'string'
-    && properties.icon.emoji.length !== 0
-  ) {
-    iconComponent = <Twemoji className={classes.icon} emoji={properties.icon.emoji} /> 
-  }
-
-  if (iconComponent === null) {
-    let isSquareIcon = false
-    let icon_url = getImageUrl(properties.icon)
-    
-    if (!icon_url) {
-      // coverphoto fallback
-      isSquareIcon = true
-      icon_url = getImageUrl(properties.coverphoto)
-    }
-
-    if (typeof icon_url === 'string' && icon_url.length !== 0) {
-      iconComponent = <div className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round}`} style={{ backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }} alt={title}></div>
-    }
-  }
-
-  if (iconComponent === null) {
-    switch (block.type) {
-      case 'person':
-        iconComponent = <PersonIcon className={classes.icon} />
-        break
-      case 'redirect':
-        iconComponent = <RedirectIcon className={classes.icon} />
-        break
-      default:
-      iconComponent = <PageIcon className={classes.icon} />
-    }    
-  }
 
 
 
@@ -108,7 +124,7 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId }) {
         {...onClickProps}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {iconComponent}
+          <BlockIcon block={block} />
           <span dir="auto" className={classes.title}>{title}</span>
         </div>
       </a>
@@ -126,7 +142,7 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId }) {
         {...onClickProps}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {iconComponent}
+          <BlockIcon block={block} />
           <span dir="auto" className={classes.title}>{title}</span>
         </div>
       </Link>
@@ -144,7 +160,7 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId }) {
     {...onClickProps}
   >
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      {iconComponent}
+      <BlockIcon block={block} />
       <span dir="auto" className={classes.title}>{title}</span>
     </div>
   </div>
