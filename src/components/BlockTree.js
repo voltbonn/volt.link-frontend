@@ -8,7 +8,7 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 import BlockMenu from './edit/BlockMenu.js'
 import ViewerAuto from './view/ViewerAuto.js'
 
-import { Localized, useLocalization } from '../fluent/Localized.js'
+import { Localized } from '../fluent/Localized.js'
 
 import classes from './BlockTree.module.css'
 
@@ -28,8 +28,6 @@ import {
   FilterList as FilterListIcon,
   Archive as ArchiveIcon,
 
-  // Search as SearchIcon,
-
   InsertDriveFileSharp as PageIcon,
   // AutoAwesomeSharp as ActionIcon,
   LinkSharp as RedirectIcon,
@@ -39,6 +37,8 @@ import {
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
   EditSharp as EditIcon,
+
+  Search as SearchIcon,
 } from '@mui/icons-material'
 
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
@@ -361,7 +361,6 @@ function BlockTree({
   scrollContainer = window,
   showBlockMenu = true,
 }) {
-  const { getString } = useLocalization()
   const { loggedIn } = useUser()
 
   const outerTreeRef = useRef(null)
@@ -374,7 +373,6 @@ function BlockTree({
   const [treeNodes, setTreeNodes] = useState([])
 
   const [treeNodesFiltered, setTreeNodesFiltered] = useState([])
-  const [searchString, setSearchString] = useState('')
   const prevFetchArguments = useRef({})
 
   const [onlyShowWithEditPermissions, setOnlyShowWithEditPermissions] = useState(false) // false = show all, true = show only owning
@@ -430,14 +428,9 @@ function BlockTree({
 
   const updateTree = useCallback(nodes => {
     if (nodes.length > 0) {
-      let defaultOpenState = false
-      if (searchString.length > 0) {
-        defaultOpenState = true
-      }
-
       nodes = nodes.map(node => ({
         ...node,
-        isOpen: openById.hasOwnProperty(node._id) ? openById[node._id] : defaultOpenState,
+        isOpen: openById.hasOwnProperty(node._id) ? openById[node._id] : false,
       }))
       
       const treeRoots = buildTree(JSON.parse(JSON.stringify(nodes)))
@@ -447,7 +440,7 @@ function BlockTree({
       setTreeNodes([])
     }
     updateHeight()
-  }, [ searchString, setTreeNodes, updateHeight, openById ])
+  }, [setTreeNodes, updateHeight, openById])
 
   const loadBlocks = useLoadBlocks()
   const refetchData = useCallback(options => {
@@ -490,87 +483,10 @@ function BlockTree({
 
 
 
-  // START Filter + Search
+  // START Filter
 
   useEffect(() => {
     let filtered = treeNodes
-
-    if (searchString.length > 0) {
-      const searchStringLower = searchString.toLowerCase()
-
-      for (let i=0; i<filtered.length; i+=1) {
-        const node = filtered[i]
-
-        let showNode = false
-
-        if (
-          !!node
-          && !!node.block
-          && !!node.block.properties
-          && !!node.block.properties.text
-          && node.block.properties.text.toLowerCase().includes(searchStringLower)
-        ) {
-          showNode = true
-        } else if (
-          !!node
-          && !!node.block
-          && !!node.block.properties
-          && !!node.block.properties.translations
-        ) {
-          const translations = node.block.properties.translations
-          for (const translation of translations) {
-            if (translation.hasOwnProperty('text') && translation.text.toLowerCase().includes(searchStringLower)) {
-              showNode = true
-              break
-            }
-          }
-        } else if (
-          !!node
-          && !!node.block
-          && !!node.block.properties
-          && !!node.block.properties.slug
-          && node.block.properties.slug.toLowerCase().includes(searchStringLower)
-        ) {
-          showNode = true
-        }
-
-        filtered[i].showNode = showNode
-      }
-
-
-      // show sibling and parent nodes
-      let smallestNestingLevel = 0
-      let currentNestingLevel = 0
-      for (let i=filtered.length-1; i>=0; i-=1) {
-        const node = filtered[i]
-
-        if (currentNestingLevel !== 0) {
-          if (currentNestingLevel > node.nestingLevel) {
-            currentNestingLevel = node.nestingLevel
-            filtered[i].showNode = true // show parent node
-          } else if (currentNestingLevel < node.nestingLevel) {
-            currentNestingLevel = smallestNestingLevel
-          }
-        } else {
-          if (node.showNode === true) {
-            currentNestingLevel = node.nestingLevel
-          }
-        }
-
-        if (smallestNestingLevel === 0 || currentNestingLevel < smallestNestingLevel) {
-          smallestNestingLevel = currentNestingLevel
-        }
-      }
-
-      /*
-      isLeaf: true
-      isOpen: false
-      nestingLevel: 0
-      showNode: true
-      */
-
-      filtered = filtered.filter(node => node.showNode === true)
-    }
 
     if (onlyShowWithEditPermissions === true) {
       filtered = filtered
@@ -588,11 +504,7 @@ function BlockTree({
 
     setTreeNodesFiltered(filtered)
     updateHeight()
-  }, [ searchString, onlyShowWithEditPermissions, treeNodes, setTreeNodesFiltered, updateHeight ])
-
-  const handleSearch = useCallback(event => {
-    setSearchString(event.target.value || '')
-  }, [ setSearchString ])
+  }, [onlyShowWithEditPermissions, treeNodes, setTreeNodesFiltered, updateHeight])
 
   const toggleType = useCallback(type2toggle => {
     const newTypes = { ...types }
@@ -611,7 +523,7 @@ function BlockTree({
     })
   }, [ types, archived, refetchData ])
 
-  // END Filter + Search
+  // END Filter
 
 
 
@@ -654,14 +566,9 @@ function BlockTree({
       margin: '0 0 var(--basis_x2) 0',
     }}>
 
-      <input
-        type="text"
-        placeholder={getString('search')}
         style={{
           width: '100%',
         }}
-        onChange={handleSearch}
-      />
 
       <PopoverMenu
         trigger={triggerProps => (
