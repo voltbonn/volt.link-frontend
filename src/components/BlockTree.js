@@ -134,6 +134,11 @@ function* treeWalker(treeRoots) {
 
   // remove the root at index europaIndex
   if (europaIndex > -1) {
+    treeRootsSorted[europaIndex] = {
+      ...treeRootsSorted[europaIndex],
+      isOpen: true,
+    }
+
     treeRootsSorted = [
       treeRootsSorted[europaIndex],
       ...treeRootsSorted.slice(0, europaIndex),
