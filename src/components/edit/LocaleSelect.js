@@ -47,6 +47,7 @@ function LocaleSelect({
   defaultValue,
   onChange,
   options = defaultOptions,
+  style,
 }) {
   if (
     defaultValue === null
@@ -86,6 +87,7 @@ function LocaleSelect({
           style={{
             margin: '0',
             flexShrink: '0',
+            ...style,
           }}
         >
           <span style={{ width: '100%', textAlign: 'start' }}>

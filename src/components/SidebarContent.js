@@ -15,6 +15,8 @@ import {
 
   Login as LoginIcon,
   Logout as LogoutIcon,
+
+  LanguageSharp as LocaleChooserIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -165,6 +167,44 @@ export default function SidebarContent() {
               </a>
         }
 
+        <MenuItem
+          className="roundMenuItem"
+        >
+          <ListItemIcon>
+            <LocaleChooserIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={<>
+              <span style={{
+                marginRight: 'var(--basis_x2)',
+                verticalAlign: 'middle',
+              }}>
+                <Localized id="choose_locale" />
+              </span>
+              <LocaleSelect
+                onChange={handleLocaleChange}
+                defaultValue={userLocales[0]}
+                options={ui_locales}
+                style={{
+                  fontSize: 'inherit',
+                  padding: '4px 8px',
+                  verticalAlign: 'middle',
+                }}
+              />
+            </>}
+            secondary={<>
+              {
+                typeof choose_locale_information_string === 'string'
+                  && choose_locale_information_string !== ''
+                  ? <span style={{ marginBottom: '0' }}>
+                    <Localized id="choose_locale_information" />
+                  </span>
+                  : null
+              }
+            </>}
+          />
+        </MenuItem>
+
         <br />
 
         <BlocksLoader slugs={[
@@ -189,31 +229,6 @@ export default function SidebarContent() {
         </BlocksLoader>
 
       </MenuList>
-
-      <br />
-      <Divider style={{ opacity: 0.2 }} />
-      <br />
-
-      <div>
-        <span style={{
-          marginInlineEnd: 'var(--basis_x4)',
-        }}>
-          <Localized id="choose_locale" />
-        </span>
-        <LocaleSelect
-          onChange={handleLocaleChange}
-          defaultValue={userLocales[0]}
-          options={ui_locales}
-        />
-      </div>
-      {
-        typeof choose_locale_information_string === 'string'
-        && choose_locale_information_string !== ''
-          ? <p style={{ marginBottom: '0' }}>
-            <Localized id="choose_locale_information" />
-          </p>
-          : null
-      }
 
       <br />
       <Divider style={{ opacity: 0.2 }} />
