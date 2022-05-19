@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 
 import classes from './ViewerLine.module.css'
 
-function ViewerLine ({ block, actions = {}, locales, forceId }) {
+function ViewerLine({ block, clickable = true, onClick, locales, forceId }) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
   const properties = block.properties || {}
@@ -80,25 +80,19 @@ function ViewerLine ({ block, actions = {}, locales, forceId }) {
 
 
 
-  let cardOnClick = null
   let cardLink = path || link
-
-  if (actions.hasOwnProperty('link')) {
-    if (typeof actions.link === 'string') {
-      cardLink = actions.link
-    }
-  } else if (actions.hasOwnProperty('click')) {
-    if (typeof actions.click === 'function') {
-      cardOnClick = actions.click
-    }
-  }
 
   const {
     color = 'inherit',
     colorRGB = '--on-background-rgb',
   } = getBlockColor(block)
 
-  if (typeof cardLink === 'string' && cardLink.length > 0) {
+  const onClickProps = {}
+  if (typeof onClick === 'function') {
+    onClickProps.onClick = onClick
+  }
+  
+  if (clickable === true && typeof cardLink === 'string' && cardLink.length > 0) {
     if (cardLink.includes(':')) {
       return <a
         href={cardLink}
@@ -111,6 +105,7 @@ function ViewerLine ({ block, actions = {}, locales, forceId }) {
           color,
           '--on-background-rgb': colorRGB,
         }}
+        {...onClickProps}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {iconComponent}
@@ -119,44 +114,40 @@ function ViewerLine ({ block, actions = {}, locales, forceId }) {
       </a>
     } else {
       return <Link
-      to={cardLink}
-      title={title}
-      className={`clickable_card ${classes.root}`}
-      style={{
-        display: 'block',
-        cursor: 'pointer',
-        color,
-        '--on-background-rgb': colorRGB,
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        {iconComponent}
-        <span dir="auto" className={classes.title}>{title}</span>
-      </div>
-    </Link>
+        to={cardLink}
+        title={title}
+        className={`clickable_card ${classes.root}`}
+        style={{
+          display: 'block',
+          cursor: 'pointer',
+          color,
+          '--on-background-rgb': colorRGB,
+        }}
+        {...onClickProps}
+      >
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {iconComponent}
+          <span dir="auto" className={classes.title}>{title}</span>
+        </div>
+      </Link>
     }
-  } else {
-    const onClickProps = {}
-    if (typeof cardOnClick === 'function') {
-      onClickProps.onClick = cardOnClick
-    }
-
-    return <div
-      {...onClickProps}
-      title={title}
-      className={`clickable_card ${classes.root}`}
-      style={{
-        cursor: typeof cardOnClick === 'function' ? 'pointer' : 'auto',
-        color,
-        '--on-background-rgb': colorRGB,
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        {iconComponent}
-        <span dir="auto" className={classes.title}>{title}</span>
-      </div>
-    </div>
   }
+
+  return <div
+    title={title}
+    className={`clickable_card ${classes.root}`}
+    style={{
+      cursor: 'auto',
+      color,
+      '--on-background-rgb': colorRGB,
+    }}
+    {...onClickProps}
+  >
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      {iconComponent}
+      <span dir="auto" className={classes.title}>{title}</span>
+    </div>
+  </div>
 }
 
 export default ViewerLine

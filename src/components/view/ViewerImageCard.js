@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { renderInlineMarkdown } from '../../markdown.js'
 import { useLocalization } from '../../fluent/Localized.js'
 
-function ViewerImageCard({ block, actions = {}, locales }) {
+function ViewerImageCard({ block, locales }) {
   const [html, setHtml] = useState({ __html: '' })
 
   const { translateBlock } = useLocalization()
