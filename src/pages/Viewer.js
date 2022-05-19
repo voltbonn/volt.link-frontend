@@ -63,6 +63,20 @@ function Viewer () {
 
   const [error, setError] = useState(null)
 
+  const setAndTrackError = useCallback(error => {
+    setError(error)
+
+    if (
+      !!window.umami
+      && typeof error === 'object'
+      && error !== null
+      && error.hasOwnProperty('code')
+      && typeof error.code === 'string'
+    ) {
+      window.umami.trackEvent('Error: ' + error.code)
+    }
+  }, [setError])
+
   useEffect(() => {
     const properties = block.properties || {}
 
@@ -81,7 +95,7 @@ function Viewer () {
       loadPage(slugOrId_to_use)
         .then(async loadedBlock => { 
           if (typeof loadedBlock !== 'object' || loadedBlock === null) {
-            setError({
+            setAndTrackError({
               code: '404',
               for_slugOrId: slugOrId_to_use,
             })
@@ -140,7 +154,7 @@ function Viewer () {
             )]
             setPossibleLocales(newPossibleLocales)
 
-            setError(null)
+            setAndTrackError(null)
             setBlock(newLoadedBlock)
             setContentBlocks(blocks)
             loadingTheBlock.current = false
@@ -148,7 +162,7 @@ function Viewer () {
         })
         .catch(error => {
           console.error(error)
-          setError({
+          setAndTrackError({
             ...error,
             for_slugOrId: slugOrId_to_use,
           })
@@ -165,7 +179,7 @@ function Viewer () {
     loadBlocks,
     setContentBlocks,
     setPossibleLocales,
-    setError,
+    setAndTrackError,
   ])
 
   if (error !== null && error.for_slugOrId === slugOrId_to_use) {
