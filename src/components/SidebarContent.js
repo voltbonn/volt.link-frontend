@@ -209,6 +209,7 @@ export default function SidebarContent() {
 
         <BlocksLoader slugs={[
           'glossary',
+          'vip',
           'tools',
           'stats',
           'volt_link_workplace_group',
