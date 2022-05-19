@@ -73,7 +73,7 @@ function Viewer () {
       && error.hasOwnProperty('code')
       && typeof error.code === 'string'
     ) {
-      window.umami.trackEvent('Error: ' + error.code)
+      window.umami.trackEvent('E: ' + error.code)
     }
   }, [setError])
 
