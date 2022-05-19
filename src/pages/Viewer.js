@@ -82,7 +82,7 @@ function Viewer () {
         .then(async loadedBlock => { 
           if (typeof loadedBlock !== 'object' || loadedBlock === null) {
             setError({
-              code: 'error_404',
+              code: '404',
               for_slugOrId: slugOrId_to_use,
             })
             loadingTheBlock.current = false
@@ -178,7 +178,7 @@ function Viewer () {
       <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
         <main className={`${classes.contentWrapper}`}>
           {
-            error.code === 'error_300'
+            error.code === '300'
               ? <>
                 <h1>
                   <Localized id="error_300_title" />
@@ -195,14 +195,14 @@ function Viewer () {
               : null
           }
           {
-            error.code === 'error_403'
+            error.code === '403'
               ? <Suspense>
                   <ErrorPage errorName="no_access" />
               </Suspense>
               : null
           }
           {
-            error.code === 'error_404'
+            error.code === '404'
               ? <Suspense>
                 <ErrorPage errorName="not_found" />
               </Suspense>
