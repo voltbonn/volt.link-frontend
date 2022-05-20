@@ -128,7 +128,7 @@ function* treeWalker(treeRoots) {
     .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified ? 1 : -1)
 
   // find the index of the root with block.properties.slug === 'europa'
-  const europaIndex = treeRootsSorted.findIndex(root => root.block.properties.slug === 'europa')
+  const europaIndex = treeRootsSorted.findIndex(root => root?.block?.properties?.slug === 'europa')
 
   // remove the root at index europaIndex
   if (europaIndex > -1) {
