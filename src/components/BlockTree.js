@@ -416,7 +416,7 @@ function BlockTree({
 
   const updateHeight = useCallback(() => {
     if (innerTreeRef.current && outerTreeRef.current) {
-      setTimeout(() => {
+      setTimeout(() => { // TODO remove this timeout (it's used to update the initial height)
         const outerBounds = outerTreeRef.current.getBoundingClientRect()      
         const maxHeight = viewportHeight - outerBounds.top
 
