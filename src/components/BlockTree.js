@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
 // import { useLayoutEffect } from 'react'
-import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
 
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
@@ -662,35 +661,18 @@ function BlockTree({
         {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Reload</span> */}
       </button>
     </div>
-  <div
-    style={{
-      height: outerHeight,
-      marginRight: '-12px',
-      marginLeft: '-12px',
-      marginBottom: bottomMargin,
-    }}
-    ref={outerTreeRef}
-  >
-    <AutoSizer disableWidth>
-      {({ height }) => (
-        <FixedSizeList
-          itemCount={treeNodesFiltered.length}
-          ref={treeRef}
-          innerRef={innerTreeRef}
-          // onScroll={updateHeight}
-          itemSize={minItemSize}
-          height={height}
-          width="100%"
-          style={{
-            overflowY: 'hidden',
-            overflowX: 'auto',
-            // overflowX: 'hidden',
-          }}
-        >
-          {row}
-        </FixedSizeList>
-      )}
-    </AutoSizer>
+    <div
+      style={{
+        height: outerHeight,
+        marginRight: '-12px',
+        marginLeft: '-12px',
+        marginBottom: bottomMargin,
+        overflowY: 'visible',
+        overflowX: 'auto',
+      }}
+      ref={outerTreeRef}
+    >
+      <FixedSizeList
         itemData={{
           items: treeNodesFiltered,
           props: {
@@ -700,7 +682,22 @@ function BlockTree({
             showBlockMenu,
           }
         }}
+        itemCount={treeNodesFiltered.length}
+        innerRef={innerTreeRef}
+        // onScroll={updateHeight}
+        itemSize={minItemSize}
+        height={outerHeight}
+        width="auto"
+        style={{
+          // overflow: 'visible',
+          overflowY: 'hidden',
+          overflowX: 'visible',
+          // overflowX: 'hidden',
+        }}
         itemKey={(index, data) => data.items[index]._id}
+      >
+        {BlockRow}
+      </FixedSizeList>
       {
         treeNodesFiltered.length === 0
           ? <p style={{
