@@ -431,7 +431,7 @@ function BlockTree({
     }
   }, [ viewportHeight, innerTreeRef, outerTreeRef, setOuterHeight, setBottomMargin ])
 
-  useScrollPosition(updateHeight, [ updateHeight ], null, false, 300, scrollContainer)
+  useScrollPosition(updateHeight, [updateHeight], null, false, 300, scrollContainer)
 
   const updateTree = useCallback(nodes => {
     if (nodes.length > 0) {
