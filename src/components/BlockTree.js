@@ -220,22 +220,30 @@ function getFlatTree(treeRoots){
 
 
 const BlockRow = ({
-  createBlock,
   index,
   style,
   data,
-  toggleOpenById,
-  refetchData,
   // onSetSize,
-  showBlockMenu = true,
 }) => {
+  const {
+    items,
+    props,
+  } = data || []
+
+  const {
+    createBlock,
+    toggleOpenById,
+    refetchData,
+    showBlockMenu,
+  } = props || {}
+
   const {
     _id,
     isLeaf,
     isOpen,
     block,
     nestingLevel,
-  } = data[index]
+  } = items[index] || {}
 
   // const rootRef = useRef()
   // const [ windowWidth ] = useWindowSize()
@@ -548,16 +556,6 @@ function BlockTree({
     })
   }, [ types, archived, refetchData ])
 
-  const row = (props) => {
-    return <BlockRow
-      createBlock={createBlock}
-      toggleOpenById={toggleOpenById}
-      refetchData={refetchDataWithFilter}
-      // onSetSize={setSize}
-      showBlockMenu={showBlockMenu}
-      {...props}
-    />
-  }
 
   return <>
     <div style={{
@@ -676,7 +674,6 @@ function BlockTree({
     <AutoSizer disableWidth>
       {({ height }) => (
         <FixedSizeList
-          itemData={treeNodesFiltered}
           itemCount={treeNodesFiltered.length}
           ref={treeRef}
           innerRef={innerTreeRef}
@@ -689,12 +686,21 @@ function BlockTree({
             overflowX: 'auto',
             // overflowX: 'hidden',
           }}
-          itemKey={(index, data) => data[index]._id}
         >
           {row}
         </FixedSizeList>
       )}
     </AutoSizer>
+        itemData={{
+          items: treeNodesFiltered,
+          props: {
+            createBlock,
+            toggleOpenById,
+            refetchData: refetchDataWithFilter,
+            showBlockMenu,
+          }
+        }}
+        itemKey={(index, data) => data.items[index]._id}
       {
         treeNodesFiltered.length === 0
           ? <p style={{
