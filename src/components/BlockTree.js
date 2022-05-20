@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { FixedSizeList } from 'react-window'
+import { VariableSizeList } from 'react-window'
 
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
@@ -51,7 +51,7 @@ const blockTypeIcons = {
 }
 
 
-const minItemSize = 43
+const minItemSize = 41
 
 // const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
 // const getHeight = () => window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
@@ -203,25 +203,10 @@ function getFlatTree(treeRoots){
   return flatTree
 }
 
-// const useWindowSize = () => {
-//   let [size, setSize] = useState([0, 0])
-//   useLayoutEffect(() => {
-//     function updateSize() {
-//       setSize([window.innerWidth, window.innerHeight])
-//     }
-//     window.addEventListener("resize", updateSize)
-//     updateSize()
-//     return () => window.removeEventListener("resize", updateSize)
-//   }, [])
-//   return size
-// }
-
-
 const BlockRow = ({
   index,
   style,
   data,
-  // onSetSize,
 }) => {
   const {
     items,
@@ -233,6 +218,7 @@ const BlockRow = ({
     toggleOpenById,
     refetchData,
     showBlockMenu,
+    setItemSize,
   } = props || {}
 
   const {
@@ -243,15 +229,16 @@ const BlockRow = ({
     nestingLevel,
   } = items[index] || {}
 
-  // const rootRef = useRef()
-  // const [ windowWidth ] = useWindowSize()
-  // useEffect(() => {
-  //   if (typeof onSetSize === 'function') {
-  //     const height = rootRef.current.getBoundingClientRect().height
-  //     onSetSize(index, height)
-  //   }
-  // }, [ index, onSetSize, windowWidth ])
-
+  const itemRef = useRef()
+  useEffect(() => {
+    if (typeof setItemSize === 'function' && itemRef.current) {
+      const height = itemRef.current.getBoundingClientRect().height
+      if (height > 0) {
+        setItemSize(index, ~~height)
+      }
+    }
+  }, [index, block, setItemSize]) // mention block here, to recalc the height on new data
+  
   const [blockMenuIsOpen, setBlockMenuIsOpen] = useState(false)
 
   const onBlockMenuToogle = useCallback(newValue => {
@@ -323,14 +310,14 @@ const BlockRow = ({
   const inset = ~~(nestingLevel * 25 + (isLeaf ? 24 : 0))
 
   return <div
-    // ref={rootRef}
+    ref={itemRef}
     key={block._id}
     style={{
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'row',
       ...style,
-      // height: 'auto',
+      height: 'auto',
       marginLeft: inset,
       minWidth: `calc(100% - ${(isLeaf ? 24 : 0)}px)`,
       width: `calc(100% - ${inset}px)`,
@@ -533,9 +520,22 @@ function BlockTree({
 
 
 
-
-
-
+  const listRef = useRef(null)
+  const [itemSizes, setSize] = React.useState([])
+  const setItemSize = React.useCallback((index, size) => {
+    if (typeof setSize === 'function') {
+      setSize(sizes => ({
+        ...sizes,
+        [index]: size
+      }))
+      if (!!listRef.current && typeof listRef.current.resetAfterIndex === 'function') {
+        listRef.current.resetAfterIndex(index, false)
+      }
+    }
+  }, [])
+  const getItemSize = React.useCallback(index => {
+    return itemSizes[index] || minItemSize
+  }, [itemSizes])
 
 
 
@@ -670,7 +670,9 @@ function BlockTree({
       }}
       ref={outerTreeRef}
     >
-      <FixedSizeList
+      <VariableSizeList
+        ref={listRef}
+        itemSize={getItemSize}
         itemData={{
           items: treeNodesFiltered,
           props: {
@@ -678,12 +680,12 @@ function BlockTree({
             toggleOpenById,
             refetchData: refetchDataWithFilter,
             showBlockMenu,
+            setItemSize,
           }
         }}
         itemCount={treeNodesFiltered.length}
         innerRef={innerTreeRef}
         // onScroll={updateHeight}
-        itemSize={minItemSize}
         height={outerHeight}
         width="auto"
         style={{
@@ -692,10 +694,11 @@ function BlockTree({
           overflowX: 'visible',
           // overflowX: 'hidden',
         }}
+        estimatedItemSize={minItemSize}
         itemKey={(index, data) => data.items[index]._id}
       >
         {BlockRow}
-      </FixedSizeList>
+      </VariableSizeList>
       {
         treeNodesFiltered.length === 0
           ? <p style={{
