@@ -126,12 +126,18 @@ export default function SidebarContent() {
     <header className={classes.header}>
       <div className={classes.headerBar}>
         {
-          matchesStartpage
-          ? <h1>VoltLink</h1>
-          : <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0' }}>
+          !matchesStartpage
+          ? <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0' }}>
               <MenuOpenIcon className="icon" />
             </button>
+          : null
         }
+
+          {
+            matchesStartpage
+              ? <h1>Volt.Link</h1>
+              : <h2 style={{ margin: 0 }}>Volt.Link</h2>
+          }
 
         <AddMenu
           trigger={triggerProps => (
