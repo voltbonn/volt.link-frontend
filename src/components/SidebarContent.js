@@ -211,8 +211,25 @@ export default function SidebarContent() {
           'glossary',
           'vip',
           'tools',
-          'stats',
+        ]}>
+          {({ blocks, slugs }) => {
+            return slugs
+              .map(slug => {
+                const block = blocks.find(block => block?.properties?.slug === slug)
+                if (block) {
+                  return <ViewerAuto key={block._id} block={block} />
+                }
+                return null
+              })
+              .filter(Boolean)
+          }}
+        </BlocksLoader>
+
+        <br />
+
+        <BlocksLoader slugs={[
           'volt_link_workplace_group',
+          'stats',
           'volt_link_source_code',
           'volt_link_contact',
         ]}>
