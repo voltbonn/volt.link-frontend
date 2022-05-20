@@ -372,7 +372,6 @@ function BlockTree({
 
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
-  const treeRef = useRef(null)
   const [outerHeight, setOuterHeight] = useState(minItemSize)
   const [bottomMargin, setBottomMargin] = useState(0)
   const [nodes, setNodes] = useState({})
