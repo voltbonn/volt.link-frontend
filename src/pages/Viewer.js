@@ -327,7 +327,7 @@ function Viewer () {
       rightActions={rightHeaderActions}
     />
 
-    <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
+    <div className={`basis_0_6 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
       (type === 'page' || type === 'person' || type === 'redirect')
       && coverphoto_url !== ''
