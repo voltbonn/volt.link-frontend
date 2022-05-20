@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-// import { useLayoutEffect } from 'react'
 import { FixedSizeList } from 'react-window'
 
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
