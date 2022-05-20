@@ -89,7 +89,8 @@
 @media (max-width: 800px) {
   :root,
   .basis_x1,
-  .basis_0_8 {
+  .basis_0_8,
+  .basis_0_6 {
     --basis: 0.4rem;
   }
 }
