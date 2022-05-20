@@ -141,7 +141,7 @@ function Viewer () {
                 ...blocks,
               ]
                 .flatMap(thisBlock => {
-                  const properties = thisBlock.properties || {}
+                  const properties = thisBlock?.properties || {}
 
                   return [
                     properties.locale || null,
