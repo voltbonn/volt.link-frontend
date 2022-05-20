@@ -77,9 +77,6 @@
   --basis: 0.3rem;
 }
 
-:root {
-  --basis: 1rem;
-}
 @media (max-width: 1000px) {
   :root,
   .basis_x1 {
