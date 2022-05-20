@@ -140,6 +140,7 @@ function Viewer () {
                 loadedBlock,
                 ...blocks,
               ]
+                .filter(Boolean)
                 .flatMap(thisBlock => {
                   const properties = thisBlock?.properties || {}
 
