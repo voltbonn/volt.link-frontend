@@ -519,7 +519,6 @@ function BlockTree({
 
 
 
-
   const listRef = useRef(null)
   const [itemSizes, setSize] = React.useState([])
   const setItemSize = React.useCallback((index, size) => {
@@ -536,6 +535,7 @@ function BlockTree({
   const getItemSize = React.useCallback(index => {
     return itemSizes[index] || minItemSize
   }, [itemSizes])
+
 
 
 
