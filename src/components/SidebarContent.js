@@ -238,6 +238,8 @@ export default function SidebarContent() {
           'stats',
           'volt_link_source_code',
           'volt_link_contact',
+          'imprint',
+          'privacy_policy',
         ]}>
           {({ blocks, slugs }) => {
             return slugs
