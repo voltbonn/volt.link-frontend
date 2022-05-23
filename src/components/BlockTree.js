@@ -7,7 +7,7 @@ import BlockMenu from './edit/BlockMenu.js'
 import ViewerAuto from './view/ViewerAuto.js'
 import MultiButton from './MultiButton.js'
 
-import { Localized } from '../fluent/Localized.js'
+import { useLocalization, Localized } from '../fluent/Localized.js'
 
 import classes from './BlockTree.module.css'
 
@@ -383,6 +383,7 @@ function BlockTree({
   scrollContainer = window,
   showBlockMenu = true,
 }) {
+  const { getString } = useLocalization()
   const { loggedIn } = useUser()
 
   const searchButtonRef = useRef(null)
