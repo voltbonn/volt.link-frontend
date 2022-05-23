@@ -42,8 +42,8 @@ export const getBlock_Query = gql`
 `
 
 export const getBlocks_Query = gql`
-  query getBlocks ($ids: [String], $slugs: [String], $types: [String], $archived: Boolean, $roots: [ObjectID]) {
-    blocks (ids: $ids, slugs: $slugs, types: $types, archived: $archived, roots: $roots) {
+  query getBlocks ($ids: [String], $slugs: [String], $types: [String], $archived: Boolean, $roots: [ObjectID], $roles: [String]) {
+    blocks (ids: $ids, slugs: $slugs, types: $types, archived: $archived, roots: $roots, roles: $roles) {
       _id
       type
       properties
@@ -65,8 +65,8 @@ export const getBlocks_Query = gql`
 `
 
 export const getBlocksWithContent_Query = gql`
-  query getBlocks ($ids: [String], $slugs: [String], $types: [String], $archived: Boolean, $roots: [ObjectID]) {
-    blocks (ids: $ids, slugs: $slugs, types: $types, archived: $archived, roots: $roots) {
+  query getBlocks ($ids: [String], $slugs: [String], $types: [String], $archived: Boolean, $roots: [ObjectID] $roles: [String]) {
+    blocks (ids: $ids, slugs: $slugs, types: $types, archived: $archived, roots: $roots, roles: $roles) {
 		  _id
 		  type
 		  properties

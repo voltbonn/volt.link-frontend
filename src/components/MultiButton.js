@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 
-function MultiButton({ ariaLabel, items, defaultValue, onChange, style, className }) {
+function MultiButton({ ariaLabel, items, defaultValue, onChange, style = {}, buttonProps = {}, className = '' }) {
   const [choosen, setChoosen] = useState()
 
   useEffect(() => setChoosen(defaultValue), [defaultValue, setChoosen])
@@ -15,11 +15,8 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange, style, classNam
 
   return <div
     aria-label={ariaLabel}
-    className={'buttonRow ' + (className || '')}
-    style={{
-      display: 'inline-block',
-      ...style
-    }}
+    className={'buttonRow ' + (className || '')}
+    style={style}
   >
     {
       items.map(item => {
@@ -27,14 +24,23 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange, style, classNam
         const title = item.title
         const icon = item.icon || null
         return <button
-          key={value+'_'+title}
-          className={`default ${choosen === value ? 'choosen' : ''} ${!!icon ? 'hasIcon' : ''}`}
+          {...buttonProps}
+          key={value}
+          className={`default ${choosen === value ? 'choosen' : ''} ${!!icon ? 'hasIcon' : ''} ${buttonProps?.className || ''}`}
           onClick={handleClick}
           data-value={value}
         >
           <span style={{pointerEvents: 'none'}}>
             {!!icon ? icon : null}
-            {!!title ? <span style={{verticalAlign: 'middle'}}>{title}</span> : null}
+            {
+              !!title
+                ? (
+                  typeof title === 'object' // check if it's a component
+                    ? title
+                    : <span style={{verticalAlign: 'middle'}}>{title}</span>
+                )
+                : null
+            }
           </span>
         </button>
       })

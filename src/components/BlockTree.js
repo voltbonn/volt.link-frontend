@@ -5,6 +5,7 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 import BlockMenu from './edit/BlockMenu.js'
 import ViewerAuto from './view/ViewerAuto.js'
+import MultiButton from './MultiButton.js'
 
 import { Localized } from '../fluent/Localized.js'
 
@@ -34,7 +35,7 @@ import {
   // TitleSharp as HeadlineIcon,
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
-  EditSharp as EditIcon,
+  // EditSharp as EditIcon,
 
   Search as SearchIcon,
 } from '@mui/icons-material'
@@ -391,17 +392,13 @@ function BlockTree({
   const innerTreeRef = useRef(null)
   const [outerHeight, setOuterHeight] = useState(minItemSize)
   const [bottomMargin, setBottomMargin] = useState(0)
-  const [nodes, setNodes] = useState({})
+  const [nodes, setNodes] = useState([])
   const [openById, setOpenById] = useState({})
   const [treeNodes, setTreeNodes] = useState([])
 
-  const [treeNodesFiltered, setTreeNodesFiltered] = useState([])
   const prevFetchArguments = useRef({})
 
-  const [onlyShowWithEditPermissions, setOnlyShowWithEditPermissions] = useState(false) // false = show all, true = show only owning
-  function toggleOnlyShowWithEditPermissions() {
-    setOnlyShowWithEditPermissions(oldOnlyShowWithEditPermissions => !oldOnlyShowWithEditPermissions)
-  }
+  const [treeType, setTreeType] = useState('europa') // europa / people / own_blocks
 
   const [types, setTypes] = useState({
     person: true,
@@ -471,11 +468,30 @@ function BlockTree({
 
   const loadBlocks = useLoadBlocks()
   const refetchData = useCallback(options => {
-    const {
+    let {
       force = false,
       filteredTypes,
       archived,
     } = options || {}
+
+    let roots = null
+    let roles = ['viewer','editor','owner']
+
+    if (treeType === 'europa') {
+      roots = ['6249c879fcaf12b124914396'] // TODO: don't hard code the id of europa 
+      filteredTypes = [
+        'page',
+        'redirect',
+      ]
+      archived = false
+    } else if (treeType === 'people') {
+      filteredTypes = [
+        'person'
+      ]
+      archived = false
+    } else if (treeType === 'own_pages') {
+      roles = ['editor', 'owner']
+    }
 
     if (
       force === true
@@ -485,7 +501,7 @@ function BlockTree({
       prevFetchArguments.current.types = filteredTypes
       prevFetchArguments.current.archived = archived
       
-      loadBlocks({ types: filteredTypes, archived })
+      loadBlocks({ types: filteredTypes, archived, roots, roles })
         .then(async loadedBlocks => {
           const nodes = loadedBlocks
           .map(block => ({
@@ -500,7 +516,7 @@ function BlockTree({
         })
         .catch(error => console.error(error))
     }
-  }, [ loadBlocks, setNodes, updateTree ])
+  }, [treeType, loadBlocks, setNodes, updateTree])
 
   // useEffect(() => {
   //   refetchData()
@@ -511,27 +527,6 @@ function BlockTree({
 
 
   // START Filter
-
-  useEffect(() => {
-    let filtered = treeNodes
-
-    if (onlyShowWithEditPermissions === true) {
-      filtered = filtered
-        .filter(node => (
-          !!node
-          && !!node.block
-          && !!node.block.computed
-          && !!node.block.computed.roles
-          && (
-            node.block.computed.roles.includes('owner')
-            || node.block.computed.roles.includes('editor')
-          )
-        ))
-    }
-
-    setTreeNodesFiltered(filtered)
-    updateHeight()
-  }, [onlyShowWithEditPermissions, treeNodes, setTreeNodesFiltered, updateHeight])
 
   const toggleType = useCallback(type2toggle => {
     const newTypes = { ...types }
@@ -593,10 +588,40 @@ function BlockTree({
   const isMacLike = /(macintosh|macintel|macppc|mac68k|macos|iphone|ipad|ipod)/i.test(window.navigator.userAgent.toLowerCase())
   
   return <>
+    <div>
+      <MultiButton
+        defaultValue={treeType}
+        items={[
+          // TODO: Translate the item titles.
+          { value: 'europa', title: 'Volt Europa' },
+          { value: 'people', title: 'People' },
+          { value: 'own_blocks', title: 'Your Pages' }
+        ]}
+        onChange={setTreeType}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          margin: 'calc(-2 * var(--basis)) 0 var(--basis_x4) 0',
+          justifyContent: 'stretch',
+          flexWrap: 'wrap',
+          gap: 'var(--basis_x2)',
+        }}
+        buttonProps={{
+          style: {
+            flexGrow: 1,
+            justifyContent: 'center',
+            flexShrink: 0,
+            margin: 0,
+          }
+        }}
+      />
+    </div>
+
     <div style={{
       display: 'flex',
       alignItems: 'center',
       margin: '0 0 var(--basis_x2) 0',
+      gap: 'var(--basis)',
     }}>
 
       <MenuItem
@@ -604,61 +629,17 @@ function BlockTree({
         onClick={openSearch}
         style={{
           width: '100%',
-        }}
-
-      <PopoverMenu
-        trigger={triggerProps => (
-          <button
-            {...triggerProps}
-            className="text hasIcon"
-            style={{
-              flexShrink: '0',
-            }}
-          >
-            <FilterListIcon className="icon" />
-            {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Filter</span> */}
-          </button>
-        )}
-      >
-        {/*
-          { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
-          { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
-          { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_plural_redirect') },
-        */}
           justifyContent: 'space-between',
           // boxShadow: 'inset 0 0 0 1px rgba(var(--background-rgb), var(--alpha))',
           boxShadow: '0 0 0 1px var(--background)',
           background: 'var(--background)',
 
-        <div style={{ marginTop: '8px' }}></div>
           // the following replaces the roundMenuItem-css-class
           borderRadius: 'var(--basis)',
           margin: '0',
           padding: 'var(--basis) var(--basis_x2)',
           // end of the roundMenuItem-css-class stuff
 
-        {
-          Object.keys(types)
-            .map(type => (
-              <MenuItem
-                className="roundMenuItem"
-                key={type}
-                onClick={() => toggleType(type)}
-                selected={filteredTypes.includes(type)}
-                sx={{
-                  marginTop: '2px !important',
-                  marginBottom: '2px !important',
-                }}
-              >
-                <ListItemIcon>
-                  {blockTypeIcons[type]}
-                </ListItemIcon>
-                <ListItemText>
-                  <Localized id={'block_menu_type_label_plural_'+type} />
-                </ListItemText>
-              </MenuItem>
-            ))
-        }
         }}
       >
         <ListItemIcon>
@@ -691,55 +672,89 @@ function BlockTree({
         />
       </MenuItem>
 
-        {
-          loggedIn
-          && <>
-            <Divider style={{ opacity: 0.2 }} />
-
-            <MenuItem
-              className="roundMenuItem"
-              onClick={toggleArchived}
-              selected={archived === true}
-              sx={{
-                marginBottom: '2px !important',
+      {
+        loggedIn && treeType === 'own_blocks'
+        ? <PopoverMenu
+          trigger={triggerProps => (
+            <button
+              {...triggerProps}
+              className="text hasIcon"
+              style={{
+                flexShrink: '0',
+                margin: '0',
               }}
             >
-              <ListItemIcon>
-                <ArchiveIcon className="icon" />
-              </ListItemIcon>
-              <ListItemText>
-                <Localized id={archived === true ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
-              </ListItemText>
-            </MenuItem>
+              <FilterListIcon className="icon" />
+              {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Filter</span> */}
+            </button>
+          )}
+        >
+          {/*
+            { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
+            { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
+            { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_plural_redirect') },
+          */}
 
-            <MenuItem
-              className="roundMenuItem"
-              onClick={toggleOnlyShowWithEditPermissions}
-              selected={onlyShowWithEditPermissions === true}
-            >
-              <ListItemIcon>
-                <EditIcon className="icon" />
-              </ListItemIcon>
-              <ListItemText>
-                <Localized id={onlyShowWithEditPermissions === true ? 'filter_menu_showing_editing' : 'filter_menu_show_editing'} />
-              </ListItemText>
-            </MenuItem>
-          </>
-        }
+          <div style={{ marginTop: '8px' }}></div>
 
-      </PopoverMenu>
+          {
+            Object.keys(types)
+              .map(type => (
+                <MenuItem
+                  className="roundMenuItem"
+                  key={type}
+                  onClick={() => toggleType(type)}
+                  selected={filteredTypes.includes(type)}
+                  sx={{
+                    marginTop: '2px !important',
+                    marginBottom: '2px !important',
+                  }}
+                >
+                  <ListItemIcon>
+                    {blockTypeIcons[type]}
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Localized id={'block_menu_type_label_plural_'+type} />
+                  </ListItemText>
+                </MenuItem>
+              ))
+          }
+
+          <Divider style={{ opacity: 'var(--alpha-less)'}} />
+
+          <MenuItem
+            className="roundMenuItem"
+            onClick={toggleArchived}
+            selected={archived === true}
+            sx={{
+              marginBottom: '2px !important',
+            }}
+          >
+            <ListItemIcon>
+              <ArchiveIcon className="icon" />
+            </ListItemIcon>
+            <ListItemText>
+              <Localized id={archived === true ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
+            </ListItemText>
+          </MenuItem>
+
+        </PopoverMenu>
+        : null
+      }
 
       <button
         className="text hasIcon"
         onClick={refetchDataWithFilter}
         style={{
           flexShrink: '0',
+          margin: '0px',
         }}
       >
         <RequeryIcon className="icon" />
         {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Reload</span> */}
       </button>
     </div>
+
     <div
       style={{
         height: outerHeight,
@@ -755,7 +770,7 @@ function BlockTree({
         ref={listRef}
         itemSize={getItemSize}
         itemData={{
-          items: treeNodesFiltered,
+          items: treeNodes,
           props: {
             createBlock,
             toggleOpenById,
@@ -764,7 +779,7 @@ function BlockTree({
             setItemSize,
           }
         }}
-        itemCount={treeNodesFiltered.length}
+        itemCount={treeNodes.length}
         innerRef={innerTreeRef}
         // onScroll={updateHeight}
         height={outerHeight}
@@ -781,7 +796,7 @@ function BlockTree({
         {BlockRow}
       </VariableSizeList>
       {
-        treeNodesFiltered.length === 0
+        treeNodes.length === 0
           ? <p style={{
             textAlign: 'center',
             fontWeight: 'bold',
