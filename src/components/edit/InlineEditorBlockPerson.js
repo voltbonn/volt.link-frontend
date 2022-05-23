@@ -3,12 +3,8 @@ import React, { useState, useCallback } from 'react'
 import { withLocalization } from '../../fluent/Localized.js'
 import { getBlockColor } from '../../functions.js'
 
-
-import {
-  Face as PersonPlaceholderIcon,
-} from '@mui/icons-material'
-
 import HtmlInput from './HtmlInput.js'
+import BlockIcon from '../view/BlockIcon.js'
 
 function InlineEditorBlockPersonRaw({
   getString,
@@ -45,6 +41,7 @@ function InlineEditorBlockPersonRaw({
   return <div
     style={{
       display: 'flex',
+      alignItems: 'center',
       margin: '0 0 var(--basis) 0',
       cursor: 'auto',
       '--on-background-rgb': colorRGB,
@@ -52,11 +49,7 @@ function InlineEditorBlockPersonRaw({
     }}
     className="clickable_card active"
   >
-    <PersonPlaceholderIcon
-      style={{
-        margin: 'var(--basis)',
-      }}
-    />
+    <BlockIcon block={block} />
 
     <HtmlInput
       defaultValue={text}

@@ -4,7 +4,6 @@ import { withLocalization } from '../../fluent/Localized.js'
 import { getBlockColor } from '../../functions.js'
 
 import {
-  LinkSharp as RedirectIcon,
   ArrowForward as ToIcon,
 } from '@mui/icons-material'
 
@@ -12,6 +11,7 @@ import FancyInput from './FancyInput.js'
 import HtmlInput from './HtmlInput.js'
 import UrlInput from './UrlInput.js'
 import SlugInput from './SlugInput.js'
+import BlockIcon from '../view/BlockIcon.js'
 
 
 function InlineEditorBlockRedirectRaw({
@@ -94,11 +94,7 @@ function InlineEditorBlockRedirectRaw({
   className="clickable_card active"
   >
     <div style={{ width: '100%', display: 'flex', alignItems: 'center', color }}>
-      <RedirectIcon
-        style={{
-          margin: 'var(--basis)',
-        }}
-      />
+      <BlockIcon block={block} />
 
       <HtmlInput
         defaultValue={text}
