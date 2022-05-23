@@ -592,10 +592,9 @@ function BlockTree({
       <MultiButton
         defaultValue={treeType}
         items={[
-          // TODO: Translate the item titles.
           { value: 'europa', title: 'Volt Europa' },
-          { value: 'people', title: 'People' },
-          { value: 'own_blocks', title: 'Your Pages' }
+          { value: 'people', title: getString('block_menu_type_label_plural_person') },
+          { value: 'own_blocks', title: getString('block_tree_own_blocks') }
         ]}
         onChange={setTreeType}
         style={{
