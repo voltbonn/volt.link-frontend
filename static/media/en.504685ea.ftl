@@ -38,6 +38,8 @@ sharing_qrcode = QR-Code
 sharing_statistics = Statistics
 sharing_copy_url = Copy URL
 
+block_tree_own_blocks = Your Pages
+
 translate_dialog_title = Translate
 translate_dialog_description = Select the languages of the texts and add translations.<br/><br/>If the translation stays the same in every language, there is no need to translate it (eg. "Instagram", "Twitter", …).
 
