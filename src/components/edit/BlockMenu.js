@@ -472,7 +472,8 @@ function BlockMenu ({
       */}
 
       {
-        canEdit
+        false
+        && canEdit
         && <SubMenu
           parentMenuIsOpen={open}
           label={<>
@@ -534,7 +535,7 @@ function BlockMenu ({
       }
             
       {
-        canEdit
+        (typeof saveProperty === 'function' || typeof onArchivedToggle === 'function')
         && <Divider style={{ opacity: 0.2, marginTop: '8px', marginBottom: '8px' }} />
       }
 
