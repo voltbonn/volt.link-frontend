@@ -167,6 +167,7 @@ function App() {
                 <meta name="og:description" content={fallback_description} />
                 <meta name="twitter:description" content={fallback_description} />
               </Helmet>
+
               <SidebarContent />
             </>} />
           </Routes>
