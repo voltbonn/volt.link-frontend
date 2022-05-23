@@ -490,7 +490,7 @@ function BlockTree({
         'person'
       ]
       archived = false
-    } else if (treeType === 'own_pages') {
+    } else if (treeType === 'own_blocks') {
       roles = ['editor', 'owner']
     }
 
