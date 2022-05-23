@@ -13,6 +13,8 @@ import {
 import { SidebarProvider, Sidebar, SidebarContent, Main } from '../components/Sidebar.js'
 import { Helmet } from 'react-helmet'
 
+import SearchBox from '../components/SearchBox.js'
+
 import Viewer from './Viewer.js'
 const Editor = lazy(() => import('./Editor.js'))
 
@@ -145,6 +147,8 @@ function App() {
           : <Sidebar />
         }
         <Main>
+          <SearchBox />
+          
           <Routes location={customLocation}>
             <Route path="/:id/view" element={<Viewer />} />
             <Route path="/:id/edit" element={

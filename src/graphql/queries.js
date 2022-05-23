@@ -196,3 +196,26 @@ export const checkSlug_Query = gql`
     }
   }
 `
+
+export const search_Query = gql`
+  query search ($query: String!, $types: [String], $archived: Boolean) {
+    blocks: search (query: $query, types: $types, archived: $archived) {
+      _id
+      type
+      properties
+      content {
+        blockId
+      }
+      parent
+      metadata {
+        modified
+        modified_by
+      }
+      permissions
+      computed {
+        roles
+        inherited_block_permissions
+      }
+    }
+  }
+`

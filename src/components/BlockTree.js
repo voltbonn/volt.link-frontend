@@ -44,6 +44,34 @@ import useUser from '../hooks/useUser.js'
 
 import PopoverMenu from './PopoverMenu.js'
 
+import useResizeObserver from '@react-hook/resize-observer'
+
+const useSize = target => {
+  const mountedRef = React.useRef(false)
+  useEffect(() => {
+    mountedRef.current = true
+    return () => {
+      mountedRef.current = false
+    }
+  }, [])
+
+  const [size, setSize] = React.useState()
+
+  React.useLayoutEffect(() => {
+    if (mountedRef.current === true) {
+      setSize(target.current.getBoundingClientRect())
+    }
+  }, [target])
+
+  // Where the magic happens
+  useResizeObserver(target, (entry) => {
+    if (mountedRef.current === true) {
+      setSize(entry.contentRect)
+    }
+  })
+  return size
+}
+
 const blockTypeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
@@ -356,6 +384,9 @@ function BlockTree({
 }) {
   const { loggedIn } = useUser()
 
+  const searchButtonRef = useRef(null)
+  const searchButtonSize = useSize(searchButtonRef)
+
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
   const [outerHeight, setOuterHeight] = useState(minItemSize)
@@ -385,6 +416,10 @@ function BlockTree({
   }
 
 
+  const openSearch = () => {
+    const event = new CustomEvent('open_search')
+    window.dispatchEvent(event)
+  }
   /*
   const sizeMap = useRef({})
   const setSize = useCallback((index, size) => {
@@ -554,6 +589,9 @@ function BlockTree({
   }, [ types, archived, refetchData ])
 
 
+  // const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) // source: https://stackoverflow.com/questions/10527983/best-way-to-detect-mac-os-x-or-windows-computers-with-javascript-or-jquery?noredirect=1&lq=1
+  const isMacLike = /(macintosh|macintel|macppc|mac68k|macos|iphone|ipad|ipod)/i.test(window.navigator.userAgent.toLowerCase())
+  
   return <>
     <div style={{
       display: 'flex',
@@ -561,6 +599,9 @@ function BlockTree({
       margin: '0 0 var(--basis_x2) 0',
     }}>
 
+      <MenuItem
+        ref={searchButtonRef}
+        onClick={openSearch}
         style={{
           width: '100%',
         }}
@@ -584,8 +625,17 @@ function BlockTree({
           { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
           { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_plural_redirect') },
         */}
+          justifyContent: 'space-between',
+          // boxShadow: 'inset 0 0 0 1px rgba(var(--background-rgb), var(--alpha))',
+          boxShadow: '0 0 0 1px var(--background)',
+          background: 'var(--background)',
 
         <div style={{ marginTop: '8px' }}></div>
+          // the following replaces the roundMenuItem-css-class
+          borderRadius: 'var(--basis)',
+          margin: '0',
+          padding: 'var(--basis) var(--basis_x2)',
+          // end of the roundMenuItem-css-class stuff
 
         {
           Object.keys(types)
@@ -609,6 +659,37 @@ function BlockTree({
               </MenuItem>
             ))
         }
+        }}
+      >
+        <ListItemIcon>
+          <SearchIcon />
+        </ListItemIcon>
+        <ListItemText
+          secondary={<span style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}>
+            <Localized id="search" />
+
+            {
+              searchButtonSize?.width > 500
+                ? (
+                  isMacLike
+                    ? <kbd>⌘ K</kbd>
+                    : <kbd>Ctrl+K</kbd>
+                )
+                : null
+            }
+            {/*
+              Command / Cmd: ⌘
+              Shift: ⇧
+              Option / Alt: ⌥
+              Control / Ctrl: ⌃
+              Caps Lock: ⇪
+            */}
+          </span>}
+        />
+      </MenuItem>
 
         {
           loggedIn

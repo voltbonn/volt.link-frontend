@@ -95,6 +95,7 @@ block_menu_text_decoration_label_checkbox = Checkbox
 block_menu_type_label_plural_page = Pages
 block_menu_type_label_plural_redirect = Redirects
 block_menu_type_label_plural_person = People
+block_menu_type_label_plural_website = Websites
 
 block_menu_type_label_page = Page
 block_menu_type_label_redirect = Redirect
