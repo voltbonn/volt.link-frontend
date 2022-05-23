@@ -63,7 +63,15 @@ function removeProperty(obj, prop) {
   return obj
 }
 
-function ViewerAuto ({ blockId = null, block = {}, actions = {}, size = 'card', dragable = false, ...props }) {
+function ViewerAuto ({
+  blockId = null,
+  block = {},
+  clickable = true,
+  onClick = null,
+  size = 'card',
+  dragable = false,
+  ...props
+}) {
   let component = null
 
   const [loadedBlock, setLoadedBlock] = useState(block)
@@ -104,28 +112,28 @@ function ViewerAuto ({ blockId = null, block = {}, actions = {}, size = 'card', 
 
   switch (type) {
     case 'text':
-      component = <ViewerTextCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      component = <ViewerTextCard key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
       break
     case 'button':
-      component = <ViewerButtonCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      component = <ViewerButtonCard key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
       break
     case 'divider':
-      component = <ViewerDividerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      component = <ViewerDividerLine key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
       break
     case 'page':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
       break
     case 'person':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
       break
     case 'redirect':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
       break
     case 'image':
-      component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
       break
     default:
-      component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} actions={actions} {...props} />
+      component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
   }
 
   const mutationFunction = useMutation()

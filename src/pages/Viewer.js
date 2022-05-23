@@ -63,6 +63,20 @@ function Viewer () {
 
   const [error, setError] = useState(null)
 
+  const setAndTrackError = useCallback(error => {
+    setError(error)
+
+    if (
+      !!window.umami
+      && typeof error === 'object'
+      && error !== null
+      && error.hasOwnProperty('code')
+      && typeof error.code === 'string'
+    ) {
+      window.umami.trackEvent('E: ' + error.code)
+    }
+  }, [setError])
+
   useEffect(() => {
     const properties = block.properties || {}
 
@@ -81,8 +95,8 @@ function Viewer () {
       loadPage(slugOrId_to_use)
         .then(async loadedBlock => { 
           if (typeof loadedBlock !== 'object' || loadedBlock === null) {
-            setError({
-              code: 'error_404',
+            setAndTrackError({
+              code: '404',
               for_slugOrId: slugOrId_to_use,
             })
             loadingTheBlock.current = false
@@ -126,8 +140,9 @@ function Viewer () {
                 loadedBlock,
                 ...blocks,
               ]
+                .filter(Boolean)
                 .flatMap(thisBlock => {
-                  const properties = thisBlock.properties || {}
+                  const properties = thisBlock?.properties || {}
 
                   return [
                     properties.locale || null,
@@ -140,7 +155,7 @@ function Viewer () {
             )]
             setPossibleLocales(newPossibleLocales)
 
-            setError(null)
+            setAndTrackError(null)
             setBlock(newLoadedBlock)
             setContentBlocks(blocks)
             loadingTheBlock.current = false
@@ -148,7 +163,7 @@ function Viewer () {
         })
         .catch(error => {
           console.error(error)
-          setError({
+          setAndTrackError({
             ...error,
             for_slugOrId: slugOrId_to_use,
           })
@@ -165,7 +180,7 @@ function Viewer () {
     loadBlocks,
     setContentBlocks,
     setPossibleLocales,
-    setError,
+    setAndTrackError,
   ])
 
   if (error !== null && error.for_slugOrId === slugOrId_to_use) {
@@ -178,7 +193,7 @@ function Viewer () {
       <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
         <main className={`${classes.contentWrapper}`}>
           {
-            error.code === 'error_300'
+            error.code === '300'
               ? <>
                 <h1>
                   <Localized id="error_300_title" />
@@ -195,14 +210,14 @@ function Viewer () {
               : null
           }
           {
-            error.code === 'error_403'
+            error.code === '403'
               ? <Suspense>
                   <ErrorPage errorName="no_access" />
               </Suspense>
               : null
           }
           {
-            error.code === 'error_404'
+            error.code === '404'
               ? <Suspense>
                 <ErrorPage errorName="not_found" />
               </Suspense>
@@ -313,7 +328,7 @@ function Viewer () {
       rightActions={rightHeaderActions}
     />
 
-    <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
+    <div className={`basis_0_6 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
       (type === 'page' || type === 'person' || type === 'redirect')
       && coverphoto_url !== ''

@@ -70,9 +70,7 @@ function SimpleTranslationRepeater({ onSaveProperty, block, isFirst }) {
           margin: '0',
           minHeight: '30px',
         }}
-        actions={{
-          click: false,
-        }}
+        clickable={false}
       />
     </div>
 

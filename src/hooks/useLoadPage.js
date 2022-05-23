@@ -103,7 +103,7 @@ function useLoadPage() {
       let snackbarKey = null
 
       if (!slugOrId || slugOrId === '') {
-        final_reject({ code: 'error_404' })
+        final_reject({ code: '404' })
       } else {
         const loadingDataPromise = new Promise(async resolve => {
           let done = false
@@ -132,7 +132,7 @@ function useLoadPage() {
                 }
 
                 final_reject({
-                  code: 'error_300',
+                  code: '300',
                   blocks,
                 })
 
@@ -163,7 +163,7 @@ function useLoadPage() {
 
             if (existsAsId === true || existsAsSlug === true) {
               // show error page: now permission to view this block
-              final_reject({ code: 'error_403' })
+              final_reject({ code: '403' })
 
               enqueueSnackbar('Error 403: You are not allowed to view this page.', { // todo: remove me
                 variant: 'error',
@@ -172,7 +172,7 @@ function useLoadPage() {
               })
             } else {
               // show error page: the block does not exist
-              final_reject({ code: 'error_404' })
+              final_reject({ code: '404' })
 
               enqueueSnackbar('Error 404: The page does not exist.', { // todo: remove me
                 variant: 'error',

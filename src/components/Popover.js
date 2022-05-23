@@ -75,7 +75,7 @@ function Popover ({
       anchorEl={anchorRef.current}
       transition
       placement="bottom-start"
-      disablePortal={true}
+      disablePortal={false}
       modifiers={[
         {
           name: 'flip',

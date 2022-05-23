@@ -3,11 +3,8 @@ import React, { useState, useCallback } from 'react'
 import { withLocalization } from '../../fluent/Localized.js'
 import { getBlockColor } from '../../functions.js'
 
-import {
-  InsertDriveFile as PagePlaceholderIcon,
-} from '@mui/icons-material'
-
 import HtmlInput from './HtmlInput.js'
+import BlockIcon from '../view/BlockIcon.js'
 
 function InlineEditorBlockPageRaw({
   getString,
@@ -44,18 +41,16 @@ function InlineEditorBlockPageRaw({
   return <div
     style={{
       display: 'flex',
+      alignItems: 'center',
       margin: '0 0 var(--basis) 0',
       cursor: 'auto',
       '--on-background-rgb': colorRGB,
       color: color,
+      paddingInlineStart: 'var(--basis_x4)',
     }}
     className="clickable_card active"
   >
-    <PagePlaceholderIcon
-      style={{
-        margin: 'var(--basis)',
-      }}
-    />
+    <BlockIcon block={block} />
 
     <HtmlInput
       defaultValue={text}

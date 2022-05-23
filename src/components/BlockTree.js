@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-// import { useLayoutEffect } from 'react'
-import AutoSizer from 'react-virtualized-auto-sizer'
-import { FixedSizeList } from 'react-window'
+import { VariableSizeList } from 'react-window'
 
 import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 import BlockMenu from './edit/BlockMenu.js'
 import ViewerAuto from './view/ViewerAuto.js'
+import MultiButton from './MultiButton.js'
 
-import { Localized, useLocalization } from '../fluent/Localized.js'
+import { Localized } from '../fluent/Localized.js'
 
 import classes from './BlockTree.module.css'
 
@@ -28,8 +27,6 @@ import {
   FilterList as FilterListIcon,
   Archive as ArchiveIcon,
 
-  // Search as SearchIcon,
-
   InsertDriveFileSharp as PageIcon,
   // AutoAwesomeSharp as ActionIcon,
   LinkSharp as RedirectIcon,
@@ -38,13 +35,43 @@ import {
   // TitleSharp as HeadlineIcon,
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
-  EditSharp as EditIcon,
+  // EditSharp as EditIcon,
+
+  Search as SearchIcon,
 } from '@mui/icons-material'
 
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
 
 import PopoverMenu from './PopoverMenu.js'
+
+import useResizeObserver from '@react-hook/resize-observer'
+
+const useSize = target => {
+  const mountedRef = React.useRef(false)
+  useEffect(() => {
+    mountedRef.current = true
+    return () => {
+      mountedRef.current = false
+    }
+  }, [])
+
+  const [size, setSize] = React.useState()
+
+  React.useLayoutEffect(() => {
+    if (mountedRef.current === true) {
+      setSize(target.current.getBoundingClientRect())
+    }
+  }, [target])
+
+  // Where the magic happens
+  useResizeObserver(target, (entry) => {
+    if (mountedRef.current === true) {
+      setSize(entry.contentRect)
+    }
+  })
+  return size
+}
 
 const blockTypeIcons = {
   page: <PageIcon />,
@@ -53,7 +80,7 @@ const blockTypeIcons = {
 }
 
 
-const minItemSize = 43
+const minItemSize = 41
 
 // const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
 // const getHeight = () => window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
@@ -129,11 +156,16 @@ function* treeWalker(treeRoots) {
   let treeRootsSorted = treeRoots
     .sort((a, b) => b.block.metadata.modified > a.block.metadata.modified ? 1 : -1)
 
-  // find the index of the root with block._id === '6249c879fcaf12b124914396' (this is the id of volt europa)
-  const europaIndex = treeRootsSorted.findIndex(root => root.block._id === '6249c879fcaf12b124914396') // TODO: make this independet of the id
+  // find the index of the root with block.properties.slug === 'europa'
+  const europaIndex = treeRootsSorted.findIndex(root => root?.block?.properties?.slug === 'europa')
 
   // remove the root at index europaIndex
   if (europaIndex > -1) {
+    treeRootsSorted[europaIndex] = {
+      ...treeRootsSorted[europaIndex],
+      isOpen: true,
+    }
+
     treeRootsSorted = [
       treeRootsSorted[europaIndex],
       ...treeRootsSorted.slice(0, europaIndex),
@@ -200,47 +232,42 @@ function getFlatTree(treeRoots){
   return flatTree
 }
 
-// const useWindowSize = () => {
-//   let [size, setSize] = useState([0, 0])
-//   useLayoutEffect(() => {
-//     function updateSize() {
-//       setSize([window.innerWidth, window.innerHeight])
-//     }
-//     window.addEventListener("resize", updateSize)
-//     updateSize()
-//     return () => window.removeEventListener("resize", updateSize)
-//   }, [])
-//   return size
-// }
-
-
 const BlockRow = ({
-  createBlock,
   index,
   style,
   data,
-  toggleOpenById,
-  refetchData,
-  // onSetSize,
-  showBlockMenu = true,
 }) => {
+  const {
+    items,
+    props,
+  } = data || []
+
+  const {
+    createBlock,
+    toggleOpenById,
+    refetchData,
+    showBlockMenu,
+    setItemSize,
+  } = props || {}
+
   const {
     _id,
     isLeaf,
     isOpen,
     block,
     nestingLevel,
-  } = data[index]
+  } = items[index] || {}
 
-  // const rootRef = useRef()
-  // const [ windowWidth ] = useWindowSize()
-  // useEffect(() => {
-  //   if (typeof onSetSize === 'function') {
-  //     const height = rootRef.current.getBoundingClientRect().height
-  //     onSetSize(index, height)
-  //   }
-  // }, [ index, onSetSize, windowWidth ])
-
+  const itemRef = useRef()
+  useEffect(() => {
+    if (typeof setItemSize === 'function' && itemRef.current) {
+      const height = itemRef.current.getBoundingClientRect().height
+      if (height > 0) {
+        setItemSize(index, ~~height)
+      }
+    }
+  }, [index, block, setItemSize]) // mention block here, to recalc the height on new data
+  
   const [blockMenuIsOpen, setBlockMenuIsOpen] = useState(false)
 
   const onBlockMenuToogle = useCallback(newValue => {
@@ -312,14 +339,14 @@ const BlockRow = ({
   const inset = ~~(nestingLevel * 25 + (isLeaf ? 24 : 0))
 
   return <div
-    // ref={rootRef}
+    ref={itemRef}
     key={block._id}
     style={{
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'row',
       ...style,
-      // height: 'auto',
+      height: 'auto',
       marginLeft: inset,
       minWidth: `calc(100% - ${(isLeaf ? 24 : 0)}px)`,
       width: `calc(100% - ${inset}px)`,
@@ -356,26 +383,22 @@ function BlockTree({
   scrollContainer = window,
   showBlockMenu = true,
 }) {
-  const { getString } = useLocalization()
   const { loggedIn } = useUser()
+
+  const searchButtonRef = useRef(null)
+  const searchButtonSize = useSize(searchButtonRef)
 
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
-  const treeRef = useRef(null)
   const [outerHeight, setOuterHeight] = useState(minItemSize)
   const [bottomMargin, setBottomMargin] = useState(0)
-  const [nodes, setNodes] = useState({})
+  const [nodes, setNodes] = useState([])
   const [openById, setOpenById] = useState({})
   const [treeNodes, setTreeNodes] = useState([])
 
-  const [treeNodesFiltered, setTreeNodesFiltered] = useState([])
-  const [searchString, setSearchString] = useState('')
   const prevFetchArguments = useRef({})
 
-  const [onlyShowWithEditPermissions, setOnlyShowWithEditPermissions] = useState(false) // false = show all, true = show only owning
-  function toggleOnlyShowWithEditPermissions() {
-    setOnlyShowWithEditPermissions(oldOnlyShowWithEditPermissions => !oldOnlyShowWithEditPermissions)
-  }
+  const [treeType, setTreeType] = useState('europa') // europa / people / own_blocks
 
   const [types, setTypes] = useState({
     person: true,
@@ -390,6 +413,10 @@ function BlockTree({
   }
 
 
+  const openSearch = () => {
+    const event = new CustomEvent('open_search')
+    window.dispatchEvent(event)
+  }
   /*
   const sizeMap = useRef({})
   const setSize = useCallback((index, size) => {
@@ -406,7 +433,7 @@ function BlockTree({
 
   const updateHeight = useCallback(() => {
     if (innerTreeRef.current && outerTreeRef.current) {
-      setTimeout(() => {
+      setTimeout(() => { // TODO remove this timeout (it's used to update the initial height)
         const outerBounds = outerTreeRef.current.getBoundingClientRect()      
         const maxHeight = viewportHeight - outerBounds.top
 
@@ -421,18 +448,13 @@ function BlockTree({
     }
   }, [ viewportHeight, innerTreeRef, outerTreeRef, setOuterHeight, setBottomMargin ])
 
-  useScrollPosition(updateHeight, [ updateHeight ], null, false, 300, scrollContainer)
+  useScrollPosition(updateHeight, [updateHeight], null, false, 300, scrollContainer)
 
   const updateTree = useCallback(nodes => {
     if (nodes.length > 0) {
-      let defaultOpenState = false
-      if (searchString.length > 0) {
-        defaultOpenState = true
-      }
-
       nodes = nodes.map(node => ({
         ...node,
-        isOpen: openById.hasOwnProperty(node._id) ? openById[node._id] : defaultOpenState,
+        isOpen: openById.hasOwnProperty(node._id) ? openById[node._id] : false,
       }))
       
       const treeRoots = buildTree(JSON.parse(JSON.stringify(nodes)))
@@ -442,15 +464,34 @@ function BlockTree({
       setTreeNodes([])
     }
     updateHeight()
-  }, [ searchString, setTreeNodes, updateHeight, openById ])
+  }, [setTreeNodes, updateHeight, openById])
 
   const loadBlocks = useLoadBlocks()
   const refetchData = useCallback(options => {
-    const {
+    let {
       force = false,
       filteredTypes,
       archived,
     } = options || {}
+
+    let roots = null
+    let roles = ['viewer','editor','owner']
+
+    if (treeType === 'europa') {
+      roots = ['6249c879fcaf12b124914396'] // TODO: don't hard code the id of europa 
+      filteredTypes = [
+        'page',
+        'redirect',
+      ]
+      archived = false
+    } else if (treeType === 'people') {
+      filteredTypes = [
+        'person'
+      ]
+      archived = false
+    } else if (treeType === 'own_pages') {
+      roles = ['editor', 'owner']
+    }
 
     if (
       force === true
@@ -460,7 +501,7 @@ function BlockTree({
       prevFetchArguments.current.types = filteredTypes
       prevFetchArguments.current.archived = archived
       
-      loadBlocks({ types: filteredTypes, archived })
+      loadBlocks({ types: filteredTypes, archived, roots, roles })
         .then(async loadedBlocks => {
           const nodes = loadedBlocks
           .map(block => ({
@@ -475,7 +516,7 @@ function BlockTree({
         })
         .catch(error => console.error(error))
     }
-  }, [ loadBlocks, setNodes, updateTree ])
+  }, [treeType, loadBlocks, setNodes, updateTree])
 
   // useEffect(() => {
   //   refetchData()
@@ -485,109 +526,7 @@ function BlockTree({
 
 
 
-  // START Filter + Search
-
-  useEffect(() => {
-    let filtered = treeNodes
-
-    if (searchString.length > 0) {
-      const searchStringLower = searchString.toLowerCase()
-
-      for (let i=0; i<filtered.length; i+=1) {
-        const node = filtered[i]
-
-        let showNode = false
-
-        if (
-          !!node
-          && !!node.block
-          && !!node.block.properties
-          && !!node.block.properties.text
-          && node.block.properties.text.toLowerCase().includes(searchStringLower)
-        ) {
-          showNode = true
-        } else if (
-          !!node
-          && !!node.block
-          && !!node.block.properties
-          && !!node.block.properties.translations
-        ) {
-          const translations = node.block.properties.translations
-          for (const translation of translations) {
-            if (translation.hasOwnProperty('text') && translation.text.toLowerCase().includes(searchStringLower)) {
-              showNode = true
-              break
-            }
-          }
-        } else if (
-          !!node
-          && !!node.block
-          && !!node.block.properties
-          && !!node.block.properties.slug
-          && node.block.properties.slug.toLowerCase().includes(searchStringLower)
-        ) {
-          showNode = true
-        }
-
-        filtered[i].showNode = showNode
-      }
-
-
-      // show sibling and parent nodes
-      let smallestNestingLevel = 0
-      let currentNestingLevel = 0
-      for (let i=filtered.length-1; i>=0; i-=1) {
-        const node = filtered[i]
-
-        if (currentNestingLevel !== 0) {
-          if (currentNestingLevel > node.nestingLevel) {
-            currentNestingLevel = node.nestingLevel
-            filtered[i].showNode = true // show parent node
-          } else if (currentNestingLevel < node.nestingLevel) {
-            currentNestingLevel = smallestNestingLevel
-          }
-        } else {
-          if (node.showNode === true) {
-            currentNestingLevel = node.nestingLevel
-          }
-        }
-
-        if (smallestNestingLevel === 0 || currentNestingLevel < smallestNestingLevel) {
-          smallestNestingLevel = currentNestingLevel
-        }
-      }
-
-      /*
-      isLeaf: true
-      isOpen: false
-      nestingLevel: 0
-      showNode: true
-      */
-
-      filtered = filtered.filter(node => node.showNode === true)
-    }
-
-    if (onlyShowWithEditPermissions === true) {
-      filtered = filtered
-        .filter(node => (
-          !!node
-          && !!node.block
-          && !!node.block.computed
-          && !!node.block.computed.roles
-          && (
-            node.block.computed.roles.includes('owner')
-            || node.block.computed.roles.includes('editor')
-          )
-        ))
-    }
-
-    setTreeNodesFiltered(filtered)
-    updateHeight()
-  }, [ searchString, onlyShowWithEditPermissions, treeNodes, setTreeNodesFiltered, updateHeight ])
-
-  const handleSearch = useCallback(event => {
-    setSearchString(event.target.value || '')
-  }, [ setSearchString ])
+  // START Filter
 
   const toggleType = useCallback(type2toggle => {
     const newTypes = { ...types }
@@ -606,13 +545,26 @@ function BlockTree({
     })
   }, [ types, archived, refetchData ])
 
-  // END Filter + Search
+  // END Filter
 
 
 
-
-
-
+  const listRef = useRef(null)
+  const [itemSizes, setSize] = React.useState([])
+  const setItemSize = React.useCallback((index, size) => {
+    if (typeof setSize === 'function') {
+      setSize(sizes => ({
+        ...sizes,
+        [index]: size
+      }))
+      if (!!listRef.current && typeof listRef.current.resetAfterIndex === 'function') {
+        listRef.current.resetAfterIndex(index, false)
+      }
+    }
+  }, [])
+  const getItemSize = React.useCallback(index => {
+    return itemSizes[index] || minItemSize
+  }, [itemSizes])
 
 
 
@@ -631,160 +583,220 @@ function BlockTree({
     })
   }, [ types, archived, refetchData ])
 
-  const row = (props) => {
-    return <BlockRow
-      createBlock={createBlock}
-      toggleOpenById={toggleOpenById}
-      refetchData={refetchDataWithFilter}
-      // onSetSize={setSize}
-      showBlockMenu={showBlockMenu}
-      {...props}
-    />
-  }
 
+  // const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) // source: https://stackoverflow.com/questions/10527983/best-way-to-detect-mac-os-x-or-windows-computers-with-javascript-or-jquery?noredirect=1&lq=1
+  const isMacLike = /(macintosh|macintel|macppc|mac68k|macos|iphone|ipad|ipod)/i.test(window.navigator.userAgent.toLowerCase())
+  
   return <>
+    <div>
+      <MultiButton
+        defaultValue={treeType}
+        items={[
+          // TODO: Translate the item titles.
+          { value: 'europa', title: 'Volt Europa' },
+          { value: 'people', title: 'People' },
+          { value: 'own_blocks', title: 'Your Pages' }
+        ]}
+        onChange={setTreeType}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          margin: 'calc(-2 * var(--basis)) 0 var(--basis_x4) 0',
+          justifyContent: 'stretch',
+          flexWrap: 'wrap',
+          gap: 'var(--basis_x2)',
+        }}
+        buttonProps={{
+          style: {
+            flexGrow: 1,
+            justifyContent: 'center',
+            flexShrink: 0,
+            margin: 0,
+          }
+        }}
+      />
+    </div>
+
     <div style={{
       display: 'flex',
       alignItems: 'center',
       margin: '0 0 var(--basis_x2) 0',
+      gap: 'var(--basis)',
     }}>
 
-      <input
-        type="text"
-        placeholder={getString('search')}
+      <MenuItem
+        ref={searchButtonRef}
+        onClick={openSearch}
         style={{
           width: '100%',
+          justifyContent: 'space-between',
+          // boxShadow: 'inset 0 0 0 1px rgba(var(--background-rgb), var(--alpha))',
+          boxShadow: '0 0 0 1px var(--background)',
+          background: 'var(--background)',
+
+          // the following replaces the roundMenuItem-css-class
+          borderRadius: 'var(--basis)',
+          margin: '0',
+          padding: 'var(--basis) var(--basis_x2)',
+          // end of the roundMenuItem-css-class stuff
+
         }}
-        onChange={handleSearch}
-      />
-
-      <PopoverMenu
-        trigger={triggerProps => (
-          <button
-            {...triggerProps}
-            className="text hasIcon"
-            style={{
-              flexShrink: '0',
-            }}
-          >
-            <FilterListIcon className="icon" />
-            {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Filter</span> */}
-          </button>
-        )}
       >
-        {/*
-          { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
-          { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
-          { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_plural_redirect') },
-        */}
+        <ListItemIcon>
+          <SearchIcon />
+        </ListItemIcon>
+        <ListItemText
+          secondary={<span style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}>
+            <Localized id="search" />
 
-        <div style={{ marginTop: '8px' }}></div>
+            {
+              searchButtonSize?.width > 500
+                ? (
+                  isMacLike
+                    ? <kbd>⌘ K</kbd>
+                    : <kbd>Ctrl+K</kbd>
+                )
+                : null
+            }
+            {/*
+              Command / Cmd: ⌘
+              Shift: ⇧
+              Option / Alt: ⌥
+              Control / Ctrl: ⌃
+              Caps Lock: ⇪
+            */}
+          </span>}
+        />
+      </MenuItem>
 
-        {
-          Object.keys(types)
-            .map(type => (
-              <MenuItem
-                className="roundMenuItem"
-                key={type}
-                onClick={() => toggleType(type)}
-                selected={filteredTypes.includes(type)}
-                sx={{
-                  marginTop: '2px !important',
-                  marginBottom: '2px !important',
-                }}
-              >
-                <ListItemIcon>
-                  {blockTypeIcons[type]}
-                </ListItemIcon>
-                <ListItemText>
-                  <Localized id={'block_menu_type_label_plural_'+type} />
-                </ListItemText>
-              </MenuItem>
-            ))
-        }
-
-        {
-          loggedIn
-          && <>
-            <Divider style={{ opacity: 0.2 }} />
-
-            <MenuItem
-              className="roundMenuItem"
-              onClick={toggleArchived}
-              selected={archived === true}
-              sx={{
-                marginBottom: '2px !important',
+      {
+        loggedIn && treeType === 'own_blocks'
+        ? <PopoverMenu
+          trigger={triggerProps => (
+            <button
+              {...triggerProps}
+              className="text hasIcon"
+              style={{
+                flexShrink: '0',
+                margin: '0',
               }}
             >
-              <ListItemIcon>
-                <ArchiveIcon className="icon" />
-              </ListItemIcon>
-              <ListItemText>
-                <Localized id={archived === true ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
-              </ListItemText>
-            </MenuItem>
+              <FilterListIcon className="icon" />
+              {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Filter</span> */}
+            </button>
+          )}
+        >
+          {/*
+            { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
+            { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
+            { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_plural_redirect') },
+          */}
 
-            <MenuItem
-              className="roundMenuItem"
-              onClick={toggleOnlyShowWithEditPermissions}
-              selected={onlyShowWithEditPermissions === true}
-            >
-              <ListItemIcon>
-                <EditIcon className="icon" />
-              </ListItemIcon>
-              <ListItemText>
-                <Localized id={onlyShowWithEditPermissions === true ? 'filter_menu_showing_editing' : 'filter_menu_show_editing'} />
-              </ListItemText>
-            </MenuItem>
-          </>
-        }
+          <div style={{ marginTop: '8px' }}></div>
 
-      </PopoverMenu>
+          {
+            Object.keys(types)
+              .map(type => (
+                <MenuItem
+                  className="roundMenuItem"
+                  key={type}
+                  onClick={() => toggleType(type)}
+                  selected={filteredTypes.includes(type)}
+                  sx={{
+                    marginTop: '2px !important',
+                    marginBottom: '2px !important',
+                  }}
+                >
+                  <ListItemIcon>
+                    {blockTypeIcons[type]}
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Localized id={'block_menu_type_label_plural_'+type} />
+                  </ListItemText>
+                </MenuItem>
+              ))
+          }
+
+          <Divider style={{ opacity: 'var(--alpha-less)'}} />
+
+          <MenuItem
+            className="roundMenuItem"
+            onClick={toggleArchived}
+            selected={archived === true}
+            sx={{
+              marginBottom: '2px !important',
+            }}
+          >
+            <ListItemIcon>
+              <ArchiveIcon className="icon" />
+            </ListItemIcon>
+            <ListItemText>
+              <Localized id={archived === true ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
+            </ListItemText>
+          </MenuItem>
+
+        </PopoverMenu>
+        : null
+      }
 
       <button
         className="text hasIcon"
         onClick={refetchDataWithFilter}
         style={{
           flexShrink: '0',
+          margin: '0px',
         }}
       >
         <RequeryIcon className="icon" />
         {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Reload</span> */}
       </button>
     </div>
-  <div
-    style={{
-      height: outerHeight,
-      marginRight: '-12px',
-      marginLeft: '-12px',
-      marginBottom: bottomMargin,
-    }}
-    ref={outerTreeRef}
-  >
-    <AutoSizer disableWidth>
-      {({ height }) => (
-        <FixedSizeList
-          itemData={treeNodesFiltered}
-          itemCount={treeNodesFiltered.length}
-          ref={treeRef}
-          innerRef={innerTreeRef}
-          // onScroll={updateHeight}
-          itemSize={minItemSize}
-          height={height}
-          width="100%"
-          style={{
-            overflowY: 'hidden',
-            overflowX: 'auto',
-            // overflowX: 'hidden',
-          }}
-          itemKey={(index, data) => data[index]._id}
-        >
-          {row}
-        </FixedSizeList>
-      )}
-    </AutoSizer>
+
+    <div
+      style={{
+        height: outerHeight,
+        marginRight: '-12px',
+        marginLeft: '-12px',
+        marginBottom: bottomMargin,
+        overflowY: 'visible',
+        overflowX: 'auto',
+      }}
+      ref={outerTreeRef}
+    >
+      <VariableSizeList
+        ref={listRef}
+        itemSize={getItemSize}
+        itemData={{
+          items: treeNodes,
+          props: {
+            createBlock,
+            toggleOpenById,
+            refetchData: refetchDataWithFilter,
+            showBlockMenu,
+            setItemSize,
+          }
+        }}
+        itemCount={treeNodes.length}
+        innerRef={innerTreeRef}
+        // onScroll={updateHeight}
+        height={outerHeight}
+        width="auto"
+        style={{
+          // overflow: 'visible',
+          overflowY: 'hidden',
+          overflowX: 'visible',
+          // overflowX: 'hidden',
+        }}
+        estimatedItemSize={minItemSize}
+        itemKey={(index, data) => data.items[index]._id}
+      >
+        {BlockRow}
+      </VariableSizeList>
       {
-        treeNodesFiltered.length === 0
+        treeNodes.length === 0
           ? <p style={{
             textAlign: 'center',
             fontWeight: 'bold',

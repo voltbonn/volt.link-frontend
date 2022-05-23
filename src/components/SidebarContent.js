@@ -15,6 +15,8 @@ import {
 
   Login as LoginIcon,
   Logout as LogoutIcon,
+
+  LanguageSharp as LocaleChooserIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -124,12 +126,18 @@ export default function SidebarContent() {
     <header className={classes.header}>
       <div className={classes.headerBar}>
         {
-          matchesStartpage
-          ? <h1>VoltLink</h1>
-          : <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0' }}>
+          !matchesStartpage
+          ? <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0' }}>
               <MenuOpenIcon className="icon" />
             </button>
+          : null
         }
+
+          {
+            matchesStartpage
+              ? <h1>Volt.Link</h1>
+              : <h2 style={{ margin: 0 }}>Volt.Link</h2>
+          }
 
         <AddMenu
           trigger={triggerProps => (
@@ -165,15 +173,73 @@ export default function SidebarContent() {
               </a>
         }
 
+        <MenuItem
+          className="roundMenuItem"
+        >
+          <ListItemIcon>
+            <LocaleChooserIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={<>
+              <span style={{
+                marginRight: 'var(--basis_x2)',
+                verticalAlign: 'middle',
+              }}>
+                <Localized id="choose_locale" />
+              </span>
+              <LocaleSelect
+                onChange={handleLocaleChange}
+                defaultValue={userLocales[0]}
+                options={ui_locales}
+                style={{
+                  fontSize: 'inherit',
+                  padding: '4px 8px',
+                  verticalAlign: 'middle',
+                }}
+              />
+            </>}
+            secondary={<>
+              {
+                typeof choose_locale_information_string === 'string'
+                  && choose_locale_information_string !== ''
+                  ? <span style={{ marginBottom: '0' }}>
+                    <Localized id="choose_locale_information" />
+                  </span>
+                  : null
+              }
+            </>}
+          />
+        </MenuItem>
+
         <br />
 
         <BlocksLoader slugs={[
           'glossary',
+          'vip',
           'tools',
-          'stats',
+        ]}>
+          {({ blocks, slugs }) => {
+            return slugs
+              .map(slug => {
+                const block = blocks.find(block => block?.properties?.slug === slug)
+                if (block) {
+                  return <ViewerAuto key={block._id} block={block} />
+                }
+                return null
+              })
+              .filter(Boolean)
+          }}
+        </BlocksLoader>
+
+        <br />
+
+        <BlocksLoader slugs={[
           'volt_link_workplace_group',
+          'stats',
           'volt_link_source_code',
           'volt_link_contact',
+          'imprint',
+          'privacy_policy',
         ]}>
           {({ blocks, slugs }) => {
             return slugs
@@ -189,31 +255,6 @@ export default function SidebarContent() {
         </BlocksLoader>
 
       </MenuList>
-
-      <br />
-      <Divider style={{ opacity: 0.2 }} />
-      <br />
-
-      <div>
-        <span style={{
-          marginInlineEnd: 'var(--basis_x4)',
-        }}>
-          <Localized id="choose_locale" />
-        </span>
-        <LocaleSelect
-          onChange={handleLocaleChange}
-          defaultValue={userLocales[0]}
-          options={ui_locales}
-        />
-      </div>
-      {
-        typeof choose_locale_information_string === 'string'
-        && choose_locale_information_string !== ''
-          ? <p style={{ marginBottom: '0' }}>
-            <Localized id="choose_locale_information" />
-          </p>
-          : null
-      }
 
       <br />
       <Divider style={{ opacity: 0.2 }} />

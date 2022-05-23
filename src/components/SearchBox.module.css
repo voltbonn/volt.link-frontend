@@ -1,0 +1,112 @@
+.dialog {
+  position: relative;
+  top: var(--basis_x16);
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+
+  width: 700px;
+  max-width: calc(100% - var(--basis_x8));
+  max-height: calc(100% - var(--basis_x32));
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  /* padding: var(--basis_x8); */
+  background: var(--background);
+  margin-bottom: var(--basis_x8);
+  box-shadow: var(--basis_x2) var(--basis_x2) 0 0 var(--on-background);
+}
+@media (max-height: 600px) {
+  .dialog {
+  top: var(--basis_x4);
+    max-height: calc(100% - var(--basis_x8));
+  }
+}
+.dialog h1 {
+  margin: 0 0 var(--basis_x4) 0;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(var(--background-contrast-rgb), 0.6);
+  cursor: pointer;
+}
+
+.dialog h1 {
+  display: inline-block;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+}
+.inputWrapper .input {
+  flex-grow: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.searchInput {
+  width: 100%;
+
+  padding: var(--basis_x4) var(--basis_x8);
+  border: 0;
+  border-radius: 0;
+  background: var(--background);
+  color: var(--on-background);
+  font-size: var(--basis_x4);
+  font-family: var(--font-family);
+  outline: none;
+}
+
+.filters {
+  display: flex;
+  justify-content: flex-start;
+  /* justify-content: space-between; */
+  gap: var(--basis);
+  flex-wrap: wrap;
+  background: rgba(var(--on-background-rgb), var(--alpha-less));
+  padding: var(--basis_x2) var(--basis_x8);
+}
+@media (max-width: 500px) {
+  .filters {
+    justify-content: space-around;
+    padding: var(--basis_x2);
+  }
+}
+.filters button {
+  margin: 0;
+}
+
+.searchResults {
+  padding: var(--basis_x4) var(--basis_x8);
+}
+
+.searchErrors {  
+  color: var(--red);
+}
+
+.blockRow .blockRowActions {
+  display: flex;
+  align-items: stretch;
+}
+@media (any-hover: hover) {
+  @media (min-width: 1200px) {
+    .blockRow .blockRowActions {
+      display: none;
+    }
+    .blockRow.fakeHover .blockRowActions,
+    .blockRow:hover .blockRowActions {
+      display: flex;
+      align-items: stretch;
+    }
+  }
+}

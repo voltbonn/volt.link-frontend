@@ -85,10 +85,9 @@ function Start() {
           locale = locale.toLowerCase() // Not really correct but the system locales sadly don't conform to the standard.
 
           const language = locale.split('-')[0]
-          if (language !== locale) {
+          if (typeof language === 'string' && language !== '') {
             window.umami.trackEvent('L: ' + language) // Log just the language.
           }
-          window.umami.trackEvent('L: ' + locale) // Log the full locale.
         }
       }
     }

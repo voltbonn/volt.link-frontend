@@ -21,8 +21,8 @@ const Twemoji = ({ className, style, emoji = '' }) => {
   return <span
     className={className}
     style={{
-      ...style,
       fontSize: 0,
+      ...style,
     }}
     dangerouslySetInnerHTML={html}
   />

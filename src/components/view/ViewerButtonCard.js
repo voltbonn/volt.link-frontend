@@ -4,7 +4,7 @@ import { renderInlineMarkdown } from '../../markdown.js'
 import { useLocalization } from '../../fluent/Localized.js'
 import { getBlockColor } from '../../functions.js'
 
-function ViewerButtonCard ({ block, actions = {}, locales }) {
+function ViewerButtonCard({ block, clickable = true, locales }) {
   const [html, setHtml] = useState({ __html: '' })
 
   const { getString, translateBlock } = useLocalization()
@@ -35,9 +35,7 @@ function ViewerButtonCard ({ block, actions = {}, locales }) {
     colorStyles['--button-color'] = contrastingColor
   }
 
-  const hasClickAction = actions.hasOwnProperty('click')
-
-  if (hasClickAction === false && url !== '') {
+  if (clickable === true && url !== '') {
     return <a
         href={url}
         target="_blank" rel="noreferrer"
@@ -53,20 +51,6 @@ function ViewerButtonCard ({ block, actions = {}, locales }) {
         }}
       ></button>
     </a>
-  }
-
-  if (hasClickAction === true && typeof actions.click === 'function') {
-    return <button
-      dir="auto"
-      dangerouslySetInnerHTML={html}
-      className="default square"
-      style={{
-        margin: '0',
-        whiteSpace: 'pre-wrap',
-        ...colorStyles,
-      }}
-      onClick={actions.click}
-    ></button>
   }
 
   return <button
