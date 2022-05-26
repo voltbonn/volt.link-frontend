@@ -139,11 +139,9 @@ function SearchBox() {
 
   const search = useCallback(async event => {
     let query_text = event.target.value || ''
-
     if (typeof query_text !== 'string') {
       query_text = ''
     }
-    
     queryTextRef.current = query_text
 
     perform_search(query_text, type, showArchived)
