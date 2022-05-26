@@ -126,7 +126,7 @@ block_menu_info_created = Creati
 block_menu_info_modified = Ultimo modificato
 block_menu_info_id = ID
 
-placeholder_main_headline = Senza titolo
+placeholder_headline_empty = Senza titolo
 placeholder_headline = Titolo
 placeholder_button = Tasto
 placeholder_text = Testo

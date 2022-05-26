@@ -101,7 +101,7 @@ function InlineEditorBlockRedirectRaw({
         onChange={setText}
         onBlur={publishChanges}
 
-        placeholder={getString('placeholder_headline')}
+        placeholder={getString('placeholder_headline_empty')}
         style={{
           flexGrow: '1',
           width: '100%',

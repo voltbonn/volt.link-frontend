@@ -129,7 +129,7 @@ block_menu_info_created = Created
 block_menu_info_modified = Last Modified
 block_menu_info_id = ID
 
-placeholder_main_headline = Untitled
+placeholder_headline_empty = Untitled
 placeholder_headline = Headline
 placeholder_button = Button
 placeholder_text = Text

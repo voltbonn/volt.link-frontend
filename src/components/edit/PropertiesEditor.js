@@ -273,7 +273,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         onChange={newValue => updateProperty('text', newValue, true)}
         onBlur={publishProperties}
 
-        placeholder={getString('placeholder_main_headline')}
+        placeholder={getString('placeholder_headline_empty')}
         style={{
           padding: 'var(--basis) var(--basis_x2)',
         }}

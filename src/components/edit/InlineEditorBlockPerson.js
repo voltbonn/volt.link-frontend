@@ -56,7 +56,7 @@ function InlineEditorBlockPersonRaw({
       onChange={setText}
       onBlur={publishChanges}
 
-      placeholder={getString('placeholder_text')}
+      placeholder={getString('placeholder_headline_empty')}
       style={{
         flexGrow: '1',
         width: '100%',

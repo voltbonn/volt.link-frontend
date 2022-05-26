@@ -22,11 +22,11 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId }) {
     if (typeof slug === 'string' && slug.length !== '') {
       title = '/'+slug
     } else {
-      title = getString('placeholder_main_headline')
     }
   }
   
 
+    title = getString('placeholder_headline_empty')
 
 
 

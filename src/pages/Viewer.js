@@ -229,7 +229,7 @@ function Viewer () {
   } else {
   const type = block.type || null
 
-  const title = translateBlock(block, locales, getString('placeholder_main_headline'))
+  const title = translateBlock(block, locales, getString('placeholder_headline_empty'))
   const coverphoto_url = getImageUrl(properties.coverphoto)
 
   // const pronouns = properties.pronouns || ''
