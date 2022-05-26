@@ -33,7 +33,7 @@ import ViewerAuto from './view/ViewerAuto.js'
 import MultiButton from './MultiButton.js'
 
 import { useApolloClient } from '@apollo/client'
-import { search_Query } from '../graphql/queries'
+import { saveBlock_Mutation } from '../graphql/queries.js'
 
 import { Localized } from '../fluent/Localized.js'
 
