@@ -130,7 +130,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   useEffect(() => {
     setProperties({
       ...defaultProperties,
-      text: defaultProperties.text || '',
+      text: defaultProperties?.text || '',
     })
   }, [
     defaultProperties,
@@ -269,7 +269,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       paddingLeft: 'calc(8 * var(--basis))',
     }}>
       <HtmlInput
-        defaultValue={properties.text}
+        defaultValue={properties?.text || ''}
         onChange={newValue => updateProperty('text', newValue, true)}
         onBlur={publishProperties}
 
