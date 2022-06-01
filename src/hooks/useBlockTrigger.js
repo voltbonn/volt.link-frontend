@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react' // useCallback
 // import { useNavigate } from 'react-router-dom'
 
-export default function useBlockTrigger({ block = null, forceId = false }) {
+export default function useBlockTrigger({ block = null, forceId = false, pathSuffix = '' }) {
   const [link, setLink] = useState(null)
   const [path, setPath] = useState(null)
   // const [onClick, setOnClick] = useState(null)
@@ -12,6 +12,17 @@ export default function useBlockTrigger({ block = null, forceId = false }) {
     let newLink = null
     let newPath = null
     // let newOnClick = null
+
+    pathSuffix = pathSuffix.trim().toLowerCase()
+    if (pathSuffix === 'view') {
+      pathSuffix = ''
+    }
+
+    let pathSuffixFull = pathSuffix
+    if (pathSuffixFull.length > 0) {
+      pathSuffixFull = `/${pathSuffixFull}`
+    }
+
 
     if (block !== null) {
       const blockId = block._id
@@ -24,6 +35,7 @@ export default function useBlockTrigger({ block = null, forceId = false }) {
         type === 'redirect'
         && typeof url === 'string'
         && url.length > 0
+        && pathSuffix === '' // empty path suffix means that we are in the view page
       ) {
         newLink = url
         newPath = null // `/${properties.slug}`
@@ -33,16 +45,16 @@ export default function useBlockTrigger({ block = null, forceId = false }) {
         && slug.length > 0
       ) {
         if (forceId === true) {
-          newLink = `${window.domains.frontend}${slug}=${blockId}`
-          newPath = `/${slug}=${blockId}`
+          newLink = `${window.domains.frontend}${slug}=${blockId}${pathSuffixFull}`
+          newPath = `/${slug}=${blockId}${pathSuffixFull}`
         } else {
-          newLink = `${window.domains.frontend}${slug}`
-          newPath = `/${slug}`
+          newLink = `${window.domains.frontend}${slug}${pathSuffixFull}`
+          newPath = `/${slug}${pathSuffixFull}`
         }
         // newOnClick = () => navigate(newPath)
       } else {
-        newLink = `${window.domains.frontend}${blockId}/view`
-        newPath = `/${blockId}`
+        newLink = `${window.domains.frontend}${blockId}${pathSuffixFull}`
+        newPath = `/${blockId}${pathSuffixFull}`
         // newOnClick = () => navigate(newPath)
       }
     }
@@ -50,7 +62,7 @@ export default function useBlockTrigger({ block = null, forceId = false }) {
     setLink(newLink)
     setPath(newPath)
     // setOnClick(newOnClick)
-  }, [block, forceId, setLink, setPath]) // setOnClick, navigate
+  }, [block, forceId, pathSuffix, setLink, setPath]) // setOnClick, navigate
 
   return { link, path } // onClick
 }

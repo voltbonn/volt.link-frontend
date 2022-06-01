@@ -8,12 +8,12 @@ import { Link } from 'react-router-dom'
 import classes from './ViewerLine.module.css'
 import BlockIcon from './BlockIcon.js'
 
-function ViewerLine({ block, clickable = true, onClick, locales, forceId }) {
+function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSuffix }) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
   const properties = block.properties || {}
   
-  const { link, path } = useBlockTrigger({ block, forceId })
+  const { link, path } = useBlockTrigger({ block, forceId, pathSuffix })
 
   let title = translateBlock(block, locales || userLocales, '')
   if (title === '') {
