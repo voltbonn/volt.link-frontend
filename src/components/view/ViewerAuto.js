@@ -129,7 +129,6 @@ function ViewerAuto ({
     case 'redirect':
       component = <ViewerLine key={loadedBlock._id} block={loadedBlock} {...props} />
       break
-      break
     case 'image':
       component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} {...props} />
       break
