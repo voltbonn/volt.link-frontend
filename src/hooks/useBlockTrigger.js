@@ -13,12 +13,12 @@ export default function useBlockTrigger({ block = null, forceId = false, pathSuf
     let newPath = null
     // let newOnClick = null
 
-    pathSuffix = pathSuffix.trim().toLowerCase()
-    if (pathSuffix === 'view') {
-      pathSuffix = ''
+    let changedPathSuffix = pathSuffix.trim().toLowerCase()
+    if (changedPathSuffix === 'view') {
+      changedPathSuffix = ''
     }
 
-    let pathSuffixFull = pathSuffix
+    let pathSuffixFull = changedPathSuffix
     if (pathSuffixFull.length > 0) {
       pathSuffixFull = `/${pathSuffixFull}`
     }
@@ -35,7 +35,7 @@ export default function useBlockTrigger({ block = null, forceId = false, pathSuf
         type === 'redirect'
         && typeof url === 'string'
         && url.length > 0
-        && pathSuffix === '' // empty path suffix means that we are in the view page
+        && changedPathSuffix === '' // empty path suffix means that we are in the view page
       ) {
         newLink = url
         newPath = null // `/${properties.slug}`
