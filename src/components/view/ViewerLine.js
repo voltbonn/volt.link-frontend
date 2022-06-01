@@ -11,22 +11,41 @@ import BlockIcon from './BlockIcon.js'
 function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSuffix }) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
+  const type = block?.type || 'unknown'
   const properties = block.properties || {}
+  const slug = properties.slug || ''
   
   const { link, path } = useBlockTrigger({ block, forceId, pathSuffix })
 
   let title = translateBlock(block, locales || userLocales, '')
-  if (title === '') {
-    const slug = properties.slug || ''
 
-    if (typeof slug === 'string' && slug.length !== '') {
-      title = '/'+slug
-    } else {
+  let additionalInfos = []
+  if (type === 'page' || type === 'redirect' || type === 'person') {
+    if (title === '' && typeof slug === 'string' && slug !== '') {
+      additionalInfos.push(<div key="slug">{'/' + slug}</div>)
+    }
     }
   }
-  
 
+  if (title === '' && additionalInfos.length === 0) {
     title = getString('placeholder_headline_empty')
+  }
+
+  const content = <div style={{ display: 'flex', alignItems: 'center' }}>
+    <BlockIcon block={block} />
+    <div className={classes.content}>
+      <div dir="auto" className={classes.title}>
+        {title}
+      </div>
+      {
+        additionalInfos.length > 0
+          ? <div dir="auto" className={classes.additionalInfos}>
+            {additionalInfos}
+          </div>
+          : null
+      }
+    </div>
+  </div>
 
 
 
@@ -57,10 +76,7 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSu
         }}
         {...onClickProps}
       >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <BlockIcon block={block} />
-          <span dir="auto" className={classes.title}>{title}</span>
-        </div>
+        {content}
       </a>
     } else {
       return <Link
@@ -75,10 +91,7 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSu
         }}
         {...onClickProps}
       >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <BlockIcon block={block} />
-          <span dir="auto" className={classes.title}>{title}</span>
-        </div>
+        {content}
       </Link>
     }
   }
@@ -93,10 +106,7 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSu
     }}
     {...onClickProps}
   >
-    <div style={{ display: 'flex', alignItems: 'center' }}>
-      <BlockIcon block={block} />
-      <span dir="auto" className={classes.title}>{title}</span>
-    </div>
+    {content}
   </div>
 }
 
