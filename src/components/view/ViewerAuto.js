@@ -84,6 +84,12 @@ function ViewerAuto ({
   const loadBlock = useLoadBlock()
 
   useEffect(() => {
+    if (JSON.stringify(block) !== JSON.stringify(loadedBlock)) {
+      setLoadedBlock(block)
+    }
+  }, [loadedBlock, block])
+
+  useEffect(() => {
     if (
       !!blockId
       && (!loadedBlock.hasOwnProperty('_id') || blockId !== loadedBlock._id)
