@@ -10,10 +10,11 @@
   color: var(--on-background);
 }
 /*
-@supports(backdrop-filter: blur(var(--blur))) {
+@supports (backdrop-filter: saturate(180%) blur(20px)) {
   .header {
-    background: rgba(var(--background-rgb), var(--alpha-more));
-    backdrop-filter: blur(var(--blur));
+    background: rgba(var(--background-rgb), 0.8);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
   }
 }
 */
