@@ -70,6 +70,7 @@ function ViewerAuto ({
   onClick = null,
   size = 'card',
   dragable = false,
+  parentProps = {},
   ...props
 }) {
   let component = null
@@ -81,6 +82,12 @@ function ViewerAuto ({
   const { getPressedKeys } = usePressedKeys({ keys: ['shift'] }) // returns a Set !!!
 
   const loadBlock = useLoadBlock()
+
+  useEffect(() => {
+    if (JSON.stringify(block) !== JSON.stringify(loadedBlock)) {
+      setLoadedBlock(block)
+    }
+  }, [loadedBlock, block])
 
   useEffect(() => {
     if (
@@ -128,7 +135,6 @@ function ViewerAuto ({
       break
     case 'redirect':
       component = <ViewerLine key={loadedBlock._id} block={loadedBlock} {...props} />
-      break
       break
     case 'image':
       component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} {...props} />
@@ -253,6 +259,7 @@ function ViewerAuto ({
     })}
     onReceive={onReceive}
     checkEntry={handleCheckEntry}
+    {...parentProps}
   >
     {component}
   </DataBothWays>
