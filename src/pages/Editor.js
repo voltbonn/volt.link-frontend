@@ -1,95 +1,141 @@
-import { useRef, useState, useEffect, useCallback } from 'react'
+import React, { lazy, Suspense, useRef, useState, useEffect, useCallback } from 'react'
 
 import {
   useParams,
 } from 'react-router-dom'
 
-import classes from './Editor.module.css'
-
-import useLoadBlock from '../hooks/useLoadBlock.js'
-import useBlockMatchesRoles from '../hooks/useBlockMatchesRoles.js'
+import { Localized } from '../fluent/Localized.js'
+import useLoadPage from '../hooks/useLoadPage.js'
+import useLoadBlocks from '../hooks/useLoadBlocks.js'
 
 import Header from '../components/Header.js'
-import ErrorPage from '../components/ErrorPage.js'
+import ViewerAuto from '../components/view/ViewerAuto.js'
 
 import PageEditor from '../components/apps/PageEditor.js'
 
+import classes from './Viewer.module.css'
+
+const ErrorPage = lazy(() => import('../components/ErrorPage.js'))
+
 function Editor() {
-  const loadBlock = useLoadBlock()
+  const loadingTheBlock = useRef(false)
 
-  const loadedTheBlock = useRef(false)
-  let { id = '' } = useParams()
+  const loadPage = useLoadPage()
+  const loadBlocks = useLoadBlocks()
 
-  const [block, setBlockInternal] = useState({
+  let { id: slugOrId = '' } = useParams()
+
+  let slugOrId_to_use = slugOrId
+
+  if (slugOrId.includes('=')) {
+    const [, id] = slugOrId.split('=')
+    slugOrId_to_use = id
+  }
+
+  const [block, setBlock] = useState({
     type: 'page',
     properties: {},
     content: [],
   })
 
-  const setBlock = useCallback(newBlock => {
-    setBlockInternal(newBlock)
-  }, [ setBlockInternal ])
+  const [error, setError] = useState(null)
 
-  const [ canEdit, setCanEdit ] = useState(null)
-  const blockMatchesRoles = useBlockMatchesRoles()
-  useEffect(() => {
-    blockMatchesRoles(id, ['editor', 'owner'])
-      .then(matchesRoles => {
-        setCanEdit(matchesRoles)
-      })
-      .catch(error => {
-        console.error(error)
-        setCanEdit(false)
-      })
-  }, [id, blockMatchesRoles, setCanEdit])
+  const setAndTrackError = useCallback(error => {
+    setError(error)
 
-  useEffect(() => {
     if (
-      canEdit
-      && typeof id === 'string'
-      && id !== ''
+      !!window.umami
+      && typeof error === 'object'
+      && error !== null
+      && error.hasOwnProperty('code')
+      && typeof error.code === 'string'
+    ) {
+      window.umami.trackEvent('E: ' + error.code)
+    }
+  }, [setError])
+
+  useEffect(() => {
+    const properties = block.properties || {}
+
+    if (
+      loadingTheBlock.current === false
+      && typeof slugOrId_to_use === 'string'
+      && slugOrId_to_use !== ''
+      && slugOrId_to_use !== block._id
+      && slugOrId_to_use !== properties.slug
       && (
-        !loadedTheBlock.current
-        || id !== block._id
+        error === null
+        || error.for_slugOrId !== slugOrId_to_use
       )
     ) {
-      loadBlock(id)
-        .then(loadedBlock => {
-          if (typeof loadedBlock === 'object' && loadedBlock !== null) {
-            loadedTheBlock.current = true
+      loadingTheBlock.current = true
+      loadPage(slugOrId_to_use)
+        .then(async loadedBlock => {
+          if (typeof loadedBlock !== 'object' || loadedBlock === null) {
+            setAndTrackError({
+              code: '404',
+              for_slugOrId: slugOrId_to_use,
+            })
+            loadingTheBlock.current = false
+          } else {
+            let newLoadedBlock = loadedBlock
 
-            setBlock(loadedBlock)
+            if (
+              Array.isArray(loadedBlock.content)
+              && loadedBlock.content.length > 0
+            ) {
+              let newContentConfigs = [...loadedBlock.content]
+
+              const ids2load = loadedBlock.content
+                .filter(contentConfig => !contentConfig.hasOwnProperty('block'))
+                .map(contentConfig => contentConfig.blockId)
+
+              let loadedContentBlocks = []
+              if (ids2load.length > 0) {
+                loadedContentBlocks = await loadBlocks({ ids: ids2load })
+              }
+
+              newContentConfigs = newContentConfigs
+                .map(contentConfig => {
+                  if (!contentConfig.hasOwnProperty('block')) {
+                    contentConfig.block = loadedContentBlocks.find(block => block._id === contentConfig.blockId)
+                  }
+                  return contentConfig
+                })
+
+              newLoadedBlock = {
+                ...newLoadedBlock,
+                content: newContentConfigs,
+              }
+            }
+
+            setAndTrackError(null)
+            setBlock(newLoadedBlock)
+            loadingTheBlock.current = false
           }
         })
         .catch(error => {
           console.error(error)
+          setAndTrackError({
+            ...error,
+            for_slugOrId: slugOrId_to_use,
+          })
+          loadingTheBlock.current = false
         })
     }
   }, [
-    canEdit,
-    id,
+    error,
+    slugOrId_to_use,
     block,
-    loadBlock,
+    block._id,
+    loadPage,
     setBlock,
-    // setLocales,
+    loadBlocks,
+    setAndTrackError,
   ])
 
-  // const isFirstRun = useRef(true)
-  // useEffect(() => {
-  //   if (isFirstRun.current) {
-  //     isFirstRun.current = false
-  //     return;
-  //   }
-  //
-  //   if (
-  //     Object.keys(block).length > 0
-  //     && JSON.stringify(initialBlock) !== JSON.stringify(block)
-  //   ) {
-  //   }
-  // }, [isFirstRun, initialBlock, block])
-
-  if (canEdit === false) {
-    return <div className={classes.editor}>
+  if (error !== null && error.for_slugOrId === slugOrId_to_use) {
+    return <div className={classes.viewer}>
       <Header
         block={null}
         title="Error"
@@ -97,17 +143,45 @@ function Editor() {
       />
       <div className={`basis_x1 ${classes.app} ${classes.spine_aligned}`} dir="auto">
         <main className={`${classes.contentWrapper}`}>
-          <ErrorPage errorName="no_access" />
+          {
+            error.code === '300'
+              ? <>
+                <h1>
+                  <Localized id="error_300_title" />
+                </h1>
+                <br />
+                <p>
+                  <Localized id="error_300_description" />
+                </p>
+                <br />
+                {
+                  error.blocks.map(block => <ViewerAuto key={block._id} block={block} forceId={true} />)
+                }
+              </>
+              : null
+          }
+          {
+            error.code === '403'
+              ? <Suspense>
+                <ErrorPage errorName="no_access" />
+              </Suspense>
+              : null
+          }
+          {
+            error.code === '404'
+              ? <Suspense>
+                <ErrorPage errorName="not_found" />
+              </Suspense>
+              : null
+          }
         </main>
       </div>
     </div>
-  } else if (canEdit === true) {
+  } else {
     return <PageEditor
       block={block}
       onSaveBlock={setBlock}
     />
-  } else {
-    return null
   }
 }
 
