@@ -204,7 +204,12 @@ function Viewer () {
                 </p>
                 <br />
                 {
-                  error.blocks.map(block => <ViewerAuto key={block._id} block={block} forceId={true} />)
+                  error.blocks.map(block => <ViewerAuto
+                    key={block._id}
+                    block={block}
+                    forceId={true}
+                    pathSuffix="view"
+                  />)
                 }
               </>
               : null
