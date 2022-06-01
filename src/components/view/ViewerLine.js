@@ -24,7 +24,6 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSu
     if (title === '' && typeof slug === 'string' && slug !== '') {
       additionalInfos.push(<div key="slug">{'/' + slug}</div>)
     }
-    }
   }
 
   if (title === '' && additionalInfos.length === 0) {

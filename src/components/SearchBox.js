@@ -33,7 +33,8 @@ import ViewerAuto from './view/ViewerAuto.js'
 import MultiButton from './MultiButton.js'
 
 import { useApolloClient } from '@apollo/client'
-import { saveBlock_Mutation } from '../graphql/queries.js'
+import { search_Query } from '../graphql/queries.js'
+import { saveBlock_Mutation } from '../graphql/mutations.js'
 
 import { Localized } from '../fluent/Localized.js'
 
@@ -155,9 +156,35 @@ function SearchBox() {
     setOpen(false)
   }, [setOpen])
 
-  const handleResultClick = useCallback(() => {
+  const handleResultClick = useCallback(async (block, index) => {
     setOpen(false)
-  }, [setOpen])
+
+    const newBlock = {
+      type: 'search',
+      properties: {
+        text: queryTextRef.current,
+        // filter: {
+        //   type,
+        //   showArchived,
+        // },
+        chosenResult: {
+          index,
+          blockId: block._id,
+        }
+      }
+    }
+
+    try {
+      await apollo_client.mutate({
+        mutation: saveBlock_Mutation,
+        variables: {
+          block: newBlock,
+        },
+      })
+    } catch (error) {
+      console.error('error', error)
+    }
+  }, [setOpen, apollo_client]) // showArchived, type
 
   return <Modal
     open={open}
@@ -310,7 +337,7 @@ function SearchBox() {
               ? <div>
                 {
                   results
-                    .map(block => <div
+                    .map((block, index) => <div
                       key={block._id}
                       className={classes.blockRow}
                       style={{
@@ -322,7 +349,7 @@ function SearchBox() {
                       <ViewerAuto
                         type="line"
                         block={block}
-                        onClick={handleResultClick}
+                        onClick={() => handleResultClick(block, index)}
                       />
 
                       <div className={classes.blockRowActions}>
