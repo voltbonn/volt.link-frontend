@@ -89,6 +89,7 @@ function InlineEditorBlockRedirectRaw({
     margin: '0 0 var(--basis) 0',
     cursor: 'auto',
     '--on-background-rgb': colorRGB,
+    paddingInlineStart: 'var(--basis_x4)',
   }}
   className="clickable_card active"
   >
