@@ -53,9 +53,8 @@ function InlineEditorBlockRedirectRaw({
       const url = urlRef.current
 
       const newBlock = {
-        ...block,
+        _id: block._id,
         properties: {
-          ...block.properties,
           text,
         },
       }
@@ -90,6 +89,7 @@ function InlineEditorBlockRedirectRaw({
     margin: '0 0 var(--basis) 0',
     cursor: 'auto',
     '--on-background-rgb': colorRGB,
+    paddingInlineStart: 'var(--basis_x4)',
   }}
   className="clickable_card active"
   >
@@ -101,7 +101,7 @@ function InlineEditorBlockRedirectRaw({
         onChange={setText}
         onBlur={publishChanges}
 
-        placeholder={getString('placeholder_headline_main')}
+        placeholder={getString('placeholder_headline_empty')}
         style={{
           flexGrow: '1',
           width: '100%',

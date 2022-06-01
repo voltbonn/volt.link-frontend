@@ -204,7 +204,12 @@ function Viewer () {
                 </p>
                 <br />
                 {
-                  error.blocks.map(block => <ViewerAuto key={block._id} block={block} forceId={true} />)
+                  error.blocks.map(block => <ViewerAuto
+                    key={block._id}
+                    block={block}
+                    forceId={true}
+                    pathSuffix="view"
+                  />)
                 }
               </>
               : null
@@ -229,7 +234,7 @@ function Viewer () {
   } else {
   const type = block.type || null
 
-  const title = translateBlock(block, locales, getString('placeholder_main_headline'))
+  const title = translateBlock(block, locales, getString('placeholder_headline_empty'))
   const coverphoto_url = getImageUrl(properties.coverphoto)
 
   // const pronouns = properties.pronouns || ''
@@ -328,7 +333,7 @@ function Viewer () {
       rightActions={rightHeaderActions}
     />
 
-    <div className={`basis_0_6 ${classes.app} ${classes.spine_aligned}`} dir="auto">
+    <div className={`basis_0_8 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
       (type === 'page' || type === 'person' || type === 'redirect')
       && coverphoto_url !== ''

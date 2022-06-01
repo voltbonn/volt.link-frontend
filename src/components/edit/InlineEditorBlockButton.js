@@ -29,9 +29,8 @@ function InlineEditorBlockButtonRaw({
   const publishChanges = useCallback(() => {
     if (onChange) {
       const newBlock = {
-        ...block,
+        _id: block._id,
         properties: {
-          ...block.properties,
           text,
         },
       }

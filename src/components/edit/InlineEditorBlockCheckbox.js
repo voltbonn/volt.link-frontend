@@ -24,9 +24,8 @@ function InlineEditorBlockCheckboxRaw({
   const publishChanges = useCallback(() => {
     if (onChange) {
       onChange({
-        ...block,
+        _id: block._id,
         properties: {
-          ...block.properties,
           text,
           checked: checked.current,
         },

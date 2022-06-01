@@ -363,7 +363,7 @@ function PageEditor({
     />
   </div>
 
-  const title = block.properties.text || getString('placeholder_main_headline')
+  const title = block.properties.text || getString('placeholder_headline_empty')
   const helmet_title = `✍️ ${title}`
 
   return <div key={block._id} className={`hasHeader ${classes.editor} ${typeof type === 'string' && type !== '' ? classes['type_'+type] : ''}`}>

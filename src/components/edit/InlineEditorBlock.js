@@ -112,7 +112,7 @@ function InlineEditorBlockRaw({
     }
   }, [contentConfig.block])
 
-  const saveBlockCallback = useCallback(newBlock => {
+  const handleBlockChange = useCallback(newBlock => {
     saveBlock(newBlock)
       .then(gottenBlock => {
         setBlock(gottenBlock)
@@ -126,37 +126,30 @@ function InlineEditorBlockRaw({
   }, [block, onChange, saveBlock])
 
   const saveType = useCallback(newValue => {
-    const newBlock = {
-      ...block,
+    handleBlockChange({
+      _id: block._id,
       type: newValue,
-    }
-
-    saveBlockCallback(newBlock)
-  }, [ block, saveBlockCallback])
+    })
+  }, [block, handleBlockChange])
 
   const saveProperty = useCallback((propertyName, newValue) => {
     if (typeof propertyName === 'string') {
-      const newProperties = { ...block.properties }
       if (newValue === null || newValue === undefined) {
-        newProperties[propertyName] = null
-      } else {
-        newProperties[propertyName] = newValue
+        newValue = null
       }
 
-      if (newProperties !== block.properties) {
-        const newBlock = {
-          ...block,
-          properties: newProperties,
-        }
-
-        saveBlockCallback(newBlock)
-      }
+      handleBlockChange({
+        _id: block._id,
+        properties: {
+          [propertyName]: newValue,
+        },
+      })
     }
-  }, [ block, saveBlockCallback ])
+  }, [block._id, handleBlockChange])
 
   // const handleChange = useCallback(newBlock => {
   //   setBlock(newBlock)
-
+  //
   //   if (onChange) {
   //     const target = wrapperDiv.current
   //     target.value = newBlock
@@ -164,26 +157,11 @@ function InlineEditorBlockRaw({
   //   }
   // }, [setBlock, onChange])
 
-  const handleBlockChange = useCallback(newBlock => {
-    if (JSON.stringify(newBlock) !== JSON.stringify(block)) {
-      saveBlock(newBlock)
-        .then((newBlock) => {
-          setBlock(newBlock)
-          if (!block._id || block._id !== newBlock._id) {
-            onChange({
-              blockId: newBlock._id,
-              block: newBlock,
-            })
-          }
-        })
-    }
-  }, [saveBlock, block, onChange])
-
   const handleSaveBlock = useCallback((newBlock, callback) => {
     saveBlock(newBlock)
-      .then(newBlock => {
-        if (callback) {
-          callback(newBlock)
+      .then(gottenBlock => {
+        if (typeof callback === 'function') {
+          callback(gottenBlock)
         }
       })
       .catch(console.error)

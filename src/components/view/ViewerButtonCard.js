@@ -8,7 +8,7 @@ function ViewerButtonCard({ block, clickable = true, locales }) {
   const [html, setHtml] = useState({ __html: '' })
 
   const { getString, translateBlock } = useLocalization()
-  const text = translateBlock(block, locales, getString('placeholder_main_headline'))
+  const text = translateBlock(block, locales, getString('placeholder_headline_empty'))
 
   useEffect(() => {
     const textWithHtml = renderInlineMarkdown(text, { linkify: false })

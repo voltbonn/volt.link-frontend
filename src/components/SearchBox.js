@@ -33,7 +33,7 @@ import ViewerAuto from './view/ViewerAuto.js'
 import MultiButton from './MultiButton.js'
 
 import { useApolloClient } from '@apollo/client'
-import { search_Query } from '../graphql/queries'
+import { saveBlock_Mutation } from '../graphql/queries.js'
 
 import { Localized } from '../fluent/Localized.js'
 
@@ -138,17 +138,13 @@ function SearchBox() {
   }, [apollo_client, setResults, setErrors])
 
   const search = useCallback(async event => {
-
     let query_text = event.target.value || ''
-
     if (typeof query_text !== 'string') {
       query_text = ''
     }
-    
     queryTextRef.current = query_text
 
     perform_search(query_text, type, showArchived)
-
   }, [perform_search, type, showArchived])
 
   useEffect(() => {

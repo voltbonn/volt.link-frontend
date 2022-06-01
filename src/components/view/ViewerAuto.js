@@ -112,28 +112,29 @@ function ViewerAuto ({
 
   switch (type) {
     case 'text':
-      component = <ViewerTextCard key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
+      component = <ViewerTextCard key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     case 'button':
-      component = <ViewerButtonCard key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
+      component = <ViewerButtonCard key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     case 'divider':
-      component = <ViewerDividerLine key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
+      component = <ViewerDividerLine key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     case 'page':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     case 'person':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     case 'redirect':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
+      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} {...props} />
+      break
       break
     case 'image':
-      component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
+      component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     default:
-      component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} clickable={clickable} onClick={onClick} {...props} />
+      component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} {...props} />
   }
 
   const mutationFunction = useMutation()

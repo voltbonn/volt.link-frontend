@@ -127,7 +127,7 @@ block_menu_info_created = Gemaakt
 block_menu_info_modified = Laatst gewijzigd
 block_menu_info_id = ID
 
-placeholder_main_headline = Zonder titel
+placeholder_headline_empty = Zonder titel
 placeholder_headline = Rubriek
 placeholder_button = Knop
 placeholder_text = Tekst
