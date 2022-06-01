@@ -53,9 +53,8 @@ function InlineEditorBlockRedirectRaw({
       const url = urlRef.current
 
       const newBlock = {
-        ...block,
+        _id: block._id,
         properties: {
-          ...block.properties,
           text,
         },
       }

@@ -29,9 +29,8 @@ function InlineEditorBlockCodeRaw({
   const publishTextChange = useCallback(() => {
     if (onChange) {
       onChange({
-        ...block,
+        _id: block._id,
         properties: {
-          ...block.properties,
           text,
         },
       })
