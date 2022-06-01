@@ -70,6 +70,7 @@ function ViewerAuto ({
   onClick = null,
   size = 'card',
   dragable = false,
+  parentProps = {},
   ...props
 }) {
   let component = null
@@ -252,6 +253,7 @@ function ViewerAuto ({
     })}
     onReceive={onReceive}
     checkEntry={handleCheckEntry}
+    {...parentProps}
   >
     {component}
   </DataBothWays>
