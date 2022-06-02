@@ -8,7 +8,15 @@ import { Link } from 'react-router-dom'
 import classes from './ViewerLine.module.css'
 import BlockIcon from './BlockIcon.js'
 
-function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSuffix }) {
+function toSimpleIsoString(date) {
+  let simpleIsoString = date.toISOString()
+    .replace('T', ' ')
+    .replace(/(:[^:]*?)$/, '')
+
+  return simpleIsoString
+}
+
+function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId, pathSuffix, size = 'line' }) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
   const type = block?.type || 'unknown'
@@ -24,13 +32,41 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSu
     if (title === '' && typeof slug === 'string' && slug !== '') {
       additionalInfos.push(<div key="slug">{'/' + slug}</div>)
     }
+  } else if (type === 'website') {
+    if (properties.hasOwnProperty('description')) {
+      const description = properties.description
+      additionalInfos.push(<div key="description">{description}</div>)
+    }
+  } else if (type === 'apikey') {
+    if (properties.hasOwnProperty('nbf') && properties.hasOwnProperty('exp')) {
+      // display date range of validity
+      const nbf = new Date(properties.nbf)
+      const exp = new Date(properties.exp)
+      additionalInfos.push(<div key="nbf_and_exp">{getString('apikey_validity', { from: toSimpleIsoString(nbf), to: toSimpleIsoString(exp) })}</div>)
+    } else if (properties.hasOwnProperty('nbf')) {
+      // display start date of validity
+      const nbf = new Date(properties.nbf)
+      additionalInfos.push(<div key="nbf">{getString('apikey_validity_from', { from: toSimpleIsoString(nbf) })}</div>)
+    } else if (properties.hasOwnProperty('exp')) {
+      // display end date of validity
+      const exp = new Date(properties.exp)
+      additionalInfos.push(<div key="exp">{getString('apikey_validity_to', { to: toSimpleIsoString(exp) })}</div>)
+    }
   }
 
   if (title === '' && additionalInfos.length === 0) {
     title = getString('placeholder_headline_empty')
   }
 
-  const content = <div style={{ display: 'flex', alignItems: 'center' }}>
+  if (size === 'line') {
+    if (title !== '') {
+      additionalInfos = []
+    } else if (additionalInfos.length === 0) {
+      additionalInfos = [additionalInfos[0]]
+    }
+  }
+
+  const content = <div style={{ display: 'flex', alignItems: 'flex-start' }}>
     <BlockIcon block={block} />
     <div className={classes.content}>
       <div dir="auto" className={classes.title}>
@@ -109,4 +145,4 @@ function ViewerLine({ block, clickable = true, onClick, locales, forceId, pathSu
   </div>
 }
 
-export default ViewerLine
+export default ViewerLineAndCard

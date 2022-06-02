@@ -50,7 +50,7 @@ const possibleTypes = [
   'page',
   'redirect',
   'person',
-  // 'website',
+  'website',
 ]
 
 function SearchBox() {
@@ -359,7 +359,7 @@ function SearchBox() {
                       }}
                     >
                       <ViewerAuto
-                        type="line"
+                        size="card"
                         block={block}
                         onClick={() => handleResultClick(block, index)}
                       />

@@ -32,7 +32,7 @@ export default function useBlockTrigger({ block = null, forceId = false, pathSuf
       const url = properties.url || ''
 
       if (
-        type === 'redirect'
+        (type === 'redirect' || type === 'website')
         && typeof url === 'string'
         && url.length > 0
         && changedPathSuffix === '' // empty path suffix means that we are in the view page

@@ -3,6 +3,7 @@ import {
   InsertDriveFile as PageIcon,
   Face as PersonIcon,
   LinkSharp as RedirectIcon,
+  PublicSharp as WebsiteIcon,
 } from '@mui/icons-material'
 
 import Twemoji from '../Twemoji.js'
@@ -65,6 +66,9 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
         break
       case 'redirect':
         iconComponent = <RedirectIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
+      case 'website':
+        iconComponent = <WebsiteIcon {...props} style={style} className={`${classes.icon} ${className}`} />
         break
       default:
         iconComponent = <PageIcon {...props} style={style} className={`${classes.icon} ${className}`} />
