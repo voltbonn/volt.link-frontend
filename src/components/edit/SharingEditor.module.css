@@ -14,7 +14,13 @@
   padding: var(--basis_x8);
   background: var(--background);
   margin-bottom: var(--basis_x8);
-  box-shadow: var(--basis_x2) var(--basis_x2) 0 0 var(--on-background);
+
+  box-shadow:
+    0 var(--basis_x16) var(--basis_x32) var(--shadow-color-rgba),
+    0 var(--basis_x8) var(--basis_x16) var(--shadow-color-rgba),
+    0 var(--basis_x2) var(--basis_x4) var(--shadow-color-rgba),
+    0 0 var(--basis_x0_5) var(--shadow-color-rgba);
+  border-radius: var(--basis_x2);
 }
 @media (max-width: 700px) {
   .dialog {

@@ -14,12 +14,26 @@
   /* padding: var(--basis_x8); */
   background: var(--background);
   margin-bottom: var(--basis_x8);
-  box-shadow: var(--basis_x2) var(--basis_x2) 0 0 var(--on-background);
+
+  box-shadow:
+    0 var(--basis_x16) var(--basis_x32) var(--shadow-color-rgba),
+    0 var(--basis_x8) var(--basis_x16) var(--shadow-color-rgba),
+    0 var(--basis_x2) var(--basis_x4) var(--shadow-color-rgba),
+    0 0 var(--basis_x0_5) var(--shadow-color-rgba);
+  border-radius: var(--basis_x2);
 }
-@media (max-height: 600px) {
+@media (max-height: 700px) {
   .dialog {
-  top: var(--basis_x4);
+    top: var(--basis_x4);
     max-height: calc(100% - var(--basis_x8));
+  }
+}
+@media (max-width: 600px) or (max-height: 600px) {
+  .dialog {
+    top: 0;
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 0;
   }
 }
 .dialog h1 {
@@ -78,7 +92,7 @@
 }
 @media (max-width: 500px) {
   .filters {
-    justify-content: space-around;
+    /* justify-content: space-around; */
     padding: var(--basis_x2);
   }
 }
