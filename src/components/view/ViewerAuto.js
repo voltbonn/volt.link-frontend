@@ -67,7 +67,6 @@ function ViewerAuto ({
   blockId = null,
   block = {},
   clickable = true,
-  onClick = null,
   size = 'card',
   dragable = false,
   parentProps = {},
