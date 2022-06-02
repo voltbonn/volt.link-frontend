@@ -102,6 +102,7 @@ block_menu_text_style_label_caption = Untertitel
 block_menu_choose_text_decorations_label = Text DeKorationen
 block_menu_text_decoration_label_checkbox = Ankreuzfeld
 
+block_menu_type_label_plural_everything = Alles
 block_menu_type_label_plural_page = Seiten
 block_menu_type_label_plural_redirect = Weiterleitungen
 block_menu_type_label_plural_person = Personen

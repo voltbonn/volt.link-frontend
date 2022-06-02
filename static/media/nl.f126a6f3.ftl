@@ -93,6 +93,7 @@ block_menu_text_style_label_caption = Onderschrift
 block_menu_choose_text_decorations_label = Tekstdecoraties
 block_menu_text_decoration_label_checkbox = Checkbox
 
+block_menu_type_label_plural_everything = Alles
 block_menu_type_label_plural_page = Pagina's
 block_menu_type_label_plural_redirect = Doorverwijzingen
 block_menu_type_label_plural_person = Mensen

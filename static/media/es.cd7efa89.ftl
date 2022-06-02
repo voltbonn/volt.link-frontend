@@ -102,6 +102,7 @@ block_menu_text_style_label_caption = Leyenda
 block_menu_choose_text_decorations_label = Decoraciones de texto
 block_menu_text_decoration_label_checkbox = Casilla de verificación
 
+block_menu_type_label_plural_everything = Todo
 block_menu_type_label_plural_page = Páginas
 block_menu_type_label_plural_redirect = Redirecciona
 block_menu_type_label_plural_person = Personas

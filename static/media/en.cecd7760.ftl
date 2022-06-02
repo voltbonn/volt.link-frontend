@@ -94,6 +94,7 @@ block_menu_text_style_label_caption = Caption
 block_menu_choose_text_decorations_label = Text Decorations
 block_menu_text_decoration_label_checkbox = Checkbox
 
+block_menu_type_label_plural_everything = Everything
 block_menu_type_label_plural_page = Pages
 block_menu_type_label_plural_redirect = Redirects
 block_menu_type_label_plural_person = People

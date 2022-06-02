@@ -99,6 +99,7 @@ block_menu_text_style_label_caption = Légende
 block_menu_choose_text_decorations_label = Décorations de texte
 block_menu_text_decoration_label_checkbox = Case à cocher
 
+block_menu_type_label_plural_everything = Tout
 block_menu_type_label_plural_page = Pages
 block_menu_type_label_plural_redirect = Redirections
 block_menu_type_label_plural_person = Personnes
