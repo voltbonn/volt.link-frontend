@@ -46,6 +46,7 @@ const blockTypeIcons = {
 }
 
 const possibleTypes = [
+  'everything',
   'page',
   'redirect',
   'person',
@@ -106,14 +107,25 @@ function SearchBox() {
       setResults([])
       setErrors(['Type more than one characters.'])
     } else {
+      const variables = {
+        query: query_text,
+        archived: showArchived,
+      }
+      if (
+        typeof type === 'string'
+        && type.length > 0
+        && possibleTypes.includes(type)
+        && type !== 'everything'
+      ) {
+        variables.types = [type]
+      } else {
+        variables.types = possibleTypes.filter(t => t !== 'everything')
+      }
+
       try {
         const { errors, data } = await apollo_client.query({
           query: search_Query,
-          variables: {
-            query: query_text,
-            types: [type],
-            archived: showArchived,
-          },
+          variables,
         })
 
         if (Array.isArray(errors) && errors.length > 0) {
