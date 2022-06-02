@@ -5,7 +5,7 @@ import { DataBothWays } from '../DataTransmat.js'
 import ViewerTextCard from './ViewerTextCard.js'
 import ViewerButtonCard from './ViewerButtonCard.js'
 import ViewerDividerLine from './ViewerDividerLine.js'
-import ViewerLine from './ViewerLine.js'
+import ViewerLineAndCard from './ViewerLineAndCard.js'
 import ViewerImageCard from './ViewerImageCard.js'
 
 import classes from './ViewerAuto.module.css'
@@ -67,7 +67,7 @@ function ViewerAuto ({
   blockId = null,
   block = {},
   clickable = true,
-  size = 'card',
+  size = 'line',
   dragable = false,
   parentProps = {},
   ...props
@@ -127,13 +127,19 @@ function ViewerAuto ({
       component = <ViewerDividerLine key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     case 'page':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} {...props} />
+      component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
       break
     case 'person':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} {...props} />
+      component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
       break
     case 'redirect':
-      component = <ViewerLine key={loadedBlock._id} block={loadedBlock} {...props} />
+      component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      break
+    case 'website':
+      component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      break
+    case 'apikey':
+      component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
       break
     case 'image':
       component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} {...props} />
