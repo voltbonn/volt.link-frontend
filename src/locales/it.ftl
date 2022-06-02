@@ -89,6 +89,7 @@ block_menu_text_style_label_h3 = Sottotitolo
 block_menu_text_style_label_body = Corpo
 block_menu_text_style_label_caption = Didascalia
 
+block_menu_type_label_plural_everything = Tutto
 block_menu_type_label_plural_page = Pagine
 block_menu_type_label_plural_redirect = Reindirizza
 block_menu_type_label_plural_person = Persone
