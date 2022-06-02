@@ -22,10 +22,18 @@
     0 0 var(--basis_x0_5) var(--shadow-color-rgba);
   border-radius: var(--basis_x2);
 }
-@media (max-height: 600px) {
+@media (max-height: 700px) {
   .dialog {
-  top: var(--basis_x4);
+    top: var(--basis_x4);
     max-height: calc(100% - var(--basis_x8));
+  }
+}
+@media (max-width: 600px) or (max-height: 600px) {
+  .dialog {
+    top: 0;
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 0;
   }
 }
 .dialog h1 {
