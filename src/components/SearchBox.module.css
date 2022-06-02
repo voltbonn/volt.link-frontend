@@ -92,7 +92,7 @@
 }
 @media (max-width: 500px) {
   .filters {
-    justify-content: space-around;
+    /* justify-content: space-around; */
     padding: var(--basis_x2);
   }
 }
