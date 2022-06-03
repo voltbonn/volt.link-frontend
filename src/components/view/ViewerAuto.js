@@ -74,7 +74,7 @@ function ViewerAuto ({
 }) {
   let component = null
 
-  const [loadedBlock, setLoadedBlock] = useState(block)
+  const [loadedBlock, setLoadedBlock] = useState(block || {})
   const loadingBlockRef = useRef(false)
 
   const { userroles } = useUser()
@@ -84,7 +84,11 @@ function ViewerAuto ({
 
   useEffect(() => {
     if (JSON.stringify(block) !== JSON.stringify(loadedBlock)) {
-      setLoadedBlock(block)
+      if (!block) {
+        setLoadedBlock({})
+      } else {
+        setLoadedBlock(block)
+      }
     }
   }, [loadedBlock, block])
 
