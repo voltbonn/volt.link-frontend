@@ -16,6 +16,7 @@
 }
 
 .app .items {
+  margin-top: calc(var(--basis_x4) + var(--basis)); /* x4 is the size of a divider and x1 is the spacing between items. */
   margin-bottom: 20vh;
 }
 

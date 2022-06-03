@@ -138,6 +138,7 @@ placeholder_code = Code
 placeholder_image_alt_text = Image Alt Text
 placeholder_image_url = https://assets.volteuropa.org/path/to/image.jpg
 inline_editor_image_block_explainer_title = Image:
+placeholder_pronouns = they/them, she/her, he/him
 
 edit_block = Edit
 view_block = View

@@ -243,6 +243,24 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         </FancyInput>
       </div>
     </>
+  } else if (type === 'person') {
+    propertiesFrameContent = <>
+      <div className={classes.properties_row}>
+        <h3><Localized id="properties_editor_pronouns_label" /></h3>
+        <HtmlInput
+          defaultValue={properties?.pronouns || ''}
+          onChange={newValue => updateProperty('pronouns', newValue, true)}
+          onBlur={publishProperties}
+
+          placeholder={getString('placeholder_pronouns')}
+          style={{
+            padding: 'var(--basis) var(--basis_x2)',
+          }}
+          linebreaks={false}
+          className={`type_p`}
+        />
+      </div>
+    </>
   }
 
   return <>
@@ -277,7 +295,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
         style={{
           padding: 'var(--basis) var(--basis_x2)',
         }}
-        linebreaks={true}
+        linebreaks={false}
         className={`type_h1`}
       />
     </div>
