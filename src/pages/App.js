@@ -124,6 +124,10 @@ function App() {
       }
 
       newPathname = `/${idOrSlug}/${suffix}`
+
+      if (idOrSlug === 'search') {
+        window.dispatchEvent(new CustomEvent('open_search'))
+      }
     }
 
     if (customLocation.pathname !== newPathname) {
