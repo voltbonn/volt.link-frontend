@@ -33,9 +33,11 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
       additionalInfos.push(<div key="slug">{'/' + slug}</div>)
     }
   } else if (type === 'website') {
-    if (properties.hasOwnProperty('description')) {
-      const description = properties.description
-      additionalInfos.push(<div key="description">{description}</div>)
+    if (properties.hasOwnProperty('url') && typeof properties.url === 'string' && properties.url.length > 0) {
+      additionalInfos.push(<div key="url" style={{ fontSize: 'calc(0.6 * var(--body-font-size))', margin: 'var(--basis_x0_5) 0' }}><em>{properties.url}</em></div>)
+    }
+    if (properties.hasOwnProperty('description') && typeof properties.description === 'string' && properties.description.length > 0) {
+      additionalInfos.push(<div key="description">{properties.description}</div>)
     }
   } else if (type === 'apikey') {
     if (properties.hasOwnProperty('nbf') && properties.hasOwnProperty('exp')) {
