@@ -16,6 +16,6 @@
   text-overflow: ellipsis;
 }
 
-.additionalInfos {
+.additionalInfos div[importance="less"] {
   opacity: var(--alpha);
 }

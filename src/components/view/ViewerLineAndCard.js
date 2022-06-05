@@ -30,14 +30,14 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
   let additionalInfos = []
   if (type === 'page' || type === 'redirect' || type === 'person') {
     if (title === '' && typeof slug === 'string' && slug !== '') {
-      additionalInfos.push(<div key="slug">{'/' + slug}</div>)
+      additionalInfos.push(<div importance="less" key="slug">{'/' + slug}</div>)
     }
   } else if (type === 'website') {
     if (properties.hasOwnProperty('url') && typeof properties.url === 'string' && properties.url.length > 0) {
       additionalInfos.push(<div key="url" style={{ fontSize: 'calc(0.6 * var(--body-font-size))', margin: 'var(--basis_x0_5) 0' }}><em>{properties.url}</em></div>)
     }
     if (properties.hasOwnProperty('description') && typeof properties.description === 'string' && properties.description.length > 0) {
-      additionalInfos.push(<div key="description">{properties.description}</div>)
+      additionalInfos.push(<div importance="less" key="description">{properties.description}</div>)
     }
   } else if (type === 'apikey') {
     if (properties.hasOwnProperty('nbf') && properties.hasOwnProperty('exp')) {
