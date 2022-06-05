@@ -108,6 +108,13 @@
   color: var(--red);
 }
 
+.mathResult {
+  font-family: monospace;
+  background: rgba(var(--on-background-rgb), var(--alpha-less));
+  padding: var(--basis_x2);
+  margin: 0 0 var(--basis_x4) 0;
+}
+
 .blockRow .blockRowActions {
   display: flex;
   align-items: stretch;

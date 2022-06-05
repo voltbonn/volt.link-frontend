@@ -145,6 +145,7 @@ placeholder_code = Code
 placeholder_image_alt_text = Bild Beschreibung
 placeholder_image_url = https://assets.volteuropa.org/pfad/zum/bild.jpg
 inline_editor_image_block_explainer_title = Bild:
+placeholder_pronouns = sie/ihr, er/ihm, …
 
 edit_block = Bearbeiten
 view_block = Ansehen
