@@ -122,10 +122,11 @@
 @media (any-hover: hover) {
   @media (min-width: 1200px) {
     .blockRow .blockRowActions {
-      display: none;
+      opacity: 0;
     }
     .blockRow.fakeHover .blockRowActions,
     .blockRow:hover .blockRowActions {
+      opacity: 1;
       display: flex;
       align-items: stretch;
     }
