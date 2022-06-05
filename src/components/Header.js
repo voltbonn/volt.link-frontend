@@ -15,7 +15,7 @@ import ViewerAuto from './view/ViewerAuto.js'
 import PopoverMenu from './PopoverMenu.js'
 
 import { useApolloClient } from '@apollo/client'
-import { getBlocks_Query, getParentBlocks_Query } from '../graphql/queries'
+import { getParentBlocks_Query } from '../graphql/queries' // getBlocks_Query
 
 export default function Header({ title, block = {}, rightActions, notificationBanner }) {
   const { open, toggleSidebar } = useSidebarContext()
@@ -25,7 +25,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
   const parentId = block ? block.parent : null
 
   const [parentBlocks, setParentBlocks] = useState([])
-  const [siblingBlocks, setSiblingBlocks] = useState([])
+  // const [siblingBlocks, setSiblingBlocks] = useState([])
 
   const loadParentBlocks = useCallback(blockId => {
     apollo_client.query({
@@ -51,38 +51,38 @@ export default function Header({ title, block = {}, rightActions, notificationBa
       })
   }, [apollo_client, setParentBlocks])
 
-  const loadSiblingBlocks = useCallback((parentId, blockId) => {
-    apollo_client.query({
-      query: getBlocks_Query,
-      variables: {
-        roots: [blockId],
-        types: ['page', 'person', 'redirect'],
-        archived: false,
-      },
-    })
-      .then(async ({ data }) => {
-        if (typeof data.error === 'string' || !data.blocks) {
-          console.error(data.error)
-          setSiblingBlocks([])
-        }else{
-          setSiblingBlocks(
-            (data.blocks || [])
-              .filter(block => block._id !== blockId)
-          )
-        }
-      })
-      .catch(async error => {
-        console.error('error', error)
-        setSiblingBlocks([])
-      })
-  }, [apollo_client, setSiblingBlocks])
+  // const loadSiblingBlocks = useCallback((parentId, blockId) => {
+  //   apollo_client.query({
+  //     query: getBlocks_Query,
+  //     variables: {
+  //       roots: [blockId],
+  //       types: ['page', 'person', 'redirect'],
+  //       archived: false,
+  //     },
+  //   })
+  //     .then(async ({ data }) => {
+  //       if (typeof data.error === 'string' || !data.blocks) {
+  //         console.error(data.error)
+  //         setSiblingBlocks([])
+  //       }else{
+  //         setSiblingBlocks(
+  //           (data.blocks || [])
+  //             .filter(block => block._id !== blockId)
+  //         )
+  //       }
+  //     })
+  //     .catch(async error => {
+  //       console.error('error', error)
+  //       setSiblingBlocks([])
+  //     })
+  // }, [apollo_client, setSiblingBlocks])
 
   useEffect(() => {
     if (blockId) {
       loadParentBlocks(blockId)
-      loadSiblingBlocks(parentId, blockId)
+      // loadSiblingBlocks(parentId, blockId)
     }
-  }, [blockId, parentId, loadParentBlocks, loadSiblingBlocks])
+  }, [blockId, parentId, loadParentBlocks]) // loadSiblingBlocks
 
   const leftActions = <>
     {
@@ -93,9 +93,14 @@ export default function Header({ title, block = {}, rightActions, notificationBa
       : null
     }
 
-    <div style={{ flexGrow: '1' }}>
+    <div style={{
+      flexGrow: '1',
+      display: 'flex',
+      alignItems: 'center',
+      height: '32px',
+    }}>
       <Link to="/">
-        <button className="text" style={{ margin: 'calc(-2 * var(--basis))' }}>
+        <button className="text" style={{ margin: '0 calc(-2 * var(--basis))' }}>
           <HomeIcon style={{ verticalAlign: 'middle' }} />
         </button>
       </Link>
@@ -107,7 +112,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
         ? <>
           <PopoverMenu
             trigger={triggerProps => (
-              <button {...triggerProps} className="text" style={{ margin: 'calc(-2 * var(--basis))' }}>
+              <button {...triggerProps} className="text" style={{ margin: '0 calc(-2 * var(--basis))' }}>
                 <MoreHorizIcon style={{ verticalAlign: 'middle' }} />
               </button>
             )}
@@ -132,7 +137,19 @@ export default function Header({ title, block = {}, rightActions, notificationBa
         : null
     }
 
-    {
+    <ViewerAuto
+      key={block}
+      block={block}
+      size="line"
+      parentProps={{
+        style: {
+          flexGrow: '0',
+          margin: '0 calc(-2 * var(--basis))',
+        },
+      }}
+    />
+
+    {/*
       siblingBlocks.length > 0
         ? <PopoverMenu
             trigger={triggerProps => (
@@ -161,7 +178,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
         : <span style={{ fontWeight: 'bold' }}>
             {title}
           </span>
-    }
+    */}
     </div>
   </>
 
