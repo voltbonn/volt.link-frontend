@@ -5,7 +5,7 @@ import useBlockTrigger from '../../hooks/useBlockTrigger.js'
 
 import { Link } from 'react-router-dom'
 
-import classes from './ViewerLine.module.css'
+import classes from './ViewerLineAndCard.module.css'
 import BlockIcon from './BlockIcon.js'
 
 function toSimpleIsoString(date) {
