@@ -2,7 +2,7 @@
   "name": "edit.volt.link",
   "version": "0.1.0",
   "private": true,
-  "engines" : { 
+  "engines" : {
     "node" : ">=14.0.0"
   },
   "dependencies": {
