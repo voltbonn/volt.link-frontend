@@ -2,6 +2,9 @@
   "name": "edit.volt.link",
   "version": "0.1.0",
   "private": true,
+  "engines" : { 
+    "node" : ">=14.0.0"
+  },
   "dependencies": {
     "@apollo/client": "^3.4.11",
     "@emotion/react": "^11.4.1",
