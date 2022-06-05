@@ -56,6 +56,16 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
     }
   }
 
+  if (type === 'website') {
+    if (properties.hasOwnProperty('tags') && Array.isArray(properties.tags)) {
+      const tags = [...new Set(properties.tags)] // remove duplicats
+        .filter(tag => typeof tag === 'string' && tag.length > 0) // only keep strings
+        .map(tag => <span className={classes.tag} key={tag}>{tag}</span>) // display nicely
+
+      additionalInfos.push(<div key="tags" style={{ margin: 'var(--basis_x0_5) calc(-1 * var(--basis_x0_5))' }}>{tags}</div>)
+    }
+  }
+
   if (title === '' && additionalInfos.length === 0) {
     title = getString('placeholder_headline_empty')
   }
