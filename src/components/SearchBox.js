@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 
+import mexp from 'math-expression-evaluator'
+
 import { useHotkeys } from 'react-hotkeys-hook'
 
 import {
@@ -64,6 +66,8 @@ function SearchBox() {
   const [type, setType] = useState(possibleTypes[0])
   const [showArchived, setShowArchived] = useState(false)
 
+  const [mathResult, setMathResult] = useState('')
+
   useHotkeys('cmd+k, ctrl+k', event => {
     event.preventDefault()
     setOpen(true)
@@ -100,6 +104,24 @@ function SearchBox() {
   }, [setOpen])
 
   const perform_search = useCallback(async (query_text, type, showArchived) => {
+
+    if (query_text.length > 0) {
+      let newMathResult = ''
+      try {
+        newMathResult = mexp.eval(query_text)
+      } catch (error) {
+        console.error('math-error', error)
+      }
+      newMathResult = String(newMathResult)
+      if (newMathResult.length > 0) {
+        setMathResult(`${query_text} = ${newMathResult}`)
+      } else {
+        setMathResult('')
+      }
+    } else {
+      setMathResult('')
+    }
+
     if (query_text.length === 0) {
       setResults([])
       setErrors([])
@@ -148,7 +170,7 @@ function SearchBox() {
         setResults([])
       }
     }
-  }, [apollo_client, setResults, setErrors])
+  }, [apollo_client, setResults, setErrors, setMathResult])
 
   const search = useCallback(async event => {
     let query_text = event.target.value || ''
@@ -306,6 +328,13 @@ function SearchBox() {
             )
           }}
         >
+          {
+            typeof mathResult === 'string' && mathResult.length > 0
+              ? <div className={classes.mathResult}>
+                {mathResult}
+              </div>
+              : null
+          }
 
           {
             typeof queryTextRef.current === 'string' && queryTextRef.current.length > 1
