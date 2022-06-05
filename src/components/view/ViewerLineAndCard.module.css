@@ -1,0 +1,21 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  font-size: calc(0.8 * var(--body-font-size));
+}
+
+.title {
+  vertical-align: middle;
+  font-weight: bold;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.additionalInfos {
+  opacity: var(--alpha);
+}
