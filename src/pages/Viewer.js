@@ -323,12 +323,6 @@ function Viewer () {
 
     <Header
       block={block}
-      title={
-        <span
-          dir="auto"
-          dangerouslySetInnerHTML={titleWithRenderedMarkdown}
-        />
-      }
       rightActions={rightHeaderActions}
     />
 

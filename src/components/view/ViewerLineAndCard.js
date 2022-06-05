@@ -5,7 +5,7 @@ import useBlockTrigger from '../../hooks/useBlockTrigger.js'
 
 import { Link } from 'react-router-dom'
 
-import classes from './ViewerLine.module.css'
+import classes from './ViewerLineAndCard.module.css'
 import BlockIcon from './BlockIcon.js'
 
 function toSimpleIsoString(date) {
@@ -30,12 +30,14 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
   let additionalInfos = []
   if (type === 'page' || type === 'redirect' || type === 'person') {
     if (title === '' && typeof slug === 'string' && slug !== '') {
-      additionalInfos.push(<div key="slug">{'/' + slug}</div>)
+      additionalInfos.push(<div importance="less" key="slug">{'/' + slug}</div>)
     }
   } else if (type === 'website') {
-    if (properties.hasOwnProperty('description')) {
-      const description = properties.description
-      additionalInfos.push(<div key="description">{description}</div>)
+    if (properties.hasOwnProperty('url') && typeof properties.url === 'string' && properties.url.length > 0) {
+      additionalInfos.push(<div key="url" style={{ fontSize: 'calc(0.6 * var(--body-font-size))', margin: 'var(--basis_x0_5) 0' }}><em>{properties.url}</em></div>)
+    }
+    if (properties.hasOwnProperty('description') && typeof properties.description === 'string' && properties.description.length > 0) {
+      additionalInfos.push(<div importance="less" key="description">{properties.description}</div>)
     }
   } else if (type === 'apikey') {
     if (properties.hasOwnProperty('nbf') && properties.hasOwnProperty('exp')) {
@@ -51,6 +53,16 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
       // display end date of validity
       const exp = new Date(properties.exp)
       additionalInfos.push(<div key="exp">{getString('apikey_validity_to', { to: toSimpleIsoString(exp) })}</div>)
+    }
+  }
+
+  if (type === 'website') {
+    if (properties.hasOwnProperty('tags') && Array.isArray(properties.tags)) {
+      const tags = [...new Set(properties.tags)] // remove duplicats
+        .filter(tag => typeof tag === 'string' && tag.length > 0) // only keep strings
+        .map(tag => <span className={classes.tag} key={tag}>{tag}</span>) // display nicely
+
+      additionalInfos.push(<div key="tags" style={{ margin: 'var(--basis_x0_5) calc(-1 * var(--basis_x0_5))' }}>{tags}</div>)
     }
   }
 

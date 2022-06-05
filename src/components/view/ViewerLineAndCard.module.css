@@ -16,6 +16,16 @@
   text-overflow: ellipsis;
 }
 
-.additionalInfos {
+.additionalInfos div[importance="less"] {
   opacity: var(--alpha);
+}
+
+.tag {
+  display: inline-block;  
+  padding: var(--basis_x0_2) var(--basis_x0_5);
+  margin: var(--basis_x0_5);
+  border-radius: var(--basis_x0_5);
+  background: rgba(var(--on-background-rgb), var(--alpha-more));
+  color: var(--background);
+  font-weight: bold;
 }
