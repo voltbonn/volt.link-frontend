@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 
-import mexp from 'math-expression-evaluator'
+// import mexp from 'math-expression-evaluator'
+import { evaluate as mathjs_evaluate } from 'mathjs'
 
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -108,7 +109,7 @@ function SearchBox() {
     if (query_text.length > 0) {
       let newMathResult = ''
       try {
-        newMathResult = mexp.eval(query_text)
+        newMathResult = mathjs_evaluate(query_text)
       } catch (error) {
         console.error('math-error', error)
       }
