@@ -92,6 +92,14 @@ function SearchBox() {
     // only save a search when clicked on the item (needs function/hook to the click event)
   }, [])
 
+  const blurInpurOnEnter = useCallback(event => {
+    if (event.key === 'Enter') {
+      if (!!event.target) {
+        event.target.blur()
+      }
+    }
+  }, [])
+
   useEffect(() => {
     const open_search = () => setOpen(true)
     const close_search = () => setOpen(false)
@@ -257,6 +265,7 @@ function SearchBox() {
               className={classes.searchInput}
               defaultValue={queryTextRef.current}
               onChange={search}
+              onKeyDown={blurInpurOnEnter}
               style={{
                 // borderBottom: (results.length > 0 || errors.length > 0)
                 //   ? 'var(--basis) solid rgba(var(--on-background-rgb), var(--alpha))'
