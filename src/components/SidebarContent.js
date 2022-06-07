@@ -148,7 +148,7 @@ export default function SidebarContent() {
           <div>
             {
               matchesStartpage
-                ? <button className="text hasIcon" onClick={openSearch}>
+                ? <button className="text hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
                     <SearchIcon className="icon" />
                   </button>
                 : null

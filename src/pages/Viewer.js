@@ -256,7 +256,7 @@ function Viewer () {
           </Link>
       }
       
-      <button className="default hasIcon" onClick={openSearch}>
+      <button className="default hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
         <SearchIcon className="icon" />
       </button>
 
