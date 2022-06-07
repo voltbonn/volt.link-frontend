@@ -25,7 +25,7 @@ import {
 
   CloseSharp as CloseIcon,
 
-  MoreHorizSharp as BlockMenuIcon,
+  MoreVertSharp as BlockMenuIcon,
 
   ArchiveSharp as ArchiveIcon,
 } from '@mui/icons-material'

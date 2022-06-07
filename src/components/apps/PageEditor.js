@@ -10,7 +10,7 @@ import {
   // TranslateSharp as TranslateIcon,
   IosShareSharp as ShareIcon,
   SaveSharp as SaveIcon,
-  MoreHorizSharp as BlockMenuIcon,
+  MoreVertSharp as BlockMenuIcon,
 } from '@mui/icons-material'
 
 import MdiIcon from '@mdi/react'
