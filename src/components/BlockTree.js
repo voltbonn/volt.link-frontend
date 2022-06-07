@@ -19,7 +19,7 @@ import {
 } from '@mui/material'
 
 import {
-  MoreHorizSharp as BlockMenuIcon,
+  MoreVertSharp as BlockMenuIcon,
   ArrowDropDownSharp as ExpandLessIcon,
   ArrowRightSharp as ExpandMoreIcon,
 

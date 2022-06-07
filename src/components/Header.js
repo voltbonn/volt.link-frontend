@@ -85,25 +85,23 @@ export default function Header({ title, block = {}, rightActions, notificationBa
   }, [blockId, parentId, loadParentBlocks]) // loadSiblingBlocks
 
   const leftActions = <>
-    {
-      !open
-      ? <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0' }}>
-          <MenuIcon className="icon" />
-        </button>
-      : null
-    }
-
     <div style={{
       flexGrow: '1',
       display: 'flex',
       alignItems: 'center',
       height: '32px',
     }}>
-      <Link to="/">
-        <button className="text" style={{ margin: '0 calc(-2 * var(--basis))' }}>
-          <HomeIcon style={{ verticalAlign: 'middle' }} />
-        </button>
-      </Link>
+      {
+        open
+          ? <Link to="/">
+            <button className="text hasIcon" style={{ margin: '0 calc(-2 * var(--basis)) 0 0' }}>
+              <HomeIcon className="icon" />
+            </button>
+          </Link>
+          : <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0 calc(-2 * var(--basis)) 0 0' }}>
+            <MenuIcon className="icon" />
+          </button>
+      }
       <span style={{ margin: 'var(--basis_x2)', opacity: 'var(--alpha)' }}>/</span>
 
     {

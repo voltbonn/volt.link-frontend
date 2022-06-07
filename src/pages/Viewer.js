@@ -22,6 +22,7 @@ import classes from './Viewer.module.css'
 
 import {
   EditSharp as EditIcon,
+  Search as SearchIcon,
 } from '@mui/icons-material'
 
 import { renderInlineMarkdown } from '../markdown.js'
@@ -183,6 +184,11 @@ function Viewer () {
     setAndTrackError,
   ])
 
+  const openSearch = () => {
+    const event = new CustomEvent('open_search')
+    window.dispatchEvent(event)
+  }
+
   if (error !== null && error.for_slugOrId === slugOrId_to_use) {
     return <div className={classes.viewer}>
       <Header
@@ -249,6 +255,10 @@ function Viewer () {
             </button>
           </Link>
       }
+      
+      <button className="default hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
+        <SearchIcon className="icon" />
+      </button>
 
       {
         possibleLocales.length > 1

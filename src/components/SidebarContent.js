@@ -17,6 +17,7 @@ import {
   Logout as LogoutIcon,
 
   LanguageSharp as LocaleChooserIcon,
+  Search as SearchIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -114,6 +115,11 @@ export default function SidebarContent() {
     document.dispatchEvent(newEvent)
   }, [])
 
+  const openSearch = () => {
+    const event = new CustomEvent('open_search')
+    window.dispatchEvent(event)
+  }
+
   const ui_locales = [
     '_',
     ...Object.keys(locales),
@@ -139,15 +145,26 @@ export default function SidebarContent() {
               : <h2 style={{ margin: 0 }}>Volt.Link</h2>
           }
 
-        <AddMenu
-          trigger={triggerProps => (
-            <button className="default hasIcon" {...triggerProps}>
-              <AddIcon className="icon" />
-              {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
-            </button>
-          )}
-          createBlock={createBlock}
-        />
+          <div>
+            {
+              matchesStartpage
+                ? <button className="text hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
+                    <SearchIcon className="icon" />
+                  </button>
+                : null
+            }
+
+
+            <AddMenu
+              trigger={triggerProps => (
+                <button className="default hasIcon" {...triggerProps}>
+                  <AddIcon className="icon" />
+                  {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
+                </button>
+              )}
+              createBlock={createBlock}
+            />
+          </div>
       </div>
     </header>
 
