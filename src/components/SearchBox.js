@@ -119,7 +119,7 @@ function SearchBox() {
       try {
         newMathResult = mathjs_evaluate(query_text)
       } catch (error) {
-        console.error('math-error', error)
+        // console.error('math-error', error)
       }
       newMathResult = String(newMathResult)
       if (newMathResult.length > 0) {
