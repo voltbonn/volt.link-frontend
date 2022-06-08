@@ -83,22 +83,22 @@
 }
 
 .filters {
-  display: flex;
-  justify-content: flex-start;
-  /* justify-content: space-between; */
-  gap: var(--basis);
-  flex-wrap: wrap;
   background: rgba(var(--on-background-rgb), var(--alpha-less));
-  padding: var(--basis_x2) var(--basis_x8);
-}
-@media (max-width: 500px) {
-  .filters {
-    /* justify-content: space-around; */
-    padding: var(--basis_x2);
-  }
+  padding: var(--basis_x2) 0;
+
+  display: block;
+  width: auto;
+  white-space: nowrap;
+  overflow: auto;
 }
 .filters button {
-  margin: 0;
+  margin: 0 var(--basis_x2) 0 0;
+}
+.filters button:first-of-type {
+  margin-left: var(--basis_x8);
+}
+.filters button:last-of-type {
+  margin-right: var(--basis_x8);
 }
 
 .searchResults {
