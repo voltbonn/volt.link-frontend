@@ -41,6 +41,7 @@ export default function PopoverMenu ({
             overflow: 'auto',
             background: 'var(--background-contrast)',
             color: 'var(--on-background)',
+            borderRadius: 'var(--basis_x2)',
             ...sx,
           }}
           elevation={8}

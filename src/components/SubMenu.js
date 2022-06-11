@@ -49,6 +49,7 @@ export default function SubMenu ({
       color: 'var(--on-background)',
       overflow: 'hidden',
       transition: 'padding 0.1s ease-in-out, margin 0.1s ease-in-out, box-shadow 0.1s ease-in-out',
+      borderRadius: 'var(--basis_x2)',
       ...paperStyle,
     }}
   >
