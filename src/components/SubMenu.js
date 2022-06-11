@@ -8,7 +8,6 @@ import {
 
 import {
   ArrowRight as ArrowRightIcon,
-  ArrowDropDown as ArrowDownIcon,
 } from '@mui/icons-material'
 
 // INFO: Some code is copied from: https://github.com/azmenak/material-ui-nested-menu-item/blob/master/src/index.tsx
