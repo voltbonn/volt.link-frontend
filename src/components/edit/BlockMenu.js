@@ -173,6 +173,15 @@ function BlockMenu ({
   //   })
   // }, [ addRowBefore ])
 
+  const [openSubmenu, setOpenSubmenu] = useState(null)
+  const toggleSubmenu = useCallback((newSubmenuName) => {
+    setOpenSubmenu(oldSubmenuName => {
+      if (oldSubmenuName === newSubmenuName) {
+        return null
+      }
+      return newSubmenuName
+    })
+  }, [])
 
   const mutationFunction = useMutation()
   const navigate = useNavigate()
@@ -267,14 +276,15 @@ function BlockMenu ({
         && <>
           <SubMenu
             disabled={type === 'person'}
-            parentMenuIsOpen={open}
+            name="type"
+            open={openSubmenu === 'type'}
+            onToggle={({ name }) => toggleSubmenu(name)}
             label={<>
               <ListItemIcon>
                 <RepeatIcon />
               </ListItemIcon>
               <Localized id="block_menu_choose_type_label" />
             </>}
-            header={<Localized id="block_menu_choose_type_label" />}
           >
             {
               typeOptions
@@ -303,19 +313,20 @@ function BlockMenu ({
           && typeof saveProperty === 'function'
         )
         && <SubMenu
-          parentMenuIsOpen={open}
-          label={<>
-            <ListItemIcon>
-              <ColorIcon
-                style={{
-                  color: getColor(color),
-                }}
-              />
-            </ListItemIcon>
-            <Localized id="block_menu_choose_color_label" />
-          </>}
-          header={<Localized id="block_menu_choose_color_label" />}
-        >
+            name="color"
+            open={openSubmenu === 'color'}
+            onToggle={({ name }) => toggleSubmenu(name)}
+            label={<>
+              <ListItemIcon>
+                <ColorIcon
+                  style={{
+                    color: getColor(color),
+                  }}
+                />
+              </ListItemIcon>
+              <Localized id="block_menu_choose_color_label" />
+            </>}
+          >
           {
             colorOptionsKeys
             .map(thisColor => (
@@ -370,14 +381,15 @@ function BlockMenu ({
           && type === 'text'
         )
         && <SubMenu
-          parentMenuIsOpen={open}
+          name="text_style"
+          open={openSubmenu === 'text_style'}
+          onToggle={({ name }) => toggleSubmenu(name)}
           label={<>
             <ListItemIcon>
               <TextStyleIcon />
             </ListItemIcon>
             <Localized id="block_menu_choose_text_style_label" />
           </>}
-          header={<Localized id="block_menu_choose_text_style_label" />}
         >
           {
             [
@@ -408,14 +420,15 @@ function BlockMenu ({
           && type === 'text'
         )
         && <SubMenu
-          parentMenuIsOpen={open}
-          label={<>
-            <ListItemIcon>
-              <TextDecorationsIcon />
-            </ListItemIcon>
-            <Localized id="block_menu_choose_text_decorations_label" />
-          </>}
-          header={<Localized id="block_menu_choose_text_decorations_label" />}
+            name="text_decorations"
+            open={openSubmenu === 'text_decorations'}
+            onToggle={({ name }) => toggleSubmenu(name)}
+            label={<>
+              <ListItemIcon>
+                <TextDecorationsIcon />
+              </ListItemIcon>
+              <Localized id="block_menu_choose_text_decorations_label" />
+            </>}
         >
           {
             [
@@ -475,7 +488,9 @@ function BlockMenu ({
         false
         && canEdit
         && <SubMenu
-          parentMenuIsOpen={open}
+          name="create_child_block"
+          open={openSubmenu === 'create_child_block'}
+          onToggle={({ name }) => toggleSubmenu(name)}
           label={<>
             <ListItemIcon>
               <AddIcon />

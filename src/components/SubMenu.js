@@ -1,132 +1,99 @@
-import { useRef, useState, useCallback } from 'react'
+import { useCallback } from 'react'
 
 import {
-  Divider,
-  Menu,
   MenuItem,
-  ListItemIcon,
   ListSubheader,
+  Paper,
 } from '@mui/material'
 
 import {
-  Close as CloseIcon,
   ArrowRight as ArrowRightIcon,
+  ArrowDropDown as ArrowDownIcon,
 } from '@mui/icons-material'
-
-import { Localized } from '../fluent/Localized.js'
 
 // INFO: Some code is copied from: https://github.com/azmenak/material-ui-nested-menu-item/blob/master/src/index.tsx
 
 export default function SubMenu ({
+  name = '',
   disabled = false,
-  parentMenuIsOpen = true,
   label = '',
   triggerProps = {},
-  header = null,
-  MenuListProps = {},
-  position = 'right',
-  onOpen = () => {},
+  onToggle = null,
+  open = false,
   children,
 }) {
-  const triggerRef = useRef(null)
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
-  const open = isSubMenuOpen && parentMenuIsOpen
-
   const toggleSubmenu = useCallback(() => {
-    if (disabled !== true) {
-      const newOpen = !open
-      setIsSubMenuOpen(newOpen)
-      if (newOpen === true) {
-        onOpen()
-      }
+    if (disabled !== true && typeof onToggle === 'function') {
+      onToggle({ name })
     }
-  }, [ setIsSubMenuOpen, open, onOpen, disabled ])
+  }, [disabled, onToggle, name])
 
-  const closeSubmenu = useCallback(() => {
-    setIsSubMenuOpen(false)
-  }, [ setIsSubMenuOpen ])
+  let paperStyle = {}
+  if (open === true) {
+    paperStyle = {
+      margin: 'var(--basis)',
+      boxShadow: '0 var(--basis_x0_5) var(--basis_x4) 0 rgba(var(--on-background-rgb), 0.4)',
+      padding: '8px 0',
+      background: 'var(--background-contrast)',
+    }
+  } else {
+    paperStyle = {
+      margin: '0',
+      boxShadow: 'none',
+      background: 'transparent',
+    }
+  }
 
-  return <>
-    <MenuItem
-      {...triggerProps}
+  return <Paper
+    sx={{
+      color: 'var(--on-background)',
+      overflow: 'hidden',
+      transition: 'padding 0.1s ease-in-out, margin 0.1s ease-in-out, box-shadow 0.1s ease-in-out',
+      borderRadius: 'var(--basis_x2)',
+      ...paperStyle,
+    }}
+  >
+    {
+      label !== null
+        ? <>
+          <ListSubheader
+            onClick={toggleSubmenu}
+            style={{
+              whiteSpace: 'nowrap',
+              lineHeight: '1',
+              margin: '0',
+              padding: '0',
+              backgroundColor: 'transparent',
+              color: 'var(--on-background)',
+            }}
+          >
+            <MenuItem
+              {...triggerProps}
+              disabled={disabled}
+              className="roundMenuItem"
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                ...triggerProps.style,
+              }}
+            >
+              <div style={{ display: 'flex' }}>
+                {label}
+              </div>
 
-      disabled={disabled}
+              <ArrowRightIcon style={{
+                marginRight: '-10px',
+                transition: 'transform 0.1s ease-in-out',
+                transform: open === true ? 'rotate(90deg)' : '',
+              }} />
+            
+            </MenuItem>
+          </ListSubheader>
+          {open === true ? <div style={{ height: '12px' }}></div> : null}
+        </>
+        : null
+    }
 
-      ref={triggerRef}
-      onClick={toggleSubmenu}
-      className="roundMenuItem"
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        ...triggerProps.style,
-      }}
-    >
-      <div style={{ display: 'flex' }}>
-        {label}
-      </div>
-      <ArrowRightIcon style={{ marginRight: '-10px' }} />
-    </MenuItem>
-    <Menu
-      // Set pointer events to 'none' to prevent the invisible Popover div from capturing events for clicks and hovers
-      style={{ pointerEvents: 'none' }}
-      anchorEl={triggerRef.current}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: (position === 'right' ? 'right' : 'left'),
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: (position === 'right' ? 'left' : 'right'),
-      }}
-      open={open}
-      autoFocus={false}
-      disableAutoFocus
-      disableEnforceFocus
-      onClose={closeSubmenu}
-      sx={{
-        marginTop: '-8px', // align with parent menu
-      }}
-      MenuListProps={{
-        ...MenuListProps,
-        sx: {
-          maxWidth: 380,
-          maxHeight: 'calc(100vh - 32px)',
-          overflow: 'auto',
-          background: 'var(--background-contrast)',
-          color: 'var(--on-background)',
-          ...MenuListProps.sx,
-        },
-      }}
-    >
-      <div style={{pointerEvents: 'auto'}}>
-        {
-          header !== null
-            ? <ListSubheader
-                style={{
-                  whiteSpace: 'nowrap',
-                  lineHeight: '1',
-                  margin: '0',
-                  padding: '4px 16px 12px',
-                  backgroundColor: 'var(--background-contrast)',
-                  color: 'var(--on-background)',
-                }}
-              >
-                {header}
-              </ListSubheader>
-            : null
-        }
-
-        {children}
-
-        <Divider style={{opacity: 0.2}} />
-
-        <MenuItem className="roundMenuItem" style={{marginTop:'8px'}} onClick={closeSubmenu}>
-          <ListItemIcon>
-            <CloseIcon />
-          </ListItemIcon>
-          <Localized id="block_menu_close_menu" />
-        </MenuItem>
-      </div>
-    </Menu>
-  </>
+    {open === true ? children : null}
+  </Paper>
 }
