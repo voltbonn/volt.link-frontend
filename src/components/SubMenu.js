@@ -77,7 +77,7 @@ export default function SubMenu ({
     sx={{
       color: 'var(--on-background)',
       overflow: 'hidden',
-      transition: 'padding var(--timing-fast), margin var(--timing-fast), box-shadow var(--timing-fast)',
+      transition: 'padding var(--timing), margin var(--timing), box-shadow var(--timing)',
       borderRadius: 'var(--basis_x2)',
       ...paperStyle,
     }}
@@ -112,7 +112,7 @@ export default function SubMenu ({
 
               <ArrowRightIcon style={{
                 marginRight: '-10px',
-                transition: 'transform var(--timing-fast)',
+                transition: 'transform var(--timing)',
                 transform: open === true ? 'rotate(90deg)' : '',
               }} />
             
@@ -126,7 +126,7 @@ export default function SubMenu ({
     <div style={{
       height: childrenSize?.height,
       overflow: 'hidden',
-      transition: 'height var(--timing-fast)',
+      transition: 'height var(--timing)',
     }}>
       <div ref={childrenRef}>
         {open === true ? children : ''}
