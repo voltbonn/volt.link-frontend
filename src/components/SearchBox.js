@@ -300,10 +300,6 @@ function SearchBox() {
             }
             onChange={setType}
             className={classes.filters}
-            style={{
-              display: 'flex',
-              gap: 'var(--basis_x2)',
-            }}
             // buttonStyle={{
             //   flexGrow: 1,
             //   justifyContent: 'center',

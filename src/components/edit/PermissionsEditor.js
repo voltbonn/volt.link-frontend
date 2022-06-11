@@ -111,7 +111,7 @@ function RolesMenu({
         {
           typeof removePermission === 'function'
           ? <div>
-            <Divider style={{ opacity: 0.2 }} />
+            <Divider style={{ opacity: 0.2, margin: '8px 0' }} />
             <MenuItem
               onClick={removePermission}
               className="roundMenuItem"
@@ -127,7 +127,7 @@ function RolesMenu({
           : null
         }
 
-        <Divider style={{opacity: 0.2}} />
+        <Divider style={{ opacity: 0.2, margin: '8px 0' }} />
 
         <MenuItem
           onClick={handleClose}
