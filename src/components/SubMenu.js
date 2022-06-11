@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import React, { useRef, useCallback } from 'react'
 
 import {
   MenuItem,
@@ -12,6 +12,33 @@ import {
 
 // INFO: Some code is copied from: https://github.com/azmenak/material-ui-nested-menu-item/blob/master/src/index.tsx
 
+import useResizeObserver from '@react-hook/resize-observer'
+const useSize = target => {
+  const mountedRef = React.useRef(false)
+  React.useEffect(() => {
+    mountedRef.current = true
+    return () => {
+      mountedRef.current = false
+    }
+  }, [])
+
+  const [size, setSize] = React.useState()
+
+  React.useLayoutEffect(() => {
+    if (mountedRef.current === true) {
+      setSize(target.current.getBoundingClientRect())
+    }
+  }, [target])
+
+  // Where the magic happens
+  useResizeObserver(target, (entry) => {
+    if (mountedRef.current === true) {
+      setSize(entry.contentRect)
+    }
+  })
+  return size
+}
+
 export default function SubMenu ({
   name = '',
   disabled = false,
@@ -21,6 +48,9 @@ export default function SubMenu ({
   open = false,
   children,
 }) {
+  const childrenRef = useRef(null)
+  const childrenSize = useSize(childrenRef)
+
   const toggleSubmenu = useCallback(() => {
     if (disabled !== true && typeof onToggle === 'function') {
       onToggle({ name })
@@ -47,7 +77,7 @@ export default function SubMenu ({
     sx={{
       color: 'var(--on-background)',
       overflow: 'hidden',
-      transition: 'padding 0.1s ease-in-out, margin 0.1s ease-in-out, box-shadow 0.1s ease-in-out',
+      transition: 'padding var(--timing-fast), margin var(--timing-fast), box-shadow var(--timing-fast)',
       borderRadius: 'var(--basis_x2)',
       ...paperStyle,
     }}
@@ -82,7 +112,7 @@ export default function SubMenu ({
 
               <ArrowRightIcon style={{
                 marginRight: '-10px',
-                transition: 'transform 0.1s ease-in-out',
+                transition: 'transform var(--timing-fast)',
                 transform: open === true ? 'rotate(90deg)' : '',
               }} />
             
@@ -93,6 +123,14 @@ export default function SubMenu ({
         : null
     }
 
-    {open === true ? children : null}
+    <div style={{
+      height: childrenSize?.height,
+      overflow: 'hidden',
+      transition: 'height var(--timing-fast)',
+    }}>
+      <div ref={childrenRef}>
+        {open === true ? children : ''}
+      </div>
+    </div>
   </Paper>
 }

@@ -34,6 +34,7 @@
   --on-red: #fff;
 
   --timing: .2s ease-in-out;
+  --timing-fast: .1s ease-in-out;
 }
 
 * {
