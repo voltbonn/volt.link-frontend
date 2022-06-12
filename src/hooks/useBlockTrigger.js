@@ -32,13 +32,30 @@ export default function useBlockTrigger({ block = null, forceId = false, pathSuf
       const url = properties.url || ''
 
       if (
-        (type === 'redirect' || type === 'website')
+        type === 'website'
         && typeof url === 'string'
         && url.length > 0
         && changedPathSuffix === '' // empty path suffix means that we are in the view page
       ) {
         newLink = url
-        newPath = null // `/${properties.slug}`
+        newPath = null
+        // newOnClick = () => window.open(newLink, '_blank')
+      } else if (
+        type === 'redirect'
+        && typeof url === 'string'
+        && url.length > 0
+        && changedPathSuffix === '' // empty path suffix means that we are in the view page
+      ) {
+        if (slug.length > 0) {
+          if (forceId === true) {
+            newLink = `${window.domains.frontend}${slug}=${blockId}${pathSuffixFull}`
+          } else {
+            newLink = `${window.domains.frontend}${slug}${pathSuffixFull}`
+          }
+        } else {
+          newLink = `${window.domains.frontend}${blockId}${pathSuffixFull}`
+        }
+        newPath = null
         // newOnClick = () => window.open(newLink, '_blank')
       } else if (
         typeof slug === 'string'
