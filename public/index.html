@@ -64,14 +64,6 @@
       `)
     </script>
 
-    <script
-      async
-      defer
-      data-website-id="becf9dc6-db9a-42a7-bc64-9637bd885bff"
-      src="https://umami.qiekub.org/umami.js"
-      data-domains="volt.link"
-    ></script>
-
     <link rel="stylesheet" href="%PUBLIC_URL%/Ubuntu/index.css" type="text/css" />
     <link rel="preload" href="%PUBLIC_URL%/Ubuntu/ubuntu-v15-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="%PUBLIC_URL%/Ubuntu/ubuntu-v15-latin-700.woff2" as="font" type="font/woff2" crossorigin />
@@ -104,4 +96,25 @@
       --image-format: webp;
     }
   </style>
+  
+  <script>
+    const isDev = window.location.hostname === 'localhost'
+
+    const tag = document.createElement('script')
+    tag.async = 'async'
+    tag.defer = 'defer'
+    tag.src = 'https://umami.qiekub.org/umami.js'
+    tag.setAttribute('data-website-id',
+      isDev
+      ? '7a2e76f6-f133-4752-b972-f25ec2d0c730'
+      : 'becf9dc6-db9a-42a7-bc64-9637bd885bff'
+    )
+    tag.setAttribute('data-domains',
+      isDev
+      ? 'localhost'
+      : 'volt.link'
+    )
+
+    document.getElementsByTagName('head')[0].appendChild(tag)
+  </script>
 </html>
