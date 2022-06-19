@@ -74,7 +74,7 @@ path_editor_coverphoto_info = A url to use for the coverphoto. The photo needs t
 path_editor_no_coverphoto = Pas de photo de couverture
 
 path_editor_icon_label = Icône
-path_editor_icon_info = Une url à utiliser pour l'icône. La photo doit être téléchargée ailleurs.
+path_editor_icon_url_info = Une url à utiliser pour l'icône. La photo doit être téléchargée ailleurs.
 
 properties_editor_imprint_label = Lien d'impression
 properties_editor_privacy_policy_label = Lien vers la politique de confidentialité

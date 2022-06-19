@@ -17,6 +17,8 @@ import { Localized, withLocalization } from '../../fluent/Localized.js'
 import FancyInput from './FancyInput.js'
 import UrlInput from './UrlInput.js'
 
+import StorageFileInput from './StorageFileInput.js'
+
 const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
 
 function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) {
@@ -26,22 +28,28 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
   const [type, setType] = useState(null)
   const [url, setUrl] = useState(null)
   const [emoji, setEmoji] = useState(null)
+  const [fileId, setFileId] = useState(null)
 
   const handleEmojiChange = useCallback((event, emojiObject) => {
     const newEmoji = emojiObject.emoji || null
     setEmoji(newEmoji)
-    onChange({ type, url, emoji: newEmoji })
-  }, [onChange, type, url])
+    onChange({ type, url, emoji: newEmoji, fileId })
+  }, [onChange, type, url, fileId])
 
   const handleTypeChange = useCallback(newType => {
     setType(newType)
-    onChange({ type: newType, url, emoji })
-  }, [onChange, url, emoji])
+    onChange({ type: newType, url, emoji, fileId })
+  }, [onChange, url, emoji, fileId])
 
   const handleUrlChange = useCallback(newUrl => {
     setUrl(newUrl)
-    onChange({ type, url: newUrl, emoji })
-  }, [onChange, type, emoji])
+    onChange({ type, url: newUrl, emoji, fileId })
+  }, [onChange, type, emoji, fileId])
+
+  const handleFileChange = useCallback(newFileId => {
+    setFileId(newFileId)
+    onChange({ type, url, emoji, fileId: newFileId })
+  }, [onChange, type, url, emoji])
 
   useEffect(() => {
     if (
@@ -51,7 +59,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
     ) {
       let newIconIsSet = false
 
-      if (iconValue.type === 'url' || iconValue.type === 'emoji') {
+      if (iconValue.type === 'url' || iconValue.type === 'emoji' || iconValue.type === 'file') {
         setType(iconValue.type)
       } else {
         setType(null)
@@ -83,9 +91,22 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
         setEmoji(null)
       }
 
+      if (
+        typeof iconValue.fileId === 'string'
+        && iconValue.fileId.length > 0
+      ) {
+        setFileId(iconValue.fileId || '')
+
+        if (iconValue.type === 'file') {
+          newIconIsSet = true
+        }
+      } else {
+        setFileId(null)
+      }
+
       setIconIsSet(newIconIsSet)
     }
-  }, [iconValue, setType, setUrl, setEmoji, setIconIsSet])
+  }, [iconValue, setType, setUrl, setEmoji, setFileId, setIconIsSet])
 
   let coverphotoIsSet = false
 
@@ -98,6 +119,12 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
       coverphotoValue.type === 'url'
       && typeof coverphotoValue.url === 'string'
       && isAbsoluteUrlRegexp.test(coverphotoValue.url)
+    ) {
+      coverphotoIsSet = true
+    } else if (
+      coverphotoValue.type === 'file'
+      && typeof coverphotoValue.fileId === 'string'
+      && coverphotoValue.fileId.lengh > 0
     ) {
       coverphotoIsSet = true
     }
@@ -134,6 +161,16 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
             </div>
             : null
         }
+        {
+          type === 'file'
+            ? <div
+              className={classes.icon}
+              style={{
+                backgroundImage: iconIsSet && !!fileId ? `url(${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=400&h=400&id=${encodeURIComponent(fileId)})` : '',
+              }}
+            ></div>
+            : null
+        }
        
         <button {...triggerProps} className={`hasIcon ${iconIsSet ? 'default' : 'text'} ${classes.changeIconButton}`}>
           <IconIcon className="icon" />
@@ -158,7 +195,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
 
           <div>
             <button
-              className={type !== 'emoji' && type !== 'url' ? 'default' : 'text'}
+              className={type !== 'emoji' && type !== 'url' && type !== 'file' ? 'default' : 'text'}
               onClick={() => handleTypeChange(null)}
             >
               No Icon
@@ -175,13 +212,19 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
             >
               Url
             </button>
+            <button
+              className={type === 'file' ? 'default' : 'text'}
+              onClick={() => handleTypeChange('file')}
+            >
+              File
+            </button>
           </div>
 
           <div style={{ display: (type === 'url' ? 'block' : 'none') }}>
             <hr />
 
             <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
-              <Localized id="path_editor_icon_info" />
+              <Localized id="path_editor_icon_url_info" />
             </em>
 
             <FancyInput>
@@ -202,9 +245,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
             <hr />
           </div>
 
-          <div style={{
-            display: (type === 'emoji' ? 'block' : 'none'),
-          }}>                
+          <div style={{ display: (type === 'emoji' ? 'block' : 'none') }}>                
             <EmojiPicker
               native={true}
               onEmojiClick={handleEmojiChange}
@@ -222,8 +263,30 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
             />
           </div>
 
+          <div style={{ display: (type === 'file' ? 'block' : 'none') }}>
+            <hr />
+
+            <em className="body2" style={{ display: 'block', marginBottom: 'var(--basis)' }}>
+              <Localized id="path_editor_icon_file_info" />
+            </em>
+
+            <div>
+              <FancyInput>
+                {({ setError }) => <StorageFileInput onChange={handleFileChange} onError={setError} style={{ margin: '0' }} />}
+              </FancyInput>
+
+              {
+                typeof fileId === 'string' && fileId.length > 0
+                  ? <img src={`${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=40&h=40&id=${encodeURIComponent(fileId)}`} alt="Icon preview." width="40" style={{ marginTop: 'var(--basis)' }} />
+                  : null
+              }
+            </div>
+
+            <hr />
+          </div>
+
           {
-            type !== 'emoji' && type !== 'url'
+            type !== 'emoji' && type !== 'url' && type !== 'file'
             ? <hr />
             : null
           }
