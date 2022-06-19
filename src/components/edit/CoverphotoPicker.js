@@ -1,3 +1,141 @@
+import { useState, useEffect } from 'react'
+
+import classes from './CoverphotoPicker.module.css'
+
+import {
+  CircleSharp as CoverphotoIcon,
+} from '@mui/icons-material'
+
+import { withLocalization } from '../../fluent/Localized.js'
+
+import ImagePicker from './ImagePicker.js'
+
+const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
+
+function CoverphotoPicker({ coverphotoValue, iconValue, onChange, className, style }) {
+
+  const [coverphotoIsSet, setCoverphotoIsSet] = useState(false)
+
+  const [type, setType] = useState(null)
+  const [url, setUrl] = useState(null)
+  const [fileId, setFileId] = useState(null)
+
+  useEffect(() => {
+    if (
+      typeof coverphotoValue === 'object'
+      && coverphotoValue !== null
+      && !Array.isArray(coverphotoValue)
+    ) {
+      let newCoverphotoIsSet = false
+
+      if (coverphotoValue.type === 'url' || coverphotoValue.type === 'file') {
+        setType(coverphotoValue.type)
+      } else {
+        setType(null)
+      }
+
+      if (
+        typeof coverphotoValue.url === 'string'
+        && isAbsoluteUrlRegexp.test(coverphotoValue.url)
+      ) {
+        setUrl(coverphotoValue.url || '')
+
+        if (coverphotoValue.type === 'url') {
+          newCoverphotoIsSet = true
+        }
+      } else {
+        setUrl(null)
+      }
+
+      if (
+        typeof coverphotoValue.fileId === 'string'
+        && coverphotoValue.fileId.length > 0
+      ) {
+        setFileId(coverphotoValue.fileId || '')
+
+        if (coverphotoValue.type === 'file') {
+          newCoverphotoIsSet = true
+        }
+      } else {
+        setFileId(null)
+      }
+
+      setCoverphotoIsSet(newCoverphotoIsSet)
+    }
+  }, [coverphotoValue, setType, setUrl, setFileId, setCoverphotoIsSet])
+
+  let iconIsSet = false
+
+  if (
+    typeof iconValue === 'object'
+    && iconValue !== null
+    && !Array.isArray(iconValue)
+  ) {
+    if (
+      (
+        iconValue.type === 'url'
+        && typeof iconValue.url === 'string'
+        && isAbsoluteUrlRegexp.test(iconValue.url)
+      )
+      || (
+        iconValue.type === 'emoji'
+        && typeof iconValue.emoji === 'string'
+        && iconValue.emoji.lengh > 0
+      )
+      || (
+        iconValue.type === 'file'
+        && typeof iconValue.fileId === 'string'
+        && iconValue.fileId.lengh > 0
+      )
+    ) {
+      iconIsSet = true
+    }
+  }
+
+  let imageUrl = ''
+  if (type === 'url' && coverphotoIsSet && !!url) {
+    imageUrl = `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(url)})`
+  } else if (type === 'file' && coverphotoIsSet && !!fileId) {
+    imageUrl = `url(${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=1400&h=400&id=${encodeURIComponent(fileId)})`
+  }
+
+  return <div
+    className={`
+      ${classes.root}
+      ${iconIsSet ? classes.iconIsSet : classes.iconIsNotSet}
+      ${coverphotoIsSet ? classes.coverphotoIsSet : classes.coverphotoIsNotSet}
+      ${className || ''}
+    `}
+    style={style}
+  >
+    <ImagePicker
+      imageValue={coverphotoValue}
+      onChange={onChange}
+      types={['url', 'file']}
+      trigger={(triggerProps) => (
+        <div
+          className={classes.coverphoto}
+          style={{
+            backgroundImage: imageUrl,
+          }}
+        >
+          <div className={classes.button_wrapper}>
+            <button {...triggerProps} className={`hasIcon ${coverphotoIsSet ? 'default' : 'text'} ${classes.changeCoverphotoButton}`}>
+              <CoverphotoIcon className="icon" />
+              <span style={{ marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle'}}>Set Coverphoto</span>
+            </button>
+          </div>
+        </div>
+      )}
+    />
+  </div>
+}
+
+export default withLocalization(CoverphotoPicker)
+
+
+
+/*
 
 import classes from './CoverphotoPicker.module.css'
 
@@ -78,6 +216,11 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
         iconValue.type === 'emoji'
         && typeof iconValue.emoji === 'string'
         && iconValue.emoji.length > 0
+      )
+      || (
+        iconValue.type === 'file'
+        && typeof iconValue.fileId === 'string'
+        && iconValue.fileId.length > 0
       )
     ) {
       iconIsSet = true
@@ -205,3 +348,4 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
 }
 
 export default withLocalization(CoverphotoPicker)
+*/

@@ -26,9 +26,10 @@
   --icon-size: calc(64 * var(--basis));
   width: var(--icon-size);
   height: var(--icon-size);
+
+  border-radius: 1000px;
 }
-.root.image_type_url .icon,
-.root.image_type_file .icon {
+.root.icon_type_url .icon {
   border-radius: 1000px;
 }
 /*
