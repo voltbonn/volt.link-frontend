@@ -98,7 +98,7 @@ function StorageFileInput({ onChange, onError, style }) {
             }
 
             if (typeof data === 'object' && data !== null) {
-              if (typeof data.hasOwnProperty === 'errors') {
+              if (data.hasOwnProperty('errors')) {
                 if (typeof onError === 'function') {
                   onError(data.errors)
                 }
