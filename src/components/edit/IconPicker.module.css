@@ -26,6 +26,8 @@
   --icon-size: calc(64 * var(--basis));
   width: var(--icon-size);
   height: var(--icon-size);
+
+  border-radius: 1000px;
 }
 .root.icon_type_url .icon {
   border-radius: 1000px;
