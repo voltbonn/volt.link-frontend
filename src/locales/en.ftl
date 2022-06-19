@@ -70,7 +70,7 @@ path_editor_no_coverphoto = No Coverphoto
 
 path_editor_icon_label = Icon
 path_editor_icon_url_info = A url to use for the icon. Use the file option to upload directly to volt.link. Here is a helpful page to use images from Google Drive: https://sites.google.com/site/gdocs2direct/
-path_editor_icon_file_info = The file needs to be an image and less than 2MB.
+path_editor_icon_file_info = The file needs to be an image and less than 2MB. <br/> This feature is in beta. So there can be any kind of errors.
 
 properties_editor_imprint_label = Imprint Link
 properties_editor_privacy_policy_label = Privacy-Policy Link

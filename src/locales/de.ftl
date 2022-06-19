@@ -78,7 +78,7 @@ path_editor_no_coverphoto = Kein Titelbild
 
 path_editor_icon_label = Icon
 path_editor_icon_url_info = Eine URL fürs Icon. Das Bild muss wo anders hochgeladen werden. Hier gibt es eine Hilfe für Google Drive: https://sites.google.com/site/gdocs2direct/
-path_editor_icon_file_info = Die Datei muss ein Bild und kleiner als 2MB sein.
+path_editor_icon_file_info = Die Datei muss ein Bild und kleiner als 2MB sein. <br/> Diese Funktion ist in der Beta-Phase. Es können also alle möglichen Fehler auftreten.
 
 properties_editor_imprint_label = Impressums Link
 properties_editor_privacy_policy_label = Datenschutzerkläungs Link
