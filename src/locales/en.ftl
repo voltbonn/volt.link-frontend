@@ -69,7 +69,7 @@ path_editor_coverphoto_info = A url to use for the coverphoto. The photo needs t
 path_editor_no_coverphoto = No Coverphoto
 
 path_editor_icon_label = Icon
-path_editor_icon_info = A url to use for the icon. The photo needs to be uploaded somewhere else.
+path_editor_icon_info = A url to use for the icon. Use the file option to upload directly to volt.link. Here is a helpful page to use images from Google Drive: https://sites.google.com/site/gdocs2direct/
 
 properties_editor_imprint_label = Imprint Link
 properties_editor_privacy_policy_label = Privacy-Policy Link
