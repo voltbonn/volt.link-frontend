@@ -4,12 +4,11 @@ import classes from './StorageFileInput.module.css'
 
 function resize(file) {
   return new Promise((resolve, reject) => {
-    const MAX_HEIGHT = 100
-    const MAX_WIDTH = 100
+    const MAX_HEIGHT = 2000
+    const MAX_WIDTH = 2000
 
     const image = new Image()
     image.onload = function () {
-      // const canvas = document.getElementById('myCanvas')
       const canvas = document.createElement('canvas')
       if (image.height > MAX_HEIGHT) {
         image.width *= MAX_HEIGHT / image.height
@@ -24,10 +23,20 @@ function resize(file) {
       canvas.width = image.width
       canvas.height = image.height
       ctx.drawImage(image, 0, 0, image.width, image.height)
+    
+      const fileType = file.type || 'image/jpeg'
 
-      canvas.toBlob(resolve, 'image/png')
+      canvas.toBlob(newBlob => {
+        const resizedFile = new File([newBlob], file.name, {
+          type: fileType,
+          lastModified: file.lastModified || new Date(),
+        })
+        resolve(resizedFile)
+      }, fileType, 0.95)
     }
-    image.file = file
+    image.onerror = reject
+    const data_url = URL.createObjectURL(file)
+    image.src = data_url
   })
 }
 
@@ -37,7 +46,7 @@ function StorageFileInput({ onChange, onError, style }) {
   const [uploadProgressText, setUploadProgressText] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const singleUpload = useCallback(() => {
+  const singleUpload = useCallback(async () => {
     setUploadProgressText('')
     setLoading(true)
     if (typeof onError === 'function') {
@@ -49,7 +58,7 @@ function StorageFileInput({ onChange, onError, style }) {
         .filter(file => file.type.startsWith('image/') && file.size < 5000000) // 5000000 bytes = 5MB
       
       if (files.length > 0) {
-        const resized_file = files[0] // await resize(files[0])
+        const resized_file = await resize(files[0])
 
         const formData = new FormData()
         const operations = {
@@ -187,7 +196,7 @@ function StorageFileInput({ onChange, onError, style }) {
       display: loading === true ? 'none' : 'flex'
     }}>
       <label>
-        <input type="file" ref={fileInputRef} accept="image/*" />
+        <input type="file" ref={fileInputRef} accept="image/png, image/jpeg" />
       </label>
       <button className="default" onClick={singleUpload}>Upload</button>
     </div>
