@@ -80,12 +80,12 @@ function CoverphotoPicker({ coverphotoValue, iconValue, onChange, className, sty
       || (
         iconValue.type === 'emoji'
         && typeof iconValue.emoji === 'string'
-        && iconValue.emoji.lengh > 0
+        && iconValue.emoji.length > 0
       )
       || (
         iconValue.type === 'file'
         && typeof iconValue.fileId === 'string'
-        && iconValue.fileId.lengh > 0
+        && iconValue.fileId.length > 0
       )
     ) {
       iconIsSet = true
