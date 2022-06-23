@@ -76,11 +76,11 @@ function InlineEditorBlockImageRaw({
   let imageUrl = ''
   if (coverphoto?.type === 'url') {
     if (typeof coverphoto?.url === 'string' && coverphoto?.url.length > 0) {
-      imageUrl = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(coverphoto.url)}`
+      imageUrl = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=150&h=150&url=${encodeURIComponent(coverphoto.url)}`
     }
   } else if (coverphoto?.type === 'file') {
     if (typeof coverphoto?.fileId === 'string' && coverphoto?.fileId.length > 0) {
-      imageUrl = `${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=1400&h=400&id=${encodeURIComponent(coverphoto.fileId)}`
+      imageUrl = `${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=150&h=150&id=${encodeURIComponent(coverphoto.fileId)}`
     }
   }
 

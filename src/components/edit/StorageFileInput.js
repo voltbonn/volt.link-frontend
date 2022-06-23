@@ -4,8 +4,8 @@ import classes from './StorageFileInput.module.css'
 
 function resize(file) {
   return new Promise((resolve, reject) => {
-    const MAX_HEIGHT = 4096 // This is kinda arbitrary. But a limit is probably good. (4096 is the max in figma. so the images can be reused there.)
-    const MAX_WIDTH = 4096 // This is kinda arbitrary. But a limit is probably good. (4096 is the max in figma. so the images can be reused there.)
+    const MAX_HEIGHT = 2000 // This is kinda arbitrary. But a limit is probably good.
+    const MAX_WIDTH = 2000 // This is kinda arbitrary. But a limit is probably good.
 
     const image = new Image()
     image.onload = function () {

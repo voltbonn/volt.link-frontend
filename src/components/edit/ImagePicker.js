@@ -10,10 +10,10 @@ import { Localized, withLocalization } from '../../fluent/Localized.js'
 
 import FancyInput from './FancyInput.js'
 import UrlInput from './UrlInput.js'
-
 import StorageFileInput from './StorageFileInput.js'
-
 import MultiButton from '../MultiButton.js'
+
+import useLoadBlocks from '../../hooks/useLoadBlocks.js'
 
 const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
 
@@ -23,6 +23,8 @@ function ImagePicker({ getString, trigger, types = ['url', 'emoji', 'file'], url
   const [url, setUrl] = useState(null)
   const [emoji, setEmoji] = useState(null)
   const [fileId, setFileId] = useState(null)
+
+  const [existingImages, setExistingImages] = useState([])
 
   const handleEmojiChange = useCallback((event, emojiObject) => {
     const newEmoji = emojiObject.emoji || null
@@ -44,6 +46,20 @@ function ImagePicker({ getString, trigger, types = ['url', 'emoji', 'file'], url
     setFileId(newFileId)
     onChange({ type, url, emoji, fileId: newFileId })
   }, [onChange, type, url, emoji])
+
+  const loadBlocks = useLoadBlocks()
+  useEffect(() => {
+    if (type === 'file') {
+      loadBlocks({ types: ['file'], archived: false })
+        .then(async loadedBlocks => {
+          setExistingImages(loadedBlocks.map(block => ({
+            _id: block._id,
+            text: block?.properties?.text || undefined,
+          })))
+        })
+        .catch(error => console.error(error))
+    }
+  }, [type, loadBlocks, setExistingImages])
 
   useEffect(() => {
     if (
@@ -204,15 +220,45 @@ function ImagePicker({ getString, trigger, types = ['url', 'emoji', 'file'], url
           </em>
 
           <div>
+
             <FancyInput>
               {({ setError }) => <StorageFileInput onChange={handleFileChange} onError={setError} style={{ margin: '0' }} />}
             </FancyInput>
 
             {
               typeof fileId === 'string' && fileId.length > 0
-                ? <img src={`${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=40&h=40&id=${encodeURIComponent(fileId)}`} alt="Icon preview." width="40" style={{ marginTop: 'var(--basis)' }} />
+                ? <>
+                  <h4 style={{ marginTop: 'var(--basis_x2)' }}>Selected Image:</h4>
+                  <img src={`${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=40&h=40&id=${encodeURIComponent(fileId)}`} alt="Icon preview." width="40" style={{ marginTop: 'var(--basis)' }} />
+                </>
                 : null
             }
+
+            {
+              Array.isArray(existingImages) && existingImages.length > 0
+              ? <div style={{ width: '600px', maxWidth: '100%' }}>
+                  <h4 style={{ marginTop: 'var(--basis_x2)' }}>Already uploaded images:</h4>
+                  {
+                    existingImages.map(({ _id, text }) => (
+                      <img
+                        key={_id}
+                        onClick={() => handleFileChange(_id)}
+                        src={`${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=40&h=40&id=${encodeURIComponent(_id)}`}
+                        alt={text}
+                        title={text}
+                        width="40"
+                        style={{
+                          margin: 'var(--basis_x2)',
+                          cursor: 'pointer',
+                          maxHeight: '80px',
+                        }}
+                      />
+                    ))
+                  }
+                </div>
+              : null
+            }
+
           </div>
 
           <hr />
