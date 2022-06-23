@@ -57,8 +57,8 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   const updateProperty = useCallback((propertyKey, newPropertyValue, silent = false) => {
     const propertyTypes = {
       text: 'string',
-      coverphoto: 'string',
-      icon: 'string',
+      coverphoto: 'object',
+      icon: 'object',
       imprint: 'string',
       privacy_policy: 'string',
       tags: 'string',
