@@ -13,9 +13,11 @@ import UrlInput from './UrlInput.js'
 
 import StorageFileInput from './StorageFileInput.js'
 
+import MultiButton from '../MultiButton.js'
+
 const isAbsoluteUrlRegexp = new RegExp('^(?:[a-z]+:)?//', 'i')
 
-function ImagePicker({ trigger, types = ['url', 'emoji', 'file'], imageValue, onChange }) {
+function ImagePicker({ getString, trigger, types = ['url', 'emoji', 'file'], urlSuggestions = [], imageValue, onChange }) {
 
   const [type, setType] = useState(null)
   const [url, setUrl] = useState(null)
@@ -109,7 +111,7 @@ function ImagePicker({ trigger, types = ['url', 'emoji', 'file'], imageValue, on
             className={type !== 'emoji' && type !== 'url' && type !== 'file' ? 'default' : 'text'}
             onClick={() => handleTypeChange(null)}
           >
-            No Icon
+            No Image
           </button>
           <button
             style={{ display: types.includes('emoji') ? 'inline-block' : 'none' }}
@@ -155,6 +157,23 @@ function ImagePicker({ trigger, types = ['url', 'emoji', 'file'], imageValue, on
               />
             )}
           </FancyInput>
+
+          {
+            urlSuggestions.length > 0
+            ? <MultiButton
+                onChange={handleUrlChange}
+                ariaLabel={getString('path_editor_coverphoto_label')}
+                defaultValue={url}
+                items={
+                  urlSuggestions
+                  .map(({ value = '', icon = '' }) => ({
+                    value,
+                    icon: <img alt="" src={icon} className="icon image" />
+                  }))
+                }
+              />
+            : null
+          }
 
           <hr />
         </div>
