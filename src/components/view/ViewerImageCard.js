@@ -14,24 +14,22 @@ function ViewerImageCard({ block, locales }) {
     setHtml({ __html: textWithHtml })
   }, [text, setHtml])
 
-  let og_image_url = ''
+  let image_url = ''
   if (
     block
     && block.properties
     && block.properties.coverphoto
     && block.properties.coverphoto.type
   ) {
-    if (
-      block.properties.coverphoto.type === 'url'
-      && block.properties.coverphoto.url
-    ) {
-      og_image_url = block.properties.coverphoto.url
+    if (block.properties.coverphoto.type === 'url') {
+      if (typeof block.properties.coverphoto.url === 'string' && block.properties.coverphoto.url.length > 0) {
+        image_url = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1000&h=1000&url=${encodeURIComponent(block.properties.coverphoto.url)}`
+      }
+    } else if (block.properties.coverphoto.type === 'file') {
+      if (typeof block.properties.coverphoto.fileId === 'string' && block.properties.coverphoto.fileId.length > 0) {
+        image_url = `${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=1000&h=1000&id=${encodeURIComponent(block.properties.coverphoto.fileId)}`
+      }
     }
-  }
-
-  let image_url = ''
-  if (typeof og_image_url === 'string' && og_image_url.length > 0) {
-    image_url = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1000&h=1000&url=${encodeURIComponent(og_image_url)}`
   }
 
   if (image_url !== '') {
