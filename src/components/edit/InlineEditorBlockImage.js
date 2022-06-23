@@ -3,9 +3,12 @@ import React, { useState, useCallback } from 'react'
 import { withLocalization } from '../../fluent/Localized.js'
 import { getBlockColor } from '../../functions.js'
 
-import FancyInput from './FancyInput.js'
 import HtmlInput from './HtmlInput.js'
-import UrlInput from './UrlInput.js'
+import ImagePicker from './ImagePicker.js'
+
+import {
+  ImageSharp as ImageIcon,
+} from '@mui/icons-material'
 
 function InlineEditorBlockImageRaw({
   getString,
@@ -22,19 +25,14 @@ function InlineEditorBlockImageRaw({
   const properties = block.properties || {}
   const [text, setText] = useState(properties.text || '')
 
-  let og_url = ''
+  let og_coverphoto = ''
   if (
     properties.hasOwnProperty('coverphoto')
     && properties.coverphoto.hasOwnProperty('type')
   ) {
-    if (
-      properties.coverphoto.type === 'url'
-      && properties.coverphoto.hasOwnProperty('url')
-    ) {
-      og_url = properties.coverphoto.url
-    }
+    og_coverphoto = properties.coverphoto
   }
-  const [url, setUrl] = useState(og_url)
+  const [coverphoto, setCoverphoto] = useState(og_coverphoto)
 
   const publishChanges = useCallback(() => {
     if (onChange) {
@@ -45,20 +43,22 @@ function InlineEditorBlockImageRaw({
         },
       }
 
-      if (url === '') {
+      if (coverphoto === null) {
         if (newBlock.properties.hasOwnProperty('coverphoto')) {
           delete newBlock.properties.coverphoto
         }
       } else {
-        newBlock.properties.coverphoto = {
-          type: 'url',
-          url,
-        }
+        newBlock.properties.coverphoto = coverphoto
       }
 
       onChange(newBlock)
     }
-  }, [onChange, block, text, url])
+  }, [onChange, block, text, coverphoto])
+
+  const saveCoverphoto = useCallback(newCoverphoto => {
+    setCoverphoto(newCoverphoto)
+    publishChanges()
+  }, [publishChanges])
   
   const {
     color,
@@ -73,10 +73,19 @@ function InlineEditorBlockImageRaw({
     colorStyles['--button-color'] = contrastingColor
   }
 
-  let image_url = ''
-  if (typeof url === 'string' && url.length > 0) {
-    image_url = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=150&h=100&url=${encodeURIComponent(url)}`
+  let imageUrl = ''
+  if (coverphoto?.type === 'url') {
+    if (typeof coverphoto?.url === 'string' && coverphoto?.url.length > 0) {
+      imageUrl = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(coverphoto.url)}`
+    }
+  } else if (coverphoto?.type === 'file') {
+    if (typeof coverphoto?.fileId === 'string' && coverphoto?.fileId.length > 0) {
+      imageUrl = `${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=1400&h=400&id=${encodeURIComponent(coverphoto.fileId)}`
+    }
   }
+
+  const alt = (typeof text === 'string' && text.length > 0) ? text : 'Image Preview'
+  const title = alt
 
   return <div style={{
     margin: '0 0 var(--basis) 0',
@@ -89,11 +98,11 @@ function InlineEditorBlockImageRaw({
       marginBottom: 'var(--basis)',
     }}>
     {
-      image_url !== ''
+      imageUrl !== ''
         ? <img
-          src={image_url}
-          alt={text}
-          title={text}
+          src={imageUrl}
+          alt={alt}
+          title={title}
           style={{
             maxWidth: '150px',
             maxHeight: '100px',
@@ -104,21 +113,17 @@ function InlineEditorBlockImageRaw({
     }
     </div>
 
-    <FancyInput>
-      {({ setError }) => (
-        <UrlInput
-          onError={setError}
-          onChange={setUrl}
-          onBlur={publishChanges}
-          defaultValue={url}
-          placeholder={getString('placeholder_image_url')}
-          style={{
-            margin: '0',
-            width: '100%',
-          }}
-        />
+    <ImagePicker
+      imageValue={coverphoto}
+      onChange={saveCoverphoto}
+      types={['url', 'file']}
+      trigger={(triggerProps) => (
+        <button {...triggerProps} className="hasIcon default" style={{ margin: 0 }}>
+          <ImageIcon className="icon" />
+          <span style={{ marginInlineStart: 'var(--basis_x2)', verticalAlign: 'middle' }}>Choose an Image</span>
+        </button>
       )}
-    </FancyInput>
+    />
 
     <HtmlInput
       defaultValue={text}

@@ -30,12 +30,16 @@ window.env = 'prod' // dev / prod
 window.domains = {
   frontend: 'https://volt.link/',
   backend: 'https://api.volt.link/',
+  storage: 'https://storage.volt.link/',
   // frontend: 'http://localhost:4003/',
   // backend: 'http://localhost:4004/',
+  // storage: 'http://localhost:4006/',
 }
 
+window.graphql_uri = window.domains.backend + 'graphql/v1/'
+
 const client = new ApolloClient({
-  uri: window.domains.backend+'graphql/v1/',
+  uri: window.graphql_uri,
   cache: new InMemoryCache(),
   credentials: 'include',
   defaultOptions: {

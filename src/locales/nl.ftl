@@ -68,7 +68,7 @@ path_editor_coverphoto_info = Een url om te gebruiken voor de omslagfoto. De fot
 path_editor_no_coverphoto = Geen omslagfoto
 
 path_editor_icon_label = Icoon
-path_editor_icon_info = Een url om te gebruiken voor het icoon. De foto moet ergens anders worden geupload.
+path_editor_icon_url_info = Een url om te gebruiken voor het icoon. De foto moet ergens anders worden geupload.
 
 properties_editor_imprint_label = Afdruk Link
 properties_editor_privacy_policy_label = Privacy-beleidslink
