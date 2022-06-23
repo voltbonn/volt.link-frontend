@@ -220,13 +220,17 @@ function ImagePicker({ getString, trigger, types = ['url', 'emoji', 'file'], url
           </em>
 
           <div>
+
             <FancyInput>
               {({ setError }) => <StorageFileInput onChange={handleFileChange} onError={setError} style={{ margin: '0' }} />}
             </FancyInput>
 
             {
               typeof fileId === 'string' && fileId.length > 0
-                ? <img src={`${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=40&h=40&id=${encodeURIComponent(fileId)}`} alt="Icon preview." width="40" style={{ marginTop: 'var(--basis)' }} />
+                ? <>
+                  <h4 style={{ marginTop: 'var(--basis_x2)' }}>Selected Image:</h4>
+                  <img src={`${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=40&h=40&id=${encodeURIComponent(fileId)}`} alt="Icon preview." width="40" style={{ marginTop: 'var(--basis)' }} />
+                </>
                 : null
             }
 
