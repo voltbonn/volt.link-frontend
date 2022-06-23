@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import classes from './CoverphotoPicker.module.css'
 
 import {
-  CircleSharp as CoverphotoIcon,
+  RectangleSharp as CoverphotoIcon,
 } from '@mui/icons-material'
 
 import { withLocalization } from '../../fluent/Localized.js'
