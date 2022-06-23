@@ -58,7 +58,12 @@ function StorageFileInput({ onChange, onError, style }) {
         .filter(file => file.type.startsWith('image/') && file.size < 5000000) // 5000000 bytes = 5MB
       
       if (files.length > 0) {
-        const resized_file = await resize(files[0])
+        const thisFile = files[0]
+
+        let new_file = thisFile
+        if (thisFile.type.startsWith('image/')) {
+          new_file = await resize(thisFile)
+        }
 
         const formData = new FormData()
         const operations = {
@@ -75,7 +80,7 @@ function StorageFileInput({ onChange, onError, style }) {
 
         const map = `{"0": ["variables.file"]}`
         formData.append('map', map)
-        formData.append('0', resized_file)
+        formData.append('0', new_file)
 
 
 
