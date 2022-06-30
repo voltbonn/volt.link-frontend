@@ -23,7 +23,7 @@ function ViewerImageCard({ block, locales }) {
   ) {
     if (block.properties.coverphoto.type === 'url') {
       if (typeof block.properties.coverphoto.url === 'string' && block.properties.coverphoto.url.length > 0) {
-        image_url = `${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1000&h=1000&url=${encodeURIComponent(block.properties.coverphoto.url)}`
+        image_url = `${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=1000&h=1000&url=${encodeURIComponent(block.properties.coverphoto.url)}`
       }
     } else if (block.properties.coverphoto.type === 'file') {
       if (typeof block.properties.coverphoto.fileId === 'string' && block.properties.coverphoto.fileId.length > 0) {

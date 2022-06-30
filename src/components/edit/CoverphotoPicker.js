@@ -134,7 +134,7 @@ function CoverphotoPicker({ coverphotoValue, iconValue, onChange, className, sty
 
   let imageUrl = ''
   if (type === 'url' && coverphotoIsSet && !!url) {
-    imageUrl = `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(url)})`
+    imageUrl = `url(${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(url)})`
   } else if (type === 'file' && coverphotoIsSet && !!fileId) {
     imageUrl = `url(${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=1400&h=400&id=${encodeURIComponent(fileId)})`
   }
@@ -282,7 +282,7 @@ function CoverphotoPicker({ getString, coverphotoValue, iconValue, onChange, cla
         <div
           className={classes.coverphoto}
           style={{
-            backgroundImage: coverphotoIsSet ? `url(${window.domains.backend}download_url?f=jpg&w=1400&h=400&url=${encodeURIComponent(coverphotoValue.url)})` : '',
+            backgroundImage: coverphotoIsSet ? `url(${window.domains.storage}download_url?f=jpg&w=1400&h=400&url=${encodeURIComponent(coverphotoValue.url)})` : '',
           }}
         >
           <div className={classes.button_wrapper}>
