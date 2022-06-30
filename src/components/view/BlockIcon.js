@@ -16,31 +16,53 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
   const properties = block.properties || {}
 
   let iconComponent = null
+  let isSquareIcon = false
 
   if (
-    // TODO: is the check overkill ? 😅
     properties.hasOwnProperty('icon')
     && typeof properties.icon === 'object'
     && properties.icon !== null
     && !Array.isArray(properties.icon)
     && properties.icon.hasOwnProperty('type')
     && typeof properties.icon.type === 'string'
-    && properties.icon.type === 'emoji'
-    && properties.icon.hasOwnProperty('emoji')
-    && typeof properties.icon.emoji === 'string'
-    && properties.icon.emoji.length !== 0
   ) {
-    iconComponent = <Twemoji
-      {...props}
-      style={style}
-      key={properties.icon.emoji}
-      className={`${classes.icon} ${className}`}
-      emoji={properties.icon.emoji}
-    />
+
+    if (
+      properties.icon.type === 'emoji'
+      && properties.icon.hasOwnProperty('emoji')
+      && typeof properties.icon.emoji === 'string'
+      && properties.icon.emoji.length !== 0
+    ) {
+      iconComponent = <Twemoji
+        {...props}
+        style={style}
+        key={properties.icon.emoji}
+        className={`${classes.icon} ${className}`}
+        emoji={properties.icon.emoji}
+      />
+    }
+
+    if (
+      iconComponent === null
+      && properties.icon.type === 'file'
+      && properties.icon.hasOwnProperty('fileId')
+      && typeof properties.icon.fileId === 'string'
+      && properties.icon.fileId.length !== 0
+    ) {
+      const fileId = properties.icon.fileId
+      iconComponent = <div
+        {...props}
+        className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round} ${className}`}
+        style={{
+          ...style,
+          backgroundImage: `url(${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=40&h=40&id=${encodeURIComponent(fileId)})`
+        }}
+        alt=""
+      />
+    }
   }
 
   if (iconComponent === null) {
-    let isSquareIcon = false
     let icon_url = getImageUrl(properties.icon)
 
     if (!icon_url) {
@@ -53,11 +75,12 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
       iconComponent = <div
         {...props}
         className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round} ${className}`}
-        style={{ ...style, backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }}
+        style={{ ...style, backgroundImage: `url(${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }}
         alt=""
       />
     }
   }
+
 
   if (iconComponent === null) {
     switch (block.type) {
