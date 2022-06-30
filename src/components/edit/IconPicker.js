@@ -123,7 +123,7 @@ function IconPicker({ coverphotoValue, iconValue, onChange, className, style }) 
               ? <div
                 className={classes.icon}
                 style={{
-                  backgroundImage: iconIsSet && !!url ? `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=400&h=400&url=${encodeURIComponent(url)})` : '',
+                  backgroundImage: iconIsSet && !!url ? `url(${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=400&h=400&url=${encodeURIComponent(url)})` : '',
                 }}
               ></div>
               : null

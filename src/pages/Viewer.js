@@ -359,7 +359,7 @@ function Viewer () {
       {
       (type === 'page' || type === 'person' || type === 'redirect')
       && coverphoto_url !== ''
-          ? <div style={{ backgroundImage: `url(${window.domains.backend}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(coverphoto_url)})` }} className={classes.coverphoto}></div>
+          ? <div style={{ backgroundImage: `url(${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(coverphoto_url)})` }} className={classes.coverphoto}></div>
           : null
       }
       <main className={`${classes.contentWrapper}`}>
