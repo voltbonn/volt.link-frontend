@@ -279,17 +279,9 @@ function Viewer () {
   }
 
 
-  let coverphoto_url = ''
-  let metadata_image_url = ''
-  if (coverphoto.type === 'url' && !!coverphoto.url) {
-    coverphoto_url = `${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(coverphoto.url)}`
-    metadata_image_url = `${window.domains.storage}download_url?f=jpg&w=1000&h=1000&url=${encodeURIComponent(coverphoto.url)}`
-  } else if (coverphoto.type === 'file' && !!coverphoto.fileId) {
-    coverphoto_url = `${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=1400&h=400&id=${encodeURIComponent(coverphoto.fileId)}`
-    metadata_image_url = `${window.domains.storage}download_file/?f=jpg&w=1000&h=1000&id=${encodeURIComponent(coverphoto.fileId)}`
-  }
+  const coverphoto_url = getImageUrl(coverphoto, { width: 1400, height: 400 })
+  const metadata_image_url = getImageUrl(coverphoto, { width: 1000, height: 1000 })
 
-    console.log('coverphoto_url', coverphoto_url)
   let coverphotoComponent = null
   if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
     coverphotoComponent = <div style={{ backgroundImage: `url(${coverphoto_url})` }} className={classes.coverphoto}></div>
@@ -333,11 +325,11 @@ function Viewer () {
     }
 
     if (iconComponent === null) {
-      let icon_url = getImageUrl(properties.icon)
+      let icon_url = getImageUrl(properties.icon, { width: 400, height: 400 })
       if (typeof icon_url === 'string' && icon_url.length !== 0) {
         iconComponent = <div
           style={{
-            backgroundImage: `url(${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=400&h=400&url=${encodeURIComponent(icon_url)})`
+            backgroundImage: `url(${icon_url})`
           }}
           className={`${classes.icon} ${coverphoto_url === '' ? '' : classes.coverphotoIsSet}`}
         ></div>
