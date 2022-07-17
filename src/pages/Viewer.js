@@ -282,7 +282,6 @@ function Viewer () {
   const coverphoto_url = getImageUrl(coverphoto, { width: 1400, height: 400 })
   const metadata_image_url = getImageUrl(coverphoto, { width: 1000, height: 1000 })
 
-    console.log('coverphoto_url', coverphoto_url)
   let coverphotoComponent = null
   if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
     coverphotoComponent = <div style={{ backgroundImage: `url(${coverphoto_url})` }} className={classes.coverphoto}></div>
