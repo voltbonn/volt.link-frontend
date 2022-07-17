@@ -5,15 +5,15 @@
     "static/js/1.0317e281.chunk.js": "/static/js/1.0317e281.chunk.js",
     "static/js/1.0317e281.chunk.js.map": "/static/js/1.0317e281.chunk.js.map",
     "main.css": "/static/css/main.40b2a174.chunk.css",
-    "main.js": "/static/js/main.ae9823b2.chunk.js",
-    "main.js.map": "/static/js/main.ae9823b2.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.88a0160f.js",
-    "runtime-main.js.map": "/static/js/runtime-main.88a0160f.js.map",
-    "static/js/4.ab948158.chunk.js": "/static/js/4.ab948158.chunk.js",
-    "static/js/4.ab948158.chunk.js.map": "/static/js/4.ab948158.chunk.js.map",
+    "main.js": "/static/js/main.84c3c215.chunk.js",
+    "main.js.map": "/static/js/main.84c3c215.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.e9034cac.js",
+    "runtime-main.js.map": "/static/js/runtime-main.e9034cac.js.map",
+    "static/js/4.02f47059.chunk.js": "/static/js/4.02f47059.chunk.js",
+    "static/js/4.02f47059.chunk.js.map": "/static/js/4.02f47059.chunk.js.map",
     "static/css/5.8140840e.chunk.css": "/static/css/5.8140840e.chunk.css",
-    "static/js/5.7403931d.chunk.js": "/static/js/5.7403931d.chunk.js",
-    "static/js/5.7403931d.chunk.js.map": "/static/js/5.7403931d.chunk.js.map",
+    "static/js/5.98c31368.chunk.js": "/static/js/5.98c31368.chunk.js",
+    "static/js/5.98c31368.chunk.js.map": "/static/js/5.98c31368.chunk.js.map",
     "static/js/6.c87fcfba.chunk.js": "/static/js/6.c87fcfba.chunk.js",
     "static/js/6.c87fcfba.chunk.js.map": "/static/js/6.c87fcfba.chunk.js.map",
     "static/js/7.b6b93bf7.chunk.js": "/static/js/7.b6b93bf7.chunk.js",
@@ -41,7 +41,7 @@
     "static/css/5.8140840e.chunk.css.map": "/static/css/5.8140840e.chunk.css.map",
     "static/css/8.9597e196.chunk.css.map": "/static/css/8.9597e196.chunk.css.map",
     "static/css/main.40b2a174.chunk.css.map": "/static/css/main.40b2a174.chunk.css.map",
-    "static/js/4.ab948158.chunk.js.LICENSE.txt": "/static/js/4.ab948158.chunk.js.LICENSE.txt",
+    "static/js/4.02f47059.chunk.js.LICENSE.txt": "/static/js/4.02f47059.chunk.js.LICENSE.txt",
     "static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png": "/static/media/20200912_Plakatschlange_Koeln_Matteo Sant_Unione_011.3f9289d0.png",
     "static/media/Aktion.89c1bcdf.png": "/static/media/Aktion.89c1bcdf.png",
     "static/media/Welcome-to-Volt.39e04eca.png": "/static/media/Welcome-to-Volt.39e04eca.png",
@@ -56,9 +56,9 @@
     "static/media/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.6824f6ef.png": "/static/media/tYADz4UyUAAcV5WlmWLlkXD9LG8W02U9LbQd8rxzQ2bt99lxwK.6824f6ef.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.88a0160f.js",
-    "static/js/4.ab948158.chunk.js",
+    "static/js/runtime-main.e9034cac.js",
+    "static/js/4.02f47059.chunk.js",
     "static/css/main.40b2a174.chunk.css",
-    "static/js/main.ae9823b2.chunk.js"
+    "static/js/main.84c3c215.chunk.js"
   ]
 }
