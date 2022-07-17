@@ -63,19 +63,19 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
   }
 
   if (iconComponent === null) {
-    let icon_url = getImageUrl(properties.icon)
+    let icon_url = getImageUrl(properties.icon, { width: 40, height: 40 })
 
     if (!icon_url) {
       // coverphoto fallback
       isSquareIcon = true
-      icon_url = getImageUrl(properties.coverphoto)
+      icon_url = getImageUrl(properties.coverphoto, { width: 40, height: 40 })
     }
 
     if (typeof icon_url === 'string' && icon_url.length !== 0) {
       iconComponent = <div
         {...props}
         className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round} ${className}`}
-        style={{ ...style, backgroundImage: `url(${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=40&h=40&url=${encodeURIComponent(icon_url)})` }}
+        style={{ ...style, backgroundImage: `url(${icon_url})` }}
         alt=""
       />
     }

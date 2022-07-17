@@ -1,11 +1,19 @@
-function getImageUrl(imageObj) {
+function getImageUrl(imageObj, options) {
+  const {
+    width = null,
+    height = null,
+    format = window.imageFormat || 'jpg',
+  } = options || {}
+
   if (
     typeof imageObj === 'object'
     && imageObj !== null
     && !Array.isArray(imageObj)
   ) {
-    if (imageObj.type === 'url') {
-      return imageObj.url || ''
+    if (imageObj.type === 'url' && !!imageObj.url) {
+      return `${window.domains.storage}download_url/?f=${format}&w=${width}&h=${height}&url=${encodeURIComponent(imageObj.url || '')}`
+    } else if (imageObj.type === 'file' && !!imageObj.fileId) {
+      return `${window.domains.storage}download_file/?f=${format}&w=${width}&h=${height}&id=${encodeURIComponent(imageObj.fileId || '')}`
     }
   }
 
