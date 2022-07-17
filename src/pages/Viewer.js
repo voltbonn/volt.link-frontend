@@ -241,7 +241,7 @@ function Viewer () {
   const type = block.type || null
 
   const title = translateBlock(block, locales, getString('placeholder_headline_empty'))
-  const coverphoto_url = getImageUrl(properties.coverphoto)
+  const coverphoto = properties.coverphoto || {}
   const pronouns = properties.pronouns || ''
   
   const rightHeaderActions = <>
@@ -278,9 +278,21 @@ function Viewer () {
     __html: renderInlineMarkdown(title)
   }
 
+
+  let coverphoto_url = ''
   let metadata_image_url = ''
+  if (coverphoto.type === 'url' && !!coverphoto.url) {
+    coverphoto_url = `${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(coverphoto.url)}`
+    metadata_image_url = `${window.domains.storage}download_url?f=jpg&w=1000&h=1000&url=${encodeURIComponent(coverphoto.url)}`
+  } else if (coverphoto.type === 'file' && !!coverphoto.fileId) {
+    coverphoto_url = `${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=1400&h=400&id=${encodeURIComponent(coverphoto.fileId)}`
+    metadata_image_url = `${window.domains.storage}download_file/?f=jpg&w=1000&h=1000&id=${encodeURIComponent(coverphoto.fileId)}`
+  }
+
+    console.log('coverphoto_url', coverphoto_url)
+  let coverphotoComponent = null
   if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
-    metadata_image_url = `${window.domains.storage}download_url?f=jpg&w=1000&h=1000&url=${encodeURIComponent(coverphoto_url)}`
+    coverphotoComponent = <div style={{ backgroundImage: `url(${coverphoto_url})` }} className={classes.coverphoto}></div>
   }
 
 
@@ -357,9 +369,8 @@ function Viewer () {
 
     <div className={`basis_0_8 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
-      (type === 'page' || type === 'person' || type === 'redirect')
-      && coverphoto_url !== ''
-          ? <div style={{ backgroundImage: `url(${window.domains.storage}download_url?f=${window.imageFormat || 'jpg'}&w=1400&h=400&url=${encodeURIComponent(coverphoto_url)})` }} className={classes.coverphoto}></div>
+        (type === 'page' || type === 'person' || type === 'redirect')
+          ? coverphotoComponent
           : null
       }
       <main className={`${classes.contentWrapper}`}>
