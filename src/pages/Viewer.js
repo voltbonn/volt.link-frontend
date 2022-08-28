@@ -190,9 +190,35 @@ function Viewer () {
   }
 
   if (error !== null && error.for_slugOrId === slugOrId_to_use) {
+    const short_error_page_title = 'Error ' + error.code
     return <div className={classes.viewer}>
+      <Helmet>
+        <title>{short_error_page_title}</title>
+        <meta name="title" content={short_error_page_title} />
+        <meta name="og:title" content={short_error_page_title} />
+        <meta name="twitter:title" content={short_error_page_title} />
+
+        <meta name="description" content="" />
+        <meta property="og:description" content="" />
+        <meta name="twitter:description" content="" />
+
+        <meta property="og:image" content="" />
+        <meta name="twitter:image" content="" />
+
+        <meta property="twitter:card" content="summary" />
+      </Helmet>
+
       <Header
-        block={null}
+        block={{
+          type: 'page',
+          properties: {
+            text: short_error_page_title,
+            icon: {
+              type: 'emoji',
+              emoji: '⚠️'
+            }
+          }
+        }}
         title="Error"
         rightActions={null}
       />
@@ -222,16 +248,12 @@ function Viewer () {
           }
           {
             error.code === '403'
-              ? <Suspense>
-                  <ErrorPage errorName="no_access" />
-              </Suspense>
+              ? <ErrorPage errorName="no_access" />
               : null
           }
           {
             error.code === '404'
-              ? <Suspense>
-                <ErrorPage errorName="not_found" />
-              </Suspense>
+              ? <ErrorPage errorName="not_found" />
               : null
           }
         </main>
