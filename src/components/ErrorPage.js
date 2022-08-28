@@ -31,7 +31,7 @@ export default function ErrorPage ({ errorName }) {
     </a>
   } else if (errorName === 'not_found') {
     title = 'We could not find the requested URL…'
-    description = "The URL you requested does currently not exist. Did you type the URL correctly?"
+    description = 'The URL you requested does currently not exist. Did you type the URL correctly? It could also be that you need to login to view the page.'
 
     buttons = <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
       <button className="text hasIcon" style={{ margin: 'var(--basis_x4) 0 0 0' }}>
