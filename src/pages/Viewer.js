@@ -222,16 +222,12 @@ function Viewer () {
           }
           {
             error.code === '403'
-              ? <Suspense>
-                  <ErrorPage errorName="no_access" />
-              </Suspense>
+              ? <ErrorPage errorName="no_access" />
               : null
           }
           {
             error.code === '404'
-              ? <Suspense>
-                <ErrorPage errorName="not_found" />
-              </Suspense>
+              ? <ErrorPage errorName="not_found" />
               : null
           }
         </main>
