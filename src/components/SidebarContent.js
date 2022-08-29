@@ -26,11 +26,12 @@ import { useNavigate, useMatch } from 'react-router-dom'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
+import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
 import BlocksLoader from './BlocksLoader.js'
-
+import Twemoji from './Twemoji.js'
 import ViewerAuto from './view/ViewerAuto.js'
 
 import LocaleSelect from './edit/LocaleSelect.js'
@@ -60,6 +61,30 @@ export default function SidebarContent() {
       mounted.current = false
     }
   }, [])
+
+  const [favoriteBlocks, setFavoriteBlocks] = useState([])
+  const loadBlocks = useLoadBlocks()
+  useEffect(() => {
+    if (mounted.current) {
+      const loadFavoriteBlocks = async () => {
+        const loadFavoriteBlockIds = (await loadBlocks({
+          types: ['reaction'],
+          roles: ['owner'],
+          archived: false,
+        }))
+          .filter(block => block.properties?.icon?.emoji === '⭐️')
+          .map(block => block.properties.reactionFor)
+        console.log('loadFavoriteBlockIds', loadFavoriteBlockIds)
+
+        const favoriteBlocks = await loadBlocks({
+          ids: loadFavoriteBlockIds
+        })
+        console.log('favoriteBlocks', favoriteBlocks)
+        setFavoriteBlocks(favoriteBlocks)
+      }
+      loadFavoriteBlocks()
+    }
+  }, [loadBlocks])
 
   const {
     getString,
@@ -273,9 +298,39 @@ export default function SidebarContent() {
 
       </MenuList>
 
+
+      {
+        loggedIn
+          ? <>
+            <br />
+            <Divider style={{ opacity: 0.2, borderRadius: '10px' }} />
+            <br />
+            <h2 style={{ margin: '0 calc(1.5 * var(--basis)) var(--basis_x2) calc(1.5 * var(--basis))' }}>
+              <Twemoji emojiClassName={classes.emoji} emoji="⭐️" /> <Localized id="favorites_heading" />
+            </h2>
+            <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.5 * var(--basis)) var(--basis_x2) calc(1.5 * var(--basis))' }}>
+              <Localized id="favorites_description" />
+            </p>
+            {
+              favoriteBlocks.length > 0
+                ? favoriteBlocks
+                  .map(block => {
+                    if (block) {
+                      return <ViewerAuto key={block._id} block={block} />
+                    }
+                    return null
+                  })
+                  .filter(Boolean)
+              : null
+            }
+          </>
+          : null
+      }
+
       <br />
-      <Divider style={{ opacity: 0.2 }} />
-      <br/>
+      <Divider style={{ opacity: 0.2, borderRadius: '10px' }} />
+      <br />
+      <br />
 
       {/* All blocks: */}
       {
