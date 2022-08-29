@@ -17,6 +17,9 @@ help_page = Help / Tutorial
 
 choose_locale = Languages Changer:
 
+favorites_heading = Favorites
+favorites_description = Pages you give a star will appear here, so you can get back to them quickly.
+
 path_editor_edit_permission_error = You're not allowed to edit this link.
 
 path_editor_status_started_loading = Started loading…
