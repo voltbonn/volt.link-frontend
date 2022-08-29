@@ -7,6 +7,7 @@ import {
 
 import { Helmet } from 'react-helmet'
 import Twemoji from '../components/Twemoji.js'
+import ReactionButton from '../components/ReactionButton.js'
 
 import { getImageUrl } from '../functions.js'
 
@@ -268,6 +269,7 @@ function Viewer () {
   
   const rightHeaderActions = <>
     <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
+
       {
         (loggedIn && !!block._id)
         && <Link to={`/${block._id}/edit`} style={{ marginRight: 'var(--basis_x2)' }}>
@@ -277,10 +279,11 @@ function Viewer () {
             </button>
           </Link>
       }
-      
-      <button className="default hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
-        <SearchIcon className="icon" />
-      </button>
+
+      {
+        (loggedIn && !!block._id)
+        && <ReactionButton forBlockId={block._id} style={{ marginRight: 'var(--basis_x2)' }} />
+      }
 
       {
         possibleLocales.length > 1
@@ -289,10 +292,15 @@ function Viewer () {
                 onChange={handleLocaleChange}
                 defaultValue={locales[0] || userLocales[0] || 'en'}
                 options={possibleLocales}
+                style={{ marginRight: 'var(--basis_x2)' }}
               />
             </Suspense>
           : null
       }
+
+      <button className="default hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
+        <SearchIcon className="icon" />
+      </button>
     </div>
   </>
 

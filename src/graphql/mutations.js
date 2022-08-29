@@ -41,20 +41,32 @@ export const saveBlock_Mutation = gql`
   }
 `
 
-export const archiveBlock_Mutation = gql`
-  mutation archiveBlock ($_id: ObjectID!) {
-    archiveBlock (_id: $_id)
+export const archiveBlocks_Mutation = gql`
+  mutation archiveBlocks ($ids: [ObjectID]!) {
+    archiveBlocks (ids: $ids)
   }
 `
 
-export const unarchiveBlock_Mutation = gql`
-  mutation unarchiveBlock ($_id: ObjectID!) {
-    unarchiveBlock (_id: $_id)
+export const unarchiveBlocks_Mutation = gql`
+  mutation unarchiveBlocks ($ids: [ObjectID]!) {
+    unarchiveBlocks (ids: $ids)
   }
 `
 
 export const moveBlock_Mutation = gql`
   mutation moveBlock ($movingBlockId: ObjectID!, $newParentId: ObjectID!, $newIndex: Int!) {
     moveBlock(movingBlockId: $movingBlockId, newParentId: $newParentId, newIndex: $newIndex)
+  }
+`
+
+export const setCursor_Mutation = gql`
+  mutation setCursor ($cursor: InputCursor!) {
+    setCursor(cursor: $cursor)
+  }
+`
+
+export const removeCursor_Mutation = gql`
+  mutation removeCursor ($type: CursorType!, $blockId: ObjectID!, $propertyName: String) {
+    removeCursor(type: $type, blockId: $blockId, propertyName: $propertyName)
   }
 `

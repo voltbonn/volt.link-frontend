@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect } from 'react'
 import twemoji from 'twemoji'
 
-const Twemoji = ({ className, style, emoji = '' }) => {
+const Twemoji = ({ className, emojiClassName = 'emoji', style, emoji = '' }) => {
   const [html, setHtml] = useState({ __html: '' })
 
   useEffect(() => {
@@ -9,6 +9,7 @@ const Twemoji = ({ className, style, emoji = '' }) => {
       const textWithHtml = twemoji.parse(emoji, {
         folder: 'svg',
         ext: '.svg',
+        className: emojiClassName,
         base: '/public/twemoji/assets/',
       })
 
@@ -16,7 +17,7 @@ const Twemoji = ({ className, style, emoji = '' }) => {
     } else {
       setHtml({ __html: '' })
     }
-  }, [emoji, setHtml])
+  }, [emoji, emojiClassName, setHtml])
 
   return <span
     className={className}
