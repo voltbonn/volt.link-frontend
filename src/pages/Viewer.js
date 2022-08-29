@@ -269,6 +269,7 @@ function Viewer () {
   
   const rightHeaderActions = <>
     <div className="buttonRow" style={{ whiteSpace: 'nowrap' }}>
+
       {
         (loggedIn && !!block._id)
         && <Link to={`/${block._id}/edit`} style={{ marginRight: 'var(--basis_x2)' }}>
@@ -278,10 +279,6 @@ function Viewer () {
             </button>
           </Link>
       }
-      
-      <button className="default hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
-        <SearchIcon className="icon" />
-      </button>
 
       {
         (loggedIn && !!block._id)
@@ -295,10 +292,15 @@ function Viewer () {
                 onChange={handleLocaleChange}
                 defaultValue={locales[0] || userLocales[0] || 'en'}
                 options={possibleLocales}
+                style={{ marginRight: 'var(--basis_x2)' }}
               />
             </Suspense>
           : null
       }
+
+      <button className="default hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
+        <SearchIcon className="icon" />
+      </button>
     </div>
   </>
 
