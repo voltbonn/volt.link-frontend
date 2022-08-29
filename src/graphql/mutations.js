@@ -41,27 +41,15 @@ export const saveBlock_Mutation = gql`
   }
 `
 
-export const archiveBlock_Mutation = gql`
-  mutation archiveBlock ($_id: ObjectID!) {
-    archiveBlock (_id: $_id)
-  }
-`
-
-export const unarchiveBlock_Mutation = gql`
-  mutation unarchiveBlock ($_id: ObjectID!) {
-    unarchiveBlock (_id: $_id)
-  }
-`
-
 export const archiveBlocks_Mutation = gql`
   mutation archiveBlocks ($ids: [ObjectID]!) {
-    archiveBlocks (ids: $_id)
+    archiveBlocks (ids: $ids)
   }
 `
 
 export const unarchiveBlocks_Mutation = gql`
   mutation unarchiveBlocks ($ids: [ObjectID]!) {
-    unarchiveBlocks (ids: $_id)
+    unarchiveBlocks (ids: $ids)
   }
 `
 
