@@ -7,6 +7,7 @@ import {
 
 import { Helmet } from 'react-helmet'
 import Twemoji from '../components/Twemoji.js'
+import ReactionButton from '../components/ReactionButton.js'
 
 import { getImageUrl } from '../functions.js'
 
@@ -281,6 +282,11 @@ function Viewer () {
       <button className="default hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
         <SearchIcon className="icon" />
       </button>
+
+      {
+        (loggedIn && !!block._id)
+        && <ReactionButton forBlockId={block._id} style={{ marginRight: 'var(--basis_x2)' }} />
+      }
 
       {
         possibleLocales.length > 1

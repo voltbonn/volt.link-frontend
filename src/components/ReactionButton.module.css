@@ -1,0 +1,8 @@
+.reactionButton:not(.selected) {
+  filter: saturate(0) brightness(1.5);
+}
+
+.emoji {
+  height: 100%;
+  width: 100%;
+}
