@@ -15,6 +15,9 @@ help_page = Hilfe / Tutorial
 
 choose_locale = Sprachen Wechsler:
 
+favorites_heading = Favoriten
+favorites_description = Seiten, denen Du einen Stern gibst, werden hier angezeigt, damit Du sie schnell wiederfinden kannst.
+
 path_editor_edit_permission_error = Du darfst diesen Link nicht bearbeiten.
 
 path_editor_status_started_loading = Am laden…
