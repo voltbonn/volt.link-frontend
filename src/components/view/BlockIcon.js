@@ -4,6 +4,7 @@ import {
   Face as PersonIcon,
   LinkSharp as RedirectIcon,
   PublicSharp as WebsiteIcon,
+  WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
 } from '@mui/icons-material'
 
 import Twemoji from '../Twemoji.js'
@@ -13,13 +14,16 @@ import { getImageUrl } from '../../functions.js'
 import classes from './BlockIcon.module.css'
 
 export default function BlockIcon({ block, style = {}, className = '', ...props }) {
+  const type = block?.type || 'page'
   const properties = block.properties || {}
 
   let iconComponent = null
   let isSquareIcon = false
+  const canBeIcon = type !== 'poster'
 
   if (
-    properties.hasOwnProperty('icon')
+    canBeIcon
+    && properties.hasOwnProperty('icon')
     && typeof properties.icon === 'object'
     && properties.icon !== null
     && !Array.isArray(properties.icon)
@@ -63,7 +67,7 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
   }
 
   if (iconComponent === null) {
-    let icon_url = getImageUrl(properties.icon, { width: 40, height: 40 })
+    let icon_url = canBeIcon ? getImageUrl(properties.icon, { width: 40, height: 40 }) : null
 
     if (!icon_url) {
       // coverphoto fallback
@@ -75,7 +79,11 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
       iconComponent = <div
         {...props}
         className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round} ${className}`}
-        style={{ ...style, backgroundImage: `url(${icon_url})` }}
+        style={{
+          ...style,
+          backgroundImage: `url(${icon_url})`,
+          backgroundSize: type === 'poster' ? 'contain' : 'cover',
+        }}
         alt=""
       />
     }
@@ -92,6 +100,9 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
         break
       case 'website':
         iconComponent = <WebsiteIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
+      case 'poster':
+        iconComponent = <PosterIcon {...props} style={style} className={`${classes.icon} ${className}`} />
         break
       default:
         iconComponent = <PageIcon {...props} style={style} className={`${classes.icon} ${className}`} />

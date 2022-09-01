@@ -12,6 +12,8 @@ import IconPicker from './IconPicker.js'
 import SlugInput from './SlugInput.js'
 import UrlInput from './UrlInput.js'
 
+import { getImageUrl } from '../../functions.js'
+
 // function stripTmpIds(array){
 //   return [...array].map(obj => {
 //     const obj_new = { ...obj }
@@ -263,23 +265,42 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     </>
   }
 
+  const coverphoto_url = getImageUrl(properties.coverphoto, { width: 1400, height: 1400 })
+
   return <>
     {
-      type === 'page'
-      || type === 'person'
-      || type === 'redirect'
-      ? <>
-          <CoverphotoPicker
+      type === 'poster'
+        ? <div style={{
+            width: '1000px',
+            maxWidth: '100%',
+            margin: '0 auto',
+          }}>
+            <img src={coverphoto_url} alt="" style={{ width: '100%', height: 'auto' }} />
+          </div>
+        : null
+    }
+    {
+      type === 'page' ||
+      type === 'person' ||
+      type === 'redirect' ||
+      type === 'poster'
+      ? <CoverphotoPicker
             coverphotoValue={properties.coverphoto}
             iconValue={properties.icon}
             onChange={newValue => updateProperty('coverphoto', newValue)}
+            noPreview={type === 'poster'}
           />
-          <IconPicker
-            iconValue={properties.icon}
-            coverphotoValue={properties.coverphoto}
-            onChange={newValue => updateProperty('icon', newValue)}
-          />
-        </>
+      : null
+    }
+    {
+      type === 'page' ||
+      type === 'person' ||
+      type === 'redirect'
+      ? <IconPicker
+          iconValue={properties.icon}
+          coverphotoValue={properties.coverphoto}
+          onChange={newValue => updateProperty('icon', newValue)}
+        />
       : null
     }
 

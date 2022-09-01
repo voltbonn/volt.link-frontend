@@ -314,7 +314,17 @@ function Viewer () {
 
   let coverphotoComponent = null
   if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
-    coverphotoComponent = <div style={{ backgroundImage: `url(${coverphoto_url})` }} className={classes.coverphoto}></div>
+    if (type === 'poster') {
+      coverphotoComponent = <div style={{
+        width: '1000px',
+        maxWidth: '100%',
+        margin: '0 auto',
+      }}>
+        <img src={coverphoto_url} alt="" style={{ width: '100%', height: 'auto' }} />
+      </div>
+    } else {
+      coverphotoComponent = <div style={{ backgroundImage: `url(${coverphoto_url})` }} className={classes.coverphoto}></div>
+    }
   }
 
 
@@ -391,7 +401,7 @@ function Viewer () {
 
     <div className={`basis_0_8 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
-        (type === 'page' || type === 'person' || type === 'redirect')
+        (type === 'page' || type === 'person' || type === 'redirect' || type === 'poster')
           ? coverphotoComponent
           : null
       }

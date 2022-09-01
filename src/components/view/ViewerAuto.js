@@ -145,6 +145,9 @@ function ViewerAuto ({
     case 'apikey':
       component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
       break
+    case 'poster':
+      component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      break
     case 'image':
       component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} {...props} />
       break

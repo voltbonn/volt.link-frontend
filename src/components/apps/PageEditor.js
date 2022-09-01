@@ -350,6 +350,7 @@ function PageEditor({
       typeOptions={[
         'page',
         'redirect',
+        'poster',
       ]}
 
       trigger={props => (

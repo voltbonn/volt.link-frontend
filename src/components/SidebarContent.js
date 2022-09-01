@@ -305,10 +305,10 @@ export default function SidebarContent() {
             <br />
             <Divider style={{ opacity: 0.2, borderRadius: '10px' }} />
             <br />
-            <h2 style={{ margin: '0 calc(1.5 * var(--basis)) var(--basis_x2) calc(1.5 * var(--basis))' }}>
+            <h2 style={{ margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
               <Twemoji emojiClassName={classes.emoji} emoji="⭐️" /> <Localized id="favorites_heading" />
             </h2>
-            <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.5 * var(--basis)) var(--basis_x2) calc(1.5 * var(--basis))' }}>
+            <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
               <Localized id="favorites_description" />
             </p>
             {

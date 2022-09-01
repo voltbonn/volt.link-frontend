@@ -35,6 +35,7 @@ import {
   // CodeSharp as CodeIcon,
   Remove as DividerIcon,
   // CheckBox as CheckboxIcon,
+  WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
 
   PreviewSharp as ViewIcon,
   EditSharp as EditIcon,
@@ -69,6 +70,7 @@ const typeIcons = {
   divider: <DividerIcon />,
   page: <PageIcon />,
   redirect: <RedirectIcon />,
+  poster: <PosterIcon />,
 }
 
 const defaultTypeOptions = [
@@ -80,6 +82,7 @@ const defaultTypeOptions = [
   'divider',
   'page',
   'redirect',
+  'poster',
 ]
 
 const colorOptions = {
