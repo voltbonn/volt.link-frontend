@@ -112,6 +112,7 @@ block_menu_type_label_text = Text
 block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider
 block_menu_type_label_image = Image
+block_menu_type_label_poster = Poster
 
 block_menu_close_menu = Close Menu
 block_menu_add_before = Add Before
