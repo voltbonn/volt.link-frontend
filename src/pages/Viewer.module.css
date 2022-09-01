@@ -22,8 +22,10 @@
 
 .app .coverphoto {
   position: relative;
-  display: block;
   width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  background-color: var(--background-contrast);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
