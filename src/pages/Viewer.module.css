@@ -31,17 +31,17 @@
   height: 20rem;
 }
 @media (max-width: 1000px) {
-  .coverphoto{
+  .app .coverphoto{
     height: 17rem;
   }
 }
 @media (max-width: 800px) {
-  .coverphoto{
+  .app .coverphoto{
     height: 11rem;
   }
 }
 @media (max-width: 500px) {
-  .coverphoto{
+  .app .coverphoto{
     height: 8rem;
   }
 }
