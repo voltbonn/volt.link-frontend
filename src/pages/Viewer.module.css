@@ -22,8 +22,10 @@
 
 .app .coverphoto {
   position: relative;
-  display: block;
   width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  background-color: var(--background-contrast);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -31,17 +33,17 @@
   height: 20rem;
 }
 @media (max-width: 1000px) {
-  .coverphoto{
+  .app .coverphoto{
     height: 17rem;
   }
 }
 @media (max-width: 800px) {
-  .coverphoto{
+  .app .coverphoto{
     height: 11rem;
   }
 }
 @media (max-width: 500px) {
-  .coverphoto{
+  .app .coverphoto{
     height: 8rem;
   }
 }
