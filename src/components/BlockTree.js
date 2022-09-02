@@ -23,7 +23,7 @@ import {
   ArrowDropDownSharp as ExpandLessIcon,
   ArrowRightSharp as ExpandMoreIcon,
 
-  Replay as RequeryIcon,
+  // Replay as RequeryIcon,
   FilterList as FilterListIcon,
   Archive as ArchiveIcon,
 
@@ -36,42 +36,12 @@ import {
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
   // EditSharp as EditIcon,
-
-  Search as SearchIcon,
 } from '@mui/icons-material'
 
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
 import useUser from '../hooks/useUser.js'
 
 import PopoverMenu from './PopoverMenu.js'
-
-import useResizeObserver from '@react-hook/resize-observer'
-
-const useSize = target => {
-  const mountedRef = React.useRef(false)
-  useEffect(() => {
-    mountedRef.current = true
-    return () => {
-      mountedRef.current = false
-    }
-  }, [])
-
-  const [size, setSize] = React.useState()
-
-  React.useLayoutEffect(() => {
-    if (mountedRef.current === true) {
-      setSize(target.current.getBoundingClientRect())
-    }
-  }, [target])
-
-  // Where the magic happens
-  useResizeObserver(target, (entry) => {
-    if (mountedRef.current === true) {
-      setSize(entry.contentRect)
-    }
-  })
-  return size
-}
 
 const blockTypeIcons = {
   page: <PageIcon />,
@@ -386,9 +356,6 @@ function BlockTree({
   const { getString } = useLocalization()
   const { loggedIn } = useUser()
 
-  const searchButtonRef = useRef(null)
-  const searchButtonSize = useSize(searchButtonRef)
-
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
   const [outerHeight, setOuterHeight] = useState(minItemSize)
@@ -399,7 +366,7 @@ function BlockTree({
 
   const prevFetchArguments = useRef({})
 
-  const [treeType, setTreeType] = useState('europa') // europa / people / own_blocks
+  const [treeType, setTreeType] = useState('people') // europa / people / own_blocks
 
   const [types, setTypes] = useState({
     person: true,
@@ -413,11 +380,6 @@ function BlockTree({
     setArchived(oldArchived => !oldArchived)
   }
 
-
-  const openSearch = () => {
-    const event = new CustomEvent('open_search')
-    window.dispatchEvent(event)
-  }
   /*
   const sizeMap = useRef({})
   const setSize = useCallback((index, size) => {
@@ -487,7 +449,7 @@ function BlockTree({
       archived = false
     } else if (treeType === 'people') {
       filteredTypes = [
-        'person'
+        'person',
       ]
       archived = false
     } else if (treeType === 'own_blocks') {
@@ -583,10 +545,6 @@ function BlockTree({
       archived,
     })
   }, [ types, archived, refetchData ])
-
-
-  // const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) // source: https://stackoverflow.com/questions/10527983/best-way-to-detect-mac-os-x-or-windows-computers-with-javascript-or-jquery?noredirect=1&lq=1
-  const isMacLike = /(macintosh|macintel|macppc|mac68k|macos|iphone|ipad|ipod)/i.test(window.navigator.userAgent.toLowerCase())
   
   return <>
     <div>
@@ -631,54 +589,6 @@ function BlockTree({
       gap: 'var(--basis)',
     }}>
 
-      <MenuItem
-        ref={searchButtonRef}
-        onClick={openSearch}
-        style={{
-          width: '100%',
-          justifyContent: 'space-between',
-          // boxShadow: 'inset 0 0 0 1px rgba(var(--background-rgb), var(--alpha))',
-          boxShadow: '0 0 0 1px var(--background)',
-          background: 'var(--background)',
-
-          // the following replaces the roundMenuItem-css-class
-          borderRadius: 'var(--basis)',
-          margin: '0',
-          padding: 'var(--basis) var(--basis_x2)',
-          // end of the roundMenuItem-css-class stuff
-
-        }}
-      >
-        <ListItemIcon>
-          <SearchIcon />
-        </ListItemIcon>
-        <ListItemText
-          secondary={<span style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}>
-            <Localized id="search" />
-
-            {
-              searchButtonSize?.width > 500
-                ? (
-                  isMacLike
-                    ? <kbd>⌘ K</kbd>
-                    : <kbd>Ctrl+K</kbd>
-                )
-                : null
-            }
-            {/*
-              Command / Cmd: ⌘
-              Shift: ⇧
-              Option / Alt: ⌥
-              Control / Ctrl: ⌃
-              Caps Lock: ⇪
-            */}
-          </span>}
-        />
-      </MenuItem>
-
       {
         loggedIn && treeType === 'own_blocks'
         ? <PopoverMenu
@@ -692,7 +602,7 @@ function BlockTree({
               }}
             >
               <FilterListIcon className="icon" />
-              {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Filter</span> */}
+              <span style={{verticalAlign: 'middle'}}>Filter</span>
             </button>
           )}
         >
@@ -749,6 +659,7 @@ function BlockTree({
         : null
       }
 
+      {/*
       <button
         className="text hasIcon"
         onClick={refetchDataWithFilter}
@@ -758,8 +669,9 @@ function BlockTree({
         }}
       >
         <RequeryIcon className="icon" />
-        {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Reload</span> */}
+        <span style={{verticalAlign: 'middle'}}>Reload</span>
       </button>
+      */}
     </div>
 
     <div

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import classes from './SidebarContent.module.css'
 
 import {
@@ -36,6 +36,34 @@ import ViewerAuto from './view/ViewerAuto.js'
 
 import LocaleSelect from './edit/LocaleSelect.js'
 import { locales } from '../fluent/l10n.js'
+
+import useResizeObserver from '@react-hook/resize-observer'
+
+const useSize = target => {
+  const mountedRef = React.useRef(false)
+  useEffect(() => {
+    mountedRef.current = true
+    return () => {
+      mountedRef.current = false
+    }
+  }, [])
+
+  const [size, setSize] = React.useState()
+
+  React.useLayoutEffect(() => {
+    if (mountedRef.current === true) {
+      setSize(target.current.getBoundingClientRect())
+    }
+  }, [target])
+
+  // Where the magic happens
+  useResizeObserver(target, (entry) => {
+    if (mountedRef.current === true) {
+      setSize(entry.contentRect)
+    }
+  })
+  return size
+}
 
 function debounce(func, wait, immediate) {
   // Source: underscore.js
@@ -140,10 +168,15 @@ export default function SidebarContent() {
     document.dispatchEvent(newEvent)
   }, [])
 
+  const searchButtonRef = useRef(null)
+  const searchButtonSize = useSize(searchButtonRef)
+
   const openSearch = () => {
     const event = new CustomEvent('open_search')
     window.dispatchEvent(event)
   }
+  // const isMacLike = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) // source: https://stackoverflow.com/questions/10527983/best-way-to-detect-mac-os-x-or-windows-computers-with-javascript-or-jquery?noredirect=1&lq=1
+  const isMacLike = /(macintosh|macintel|macppc|mac68k|macos|iphone|ipad|ipod)/i.test(window.navigator.userAgent.toLowerCase())
 
   const ui_locales = [
     '_',
@@ -170,30 +203,68 @@ export default function SidebarContent() {
               : <h2 style={{ margin: 0 }}>Volt.Link</h2>
           }
 
-          <div>
-            {
-              matchesStartpage
-                ? <button className="text hasIcon" onClick={openSearch} title="Search (⌘K / Ctrl+K)">
-                    <SearchIcon className="icon" />
-                  </button>
-                : null
-            }
-
-
-            <AddMenu
-              trigger={triggerProps => (
-                <button className="default hasIcon" {...triggerProps}>
-                  <AddIcon className="icon" />
-                  {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
-                </button>
-              )}
-              createBlock={createBlock}
-            />
-          </div>
+          <AddMenu
+            trigger={triggerProps => (
+              <button className="default hasIcon" {...triggerProps}>
+                <AddIcon className="icon" />
+                {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
+              </button>
+            )}
+            createBlock={createBlock}
+          />
       </div>
     </header>
 
       <MenuList style={{ maxWidth: '100%' }}>
+
+        <MenuItem
+          ref={searchButtonRef}
+          onClick={openSearch}
+          style={{
+            width: '100%',
+            justifyContent: 'space-between',
+            // boxShadow: 'inset 0 0 0 1px rgba(var(--background-rgb), var(--alpha))',
+            boxShadow: '0 0 0 1px var(--background)',
+            background: 'var(--background)',
+
+            // the following replaces the roundMenuItem-css-class
+            borderRadius: 'var(--basis)',
+            margin: '0',
+            padding: 'var(--basis) var(--basis_x2)',
+            // end of the roundMenuItem-css-class stuff
+          }}
+        >
+          <ListItemIcon>
+            <SearchIcon />
+          </ListItemIcon>
+          <ListItemText
+            secondary={<span style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}>
+              <Localized id="search" />
+
+              {
+                searchButtonSize?.width > 500
+                  ? (
+                    isMacLike
+                      ? <kbd>⌘ K</kbd>
+                      : <kbd>Ctrl+K</kbd>
+                  )
+                  : null
+              }
+              {/*
+              Command / Cmd: ⌘
+              Shift: ⇧
+              Option / Alt: ⌥
+              Control / Ctrl: ⌃
+              Caps Lock: ⇪
+            */}
+            </span>}
+          />
+        </MenuItem>
+
+        <br />
 
         {
           loggedIn
