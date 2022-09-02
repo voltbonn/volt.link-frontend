@@ -1,5 +1,10 @@
 .reactionButton:not(.selected) {
-  filter: saturate(0) brightness(1.5);
+  filter: saturate(0) brightness(0.5);
+}
+@media (prefers-color-scheme: dark) {
+  .reactionButton:not(.selected) {
+    filter: saturate(0) brightness(1.5);
+  }
 }
 
 .emoji {
