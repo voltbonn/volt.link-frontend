@@ -269,25 +269,44 @@ export default function SidebarContent() {
         {
           loggedIn
             ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-                <MenuItem className="roundMenuItem">
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={<Localized id="logout" />} />
-                </MenuItem>
-              </a>
+              <MenuItem className="clickable_card" style={{
+                // the following replaces the roundMenuItem-css-class
+                borderRadius: 'var(--basis)',
+                margin: '0',
+                padding: 'var(--basis) var(--basis_x2)',
+                // end of the roundMenuItem-css-class stuff
+              }}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary={<Localized id="logout" />} />
+              </MenuItem>
+            </a>
             : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-                <MenuItem className="roundMenuItem">
-                  <ListItemIcon>
-                    <LoginIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={<Localized id="login" />} />
-                </MenuItem>
-              </a>
+              <MenuItem className="clickable_card" style={{
+                // the following replaces the roundMenuItem-css-class
+                borderRadius: 'var(--basis)',
+                margin: '0',
+                padding: 'var(--basis) var(--basis_x2)',
+                // end of the roundMenuItem-css-class stuff
+              }}>
+                <ListItemIcon>
+                  <LoginIcon />
+                </ListItemIcon>
+                <ListItemText primary={<Localized id="login" />} />
+              </MenuItem>
+            </a>
         }
 
         <MenuItem
-          className="roundMenuItem"
+          className="clickable_card"
+          style={{
+            // the following replaces the roundMenuItem-css-class
+            borderRadius: 'var(--basis)',
+            margin: '0',
+            padding: 'var(--basis) var(--basis_x2)',
+            // end of the roundMenuItem-css-class stuff
+          }}
         >
           <ListItemIcon>
             <LocaleChooserIcon />
@@ -315,7 +334,7 @@ export default function SidebarContent() {
               {
                 typeof choose_locale_information_string === 'string'
                   && choose_locale_information_string !== ''
-                  ? <span style={{ marginBottom: '0' }}>
+                  ? <span style={{ marginBottom: '0', whiteSpace: 'normal' }}>
                     <Localized id="choose_locale_information" />
                   </span>
                   : null
