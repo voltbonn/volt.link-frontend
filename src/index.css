@@ -488,6 +488,7 @@ button:focus.choosen:after {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  flex-shrink: 0;
 }
 .buttonRow button {
   --margin-right: calc(var(--basis) * 1.5);

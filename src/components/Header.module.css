@@ -32,7 +32,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: var(--basis_x2) var(--basis_x4);
   gap: var(--basis_x4);
 
