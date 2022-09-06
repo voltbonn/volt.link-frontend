@@ -366,7 +366,7 @@ function BlockTree({
 
   const prevFetchArguments = useRef({})
 
-  const [treeType, setTreeType] = useState('people') // europa / people / own_blocks
+  const [treeType, setTreeType] = useState('europa') // europa / people / own_blocks
 
   const [types, setTypes] = useState({
     person: true,
