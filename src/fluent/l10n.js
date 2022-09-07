@@ -13,6 +13,7 @@ export const locales = {
   en: 'English',
   it: 'Italiano (Italian)',
   se: 'Davvisámegiella (Northern Sami)',
+  lt: 'Lietuvių kalba (Lithuanian)',
 
   fr: 'Français (French)',
   es: 'Español (Spanish)',
