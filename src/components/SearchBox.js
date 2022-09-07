@@ -39,7 +39,7 @@ import { useApolloClient } from '@apollo/client'
 import { search_Query } from '../graphql/queries.js'
 import { saveBlock_Mutation } from '../graphql/mutations.js'
 
-import { Localized } from '../fluent/Localized.js'
+import { Localized, useLocalization } from '../fluent/Localized.js'
 
 const blockTypeIcons = {
   page: <PageIcon />,
@@ -57,6 +57,9 @@ const possibleTypes = [
 ]
 
 function SearchBox() {
+
+  const { getString } = useLocalization()
+
   const apollo_client = useApolloClient()
 
   const [open, setOpen] = useState(false)
@@ -261,7 +264,7 @@ function SearchBox() {
               onFocus={e => e.currentTarget.select()} // select the text
 
               type="search"
-              placeholder="Search…"
+              placeholder={getString('search')}
               className={classes.searchInput}
               defaultValue={queryTextRef.current}
               onChange={search}
