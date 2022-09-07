@@ -14,28 +14,29 @@ import {
 const locales = {
   _: '??',
   en: 'English',
-  de: 'Deutsch',
-  es: 'Español',
-  pt: 'Português',
-  fr: 'Français',
-  it: 'Italiano',
-  nl: 'Nederlands', // Dutch
-  da: 'Dansk', // Danish
-  sv: 'Svenska', // Swedish
-  nb: 'Norsk bokmål', // Norwegian
-  fi: 'Suomi', // Finish
-  se: 'Davvisámegiella (Northern Sami)', // Northern Sami
-  mt: 'Malti', // Maltese
-  pl: 'Język polski', // Polish
-  ru: 'русский язык', // Russian
-  bg: 'български език', // Bulgarian
-  tr: 'Türkçe',
-  ar: 'اَلْعَرَبِيَّة', // Arabic
-  el: 'ελληνικά', // Greek
-  ro: 'limba română', // Romanian
-  sl: 'slovenščina', // Slovenian
-  // uk: 'украї́нська мо́ва', // Ukrainian
-  // cy: 'Cymraeg', // Welsh
+  de: 'Deutsch (German)',
+  es: 'Español (Spanish)',
+  pt: 'Português (Portuguese)',
+  fr: 'Français (French)',
+  it: 'Italiano (Italian)',
+  nl: 'Dutch (Nederlands)',
+  da: 'Dansk (Danish)',
+  sv: 'Svenska (Swedish)',
+  nb: 'Norsk bokmål (Norwegian)',
+  fi: 'Suomi (Finish)',
+  se: 'Davvisámegiella (Northern Sámi)',
+  lt: 'Lietuviškai (Lithuanian)',
+  mt: 'Malti (Maltese)',
+  pl: 'Język polski (Polish)',
+  uk: 'украї́нська мо́ва (Ukrainian)',
+  ru: 'русский язык (Russian)',
+  bg: 'български език (Bulgarian)',
+  tr: 'Türkçe (Turkish)',
+  ar: 'اَلْعَرَبِيَّة (Arabic)',
+  el: 'ελληνικά (Greek)',
+  ro: 'limba română (Romanian)',
+  sl: 'slovenščina (Slovenian)',
+  cy: 'Cymraeg (Welsh)',
 }
 
 const localesArray = Object.entries(locales)
