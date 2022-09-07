@@ -12,7 +12,7 @@ export const locales = {
   de: 'Deutsch (German)',
   en: 'English',
   it: 'Italiano (Italian)',
-  se: 'Davvisámegiella (Northern Sami)',
+  se: 'Davvisámegiella (Northern Sámi)',
   lt: 'Lietuvių kalba (Lithuanian)',
 
   fr: 'Français (French)',
