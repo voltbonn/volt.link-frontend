@@ -28,6 +28,7 @@ const locales = {
   lt: 'Lietuviškai (Lithuanian)',
   mt: 'Malti (Maltese)',
   pl: 'Język polski (Polish)',
+  uk: 'украї́нська мо́ва (Ukrainian)',
   ru: 'русский язык (Russian)',
   bg: 'български език (Bulgarian)',
   tr: 'Türkçe (Turkish)',
@@ -35,8 +36,7 @@ const locales = {
   el: 'ελληνικά (Greek)',
   ro: 'limba română (Romanian)',
   sl: 'slovenščina (Slovenian)',
-  // uk: 'украї́нська мо́ва (Ukrainian)',
-  // cy: 'Cymraeg (Welsh)',
+  cy: 'Cymraeg (Welsh)',
 }
 
 const localesArray = Object.entries(locales)
