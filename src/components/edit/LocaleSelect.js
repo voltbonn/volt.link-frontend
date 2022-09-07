@@ -25,6 +25,7 @@ const locales = {
   nb: 'Norsk bokmål (Norwegian)',
   fi: 'Suomi (Finish)',
   se: 'Davvisámegiella (Northern Sámi)',
+  lt: 'Lietuviškai (Lithuanian)',
   mt: 'Malti (Maltese)',
   pl: 'Język polski (Polish)',
   ru: 'русский язык (Russian)',
