@@ -18,6 +18,8 @@ import {
 
   LanguageSharp as LocaleChooserIcon,
   Search as SearchIcon,
+
+  MoreVertSharp as BlockMenuIcon,
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -33,6 +35,7 @@ import BlockTree from './BlockTree.js'
 import BlocksLoader from './BlocksLoader.js'
 import Twemoji from './Twemoji.js'
 import ViewerAuto from './view/ViewerAuto.js'
+import BlockMenu from './edit/BlockMenu.js'
 
 import LocaleSelect from './edit/LocaleSelect.js'
 import { locales } from '../fluent/l10n.js'
@@ -92,27 +95,26 @@ export default function SidebarContent() {
 
   const [favoriteBlocks, setFavoriteBlocks] = useState([])
   const loadBlocks = useLoadBlocks()
+
+  const loadFavoriteBlocks = useCallback(async () => {
+    const loadFavoriteBlockIds = (await loadBlocks({
+      types: ['reaction'],
+      roles: ['owner'],
+      archived: false,
+    }))
+      .filter(block => block.properties?.icon?.emoji === '⭐️')
+      .map(block => block.properties.reactionFor)
+
+    const favoriteBlocks = await loadBlocks({
+      ids: loadFavoriteBlockIds
+    })
+    setFavoriteBlocks(favoriteBlocks)
+  }, [loadBlocks])
   useEffect(() => {
     if (mounted.current) {
-      const loadFavoriteBlocks = async () => {
-        const loadFavoriteBlockIds = (await loadBlocks({
-          types: ['reaction'],
-          roles: ['owner'],
-          archived: false,
-        }))
-          .filter(block => block.properties?.icon?.emoji === '⭐️')
-          .map(block => block.properties.reactionFor)
-        console.log('loadFavoriteBlockIds', loadFavoriteBlockIds)
-
-        const favoriteBlocks = await loadBlocks({
-          ids: loadFavoriteBlockIds
-        })
-        console.log('favoriteBlocks', favoriteBlocks)
-        setFavoriteBlocks(favoriteBlocks)
-      }
       loadFavoriteBlocks()
     }
-  }, [loadBlocks])
+  }, [loadFavoriteBlocks])
 
   const {
     getString,
@@ -406,7 +408,41 @@ export default function SidebarContent() {
                 ? favoriteBlocks
                   .map(block => {
                     if (block) {
-                      return <ViewerAuto key={block._id} block={block} />
+                      return <div
+                        key={block._id}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          flexDirection: 'row',
+                          height: 'auto',
+                        }}
+                        className={classes.blockRow}
+                      >
+                        <ViewerAuto key={block._id} block={block} />
+                        <div className={classes.blockRowActions}>
+                        <BlockMenu
+                          onReloadContext={loadFavoriteBlocks}
+                          {...{
+                            block,
+                            // createBlock,
+                            // saveType,
+                          }}
+                          trigger={props => (
+                            <button
+                              {...props}
+                              className={`text hasIcon`}
+                              style={{
+                                margin: '0',
+                                padding: 'var(--basis) 0',
+                                flexShrink: '0',
+                              }}
+                            >
+                              <BlockMenuIcon className="icon" />
+                            </button>
+                          )}
+                        />
+                        </div>
+                      </div>
                     }
                     return null
                   })

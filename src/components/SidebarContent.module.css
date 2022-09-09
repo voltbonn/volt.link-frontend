@@ -75,3 +75,23 @@ h2 .emoji {
   width: calc(6 * var(--basis));
   height: calc(6 * var(--basis));
 }
+
+.blockRow {
+  position: relative;
+}
+.blockRowActions {
+  display: flex;
+  align-items: stretch;
+}
+@media (any-hover: hover) {
+  @media (min-width: 1200px) {
+    .blockRow .blockRowActions {
+      display: none;
+    }
+    .blockRow.fakeHover .blockRowActions,
+    .blockRow:hover .blockRowActions {
+      display: flex;
+      align-items: stretch;
+    }
+  }
+}
