@@ -178,14 +178,12 @@ function HtmlInput({
   const updateText = useCallback(defaultValue => {
 
     let newHtmlValue = defaultValue
-    if (type === 'code') {
-      newHtmlValue = newHtmlValue
-        // .replace(/\t/g, '&emsp;')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        // .replace(/\n/g, '<br />')
-    // } else {
+      // .replace(/\t/g, '&emsp;')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      // .replace(/\n/g, '<br />')
+
     //   newHtmlValue = stripHtml(newHtmlValue)
     }
 
@@ -207,7 +205,6 @@ function HtmlInput({
       return setFakeDefaultValue({__html: newHtmlValue})
     }
   }, [
-    type,
     fakeDefaultValue,
     setFakeDefaultValue,
   ])
