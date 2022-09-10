@@ -236,6 +236,7 @@ function TranslationEditor({
 
           {
             blocks
+            .filter(block => block.type !== 'divider')
             .flatMap((block, index) => ([
               <hr key={'hr-'+index} style={{ opacity: 0 }} />,
               <div key={'div-'+index} style={{ margin: 'var(--basis_x4) 0' }}>
