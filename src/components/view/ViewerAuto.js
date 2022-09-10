@@ -7,6 +7,7 @@ import ViewerButtonCard from './ViewerButtonCard.js'
 import ViewerDividerLine from './ViewerDividerLine.js'
 import ViewerLineAndCard from './ViewerLineAndCard.js'
 import ViewerImageCard from './ViewerImageCard.js'
+import ViewerCodeCard from './ViewerCodeCard.js'
 
 import classes from './ViewerAuto.module.css'
 
@@ -150,6 +151,9 @@ function ViewerAuto ({
       break
     case 'image':
       component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      break
+    case 'code':
+      component = <ViewerCodeCard key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     default:
       component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} {...props} />

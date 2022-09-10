@@ -177,7 +177,17 @@ function HtmlInput({
 
   const updateText = useCallback(defaultValue => {
 
-    let newHtmlValue = stripHtml(defaultValue)
+    let newHtmlValue = defaultValue
+    if (type === 'code') {
+      newHtmlValue = newHtmlValue
+        // .replace(/\t/g, '&emsp;')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        // .replace(/\n/g, '<br />')
+    } else {
+      newHtmlValue = stripHtml(newHtmlValue)
+    }
 
     // if (type === 'code') {
     //   // const html = hljs.highlightAuto(newHtmlValue, { ignoreIllegals: false })
@@ -197,7 +207,7 @@ function HtmlInput({
       return setFakeDefaultValue({__html: newHtmlValue})
     }
   }, [
-    // type,
+    type,
     fakeDefaultValue,
     setFakeDefaultValue,
   ])
@@ -214,9 +224,14 @@ function HtmlInput({
 
   const handleTextChange = useCallback((event) => {
     let value = event.target.innerHTML || ''
-    // .replace(/&emsp;/g, '\t')
-    // .replace(/&lt;/g, '<')
-    // .replace(/&gt;/g, '>')
+
+    value = value
+      // .replace(/&emsp;/g, '\t')
+      .replace(/&gt;/g, '>')
+      .replace(/&lt;/g, '<')
+      .replace(/&amp;/g, '&')
+
+    console.log('value', value)
 
     if (linebreaks === false) {
       value = value.replace(/<\/? ?br ?\/?>/g, ' ')
