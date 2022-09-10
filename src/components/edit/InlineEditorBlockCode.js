@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-import { withLocalization } from '../../fluent/Localized.js'
+import { withLocalization, Localized } from '../../fluent/Localized.js'
 
 import HtmlInput from './HtmlInput.js'
 
@@ -44,7 +44,9 @@ function InlineEditorBlockCodeRaw({
   }}
     className="clickable_card active"
   >
-    <p style={{ margin: '0' }}>Dieser Code wird als HTML in der Seite dargestellt.</p>
+    <p style={{ margin: '0' }}>
+      <Localized id="inline-editor-block-code-description" />
+    </p>
     <pre class="hljs"><code>
     <HtmlInput
       defaultValue={text}
