@@ -205,7 +205,6 @@ function HtmlInput({
       return setFakeDefaultValue({__html: newHtmlValue})
     }
   }, [
-    type,
     fakeDefaultValue,
     setFakeDefaultValue,
   ])
