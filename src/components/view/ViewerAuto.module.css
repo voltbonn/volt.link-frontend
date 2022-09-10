@@ -11,3 +11,17 @@
   background-color: rgba(var(--on-background-rgb), var(--alpha-less));
   box-shadow: 0 0 0 var(--basis_x2) rgba(var(--on-background-rgb), var(--alpha-less));
 } */
+
+.root iframe {
+	width: 100%;
+	height: auto;
+	aspect-ratio: attr(aspect-ratio number, 1);
+}
+.root iframe[aspect-ratio="16/9"] { aspect-ratio: calc(16/9); }
+.root iframe[aspect-ratio="9/16"] { aspect-ratio: calc(9/16); }
+.root iframe[aspect-ratio="5/4"] { aspect-ratio: calc(5/4); }
+.root iframe[aspect-ratio="4/5"] { aspect-ratio: calc(4/5); }
+.root iframe[aspect-ratio="3/2"] { aspect-ratio: calc(3/2); }
+.root iframe[aspect-ratio="2/3"] { aspect-ratio: calc(2/3); }
+.root iframe[aspect-ratio="1/1"] { aspect-ratio: 1; }
+.root iframe[aspect-ratio="1"] { aspect-ratio: 1; }

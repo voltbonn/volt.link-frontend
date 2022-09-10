@@ -37,31 +37,40 @@ function InlineEditorBlockCodeRaw({
     }
   }, [onChange, block, text])
 
-  return <pre class="hljs"><code>
+  return <div style={{
+    display: 'block',
+    margin: '0 0 var(--basis) 0',
+    cursor: 'auto',
+  }}
+    className="clickable_card active"
+  >
+    <p style={{ margin: '0' }}>Dieser Code wird als HTML in der Seite dargestellt.</p>
+    <pre class="hljs"><code>
     <HtmlInput
-    defaultValue={text}
-    onChange={setText}
-    onBlur={publishTextChange}
+      defaultValue={text}
+      onChange={setText}
+      onBlur={publishTextChange}
 
-    type="code"
-    placeholder={getString('placeholder_code')}
-    style={{
-      margin: '0',
-      whiteSpace: 'pre',
-      fontFamily: 'monospace',
-      backgroundColor: 'transparent',
-    }}
-    linebreaks={true}
-    className="hide_border type_text"
+      type="code"
+      placeholder={getString('placeholder_code')}
+      style={{
+        margin: '0',
+        // whiteSpace: 'pre',
+        // fontFamily: 'monospace',
+        backgroundColor: 'transparent',
+      }}
+      linebreaks={true}
+      className="type_code"
 
-    onInputRef={onInputRef}
-    onGoToPrevInput={onGoToPrevInput}
-    onGoToNextInput={onGoToNextInput}
-    onMergeToPrevInput={() => onMergeToPrevInput(block)}
-    onMergeFromNextInput={() => onMergeFromNextInput(block)}
-    onSplitText={onSplitText}
-  />
+      onInputRef={onInputRef}
+      onGoToPrevInput={onGoToPrevInput}
+      onGoToNextInput={onGoToNextInput}
+      onMergeToPrevInput={() => onMergeToPrevInput(block)}
+      onMergeFromNextInput={() => onMergeFromNextInput(block)}
+      onSplitText={onSplitText}
+    />
   </code></pre>
+  </div>
 }
 
 const InlineEditorBlockCode = withLocalization(InlineEditorBlockCodeRaw)
