@@ -39,7 +39,7 @@ const default_types = [
   'redirect',
 ]
 
-function AddMenuContent({ createBlock, types, close = null }) {
+function AddMenuContent({ createBlock, types = default_types, close = null }) {
   if (!types || !Array.isArray(types)) {
     types = default_types
   }
