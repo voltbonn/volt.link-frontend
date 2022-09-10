@@ -14,15 +14,15 @@ import classes from './HtmlInput.module.css'
 
 // hljs.registerLanguage('javascript', javascript)
 
-function stripHtml(html){
-  // source: https://ourcodeworld.com/articles/read/376/how-to-strip-html-from-a-string-extract-only-text-content-in-javascript
-  // Create a new div element
-  var temporalDivElement = document.createElement("div");
-  // Set the HTML content with the providen
-  temporalDivElement.innerHTML = html;
-  // Retrieve the text property of the element (cross-browser support)
-  return temporalDivElement.textContent || temporalDivElement.innerText || "";
-}
+// function stripHtml(html){
+//   // source: https://ourcodeworld.com/articles/read/376/how-to-strip-html-from-a-string-extract-only-text-content-in-javascript
+//   // Create a new div element
+//   var temporalDivElement = document.createElement("div");
+//   // Set the HTML content with the providen
+//   temporalDivElement.innerHTML = html;
+//   // Retrieve the text property of the element (cross-browser support)
+//   return temporalDivElement.textContent || temporalDivElement.innerText || "";
+// }
 
 function getRangeLengthWithLinebreaks(element){
   element.normalize()
