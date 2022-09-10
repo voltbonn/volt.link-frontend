@@ -185,8 +185,8 @@ function HtmlInput({
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         // .replace(/\n/g, '<br />')
-    } else {
-      newHtmlValue = stripHtml(newHtmlValue)
+    // } else {
+    //   newHtmlValue = stripHtml(newHtmlValue)
     }
 
     // if (type === 'code') {
