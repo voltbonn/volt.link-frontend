@@ -24,6 +24,7 @@ import classes from './Viewer.module.css'
 import {
   EditSharp as EditIcon,
   Search as SearchIcon,
+  AssessmentSharp as AssessmentIcon,
 } from '@mui/icons-material'
 
 import { renderInlineMarkdown } from '../markdown.js'
@@ -55,6 +56,7 @@ function Viewer () {
     content: [],
   })
   const properties = block.properties || {}
+  const slug = properties.slug || slugOrId_to_use || ''
   const [contentBlocks, setContentBlocks] = useState([])
 
   const [possibleLocales, setPossibleLocales] = useState([])
@@ -78,6 +80,14 @@ function Viewer () {
       window.umami.trackEvent('E: ' + error.code)
     }
   }, [setError])
+
+  const viewStatistics = () => {
+    const a = document.createElement('a')
+    a.href = `https://umami.qiekub.org/share/s0ZHBZbb/volt.link?url=%2F${slug}`
+    a.target = '_blank'
+    a.rel = 'noreferrer'
+    a.click()
+  }
 
   useEffect(() => {
     const properties = block.properties || {}
@@ -283,6 +293,14 @@ function Viewer () {
       {
         (loggedIn && !!block._id)
         && <ReactionButton forBlockId={block._id} style={{ marginRight: 'var(--basis_x2)' }} />
+      }
+
+      {
+        (loggedIn && !!block._id && slug !== '')
+          ? <button className="text hasIcon" onClick={viewStatistics}>
+            <AssessmentIcon className="icon" />
+          </button>
+          : null
       }
 
       {

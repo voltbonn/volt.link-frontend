@@ -596,10 +596,10 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
           'button',
           'text',
           'image',
-          // 'code',
           'divider',
           'page',
           'redirect',
+          'code',
         ]}
         createBlock={createBlockByType}
         trigger={triggerProps => 

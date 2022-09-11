@@ -35,10 +35,14 @@ function ViewerButtonCard({ block, clickable = true, locales }) {
     colorStyles['--button-color'] = contrastingColor
   }
 
-  if (clickable === true && url !== '') {
+  if (clickable === true && typeof url === 'string' && url.length > 0) {
     return <a
         href={url}
-        target="_blank" rel="noreferrer"
+        {...(
+        url.startsWith(window.domains.frontend)
+          ? {}
+          : { target: '_blank', rel: 'noopener noreferrer' }
+        )}
       >
       <button
         dir="auto"
