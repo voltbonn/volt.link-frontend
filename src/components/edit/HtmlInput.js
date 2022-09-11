@@ -185,7 +185,6 @@ function HtmlInput({
       // .replace(/\n/g, '<br />')
 
     //   newHtmlValue = stripHtml(newHtmlValue)
-    }
 
     // if (type === 'code') {
     //   // const html = hljs.highlightAuto(newHtmlValue, { ignoreIllegals: false })
