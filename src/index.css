@@ -119,6 +119,8 @@
 }
 
 html {
+  scroll-behavior: smooth;
+
   --background: var(--white);
   --background-rgb: var(--white-rgb);
   --background-contrast: var(--grey);
@@ -184,6 +186,15 @@ pre.hljs {
 footer {
   padding: var(--basis_x4);
   text-align: center;
+}
+
+h1,
+h2,
+h3,
+.type_h1,
+.type_h2,
+.type_h3 {
+  scroll-margin-top: calc(10 * var(--basis));
 }
 
 h1,
