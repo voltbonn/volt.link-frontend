@@ -195,6 +195,17 @@ h1,
   text-decoration: inherit;
   font-weight: bold;
   --prefix-icon-size: calc(var(--font-add) + var(--basis_x4));
+
+  background: var(--on-background);
+  color: var(--background);
+  padding: var(--basis) var(--basis_x2);
+  display: inline-block;
+}
+@media (prefers-color-scheme: dark) {
+  h1,
+  .type_h1 {
+    color: var(--background-contrast);
+  }
 }
 
 h2,
