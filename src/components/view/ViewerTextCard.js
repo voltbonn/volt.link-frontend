@@ -73,28 +73,36 @@ function ViewerTextCard ({ block, style, locales }) {
   let component = null
   switch (text_style) {
     case 'h1':
-      component = <h1
-        {...defaultProps}
-      >
-        {prefixs}
-        {text_content}
-      </h1>
+      component = <a href={`#${block._id}`} id={block._id}>
+        <h1
+          {...defaultProps}
+        >
+          {prefixs}
+          {text_content}
+        </h1>
+      </a>
       break
     case 'h2':
-      component = <h2
-        {...defaultProps}
-      >
-        {prefixs}
-        {text_content}
-      </h2>
+      component = <a href={`#${block._id}`} id={block._id}>
+        <h2
+          {...defaultProps}
+          id={block._id}
+        >
+          {prefixs}
+          {text_content}
+        </h2>
+      </a>
       break
     case 'h3':
-      component = <h3
-        {...defaultProps}
-      >
-        {prefixs}
-        {text_content}
-      </h3>
+      component = <a href={`#${block._id}`} id={block._id}>
+        <h3
+          {...defaultProps}
+          id={block._id}
+        >
+          {prefixs}
+          {text_content}
+        </h3>
+      </a>
       break
     case 'caption':
       component = <caption
