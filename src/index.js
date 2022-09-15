@@ -136,6 +136,22 @@ function Start() {
         palette: {
           mode: prefersDarkMode ? 'dark' : 'light',
         },
+        components: {
+          MuiListItemIcon: {
+            styleOverrides: {
+              root: {
+                color: 'inherit',
+              },
+            },
+          },
+          // MuiListItemText: {
+          //   styleOverrides: {
+          //     primary: {
+          //       fontWeight: 'bold',
+          //     },
+          //   },
+          // },
+        },
       }),
     [prefersDarkMode],
   )

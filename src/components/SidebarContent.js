@@ -343,7 +343,7 @@ export default function SidebarContent() {
         }
 
         {
-          ['page', 'redirect', 'person']
+          ['redirect', 'page', 'person', 'poster']
             .map(type => (<Link key={type} to={`/list/${type}/`}>
               <MenuItem className="clickable_card" style={{
                 // the following replaces the roundMenuItem-css-class
@@ -352,7 +352,7 @@ export default function SidebarContent() {
                 padding: 'var(--basis) var(--basis_x2)',
                 // end of the roundMenuItem-css-class stuff
               }}>
-                <ListItemIcon sx={{ color: 'inherit' }}>
+                <ListItemIcon>
                   {typeIcons[type]}
                 </ListItemIcon>
                 <ListItemText
@@ -375,7 +375,7 @@ export default function SidebarContent() {
             // end of the roundMenuItem-css-class stuff
           }}
         >
-          <ListItemIcon sx={{ color: 'inherit' }}>
+          <ListItemIcon>
             <LocaleChooserIcon />
           </ListItemIcon>
           <ListItemText
@@ -421,7 +421,7 @@ export default function SidebarContent() {
                 padding: 'var(--basis) var(--basis_x2)',
                 // end of the roundMenuItem-css-class stuff
               }}>
-                <ListItemIcon sx={{ color: 'inherit' }}>
+                <ListItemIcon>
                   <LogoutIcon />
                 </ListItemIcon>
                 <ListItemText
@@ -438,7 +438,7 @@ export default function SidebarContent() {
                 padding: 'var(--basis) var(--basis_x2)',
                 // end of the roundMenuItem-css-class stuff
               }}>
-                <ListItemIcon sx={{ color: 'inherit' }}>
+                <ListItemIcon>
                   <LoginIcon />
                 </ListItemIcon>
                 <ListItemText
