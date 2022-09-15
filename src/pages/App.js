@@ -99,7 +99,7 @@ const Editor = lazy(() => import('./Editor.js'))
 
 function ListWrapper() {
   const { type = '' } = useParams()
-  return <List preselectedTypes={[type]} />
+  return <List key={type} preselectedTypes={[type]} />
 }
 
 function App() {

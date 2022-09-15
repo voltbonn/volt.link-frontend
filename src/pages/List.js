@@ -202,7 +202,7 @@ function List({
       rightActions={rightHeaderActions}
     />
 
-    <div className={`basis_0_8 ${classes.app} ${classes.spine_aligned}`} dir="auto">
+    <div className={`basis_0_2 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       <main className={`${classes.contentWrapper}`}>
         <h1
           dir="auto"
