@@ -170,7 +170,6 @@ search = Suchen…
 
 blocktree_no_nodes_to_show = Nichts anzuzeigen. Vielleicht das Filtermenü kontrollieren.
 
-inline-editor-block-code-description = Dieser Code wird als HTML in der Seite dargestellt.
 inline-editor-block-code-description = Dieser Code wird als HTML in der Seite dargestellt. Für iframes: Verwendet aspect-ration="16/9" als Attribute um die Höhe zu ändern.
 
 list_title = Liste
