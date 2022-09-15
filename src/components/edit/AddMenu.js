@@ -16,6 +16,7 @@ import {
   CheckBoxSharp as CheckboxIcon,
   // EditSharp as EditIcon,
   ImageSharp as ImageIcon,
+  WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
 } from '@mui/icons-material'
 
 import useUser from '../../hooks/useUser.js'
@@ -32,11 +33,12 @@ const blockTypeIcons = {
   person: <PersonIcon />,
   redirect: <RedirectIcon />,
   image: <ImageIcon />,
+  poster: <PosterIcon />,
 }
 
 const default_types = [
   'page',
-  'redirect',
+  'redirect'
 ]
 
 function AddMenuContent({ createBlock, types = default_types, close = null }) {

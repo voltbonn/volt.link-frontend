@@ -1,0 +1,81 @@
+.root {
+  min-height: 100vh;
+  padding: var(--basis_x4);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+
+  min-height: 100vh;
+}
+.app.spine_aligned {
+  text-align: unset;
+  align-items: flex-start;
+}
+.app.spine_aligned:dir(rtl) {
+  align-items: flex-start;
+}
+
+.app .items {
+  margin-top: calc(var(--basis_x4) + var(--basis)); /* x4 is the size of a divider and x1 is the spacing between items. */
+  margin-bottom: 20vh;
+}
+
+.app .items button {
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  text-align: unset;
+}
+.app .items p {
+  margin-bottom: 0;
+}
+.app .contentWrapper{
+  width: 1000px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: var(--basis_x16);
+}
+@media (max-width: 800px) {
+  .app .contentWrapper,
+  .app .items,
+  .app .items button{
+    width: 100%;
+  }
+}
+
+/* correct the spacing between blocks */
+.app .items .type_p,
+.app .items p {
+  margin: 0;
+}
+.app .items > div {
+  margin-top: var(--basis);
+}
+
+
+.blockRow {
+  position: relative;
+}
+.blockRowActions {
+  display: flex;
+  align-items: stretch;
+}
+/*
+@media (any-hover: hover) {
+  @media (min-width: 1200px) {
+    .blockRow .blockRowActions {
+      display: none;
+    }
+    .blockRow.fakeHover .blockRowActions,
+    .blockRow:hover .blockRowActions {
+      display: flex;
+      align-items: stretch;
+    }
+  }
+}
+*/

@@ -7,6 +7,7 @@ import {
   Route,
   useLocation,
   useMatch,
+  useParams,
   // useNavigate,
 } from 'react-router-dom'
 
@@ -15,6 +16,7 @@ import { Helmet } from 'react-helmet'
 
 import SearchBox from '../components/SearchBox.js'
 
+import List from './List.js'
 import Viewer from './Viewer.js'
 const Editor = lazy(() => import('./Editor.js'))
 
@@ -95,6 +97,11 @@ const Editor = lazy(() => import('./Editor.js'))
 //   }, [])
 // }
 
+function ListWrapper() {
+  const { type = '' } = useParams()
+  return <List preselectedTypes={[type]} />
+}
+
 function App() {
   // useScrollMemory()
 
@@ -123,7 +130,20 @@ function App() {
         idOrSlug = parts.pop()      
       }
 
-      newPathname = `/${idOrSlug}/${suffix}`
+      const typesSingular = 'redirect page poster person'.split(' ')
+      const typesPlural = 'redirects pages posters people'.split(' ')
+
+      if (idOrSlug === 'list') {
+        newPathname = `/${idOrSlug}`
+      } else if (typesSingular.includes(idOrSlug)) {
+        newPathname = `/list/${idOrSlug}`
+      } else if (typesPlural.includes(idOrSlug)) {
+        const index = typesPlural.indexOf(idOrSlug)
+        const type = typesSingular[index]
+        newPathname = `/list/${type}`
+      } else {
+        newPathname = `/${idOrSlug}/${suffix}`
+      }
 
       if (idOrSlug === 'search') {
         window.dispatchEvent(new CustomEvent('open_search'))
@@ -154,6 +174,8 @@ function App() {
           <SearchBox />
           
           <Routes location={customLocation}>
+            <Route path="/list" element={<List />} />
+            <Route path="/list/:type" element={<ListWrapper />} />
             <Route path="/:id/view" element={<Viewer />} />
             <Route path="/:id/edit" element={
               <Suspense>

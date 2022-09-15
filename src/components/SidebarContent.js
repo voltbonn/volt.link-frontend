@@ -20,11 +20,16 @@ import {
   Search as SearchIcon,
 
   MoreVertSharp as BlockMenuIcon,
+
+  InsertDriveFileSharp as PageIcon,
+  LinkSharp as RedirectIcon,
+  PersonSharp as PersonIcon,
+  WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
 
-import { useNavigate, useMatch } from 'react-router-dom'
+import { useNavigate, useMatch, Link } from 'react-router-dom'
 
 import { Localized, useLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
@@ -41,6 +46,13 @@ import LocaleSelect from './edit/LocaleSelect.js'
 import { locales } from '../fluent/l10n.js'
 
 import useResizeObserver from '@react-hook/resize-observer'
+
+const typeIcons = {
+  redirect: <RedirectIcon />,
+  page: <PageIcon />,
+  person: <PersonIcon />,
+  poster: <PosterIcon />,
+}
 
 const useSize = target => {
   const mountedRef = React.useRef(false)
@@ -270,35 +282,88 @@ export default function SidebarContent() {
 
         {
           loggedIn
-            ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-              <MenuItem className="clickable_card" style={{
-                // the following replaces the roundMenuItem-css-class
-                borderRadius: 'var(--basis)',
-                margin: '0',
-                padding: 'var(--basis) var(--basis_x2)',
-                // end of the roundMenuItem-css-class stuff
-              }}>
-                <ListItemIcon>
-                  <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText primary={<Localized id="logout" />} />
-              </MenuItem>
-            </a>
-            : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-              <MenuItem className="clickable_card" style={{
-                // the following replaces the roundMenuItem-css-class
-                borderRadius: 'var(--basis)',
-                margin: '0',
-                padding: 'var(--basis) var(--basis_x2)',
-                // end of the roundMenuItem-css-class stuff
-              }}>
-                <ListItemIcon>
-                  <LoginIcon />
-                </ListItemIcon>
-                <ListItemText primary={<Localized id="login" />} />
-              </MenuItem>
-            </a>
+            ? <>
+              <h2 style={{ margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
+                <Twemoji emojiClassName={classes.emoji} emoji="⭐️" /> <Localized id="favorites_heading" />
+              </h2>
+              <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
+                <Localized id="favorites_description" />
+              </p>
+              {
+                favoriteBlocks.length > 0
+                  ? favoriteBlocks
+                    .map(block => {
+                      if (block) {
+                        return <div
+                          key={block._id}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            height: 'auto',
+                          }}
+                          className={classes.blockRow}
+                        >
+                          <ViewerAuto key={block._id} block={block} />
+                          <div className={classes.blockRowActions}>
+                            <BlockMenu
+                              onReloadContext={loadFavoriteBlocks}
+                              {...{
+                                block,
+                                // createBlock,
+                                // saveType,
+                              }}
+                              trigger={props => (
+                                <button
+                                  {...props}
+                                  className={`text hasIcon`}
+                                  style={{
+                                    margin: '0',
+                                    padding: 'var(--basis) 0',
+                                    flexShrink: '0',
+                                  }}
+                                >
+                                  <BlockMenuIcon className="icon" />
+                                </button>
+                              )}
+                            />
+                          </div>
+                        </div>
+                      }
+                      return null
+                    })
+                    .filter(Boolean)
+                  : null
+              }
+              <br />
+              <Divider style={{ opacity: 0.2, borderRadius: '10px' }} />
+              <br />
+            </>
+            : null
         }
+
+        {
+          ['page', 'redirect', 'person']
+            .map(type => (<Link to={`/list/${type}/`}>
+              <MenuItem className="clickable_card" style={{
+                // the following replaces the roundMenuItem-css-class
+                borderRadius: 'var(--basis)',
+                margin: '0',
+                padding: 'var(--basis) var(--basis_x2)',
+                // end of the roundMenuItem-css-class stuff
+              }}>
+                <ListItemIcon sx={{ color: 'inherit' }}>
+                  {typeIcons[type]}
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' }}}
+                  primary={<Localized id={`block_menu_type_label_plural_${type}`} />}
+                />
+              </MenuItem>
+            </Link>))
+        }
+
+        <br />
 
         <MenuItem
           className="clickable_card"
@@ -310,10 +375,11 @@ export default function SidebarContent() {
             // end of the roundMenuItem-css-class stuff
           }}
         >
-          <ListItemIcon>
+          <ListItemIcon sx={{ color: 'inherit' }}>
             <LocaleChooserIcon />
           </ListItemIcon>
           <ListItemText
+            primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
             primary={<>
               <span style={{
                 marginRight: 'var(--basis_x2)',
@@ -344,6 +410,44 @@ export default function SidebarContent() {
             </>}
           />
         </MenuItem>
+
+        {
+          loggedIn
+            ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+              <MenuItem className="clickable_card" style={{
+                // the following replaces the roundMenuItem-css-class
+                borderRadius: 'var(--basis)',
+                margin: '0',
+                padding: 'var(--basis) var(--basis_x2)',
+                // end of the roundMenuItem-css-class stuff
+              }}>
+                <ListItemIcon sx={{ color: 'inherit' }}>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
+                  primary={<Localized id="logout" />}
+                />
+              </MenuItem>
+            </a>
+            : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+              <MenuItem className="clickable_card" style={{
+                // the following replaces the roundMenuItem-css-class
+                borderRadius: 'var(--basis)',
+                margin: '0',
+                padding: 'var(--basis) var(--basis_x2)',
+                // end of the roundMenuItem-css-class stuff
+              }}>
+                <ListItemIcon sx={{ color: 'inherit' }}>
+                  <LoginIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
+                  primary={<Localized id="login" />}
+                />
+              </MenuItem>
+            </a>
+        }
 
         <br />
 
@@ -387,75 +491,10 @@ export default function SidebarContent() {
               .filter(Boolean)
           }}
         </BlocksLoader>
-
       </MenuList>
-
-
-      {
-        loggedIn
-          ? <>
-            <br />
-            <Divider style={{ opacity: 0.2, borderRadius: '10px' }} />
-            <br />
-            <h2 style={{ margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
-              <Twemoji emojiClassName={classes.emoji} emoji="⭐️" /> <Localized id="favorites_heading" />
-            </h2>
-            <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
-              <Localized id="favorites_description" />
-            </p>
-            {
-              favoriteBlocks.length > 0
-                ? favoriteBlocks
-                  .map(block => {
-                    if (block) {
-                      return <div
-                        key={block._id}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                          height: 'auto',
-                        }}
-                        className={classes.blockRow}
-                      >
-                        <ViewerAuto key={block._id} block={block} />
-                        <div className={classes.blockRowActions}>
-                        <BlockMenu
-                          onReloadContext={loadFavoriteBlocks}
-                          {...{
-                            block,
-                            // createBlock,
-                            // saveType,
-                          }}
-                          trigger={props => (
-                            <button
-                              {...props}
-                              className={`text hasIcon`}
-                              style={{
-                                margin: '0',
-                                padding: 'var(--basis) 0',
-                                flexShrink: '0',
-                              }}
-                            >
-                              <BlockMenuIcon className="icon" />
-                            </button>
-                          )}
-                        />
-                        </div>
-                      </div>
-                    }
-                    return null
-                  })
-                  .filter(Boolean)
-              : null
-            }
-          </>
-          : null
-      }
 
       <br />
       <Divider style={{ opacity: 0.2, borderRadius: '10px' }} />
-      <br />
       <br />
 
       {/* All blocks: */}
