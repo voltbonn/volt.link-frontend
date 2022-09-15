@@ -344,7 +344,7 @@ export default function SidebarContent() {
 
         {
           ['page', 'redirect', 'person']
-            .map(type => (<Link to={`/list/${type}/`}>
+            .map(type => (<Link key={type} to={`/list/${type}/`}>
               <MenuItem className="clickable_card" style={{
                 // the following replaces the roundMenuItem-css-class
                 borderRadius: 'var(--basis)',
