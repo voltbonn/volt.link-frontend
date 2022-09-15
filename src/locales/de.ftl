@@ -110,6 +110,7 @@ block_menu_type_label_plural_everything = Alles
 block_menu_type_label_plural_page = Seiten
 block_menu_type_label_plural_redirect = Weiterleitungen
 block_menu_type_label_plural_person = Personen
+block_menu_type_label_plural_poster = Plakate
 
 block_menu_type_label_page = Seite
 block_menu_type_label_redirect = Weiterleitung
@@ -120,6 +121,16 @@ block_menu_type_label_code = Code
 block_menu_type_label_divider = Trennlinie
 block_menu_type_label_image = Bild
 block_menu_type_label_poster = Plakat
+
+block_type_new_page = Neue Seite
+block_type_new_redirect = Neue Weiterleitung
+block_type_new_person = Neue Person
+block_type_new_button = Neuer Button
+block_type_new_text = Neuer Text
+block_type_new_code = Neuer Code
+block_type_new_divider = Neue Trennlinie
+block_type_new_image = Neues Bild
+block_type_new_poster = Neues Plakat
 
 block_menu_close_menu = Menü schließen
 block_menu_add_before = Davor hinzufügen
@@ -161,3 +172,5 @@ blocktree_no_nodes_to_show = Nichts anzuzeigen. Vielleicht das Filtermenü kontr
 
 inline-editor-block-code-description = Dieser Code wird als HTML in der Seite dargestellt.
 inline-editor-block-code-description = Dieser Code wird als HTML in der Seite dargestellt. Für iframes: Verwendet aspect-ration="16/9" als Attribute um die Höhe zu ändern.
+
+list_title = Liste

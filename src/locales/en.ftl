@@ -103,6 +103,7 @@ block_menu_type_label_plural_page = Pages
 block_menu_type_label_plural_redirect = Redirects
 block_menu_type_label_plural_person = People
 block_menu_type_label_plural_website = Websites
+block_menu_type_label_plural_poster = Posters
 
 block_menu_type_label_page = Page
 block_menu_type_label_redirect = Redirect
@@ -113,6 +114,16 @@ block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider
 block_menu_type_label_image = Image
 block_menu_type_label_poster = Poster
+
+block_type_new_page = New Page
+block_type_new_redirect = New Redirect
+block_type_new_person = New Person
+block_type_new_button = New Button
+block_type_new_text = New Text
+block_type_new_code = New Code
+block_type_new_divider = New Divider
+block_type_new_image = New Image
+block_type_new_poster = New Poster
 
 block_menu_close_menu = Close Menu
 block_menu_add_before = Add Before
@@ -153,3 +164,5 @@ search = Search…
 blocktree_no_nodes_to_show = Nothing to show. Maybe check the filter menu.
 
 inline-editor-block-code-description = The below code will be rendered as HTML. For iframes: Use aspect-ration="16/9" as an attribute to change height.
+
+list_title = List

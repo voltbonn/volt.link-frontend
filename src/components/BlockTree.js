@@ -5,50 +5,18 @@ import { useScrollPosition } from '@n8tb1t/use-scroll-position'
 
 import BlockMenu from './edit/BlockMenu.js'
 import ViewerAuto from './view/ViewerAuto.js'
-import MultiButton from './MultiButton.js'
 
-import { useLocalization, Localized } from '../fluent/Localized.js'
+import { Localized } from '../fluent/Localized.js'
 
 import classes from './BlockTree.module.css'
-
-import {
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-} from '@mui/material'
 
 import {
   MoreVertSharp as BlockMenuIcon,
   ArrowDropDownSharp as ExpandLessIcon,
   ArrowRightSharp as ExpandMoreIcon,
-
-  // Replay as RequeryIcon,
-  FilterList as FilterListIcon,
-  Archive as ArchiveIcon,
-
-  InsertDriveFileSharp as PageIcon,
-  // AutoAwesomeSharp as ActionIcon,
-  LinkSharp as RedirectIcon,
-  PersonSharp as PersonIcon,
-  // Crop75Sharp as ButtonIcon,
-  // TitleSharp as HeadlineIcon,
-  // NotesSharp as TextIcon,
-  // Remove as DividerIcon,
-  // EditSharp as EditIcon,
 } from '@mui/icons-material'
 
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
-import useUser from '../hooks/useUser.js'
-
-import PopoverMenu from './PopoverMenu.js'
-
-const blockTypeIcons = {
-  page: <PageIcon />,
-  person: <PersonIcon />,
-  redirect: <RedirectIcon />,
-}
-
 
 const minItemSize = 41
 
@@ -344,18 +312,11 @@ const BlockRow = ({
   </div>
 }
 
-const getFilteredTypes = types => Object.entries(types)
-  .filter(([, value]) => value === true)
-  .map(([key, ]) => key)
-
 function BlockTree({
   createBlock = ()=>{},
   scrollContainer = window,
   showBlockMenu = true,
 }) {
-  const { getString } = useLocalization()
-  const { loggedIn } = useUser()
-
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
   const [outerHeight, setOuterHeight] = useState(minItemSize)
@@ -363,22 +324,6 @@ function BlockTree({
   const [nodes, setNodes] = useState([])
   const [openById, setOpenById] = useState({})
   const [treeNodes, setTreeNodes] = useState([])
-
-  const prevFetchArguments = useRef({})
-
-  const [treeType, setTreeType] = useState('europa') // europa / people / own_blocks
-
-  const [types, setTypes] = useState({
-    person: true,
-    page: true,
-    redirect: true,
-  })
-  const filteredTypes = getFilteredTypes(types)
-  
-  const [archived, setArchived] = useState(false)
-  function toggleArchived() {
-    setArchived(oldArchived => !oldArchived)
-  }
 
   /*
   const sizeMap = useRef({})
@@ -433,38 +378,15 @@ function BlockTree({
   const refetchData = useCallback(options => {
     let {
       force = false,
-      filteredTypes,
-      archived,
     } = options || {}
 
-    let roots = null
-    let roles = ['viewer','editor','owner']
-
-    if (treeType === 'europa') {
-      roots = ['6249c879fcaf12b124914396'] // TODO: don't hard code the id of europa 
-      filteredTypes = [
-        'page',
-        'redirect',
-      ]
-      archived = false
-    } else if (treeType === 'people') {
-      filteredTypes = [
-        'person',
-      ]
-      archived = false
-    } else if (treeType === 'own_blocks') {
-      roles = ['editor', 'owner']
-    }
-
-    if (
-      force === true
-      || prevFetchArguments.current.archived !== archived
-      || prevFetchArguments.current.types !== filteredTypes
-    ) {
-      prevFetchArguments.current.types = filteredTypes
-      prevFetchArguments.current.archived = archived
-      
-      loadBlocks({ types: filteredTypes, archived, roots, roles })
+    if (true || force === true) {      
+      loadBlocks({
+        types: ['page', 'redirect'],
+        archived: false,
+        roots: ['6249c879fcaf12b124914396'], // TODO: don't hard code the id of europa 
+        roles: ['viewer', 'editor', 'owner']
+      })
         .then(async loadedBlocks => {
           const nodes = loadedBlocks
           .map(block => ({
@@ -479,38 +401,11 @@ function BlockTree({
         })
         .catch(error => console.error(error))
     }
-  }, [treeType, loadBlocks, setNodes, updateTree])
-
-  // useEffect(() => {
-  //   refetchData()
-  // }, [ refetchData ])
-
-
-
-
-
-  // START Filter
-
-  const toggleType = useCallback(type2toggle => {
-    const newTypes = { ...types }
-    newTypes[type2toggle] = !newTypes[type2toggle]
-
-    const typesValues = Object.values(newTypes)
-    if (!typesValues.every(value => value === false)) {
-      setTypes(newTypes)
-    }
-  }, [ types, setTypes ])
+  }, [loadBlocks, setNodes, updateTree])
 
   useEffect(() => {
-    refetchData({
-      filteredTypes: getFilteredTypes(types),
-      archived,
-    })
-  }, [ types, archived, refetchData ])
-
-  // END Filter
-
-
+    refetchData()
+  }, [ refetchData ])
 
   const listRef = useRef(null)
   const [itemSizes, setSize] = React.useState([])
@@ -539,142 +434,10 @@ function BlockTree({
   }, [setOpenById, openById, updateTree, nodes])
 
   const refetchDataWithFilter = useCallback(options => {
-    refetchData({
-      ...options,
-      filteredTypes: getFilteredTypes(types),
-      archived,
-    })
-  }, [ types, archived, refetchData ])
+    refetchData(options)
+  }, [ refetchData ])
   
-  return <>
-    <div>
-      <MultiButton
-        defaultValue={treeType}
-        items={
-          loggedIn
-            ? [
-              { value: 'europa', title: 'Volt Europa' },
-              { value: 'people', title: getString('block_menu_type_label_plural_person') },
-              { value: 'own_blocks', title: getString('block_tree_own_blocks') }
-            ]
-            : [
-              {value: 'europa', title: 'Volt Europa' },
-              {value: 'people', title: getString('block_menu_type_label_plural_person') },
-            ]
-        }
-        onChange={setTreeType}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          margin: 'calc(-2 * var(--basis)) 0 var(--basis_x4) 0',
-          justifyContent: 'stretch',
-          flexWrap: 'wrap',
-          gap: 'var(--basis_x2)',
-        }}
-        buttonProps={{
-          style: {
-            flexGrow: 1,
-            justifyContent: 'center',
-            flexShrink: 0,
-            margin: 0,
-          }
-        }}
-      />
-    </div>
-
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      margin: '0 0 var(--basis_x2) 0',
-      gap: 'var(--basis)',
-    }}>
-
-      {
-        loggedIn && treeType === 'own_blocks'
-        ? <PopoverMenu
-          trigger={triggerProps => (
-            <button
-              {...triggerProps}
-              className="text hasIcon"
-              style={{
-                flexShrink: '0',
-                margin: '0',
-              }}
-            >
-              <FilterListIcon className="icon" />
-              <span style={{verticalAlign: 'middle'}}>Filter</span>
-            </button>
-          )}
-        >
-          {/*
-            { value: 'page', icon: <PageIcon className="icon"/>, title: getString('block_menu_type_label_plural_page') },
-            { value: 'person', icon: <PersonIcon className="icon" />, title: getString('block_menu_type_label_plural_person') },
-            { value: 'redirect', icon: <RedirectIcon className="icon" />, title: getString('block_menu_type_label_plural_redirect') },
-          */}
-
-          <div style={{ marginTop: '8px' }}></div>
-
-          {
-            Object.keys(types)
-              .map(type => (
-                <MenuItem
-                  className="roundMenuItem"
-                  key={type}
-                  onClick={() => toggleType(type)}
-                  selected={filteredTypes.includes(type)}
-                  sx={{
-                    marginTop: '2px !important',
-                    marginBottom: '2px !important',
-                  }}
-                >
-                  <ListItemIcon>
-                    {blockTypeIcons[type]}
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Localized id={'block_menu_type_label_plural_'+type} />
-                  </ListItemText>
-                </MenuItem>
-              ))
-          }
-
-          <Divider style={{ opacity: 'var(--alpha-less)'}} />
-
-          <MenuItem
-            className="roundMenuItem"
-            onClick={toggleArchived}
-            selected={archived === true}
-            sx={{
-              marginBottom: '2px !important',
-            }}
-          >
-            <ListItemIcon>
-              <ArchiveIcon className="icon" />
-            </ListItemIcon>
-            <ListItemText>
-              <Localized id={archived === true ? 'filter_menu_showing_archiv' : 'filter_menu_show_archiv'} />
-            </ListItemText>
-          </MenuItem>
-
-        </PopoverMenu>
-        : null
-      }
-
-      {/*
-      <button
-        className="text hasIcon"
-        onClick={refetchDataWithFilter}
-        style={{
-          flexShrink: '0',
-          margin: '0px',
-        }}
-      >
-        <RequeryIcon className="icon" />
-        <span style={{verticalAlign: 'middle'}}>Reload</span>
-      </button>
-      */}
-    </div>
-
-    <div
+  return <div
       style={{
         height: outerHeight,
         marginRight: '-12px',
@@ -723,7 +486,6 @@ function BlockTree({
           : null
       }
     </div>
-  </>
 }
 
 export default BlockTree
