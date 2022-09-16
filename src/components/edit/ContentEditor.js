@@ -600,6 +600,7 @@ function ContentEditor({ parentId, defaultValue = [], onChange }) {
           'page',
           'redirect',
           'code',
+          'poster',
         ]}
         createBlock={createBlockByType}
         trigger={triggerProps => 
