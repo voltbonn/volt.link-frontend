@@ -331,7 +331,7 @@ function List({
           }
 
           {
-            loggedIn && ['redirect', 'page', 'poster'].includes(filters.current.type)
+            loggedIn && ['redirect', 'page'].includes(filters.current.type)
               ? <>
                 <button
                   className="default green hasIcon"
