@@ -163,6 +163,6 @@ search = Search…
 
 blocktree_no_nodes_to_show = Nothing to show. Maybe check the filter menu.
 
-inline-editor-block-code-description = The below code will be rendered as HTML. For iframes: Use aspect-ration="16/9" as an attribute to change height.
+inline-editor-block-code-description = The below code will be rendered as HTML. For iframes: Use aspect-ratio="16/9" as an attribute to change height.
 
 list_title = List

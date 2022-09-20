@@ -23,5 +23,7 @@
 .root iframe[aspect-ratio="4/5"] { aspect-ratio: calc(4/5); }
 .root iframe[aspect-ratio="3/2"] { aspect-ratio: calc(3/2); }
 .root iframe[aspect-ratio="2/3"] { aspect-ratio: calc(2/3); }
+.root iframe[aspect-ratio="4/3"] { aspect-ratio: calc(4/3); }
+.root iframe[aspect-ratio="3/4"] { aspect-ratio: calc(3/4); }
 .root iframe[aspect-ratio="1/1"] { aspect-ratio: 1; }
 .root iframe[aspect-ratio="1"] { aspect-ratio: 1; }
