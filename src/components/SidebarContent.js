@@ -472,6 +472,7 @@ export default function SidebarContent() {
         <br />
 
         <BlocksLoader slugs={[
+          'about',
           'volt_link_workplace_group',
           'stats',
           'volt_link_source_code',
