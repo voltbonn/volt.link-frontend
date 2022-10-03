@@ -95,6 +95,7 @@
   :root,
   .basis_x1,
   .basis_0_8,
+  .basis_0_6,
   .basis_0_4 {
     --basis: 0.3rem;
   }
@@ -103,6 +104,7 @@
 :root,
 .basis_x1,
 .basis_0_8,
+.basis_0_6,
 .basis_0_4,
 .basis_0_3 {
   --basis_x0_2: calc(0.2 * var(--basis));

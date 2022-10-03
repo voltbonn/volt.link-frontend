@@ -23,8 +23,8 @@ import {
   // Divider,
 } from '@mui/material'
 
-
 import {
+  Login as LoginIcon,
   Search as SearchIcon,
 
   MoreVertSharp as BlockMenuIcon,
@@ -350,7 +350,25 @@ function List({
                 <br />
                 <br />
               </>
-              : null
+              : <>
+                <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                  <button
+                    className="default green hasIcon"
+                    style={{
+                      flexShrink: '0',
+                      margin: '0',
+                      justifyContent: 'flex-start',
+                    }}
+                  >
+                    <LoginIcon className="icon" />
+                    <span style={{ verticalAlign: 'middle' }}>
+                      {getString('needs_login_block_type_new_'+ filters.current.type)}
+                    </span>
+                  </button>
+                </a>
+                <br />
+                <br />
+              </>
           }
 
           {
