@@ -174,23 +174,22 @@ function List({
       
       const newSortedBlocksWithHeadings = []
 
-      // add first letter starting blocks between the blocks
-      for (let i = 0; i <= newSortedBlocks.length-1; i += 1) {
-
-        if (i > 0) {
-          newSortedBlocksWithHeadings.push(newSortedBlocks[i])
-        }
+      // add the days between the blocks
+      for (let i = -1; i <= newSortedBlocks.length - 2; i += 1) {
 
         const this_block_id = newSortedBlocks[i]?._id || ''
 
-        const thisLetter = (newSortedBlocks[i]?.properties?.text || newSortedBlocks[i]?.properties?.slug || '').slice(0, 1).toUpperCase()
+        let thisLetter = ''
+        if (newSortedBlocks.length >= i) {
+          thisLetter = (newSortedBlocks[i]?.properties?.text || newSortedBlocks[i]?.properties?.slug || '').slice(0, 1).toUpperCase()
+        }
 
         let nextLetter = ''
-        if (newSortedBlocks.length > i + 1) {
+        if (newSortedBlocks.length >= i + 1) {
           nextLetter = (newSortedBlocks[i + 1]?.properties?.text || newSortedBlocks[i + 1]?.properties?.slug || '').slice(0, 1).toUpperCase()
         }
 
-        if (i === 0 || thisLetter !== nextLetter) {
+        if (i <= newSortedBlocks.length - 2 && (i === 0 || thisLetter !== nextLetter)) {
           if (nextLetter === '') {
             // undefined
             newSortedBlocksWithHeadings.push({
@@ -218,9 +217,7 @@ function List({
           }
         }
 
-        if (i === 0) {
-          newSortedBlocksWithHeadings.push(newSortedBlocks[i])
-        }
+        newSortedBlocksWithHeadings.push(newSortedBlocks[i+1])
       }
       
       setSortedBlocks(newSortedBlocksWithHeadings)
@@ -229,22 +226,21 @@ function List({
       const newSortedBlocksWithHeadings = []
 
       // add first letter starting blocks between the blocks
-      for (let i = 0; i <= newSortedBlocks.length - 1; i += 1) {
-
-        if (i > 0) {
-          newSortedBlocksWithHeadings.push(newSortedBlocks[i])
-        }
+      for (let i = 0; i <= newSortedBlocks.length - 2; i += 1) {
 
         const this_block_id = newSortedBlocks[i]?._id || ''
 
-        const thisDateString = (newSortedBlocks[i]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
+        let thisDateString = ''
+        if (newSortedBlocks.length >= i) {
+          thisDateString = (newSortedBlocks[i]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
+        }
 
         let nextDateString = ''
-        if (newSortedBlocks.length > i + 1) {
+        if (newSortedBlocks.length >= i + 1) {
           nextDateString = (newSortedBlocks[i + 1]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
         }
 
-        if (i === 0 || thisDateString !== nextDateString) {
+        if (i <= newSortedBlocks.length - 2 && (i === 0 || thisDateString !== nextDateString)) {
           if (nextDateString === '') {
             // undefined
             newSortedBlocksWithHeadings.push({
@@ -272,9 +268,7 @@ function List({
           }
         }
 
-        if (i === 0) {
-          newSortedBlocksWithHeadings.push(newSortedBlocks[i])
-        }
+        newSortedBlocksWithHeadings.push(newSortedBlocks[i+1])
       }
 
       setSortedBlocks(newSortedBlocksWithHeadings)
