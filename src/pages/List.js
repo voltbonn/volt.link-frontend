@@ -565,44 +565,48 @@ function List({
           }
 
           {
-            loggedIn && ['redirect', 'page'].includes(filters.current.type)
-              ? <>
-                <button
-                  className="default green hasIcon"
-                  style={{
-                    flexShrink: '0',
-                    margin: '0',
-                    justifyContent: 'flex-start',
-                  }}
-                  onClick={() => createBlock({ type: filters.current.type })}
-                >
-                  <AddIcon className="icon" />
-                  <span style={{ verticalAlign: 'middle' }}>
-                    {getString('block_type_new_' + filters.current.type)}
-                  </span>
-                </button>
-                <br />
-                <br />
-              </>
-              : <>
-                <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-                  <button
-                    className="default green hasIcon"
-                    style={{
-                      flexShrink: '0',
-                      margin: '0',
-                      justifyContent: 'flex-start',
-                    }}
-                  >
-                    <LoginIcon className="icon" />
-                    <span style={{ verticalAlign: 'middle' }}>
-                      {getString('needs_login_block_type_new_'+ filters.current.type)}
-                    </span>
-                  </button>
-                </a>
-                <br />
-                <br />
-              </>
+            !['person'].includes(filters.current.type)
+              ? (
+                loggedIn
+                  ? <>
+                    <button
+                      className="default green hasIcon"
+                      style={{
+                        flexShrink: '0',
+                        margin: '0',
+                        justifyContent: 'flex-start',
+                      }}
+                      onClick={() => createBlock({ type: filters.current.type })}
+                    >
+                      <AddIcon className="icon" />
+                      <span style={{ verticalAlign: 'middle' }}>
+                        {getString('block_type_new_' + filters.current.type)}
+                      </span>
+                    </button>
+                    <br />
+                    <br />
+                  </>
+                  : <>
+                    <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                      <button
+                        className="default green hasIcon"
+                        style={{
+                          flexShrink: '0',
+                          margin: '0',
+                          justifyContent: 'flex-start',
+                        }}
+                      >
+                        <LoginIcon className="icon" />
+                        <span style={{ verticalAlign: 'middle' }}>
+                          {getString('needs_login_block_type_new_' + filters.current.type)}
+                        </span>
+                      </button>
+                    </a>
+                    <br />
+                    <br />
+                  </>
+              )
+              : null
           }
 
           <React.Fragment key={sorting}>
