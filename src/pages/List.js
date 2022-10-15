@@ -51,6 +51,9 @@ import {
   Edit as EditorIcon,
   AdminPanelSettings as OwnerIcon,
   // Lock as NoAccessIcon,
+
+  ArrowUpward as ArrowUpwardIcon,
+  ArrowDownward as ArrowDownwardIcon,
 } from '@mui/icons-material'
 
 const typeIcons = {
@@ -98,7 +101,13 @@ function List({
 
   const { getString } = useLocalization()
   const [loadedBlocks, setLoadedBlocks] = useState([])
+  const [sortedBlocks, setSortedBlocks] = useState([])
   const loadBlocks = useLoadBlocks()
+  const [sorting, setSorting] = useState({
+    path: 'metadate.modified',
+    asc: true,
+  })
+
 
   const filters = useRef({
     type: preselectedTypes[0],
@@ -117,14 +126,68 @@ function List({
     }
   }, [loggedIn])
 
+  const sortableFields = [
+    'metadate.modified',
+    'properties.text',
+  ]
+  const sortBlocks = useCallback((loadedBlocks) => {
+    const sorting_diretion_modifier = sorting.asc === true ? -1 : 1
+
+    const newSortedBlocks = loadedBlocks
+      .filter(block => !!block)
+      .map(block => {
+        if (!block.hasOwnProperty('properties')) {
+          block.properties = {}
+        }
+
+        let sorting_text = ''
+        if (sorting.path === 'metadate.modified') {
+          sorting_text = block?.metadata?.modified || ''
+        } else if (sorting.path === 'properties.text') {
+          sorting_text = block?.properties?.text || block?.properties?.slug || ''
+        }
+
+        return {
+          ...block,
+          sorting_text,
+        }
+      })
+      .sort((a, b) => {
+        return a.sorting_text.localeCompare(
+          b.sorting_text,
+          undefined,
+          {
+            ignorePunctuation: false,
+            numeric: false,
+          }
+        ) * sorting_diretion_modifier
+      })
+
+    setSortedBlocks(newSortedBlocks)
+  }, [sorting, setSortedBlocks])
+  const changeSorting = useCallback(path => {
+    setSorting(oldSorting => ({
+      ...oldSorting,
+      path,
+    }))
+    sortBlocks(loadedBlocks)
+  }, [loadedBlocks, sortBlocks])
+  const toggleSortDirection = useCallback(() => {
+    setSorting(oldSorting => ({
+      ...oldSorting,
+      asc: !oldSorting.asc,
+    }))
+    sortBlocks(loadedBlocks)
+  }, [loadedBlocks, sortBlocks])
+
   const loadList = useCallback(async () => {
     const loadedContentBlocks = await loadBlocks({
       types: [filters.current.type],
       roles: filters.current.roles,
     })
     setLoadedBlocks(loadedContentBlocks)
-    console.log('loadedContentBlocks', loadedContentBlocks)
-  }, [loadBlocks, setLoadedBlocks])
+    sortBlocks(loadedContentBlocks)
+  }, [loadBlocks, setLoadedBlocks, sortBlocks])
   useEffect(() => {
     loadList()
   }, [loadList])
@@ -213,6 +276,66 @@ function List({
           {getString('block_menu_type_label_plural_' + filters.current.type)}
         </h1>
         <div className={classes.items}>
+
+          <div style={{ display: 'flex', gap: 'var(--basis)', flexWrap: 'wrap' }}>
+            <button
+              className="text hasIcon"
+              style={{
+                flexShrink: '0',
+                margin: '0',
+                justifyContent: 'flex-start',
+              }}
+              onClick={toggleSortDirection}
+            >
+              {
+                sorting.asc === true
+                  ? <ArrowUpwardIcon className="icon" />
+                  : <ArrowDownwardIcon className="icon" />
+              }
+            </button>
+
+            <PopoverMenu
+              trigger={triggerProps => (
+                <button
+                  {...triggerProps}
+                  className="text"
+                  style={{
+                    flexShrink: '0',
+                    margin: '0',
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  <span style={{ verticalAlign: 'middle' }}>
+                    <Localized id={'sort_label_' + sorting.path.replace(/\./g, '_')} />
+                  </span>
+                </button>
+              )}
+            >
+
+              <div style={{ marginTop: '8px' }}></div>
+
+              {
+                sortableFields
+                  .map(path => (
+                    <MenuItem
+                      className="roundMenuItem"
+                      key={path}
+                      onClick={() => changeSorting(path)}
+                      selected={sorting.path === path}
+                      sx={{
+                        marginTop: '2px !important',
+                        marginBottom: '2px !important',
+                      }}
+                    >
+                      <ListItemText>
+                        <Localized id={'sort_label_' + path.replace(/\./g, '_')} />
+                      </ListItemText>
+                    </MenuItem>
+                  ))
+              }
+            </PopoverMenu>
+          </div>
+          <hr />
 
           {
             possibleTypes.length > 1 || possibleRoles.length > 1
@@ -372,40 +495,40 @@ function List({
           }
 
           {
-            loadedBlocks
-              .filter(block => !!block)
-              .map(block => <div
-                key={block._id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  height: 'auto',
-                }}
-                className={classes.blockRow}
-              >
-                <ViewerAuto block={block} />
-                <div className={classes.blockRowActions}>
-                  <BlockMenu
-                    onReloadContext={loadList}
-                    block={block}
-                    trigger={props => (
-                      <button
-                        {...props}
-                        className={`text hasIcon`}
-                        style={{
-                          margin: '0',
-                          padding: 'var(--basis_x0_5) 0',
-                          flexShrink: '0',
-                        }}
-                      >
-                        <BlockMenuIcon className="icon" />
-                      </button>
-                    )}
-                  />
+            sortedBlocks
+              .map(block => {
+                return <div
+                  key={block._id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    height: 'auto',
+                  }}
+                  className={classes.blockRow}
+                >
+                  <ViewerAuto block={block} />
+                  <div className={classes.blockRowActions}>
+                    <BlockMenu
+                      onReloadContext={loadList}
+                      block={block}
+                      trigger={props => (
+                        <button
+                          {...props}
+                          className={`text hasIcon`}
+                          style={{
+                            margin: '0',
+                            padding: 'var(--basis_x0_5) 0',
+                            flexShrink: '0',
+                          }}
+                        >
+                          <BlockMenuIcon className="icon" />
+                        </button>
+                      )}
+                    />
+                  </div>
                 </div>
-              </div>  
-              )                 
+              })                 
           }
         </div>
       </main>
