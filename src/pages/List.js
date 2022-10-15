@@ -224,6 +224,60 @@ function List({
       }
       
       setSortedBlocks(newSortedBlocksWithHeadings)
+    } else if (sortable_field_type === 'date') {
+
+      const newSortedBlocksWithHeadings = []
+
+      // add first letter starting blocks between the blocks
+      for (let i = 0; i <= newSortedBlocks.length - 1; i += 1) {
+
+        if (i > 0) {
+          newSortedBlocksWithHeadings.push(newSortedBlocks[i])
+        }
+
+        const this_block_id = newSortedBlocks[i]?._id || ''
+
+        const thisDateString = (newSortedBlocks[i]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
+
+        let nextDateString = ''
+        if (newSortedBlocks.length > i + 1) {
+          nextDateString = (newSortedBlocks[i + 1]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
+        }
+
+        if (i === 0 || thisDateString !== nextDateString) {
+          if (nextDateString === '') {
+            // undefined
+            newSortedBlocksWithHeadings.push({
+              _id: '???_' + this_block_id,
+              type: 'text',
+              properties: {
+                text: '???',
+                text_style: 'h2',
+                locale: 'en',
+              },
+              isSortHeading: true,
+            })
+          } else {
+            // letter
+            newSortedBlocksWithHeadings.push({
+              _id: nextDateString + '_' + this_block_id,
+              type: 'text',
+              properties: {
+                text: nextDateString,
+                text_style: 'h2',
+                locale: 'en',
+              },
+              isSortHeading: true,
+            })
+          }
+        }
+
+        if (i === 0) {
+          newSortedBlocksWithHeadings.push(newSortedBlocks[i])
+        }
+      }
+
+      setSortedBlocks(newSortedBlocksWithHeadings)
     } else {
       setSortedBlocks(newSortedBlocks)
     }
