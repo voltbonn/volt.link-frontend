@@ -88,6 +88,15 @@ const roleIcons = {
   // no_access: <NoAccessIcon />,
 }
 
+const sortableFieldsInfos = {
+  'metadate.modified': {
+    type: 'date',
+  },
+  'properties.text': {
+    type: 'text',
+  },
+}
+
 function List({
   preselectedTypes = possibleTypes,
 }) {
@@ -126,14 +135,11 @@ function List({
     }
   }, [loggedIn])
 
-  const sortableFields = [
-    'metadate.modified',
-    'properties.text',
-  ]
+  const sortableFields = Object.keys(sortableFieldsInfos)
   const sortBlocks = useCallback((loadedBlocks) => {
     const sorting_diretion_modifier = sorting.asc === true ? -1 : 1
 
-    const newSortedBlocks = loadedBlocks
+    let newSortedBlocks = loadedBlocks
       .filter(block => !!block)
       .map(block => {
         if (!block.hasOwnProperty('properties')) {
@@ -163,7 +169,64 @@ function List({
         ) * sorting_diretion_modifier
       })
 
-    setSortedBlocks(newSortedBlocks)
+    const sortable_field_type = sortableFieldsInfos[sorting.path].type
+    if (sortable_field_type === 'text') {
+      
+      const newSortedBlocksWithHeadings = []
+
+      // add first letter starting blocks between the blocks
+      for (let i = 0; i <= newSortedBlocks.length-1; i += 1) {
+
+        if (i > 0) {
+          newSortedBlocksWithHeadings.push(newSortedBlocks[i])
+        }
+
+        const this_block_id = newSortedBlocks[i]?._id || ''
+
+        const thisLetter = (newSortedBlocks[i]?.properties?.text || newSortedBlocks[i]?.properties?.slug || '').slice(0, 1).toUpperCase()
+
+        let nextLetter = ''
+        if (newSortedBlocks.length > i + 1) {
+          nextLetter = (newSortedBlocks[i + 1]?.properties?.text || newSortedBlocks[i + 1]?.properties?.slug || '').slice(0, 1).toUpperCase()
+        }
+
+        if (i === 0 || thisLetter !== nextLetter) {
+          if (nextLetter === '') {
+            // undefined
+            newSortedBlocksWithHeadings.push({
+              _id: '???_' + this_block_id,
+              type: 'text',
+              properties: {
+                text: '???',
+                text_style: 'h2',
+                locale: 'en',
+              },
+              isSortHeading: true,
+            })
+          } else {
+            // letter
+            newSortedBlocksWithHeadings.push({
+              _id: nextLetter + '_' + this_block_id,
+              type: 'text',
+              properties: {
+                text: nextLetter,
+                text_style: 'h2',
+                locale: 'en',
+              },
+              isSortHeading: true,
+            })
+          }
+        }
+
+        if (i === 0) {
+          newSortedBlocksWithHeadings.push(newSortedBlocks[i])
+        }
+      }
+      
+      setSortedBlocks(newSortedBlocksWithHeadings)
+    } else {
+      setSortedBlocks(newSortedBlocks)
+    }
   }, [sorting, setSortedBlocks])
   const changeSorting = useCallback(path => {
     setSorting(oldSorting => ({
@@ -494,8 +557,10 @@ function List({
               </>
           }
 
+          <React.Fragment key={sorting}>
           {
             sortedBlocks
+              .filter(Boolean)
               .map(block => {
                 return <div
                   key={block._id}
@@ -508,28 +573,33 @@ function List({
                   className={classes.blockRow}
                 >
                   <ViewerAuto block={block} />
-                  <div className={classes.blockRowActions}>
-                    <BlockMenu
-                      onReloadContext={loadList}
-                      block={block}
-                      trigger={props => (
-                        <button
-                          {...props}
-                          className={`text hasIcon`}
-                          style={{
-                            margin: '0',
-                            padding: 'var(--basis_x0_5) 0',
-                            flexShrink: '0',
-                          }}
-                        >
-                          <BlockMenuIcon className="icon" />
-                        </button>
-                      )}
-                    />
-                  </div>
+                  {
+                    block?.isSortHeading === true
+                      ? null
+                      : <div className={classes.blockRowActions}>
+                        <BlockMenu
+                          onReloadContext={loadList}
+                          block={block}
+                          trigger={props => (
+                            <button
+                              {...props}
+                              className={`text hasIcon`}
+                              style={{
+                                margin: '0',
+                                padding: 'var(--basis_x0_5) 0',
+                                flexShrink: '0',
+                              }}
+                            >
+                              <BlockMenuIcon className="icon" />
+                            </button>
+                          )}
+                        />
+                      </div>
+                  }
                 </div>
               })                 
           }
+          </React.Fragment>
         </div>
       </main>
     </div>
