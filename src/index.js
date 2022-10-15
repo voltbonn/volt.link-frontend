@@ -144,13 +144,14 @@ function Start() {
               },
             },
           },
-          // MuiListItemText: {
-          //   styleOverrides: {
-          //     primary: {
-          //       fontWeight: 'bold',
-          //     },
-          //   },
-          // },
+          MuiListItemText: {
+            styleOverrides: {
+              primary: {
+                fontFamily: "'Ubuntu', 'Noto Kufi Arabic', 'Geeza Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
+                // fontWeight: 'bold',
+              },
+            },
+          },
         },
       }),
     [prefersDarkMode],
