@@ -108,7 +108,7 @@ function List({
     preselectedTypes = filteredTypes
   }
 
-  const { getString } = useLocalization()
+  const { getString, translateBlock, userLocales } = useLocalization()
   const [loadedBlocks, setLoadedBlocks] = useState([])
   const [sortedBlocks, setSortedBlocks] = useState([])
   const loadBlocks = useLoadBlocks()
@@ -135,6 +135,30 @@ function List({
     }
   }, [loggedIn])
 
+  const getFirstLetter = text => {
+    // todo: should i group emojis and special characters in groups or should each letter/emoji stay as their own group?
+    
+    const matches = /^(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|.)/i.exec(text) // source of the emoji part: https://melvingeorge.me/blog/check-if-string-contain-emojis-javascript
+    if (matches) {
+      return matches[0].toUpperCase()
+    }
+    return ''
+  }
+
+  const getText = useCallback(block => {
+    if (!block) {
+      return ''
+    }
+
+    const fallback_text = block?.properties?.text || block?.properties?.slug || ''
+    const text = translateBlock(block, userLocales, fallback_text)
+
+    if (text.toLowerCase().startsWith('volt ')) {
+      return text.slice(5)
+    }
+    return text
+  }, [translateBlock, userLocales])
+
   const sortableFields = Object.keys(sortableFieldsInfos)
   const sortBlocks = useCallback((loadedBlocks) => {
     const sorting_diretion_modifier = sorting.asc === true ? -1 : 1
@@ -150,7 +174,7 @@ function List({
         if (sorting.path === 'metadate.modified') {
           sorting_text = block?.metadata?.modified || ''
         } else if (sorting.path === 'properties.text') {
-          sorting_text = block?.properties?.text || block?.properties?.slug || ''
+          sorting_text = getText(block)
         }
 
         return {
@@ -181,12 +205,12 @@ function List({
 
         let thisLetter = ''
         if (newSortedBlocks.length >= i) {
-          thisLetter = (newSortedBlocks[i]?.properties?.text || newSortedBlocks[i]?.properties?.slug || '').slice(0, 1).toUpperCase()
+          thisLetter = getFirstLetter(getText(newSortedBlocks[i]))
         }
 
         let nextLetter = ''
         if (newSortedBlocks.length >= i + 1) {
-          nextLetter = (newSortedBlocks[i + 1]?.properties?.text || newSortedBlocks[i + 1]?.properties?.slug || '').slice(0, 1).toUpperCase()
+          nextLetter = getFirstLetter(getText(newSortedBlocks[i + 1]))
         }
 
         if (i <= newSortedBlocks.length - 2 && (i === 0 || thisLetter !== nextLetter)) {
@@ -275,7 +299,7 @@ function List({
     } else {
       setSortedBlocks(newSortedBlocks)
     }
-  }, [sorting, setSortedBlocks])
+  }, [sorting, setSortedBlocks, getText])
   const changeSorting = useCallback(path => {
     setSorting(oldSorting => ({
       ...oldSorting,
