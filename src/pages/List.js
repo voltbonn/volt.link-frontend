@@ -135,6 +135,14 @@ function List({
     }
   }, [loggedIn])
 
+  const getText = block => {
+    const text = block?.properties?.text || block?.properties?.slug || ''
+    if (text.toLowerCase().startsWith('volt ')) {
+      return text.slice(5)
+    }
+    return text
+  }
+
   const sortableFields = Object.keys(sortableFieldsInfos)
   const sortBlocks = useCallback((loadedBlocks) => {
     const sorting_diretion_modifier = sorting.asc === true ? -1 : 1
@@ -150,7 +158,7 @@ function List({
         if (sorting.path === 'metadate.modified') {
           sorting_text = block?.metadata?.modified || ''
         } else if (sorting.path === 'properties.text') {
-          sorting_text = block?.properties?.text || block?.properties?.slug || ''
+          sorting_text = getText(block)
         }
 
         return {
@@ -181,12 +189,12 @@ function List({
 
         let thisLetter = ''
         if (newSortedBlocks.length >= i) {
-          thisLetter = (newSortedBlocks[i]?.properties?.text || newSortedBlocks[i]?.properties?.slug || '').slice(0, 1).toUpperCase()
+          thisLetter = getText(newSortedBlocks[i]).slice(0, 1).toUpperCase()
         }
 
         let nextLetter = ''
         if (newSortedBlocks.length >= i + 1) {
-          nextLetter = (newSortedBlocks[i + 1]?.properties?.text || newSortedBlocks[i + 1]?.properties?.slug || '').slice(0, 1).toUpperCase()
+          nextLetter = getText(newSortedBlocks[i +1 ]).slice(0, 1).toUpperCase()
         }
 
         if (i <= newSortedBlocks.length - 2 && (i === 0 || thisLetter !== nextLetter)) {
