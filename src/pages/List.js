@@ -135,11 +135,21 @@ function List({
     }
   }, [loggedIn])
 
+  const getFirstLetter = text => {
+    // todo: should i group emojis and special characters in groups or should each letter/emoji stay as their own group?
+    
+    const matches = /^(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|.)/i.exec(text) // source of the emoji part: https://melvingeorge.me/blog/check-if-string-contain-emojis-javascript
+    if (matches) {
+      return matches[0].toUpperCase()
+    }
+    return ''
+  }
+
   const getText = useCallback(block => {
     if (!block) {
       return ''
     }
-    
+
     const fallback_text = block?.properties?.text || block?.properties?.slug || ''
     const text = translateBlock(block, userLocales, fallback_text)
 
@@ -195,12 +205,12 @@ function List({
 
         let thisLetter = ''
         if (newSortedBlocks.length >= i) {
-          thisLetter = getText(newSortedBlocks[i]).slice(0, 1).toUpperCase()
+          thisLetter = getFirstLetter(getText(newSortedBlocks[i]))
         }
 
         let nextLetter = ''
         if (newSortedBlocks.length >= i + 1) {
-          nextLetter = getText(newSortedBlocks[i +1 ]).slice(0, 1).toUpperCase()
+          nextLetter = getFirstLetter(getText(newSortedBlocks[i + 1]))
         }
 
         if (i <= newSortedBlocks.length - 2 && (i === 0 || thisLetter !== nextLetter)) {
