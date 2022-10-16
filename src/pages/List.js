@@ -137,7 +137,7 @@ function List({
 
   const getFirstLetter = text => {
     // todo: should i group emojis and special characters in groups or should each letter/emoji stay as their own group?
-    
+
     const matches = /^(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|.)/i.exec(text) // source of the emoji part: https://melvingeorge.me/blog/check-if-string-contain-emojis-javascript
     if (matches) {
       return matches[0].toUpperCase()
