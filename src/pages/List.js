@@ -419,6 +419,7 @@ function List({
                 flexShrink: '0',
                 margin: '0',
                 justifyContent: 'flex-start',
+                alignItems: 'center',
               }}
               onClick={toggleSortDirection}
             >
@@ -435,9 +436,11 @@ function List({
                   {...triggerProps}
                   className="text"
                   style={{
+                    display: 'flex',
                     flexShrink: '0',
                     margin: '0',
                     justifyContent: 'flex-start',
+                    alignItems: 'center',
                   }}
                 >
                   <span style={{ verticalAlign: 'middle' }}>
