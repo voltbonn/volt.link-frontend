@@ -108,7 +108,7 @@ function List({
     preselectedTypes = filteredTypes
   }
 
-  const { getString } = useLocalization()
+  const { getString, translateBlock, userLocales } = useLocalization()
   const [loadedBlocks, setLoadedBlocks] = useState([])
   const [sortedBlocks, setSortedBlocks] = useState([])
   const loadBlocks = useLoadBlocks()
@@ -135,13 +135,19 @@ function List({
     }
   }, [loggedIn])
 
-  const getText = block => {
-    const text = block?.properties?.text || block?.properties?.slug || ''
+  const getText = useCallback(block => {
+    if (!block) {
+      return ''
+    }
+    
+    const fallback_text = block?.properties?.text || block?.properties?.slug || ''
+    const text = translateBlock(block, userLocales, fallback_text)
+
     if (text.toLowerCase().startsWith('volt ')) {
       return text.slice(5)
     }
     return text
-  }
+  }, [translateBlock, userLocales])
 
   const sortableFields = Object.keys(sortableFieldsInfos)
   const sortBlocks = useCallback((loadedBlocks) => {
@@ -283,7 +289,7 @@ function List({
     } else {
       setSortedBlocks(newSortedBlocks)
     }
-  }, [sorting, setSortedBlocks])
+  }, [sorting, setSortedBlocks, getText])
   const changeSorting = useCallback(path => {
     setSorting(oldSorting => ({
       ...oldSorting,
