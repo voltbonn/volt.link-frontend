@@ -298,7 +298,6 @@ function HtmlInput({
         if (linebreaks !== false) {
           document.execCommand('insertLineBreak')
         }
-        event.preventDefault()
       } else {
         if (onSplitText) {
           const caret = getCaretPosition(inputRef.current)
@@ -310,9 +309,9 @@ function HtmlInput({
           onSplitText({
             texts: [start, end],
           })
-          event.preventDefault()
         }
       }
+      event.preventDefault()
     } else if (event.key === 'Backspace') {
       if (onMergeToPrevInput) {
         const caret = getCaretPosition(inputRef.current)
