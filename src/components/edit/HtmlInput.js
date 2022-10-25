@@ -374,7 +374,7 @@ function HtmlInput({
   //   ? hljs.highlight(language, content)
   //   : hljs.highlightAuto(content)
 
-  return <>
+  return <div>
   <div
     ref={inputRef}
     onKeyDown={keyDownHandler}
@@ -390,7 +390,7 @@ function HtmlInput({
     {/* <pre className="hljs">
       <code dangerouslySetInnerHTML={{ __html: highlighted.value }} />
     </pre> */}
-  </>
+  </div>
 }
 
 export default HtmlInput
