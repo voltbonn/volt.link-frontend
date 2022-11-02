@@ -22,7 +22,7 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
   const type = block?.type || 'unknown'
   const properties = block.properties || {}
   const slug = properties.slug || ''
-  
+
   const { link, path } = useBlockTrigger({ block, forceId, pathSuffix })
 
   let title = translateBlock(block, locales || userLocales, '')
