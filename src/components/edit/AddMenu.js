@@ -17,6 +17,7 @@ import {
   // EditSharp as EditIcon,
   ImageSharp as ImageIcon,
   WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
+  AbcSharp as DefinitionIcon,
 } from '@mui/icons-material'
 
 import useUser from '../../hooks/useUser.js'
@@ -34,11 +35,13 @@ const blockTypeIcons = {
   redirect: <RedirectIcon />,
   image: <ImageIcon />,
   poster: <PosterIcon />,
+  definition: <DefinitionIcon />,
 }
 
 const default_types = [
   'page',
-  'redirect'
+  'redirect',
+  'definition',
 ]
 
 function AddMenuContent({ createBlock, types = default_types, close = null }) {

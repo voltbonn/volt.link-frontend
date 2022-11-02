@@ -351,6 +351,7 @@ function PageEditor({
         'page',
         'redirect',
         'poster',
+        'definition',
       ]}
 
       trigger={props => (

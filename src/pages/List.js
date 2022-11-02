@@ -67,6 +67,7 @@ const typeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   poster: <PosterIcon />,
+  definition: <PageIcon />, // todo: change icon
 }
 const possibleTypes = [
   // 'button',
@@ -79,6 +80,7 @@ const possibleTypes = [
   'page',
   'person',
   'poster',
+  'definition',
 ]
 
 const roleIcons = {
@@ -137,7 +139,7 @@ function List({
 
   const getFirstLetter = text => {
     // todo: should i group emojis and special characters in groups or should each letter/emoji stay as their own group?
-    
+
     const matches = /^(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]|.)/i.exec(text) // source of the emoji part: https://melvingeorge.me/blog/check-if-string-contain-emojis-javascript
     if (matches) {
       return matches[0].toUpperCase()
@@ -419,6 +421,7 @@ function List({
                 flexShrink: '0',
                 margin: '0',
                 justifyContent: 'flex-start',
+                alignItems: 'center',
               }}
               onClick={toggleSortDirection}
             >
@@ -435,9 +438,11 @@ function List({
                   {...triggerProps}
                   className="text"
                   style={{
+                    display: 'flex',
                     flexShrink: '0',
                     margin: '0',
                     justifyContent: 'flex-start',
+                    alignItems: 'center',
                   }}
                 >
                   <span style={{ verticalAlign: 'middle' }}>
@@ -648,7 +653,7 @@ function List({
                   }}
                   className={classes.blockRow}
                 >
-                  <ViewerAuto block={block} />
+                  <ViewerAuto size="card" block={block} />
                   {
                     block?.isSortHeading === true
                       ? null

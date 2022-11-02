@@ -159,7 +159,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   //     })
   // }, [ setVoltTeams ])
 
-  let propertiesFrameContent = null
+  let propertiesFrameContent = []
   // if (type === 'page') {
   //   propertiesFrameContent = <>
   //     <div className={classes.properties_row}>
@@ -224,8 +224,8 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
   //   </>
   // } else
   if (type === 'button' || type === 'redirect') {
-    propertiesFrameContent = <>
-      <div className={classes.properties_row}>
+    propertiesFrameContent.push(
+      <div key="url" className={classes.properties_row}>
         <h3><Localized id="properties_editor_action_url_label" /></h3>
         <FancyInput style={{ width: '100%' }}>
           {({ setError }) => (
@@ -244,10 +244,11 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
           )}
         </FancyInput>
       </div>
-    </>
-  } else if (type === 'person') {
-    propertiesFrameContent = <>
-      <div className={classes.properties_row}>
+    )
+  }
+  if (type === 'person') {
+    propertiesFrameContent.push(
+      <div key="pronouns" className={classes.properties_row}>
         <h3><Localized id="properties_editor_pronouns_label" /></h3>
         <HtmlInput
           defaultValue={properties?.pronouns || ''}
@@ -262,7 +263,8 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
           className={`type_p`}
         />
       </div>
-    </>
+    )
+  }
   }
 
   const coverphoto_url = getImageUrl(properties.coverphoto, { width: 1400, height: 1400 })

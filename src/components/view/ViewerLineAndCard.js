@@ -22,7 +22,7 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
   const type = block?.type || 'unknown'
   const properties = block.properties || {}
   const slug = properties.slug || ''
-  
+
   const { link, path } = useBlockTrigger({ block, forceId, pathSuffix })
 
   let title = translateBlock(block, locales || userLocales, '')
@@ -53,6 +53,35 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
       // display end date of validity
       const exp = new Date(properties.exp)
       additionalInfos.push(<div key="exp">{getString('apikey_validity_to', { to: toSimpleIsoString(exp) })}</div>)
+    }
+  }
+  
+  if (type === 'page' || type === 'person' || type === 'poster') {
+    let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
+
+    if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length !== '') {
+      const maxTextLength = 200
+      const maxLines = 2
+
+      contentAsPlaintext = contentAsPlaintext
+        .replace(/[\r\n]+/g, '\n') // remove double line breaks
+
+      if (contentAsPlaintext.length > maxTextLength) {
+        contentAsPlaintext = contentAsPlaintext.slice(0, maxTextLength) + '…'
+      }
+
+      contentAsPlaintext = contentAsPlaintext
+        .split('\n')
+
+      if (contentAsPlaintext.length > maxLines) {
+        contentAsPlaintext = contentAsPlaintext.slice(0, maxLines)
+        contentAsPlaintext.push('…')
+      }
+
+      additionalInfos.push(<div importance="more" key="contentAsPlaintext">{
+        contentAsPlaintext
+          .map((line, index) => <div key={index}>{line}</div>)
+      }</div>)
     }
   }
 
