@@ -56,6 +56,7 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
     }
   }
   
+  let contentPreviewText = null
   if (type === 'page' || type === 'person' || type === 'poster' || type === 'definition') {
     let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
 
@@ -77,6 +78,8 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
         contentAsPlaintext = contentAsPlaintext.slice(0, maxLines)
         contentAsPlaintext.push('…')
       }
+
+      contentPreviewText = contentAsPlaintext.join('\n')
 
       additionalInfos.push(<div importance="more" key="contentAsPlaintext">{
         contentAsPlaintext
@@ -136,13 +139,25 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
   if (typeof onClick === 'function') {
     onClickProps.onClick = onClick
   }
+
+  let hoverTitlePreviewText = ''
+  if (
+    typeof title === 'string' && title !== '' &&
+    typeof contentPreviewText === 'string' && contentPreviewText !== ''
+  ) {
+    hoverTitlePreviewText = `${title}\n\n${contentPreviewText}`
+  } else if (typeof title === 'string' && title !== '') {
+    hoverTitlePreviewText = title
+  } else if (typeof contentPreviewText === 'string' && contentPreviewText !== '') {
+    hoverTitlePreviewText = contentPreviewText
+  }
   
   if (clickable === true && typeof cardLink === 'string' && cardLink.length > 0) {
     if (cardLink.includes(':')) {
       return <a
         href={cardLink}
         target="_blank" rel="noreferrer"
-        title={title}
+        title={hoverTitlePreviewText}
         className={`clickable_card ${classes.root}`}
         style={{
           display: 'block',
@@ -157,7 +172,7 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
     } else {
       return <Link
         to={cardLink}
-        title={title}
+        title={hoverTitlePreviewText}
         className={`clickable_card ${classes.root}`}
         style={{
           display: 'block',
@@ -173,7 +188,7 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
   }
 
   return <div
-    title={title}
+    title={hoverTitlePreviewText}
     className={`clickable_card ${classes.root}`}
     style={{
       cursor: 'auto',
