@@ -68,6 +68,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       slug: 'string',
       url: 'string',
       pronouns: 'string',
+      summary: 'string',
     }
 
     const newProperties = { ...properties }
@@ -80,21 +81,21 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
           } else if (newProperties.hasOwnProperty(propertyKey)) {
             newProperties[propertyKey] = null
           }
-        break
+          break
         case 'string':
           if (newPropertyValue !== '') {
             newProperties[propertyKey] = newPropertyValue
           } else if (newProperties.hasOwnProperty(propertyKey)) {
             newProperties[propertyKey] = null
           }
-        break
+          break
         case 'boolean':
           if (newPropertyValue === true) {
             newProperties[propertyKey] = true
           } else if (newProperties.hasOwnProperty(propertyKey)) {
             newProperties[propertyKey] = null
           }
-        break
+          break
         case 'object':
           if (
             typeof newPropertyValue === 'object'
@@ -105,7 +106,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
           } else if (newProperties.hasOwnProperty(propertyKey)) {
             newProperties[propertyKey] = null
           }
-        break
+          break
         default:
           newProperties[propertyKey] = newPropertyValue
       }
@@ -265,7 +266,6 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       </div>
     )
   }
-  }
 
   const coverphoto_url = getImageUrl(properties.coverphoto, { width: 1400, height: 1400 })
 
@@ -273,37 +273,37 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
     {
       type === 'poster'
         ? <div style={{
-            width: '1000px',
-            maxWidth: '100%',
-            margin: '0 auto',
-          }}>
-            <img src={coverphoto_url} alt="" style={{ width: '100%', height: 'auto' }} />
-          </div>
+          width: '1000px',
+          maxWidth: '100%',
+          margin: '0 auto',
+        }}>
+          <img src={coverphoto_url} alt="" style={{ width: '100%', height: 'auto' }} />
+        </div>
         : null
     }
     {
       type === 'page' ||
-      type === 'person' ||
-      type === 'redirect' ||
-      type === 'poster'
-      ? <CoverphotoPicker
-            coverphotoValue={properties.coverphoto}
-            iconValue={properties.icon}
-            onChange={newValue => updateProperty('coverphoto', newValue)}
-            noPreview={type === 'poster'}
-          />
-      : null
+        type === 'person' ||
+        type === 'redirect' ||
+        type === 'poster'
+        ? <CoverphotoPicker
+          coverphotoValue={properties.coverphoto}
+          iconValue={properties.icon}
+          onChange={newValue => updateProperty('coverphoto', newValue)}
+          noPreview={type === 'poster'}
+        />
+        : null
     }
     {
       type === 'page' ||
-      type === 'person' ||
-      type === 'redirect'
-      ? <IconPicker
+        type === 'person' ||
+        type === 'redirect'
+        ? <IconPicker
           iconValue={properties.icon}
           coverphotoValue={properties.coverphoto}
           onChange={newValue => updateProperty('icon', newValue)}
         />
-      : null
+        : null
     }
 
     <div className={classes.main_headline} style={{
@@ -325,11 +325,11 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
 
     <div
       className={classes.propertiesFrame}
-      // style={
-      //   propertiesFrameContent === null
-      //     ? { display: 'none' }
-      //     : null
-      // }
+    // style={
+    //   propertiesFrameContent === null
+    //     ? { display: 'none' }
+    //     : null
+    // }
     >
       <div className={classes.properties_row}>
         <h3><Localized id="properties_editor_trigger_path_label" /></h3>
@@ -354,7 +354,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
           )}
         </FancyInput>
       </div>
-      
+
       {propertiesFrameContent}
 
       {/* <div className={classes.properties_row}>
