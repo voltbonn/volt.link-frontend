@@ -374,7 +374,7 @@ function HtmlInput({
   //   ? hljs.highlight(language, content)
   //   : hljs.highlightAuto(content)
 
-  return <div>
+  return <div style={{ flexGrow: '1' }}>
   <div
     ref={inputRef}
     onKeyDown={keyDownHandler}
