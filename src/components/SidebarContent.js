@@ -52,6 +52,7 @@ const typeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   poster: <PosterIcon />,
+  definition: <PageIcon />, // todo change icon
 }
 
 const useSize = target => {
@@ -343,7 +344,7 @@ export default function SidebarContent() {
         }
 
         {
-          ['redirect', 'page', 'person', 'poster']
+          ['redirect', 'page', 'person', 'poster', 'definition']
             .map(type => (<Link key={type} to={`/list/${type}/`}>
               <MenuItem className="clickable_card" style={{
                 // the following replaces the roundMenuItem-css-class

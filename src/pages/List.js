@@ -67,6 +67,7 @@ const typeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   poster: <PosterIcon />,
+  definition: <PageIcon />, // todo: change icon
 }
 const possibleTypes = [
   // 'button',
@@ -79,6 +80,7 @@ const possibleTypes = [
   'page',
   'person',
   'poster',
+  'definition',
 ]
 
 const roleIcons = {
@@ -651,7 +653,7 @@ function List({
                   }}
                   className={classes.blockRow}
                 >
-                  <ViewerAuto block={block} />
+                  <ViewerAuto size="card" block={block} />
                   {
                     block?.isSortHeading === true
                       ? null

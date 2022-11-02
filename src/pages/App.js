@@ -130,8 +130,8 @@ function App() {
         idOrSlug = parts.pop()      
       }
 
-      const typesSingular = 'redirect page poster person'.split(' ')
-      const typesPlural = 'redirects pages posters people'.split(' ')
+      const typesSingular = 'redirect page poster person definition'.split(' ')
+      const typesPlural = 'redirects pages posters people definitions'.split(' ')
 
       if (idOrSlug === 'list') {
         newPathname = `/${idOrSlug}`

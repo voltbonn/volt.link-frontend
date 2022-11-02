@@ -34,11 +34,13 @@ const blockTypeIcons = {
   redirect: <RedirectIcon />,
   image: <ImageIcon />,
   poster: <PosterIcon />,
+  definition: <PageIcon />,
 }
 
 const default_types = [
   'page',
-  'redirect'
+  'redirect',
+  'definition',
 ]
 
 function AddMenuContent({ createBlock, types = default_types, close = null }) {

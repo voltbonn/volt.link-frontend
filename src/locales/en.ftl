@@ -104,6 +104,7 @@ block_menu_type_label_plural_redirect = Redirects
 block_menu_type_label_plural_person = People
 block_menu_type_label_plural_website = Websites
 block_menu_type_label_plural_poster = Posters
+block_menu_type_label_plural_definition = Definitions
 
 block_menu_type_label_page = Page
 block_menu_type_label_redirect = Redirect
@@ -114,6 +115,7 @@ block_menu_type_label_code = Code
 block_menu_type_label_divider = Divider
 block_menu_type_label_image = Image
 block_menu_type_label_poster = Poster
+block_menu_type_label_definition = Definition
 
 block_type_new_page = New Page
 block_type_new_redirect = New Redirect
@@ -124,6 +126,7 @@ block_type_new_code = New Code
 block_type_new_divider = New Divider
 block_type_new_image = New Image
 block_type_new_poster = New Poster
+block_type_new_definition = New Definition
 
 needs_login_block_type_new_page = Login to create a new Page…
 needs_login_block_type_new_redirect = Login to create a new Redirect…
@@ -134,6 +137,7 @@ needs_login_block_type_new_code = Login to create a new Code…
 needs_login_block_type_new_divider = Login to create a new Divider…
 needs_login_block_type_new_image = Login to create a new Image…
 needs_login_block_type_new_poster = Login to create a new Poster…
+needs_login_block_type_new_definition = Login to create a new Definition…
 
 block_menu_close_menu = Close Menu
 block_menu_add_before = Add Before

@@ -111,6 +111,7 @@ block_menu_type_label_plural_page = Seiten
 block_menu_type_label_plural_redirect = Weiterleitungen
 block_menu_type_label_plural_person = Personen
 block_menu_type_label_plural_poster = Plakate
+block_menu_type_label_plural_definition = Definitionen
 
 block_menu_type_label_page = Seite
 block_menu_type_label_redirect = Weiterleitung
@@ -121,6 +122,7 @@ block_menu_type_label_code = Code
 block_menu_type_label_divider = Trennlinie
 block_menu_type_label_image = Bild
 block_menu_type_label_poster = Plakat
+block_menu_type_label_definition = Definition
 
 block_type_new_page = Neue Seite
 block_type_new_redirect = Neue Weiterleitung
@@ -131,6 +133,7 @@ block_type_new_code = Neuer Code
 block_type_new_divider = Neue Trennlinie
 block_type_new_image = Neues Bild
 block_type_new_poster = Neues Plakat
+block_type_new_definition = Neue Definition
 
 needs_login_block_type_new_page = Für eine neue Seite anmelden…
 needs_login_block_type_new_redirect = Für eine neue Weiterleitung anmelden…
@@ -141,6 +144,7 @@ needs_login_block_type_new_code = Für einen neuen Code anmelden…
 needs_login_block_type_new_divider = Für eine neue Trennlinie anmelden…
 needs_login_block_type_new_image = Für ein neues Bild anmelden…
 needs_login_block_type_new_poster = Für ein neues Plakat anmelden…
+needs_login_block_type_new_definition = Für eine neue Definition anmelden…
 
 block_menu_close_menu = Menü schließen
 block_menu_add_before = Davor hinzufügen
