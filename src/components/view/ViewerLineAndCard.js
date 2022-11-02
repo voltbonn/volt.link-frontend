@@ -56,7 +56,7 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
     }
   }
   
-  if (type === 'page' || type === 'person' || type === 'poster') {
+  if (type === 'page' || type === 'person' || type === 'poster' || type === 'definition') {
     let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
 
     if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length !== '') {
