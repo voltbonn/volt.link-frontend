@@ -24,6 +24,10 @@ export const getBlock_Query = gql`
           computed {
             roles
             inherited_block_permissions
+				    # contentAsPlaintextPerBlock
+				    # contentAsMarkdownPerBlock
+				    contentAsPlaintext
+				    # contentAsMarkdown
           }
         }
       }
@@ -36,6 +40,10 @@ export const getBlock_Query = gql`
       computed {
         roles
         inherited_block_permissions
+				# contentAsPlaintextPerBlock
+				# contentAsMarkdownPerBlock
+				contentAsPlaintext
+				# contentAsMarkdown
       }
     }
   }
@@ -59,6 +67,10 @@ export const getBlocks_Query = gql`
       computed {
         roles
         inherited_block_permissions
+				# contentAsPlaintextPerBlock
+				# contentAsMarkdownPerBlock
+				contentAsPlaintext
+				# contentAsMarkdown
       }
     }
   }
@@ -88,6 +100,10 @@ export const getBlocksWithContent_Query = gql`
           computed {
             roles
             inherited_block_permissions
+				    # contentAsPlaintextPerBlock
+				    # contentAsMarkdownPerBlock
+				    contentAsPlaintext
+				    # contentAsMarkdown
           }
         }
       }
@@ -100,6 +116,10 @@ export const getBlocksWithContent_Query = gql`
       computed {
         roles
         inherited_block_permissions
+				# contentAsPlaintextPerBlock
+				# contentAsMarkdownPerBlock
+				contentAsPlaintext
+				# contentAsMarkdown
       }
     }
   }
@@ -129,6 +149,10 @@ export const getBlockBySlug_Query = gql`
           computed {
             roles
             inherited_block_permissions
+				    # contentAsPlaintextPerBlock
+				    # contentAsMarkdownPerBlock
+				    contentAsPlaintext
+				    # contentAsMarkdown
           }
         }
       }
@@ -141,6 +165,10 @@ export const getBlockBySlug_Query = gql`
       computed {
         roles
         inherited_block_permissions
+				# contentAsPlaintextPerBlock
+				# contentAsMarkdownPerBlock
+				contentAsPlaintext
+				# contentAsMarkdown
       }
     }
   }
@@ -175,6 +203,12 @@ export const getParentBlocks_Query = gql`
       properties
       computed {
         sort
+        # roles
+        # inherited_block_permissions
+				# contentAsPlaintextPerBlock
+				# contentAsMarkdownPerBlock
+				# contentAsPlaintext
+				# contentAsMarkdown
       }
     }
   }
@@ -215,6 +249,10 @@ export const search_Query = gql`
       computed {
         roles
         inherited_block_permissions
+				# contentAsPlaintextPerBlock
+				# contentAsMarkdownPerBlock
+				contentAsPlaintext
+				# contentAsMarkdown
       }
     }
   }

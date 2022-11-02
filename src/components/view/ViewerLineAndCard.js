@@ -55,6 +55,35 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
       additionalInfos.push(<div key="exp">{getString('apikey_validity_to', { to: toSimpleIsoString(exp) })}</div>)
     }
   }
+  
+  if (type === 'page' || type === 'person' || type === 'poster') {
+    let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
+
+    if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length !== '') {
+      const maxTextLength = 200
+      const maxLines = 2
+
+      contentAsPlaintext = contentAsPlaintext
+        .replace(/[\r\n]+/g, '\n') // remove double line breaks
+
+      if (contentAsPlaintext.length > maxTextLength) {
+        contentAsPlaintext = contentAsPlaintext.slice(0, maxTextLength) + '…'
+      }
+
+      contentAsPlaintext = contentAsPlaintext
+        .split('\n')
+
+      if (contentAsPlaintext.length > maxLines) {
+        contentAsPlaintext = contentAsPlaintext.slice(0, maxLines)
+        contentAsPlaintext.push('…')
+      }
+
+      additionalInfos.push(<div importance="more" key="contentAsPlaintext">{
+        contentAsPlaintext
+          .map((line, index) => <div key={index}>{line}</div>)
+      }</div>)
+    }
+  }
 
   if (type === 'website') {
     if (properties.hasOwnProperty('tags') && Array.isArray(properties.tags)) {
