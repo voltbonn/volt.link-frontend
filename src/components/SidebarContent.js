@@ -6,7 +6,6 @@ import {
   MenuItem,
   ListItemIcon,
   ListItemText,
-  Divider,
 } from '@mui/material'
 
 import {
