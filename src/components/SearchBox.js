@@ -88,12 +88,10 @@ function SearchBox() {
     enableOnContentEditable: true,
   })
 
-  useEffect(() => {
-
-    // TODO: load last searchs from cache / or load them from server
-
-    // only save a search when clicked on the item (needs function/hook to the click event)
-  }, [])
+  // useEffect(() => {
+  //   // TODO: load last searchs from cache / or load them from server
+  //   // only save a search when clicked on the item (needs function/hook to the click event)
+  // }, [])
 
   const blurInpurOnEnter = useCallback(event => {
     if (event.key === 'Enter') {
