@@ -88,12 +88,10 @@ function SearchBox() {
     enableOnContentEditable: true,
   })
 
-  useEffect(() => {
-
-    // TODO: load last searchs from cache / or load them from server
-
-    // only save a search when clicked on the item (needs function/hook to the click event)
-  }, [])
+  // useEffect(() => {
+  //   // TODO: load last searchs from cache / or load them from server
+  //   // only save a search when clicked on the item (needs function/hook to the click event)
+  // }, [])
 
   const blurInpurOnEnter = useCallback(event => {
     if (event.key === 'Enter') {
@@ -161,25 +159,29 @@ function SearchBox() {
           query: search_Query,
           variables,
         })
-
-        if (Array.isArray(errors) && errors.length > 0) {
-          throw errors
-        } else if (Array.isArray(data.blocks)) {
-          const blocks = data.blocks
-            .filter(block => typeof block === 'object' && block !== null && !Array.isArray(block))
-
-          setResults(blocks)
-          if (blocks.length === 0) {
-            setErrors(['No results found.'])
+        
+        if (queryTextRef.current === query_text) {
+          if (Array.isArray(errors) && errors.length > 0) {
+            throw errors
+          } else if (Array.isArray(data.blocks)) {
+            const blocks = data.blocks
+              .filter(block => typeof block === 'object' && block !== null && !Array.isArray(block))
+          
+            setResults(blocks)
+            if (blocks.length === 0) {
+              setErrors(['No results found.'])
+            } else {
+              setErrors([])
+            }
           } else {
-            setErrors([])
+            setErrors(['Unknown error while loading blocks.'])
           }
-        } else {
-          setErrors(['Unknown error while loading blocks.'])
         }
       } catch (error) {
         console.error('error', error)
-        setResults([])
+        if (queryTextRef.current === query_text) {
+          setResults([])
+        }
       }
     }
   }, [apollo_client, setResults, setErrors, setMathResult])
