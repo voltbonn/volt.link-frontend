@@ -202,312 +202,329 @@ export default function SidebarContent() {
 
   return <div ref={scrollContainerRef} className={classes.scrollContainer}>
     <div className={classes.content}>
-    <header className={classes.header}>
-      <div className={classes.headerBar}>
-        {
-          !matchesStartpage
-          ? <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0' }}>
-              <MenuOpenIcon className="icon" />
-            </button>
-          : null
-        }
-
+      <header className={classes.header}>
+        <div className={classes.headerBar}>
           {
-            matchesStartpage
-              ? <h1>Volt.Link</h1>
-              : <h2 style={{ margin: 0 }}>Volt.Link</h2>
+            !matchesStartpage
+            ? <button onClick={toggleSidebar} className="text hasIcon" style={{ margin: '0' }}>
+                <MenuOpenIcon className="icon" />
+              </button>
+            : null
           }
 
-          <AddMenu
-            trigger={triggerProps => (
-              <button className="default hasIcon" {...triggerProps}>
-                <AddIcon className="icon" />
-                {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
-              </button>
-            )}
-            createBlock={createBlock}
-          />
-      </div>
-    </header>
+            {
+              matchesStartpage
+                ? <h1>Volt.Link</h1>
+                : <h2 style={{ margin: 0 }}>Volt.Link</h2>
+            }
 
-      <MenuList style={{ maxWidth: '100%' }}>
+            <AddMenu
+              trigger={triggerProps => (
+                <button className="default hasIcon" {...triggerProps}>
+                  <AddIcon className="icon" />
+                  {/* <span className="hideOnSmallScreen" style={{verticalAlign: 'middle'}}>Add</span> */}
+                </button>
+              )}
+              createBlock={createBlock}
+            />
+        </div>
+      </header>
 
-        <MenuItem
-          ref={searchButtonRef}
-          onClick={openSearch}
-          style={{
-            width: '100%',
-            justifyContent: 'space-between',
-            // boxShadow: 'inset 0 0 0 1px rgba(var(--background-rgb), var(--alpha))',
-            boxShadow: '0 0 0 1px var(--background)',
-            background: 'var(--background)',
 
-            // the following replaces the roundMenuItem-css-class
-            borderRadius: 'var(--basis)',
-            margin: '0',
-            padding: 'var(--basis) var(--basis_x2)',
-            // end of the roundMenuItem-css-class stuff
-          }}
-        >
-          <ListItemIcon>
-            <SearchIcon />
-          </ListItemIcon>
-          <ListItemText
-            secondary={<span style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}>
-              <Localized id="search" />
 
-              {
-                searchButtonSize?.width > 500
-                  ? (
-                    isMacLike
-                      ? <kbd>⌘ K</kbd>
-                      : <kbd>Ctrl+K</kbd>
-                  )
-                  : null
-              }
-              {/*
+      <div className={classes.startpage_cards}>
+        <div className={`${classes.card} ${classes.full_width}`}>
+          <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
+
+            <MenuItem
+              ref={searchButtonRef}
+              onClick={openSearch}
+              style={{
+                width: '100%',
+                justifyContent: 'space-between',
+                // boxShadow: 'inset 0 0 0 1px rgba(var(--background-rgb), var(--alpha))',
+                boxShadow: '0 0 0 1px var(--background)',
+                background: 'var(--background)',
+
+                // the following replaces the roundMenuItem-css-class
+                borderRadius: 'var(--basis)',
+                margin: '0',
+                padding: 'var(--basis) var(--basis_x2)',
+                // end of the roundMenuItem-css-class stuff
+              }}
+            >
+              <ListItemIcon>
+                <SearchIcon />
+              </ListItemIcon>
+              <ListItemText
+                secondary={<span style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}>
+                  <Localized id="search" />
+
+                  {
+                    searchButtonSize?.width > 500
+                      ? (
+                        isMacLike
+                          ? <kbd>⌘ K</kbd>
+                          : <kbd>Ctrl+K</kbd>
+                      )
+                      : null
+                  }
+                  {/*
               Command / Cmd: ⌘
               Shift: ⇧
               Option / Alt: ⌥
               Control / Ctrl: ⌃
               Caps Lock: ⇪
             */}
-            </span>}
-          />
-        </MenuItem>
+                </span>}
+              />
+            </MenuItem>
 
-        <br />
+          </MenuList>
+        </div>
 
         {
           loggedIn
-            ? <>
-              <h2 style={{ margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
-                <Twemoji emojiClassName={classes.emoji} emoji="⭐️" /> <Localized id="favorites_heading" />
-              </h2>
-              <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
-                <Localized id="favorites_description" />
-              </p>
-              {
-                favoriteBlocks.length > 0
-                  ? favoriteBlocks
-                    .map(block => {
-                      if (block) {
-                        return <div
-                          key={block._id}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexDirection: 'row',
-                            height: 'auto',
-                          }}
-                          className={classes.blockRow}
-                        >
-                          <ViewerAuto key={block._id} block={block} />
-                          <div className={classes.blockRowActions}>
-                            <BlockMenu
-                              onReloadContext={loadFavoriteBlocks}
-                              {...{
-                                block,
-                                // createBlock,
-                                // saveType,
-                              }}
-                              trigger={props => (
-                                <button
-                                  {...props}
-                                  className={`text hasIcon`}
-                                  style={{
-                                    margin: '0',
-                                    padding: 'var(--basis) 0',
-                                    flexShrink: '0',
-                                  }}
-                                >
-                                  <BlockMenuIcon className="icon" />
-                                </button>
-                              )}
-                            />
+            ?
+            <div className={classes.card}>
+              <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
+
+                <h2 style={{ margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
+                  <Twemoji emojiClassName={classes.emoji} emoji="⭐️" /> <Localized id="favorites_heading" />
+                </h2>
+                <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
+                  <Localized id="favorites_description" />
+                </p>
+                {
+                  favoriteBlocks.length > 0
+                    ? favoriteBlocks
+                      .map(block => {
+                        if (block) {
+                          return <div
+                            key={block._id}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              flexDirection: 'row',
+                              height: 'auto',
+                            }}
+                            className={classes.blockRow}
+                          >
+                            <ViewerAuto key={block._id} block={block} />
+                            <div className={classes.blockRowActions}>
+                              <BlockMenu
+                                onReloadContext={loadFavoriteBlocks}
+                                {...{
+                                  block,
+                                  // createBlock,
+                                  // saveType,
+                                }}
+                                trigger={props => (
+                                  <button
+                                    {...props}
+                                    className={`text hasIcon`}
+                                    style={{
+                                      margin: '0',
+                                      padding: 'var(--basis) 0',
+                                      flexShrink: '0',
+                                    }}
+                                  >
+                                    <BlockMenuIcon className="icon" />
+                                  </button>
+                                )}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      }
-                      return null
-                    })
-                    .filter(Boolean)
-                  : null
-              }
-              <br />
-              <Divider style={{ opacity: 0.2, borderRadius: '10px' }} />
-              <br />
-            </>
+                        }
+                        return null
+                      })
+                      .filter(Boolean)
+                    : null
+                }
+              </MenuList>
+            </div>
             : null
         }
 
-        {
-          ['redirect', 'page', 'person', 'poster', 'definition']
-            .map(type => (<Link key={type} to={`/list/${type}/`}>
-              <MenuItem className="clickable_card" style={{
+        <div className={classes.card}>
+          <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
+
+            {
+              ['redirect', 'page', 'person', 'poster', 'definition']
+                .map(type => (<Link key={type} to={`/list/${type}/`}>
+                  <MenuItem className="clickable_card" style={{
+                    // the following replaces the roundMenuItem-css-class
+                    borderRadius: 'var(--basis)',
+                    margin: '0',
+                    padding: 'var(--basis) var(--basis_x2)',
+                    // end of the roundMenuItem-css-class stuff
+                  }}>
+                    <ListItemIcon>
+                      {typeIcons[type]}
+                    </ListItemIcon>
+                    <ListItemText
+                      primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
+                      primary={<Localized id={`block_menu_type_label_plural_${type}`} />}
+                    />
+                  </MenuItem>
+                </Link>))
+            }
+
+            <br />
+
+            <MenuItem
+              className="clickable_card"
+              style={{
                 // the following replaces the roundMenuItem-css-class
                 borderRadius: 'var(--basis)',
                 margin: '0',
                 padding: 'var(--basis) var(--basis_x2)',
                 // end of the roundMenuItem-css-class stuff
-              }}>
-                <ListItemIcon>
-                  {typeIcons[type]}
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' }}}
-                  primary={<Localized id={`block_menu_type_label_plural_${type}`} />}
-                />
-              </MenuItem>
-            </Link>))
-        }
-
-        <br />
-
-        <MenuItem
-          className="clickable_card"
-          style={{
-            // the following replaces the roundMenuItem-css-class
-            borderRadius: 'var(--basis)',
-            margin: '0',
-            padding: 'var(--basis) var(--basis_x2)',
-            // end of the roundMenuItem-css-class stuff
-          }}
-        >
-          <ListItemIcon>
-            <LocaleChooserIcon />
-          </ListItemIcon>
-          <ListItemText
-            primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
-            primary={<>
-              <span style={{
-                marginRight: 'var(--basis_x2)',
-                verticalAlign: 'middle',
-              }}>
-                <Localized id="choose_locale" />
-              </span>
-              <LocaleSelect
-                onChange={handleLocaleChange}
-                defaultValue={userLocales[0]}
-                options={ui_locales}
-                style={{
-                  fontSize: 'inherit',
-                  padding: '4px 8px',
-                  verticalAlign: 'middle',
-                }}
-              />
-            </>}
-            secondary={<>
-              {
-                typeof choose_locale_information_string === 'string'
-                  && choose_locale_information_string !== ''
-                  ? <span style={{ marginBottom: '0', whiteSpace: 'normal' }}>
-                    <Localized id="choose_locale_information" />
+              }}
+            >
+              <ListItemIcon>
+                <LocaleChooserIcon />
+              </ListItemIcon>
+              <ListItemText
+                primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
+                primary={<>
+                  <span style={{
+                    marginRight: 'var(--basis_x2)',
+                    verticalAlign: 'middle',
+                  }}>
+                    <Localized id="choose_locale" />
                   </span>
-                  : null
-              }
-            </>}
-          />
-        </MenuItem>
+                  <LocaleSelect
+                    onChange={handleLocaleChange}
+                    defaultValue={userLocales[0]}
+                    options={ui_locales}
+                    style={{
+                      fontSize: 'inherit',
+                      padding: '4px 8px',
+                      verticalAlign: 'middle',
+                    }}
+                  />
+                </>}
+                secondary={<>
+                  {
+                    typeof choose_locale_information_string === 'string'
+                      && choose_locale_information_string !== ''
+                      ? <span style={{ marginBottom: '0', whiteSpace: 'normal' }}>
+                        <Localized id="choose_locale_information" />
+                      </span>
+                      : null
+                  }
+                </>}
+              />
+            </MenuItem>
 
+            {
+              loggedIn
+                ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                  <MenuItem className="clickable_card" style={{
+                    // the following replaces the roundMenuItem-css-class
+                    borderRadius: 'var(--basis)',
+                    margin: '0',
+                    padding: 'var(--basis) var(--basis_x2)',
+                    // end of the roundMenuItem-css-class stuff
+                  }}>
+                    <ListItemIcon>
+                      <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
+                      primary={<Localized id="logout" />}
+                    />
+                  </MenuItem>
+                </a>
+                : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                  <MenuItem className="clickable_card" style={{
+                    // the following replaces the roundMenuItem-css-class
+                    borderRadius: 'var(--basis)',
+                    margin: '0',
+                    padding: 'var(--basis) var(--basis_x2)',
+                    // end of the roundMenuItem-css-class stuff
+                  }}>
+                    <ListItemIcon>
+                      <LoginIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
+                      primary={<Localized id="login" />}
+                    />
+                  </MenuItem>
+                </a>
+            }
+
+          </MenuList>
+        </div>
+
+
+        <div className={classes.card}>
+          <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
+
+            <BlocksLoader slugs={[
+              'glossary',
+              'vip',
+              'tools',
+            ]}>
+              {({ blocks, slugs }) => {
+                return slugs
+                  .map(slug => {
+                    const block = blocks.find(block => block?.properties?.slug === slug)
+                    if (block) {
+                      return <ViewerAuto key={block._id} block={block} />
+                    }
+                    return null
+                  })
+                  .filter(Boolean)
+              }}
+            </BlocksLoader>
+
+            <br />
+
+            <BlocksLoader slugs={[
+              'about',
+              'volt_link_workplace_group',
+              'stats',
+              'volt_link_source_code',
+              'volt_link_contact',
+              'imprint',
+              'privacy_policy',
+            ]}>
+              {({ blocks, slugs }) => {
+                return slugs
+                  .map(slug => {
+                    const block = blocks.find(block => block?.properties?.slug === slug)
+                    if (block) {
+                      return <ViewerAuto key={block._id} block={block} />
+                    }
+                    return null
+                  })
+                  .filter(Boolean)
+              }}
+            </BlocksLoader>
+          </MenuList>
+        </div>
+
+        {/* All blocks: */}
         {
-          loggedIn
-            ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-              <MenuItem className="clickable_card" style={{
-                // the following replaces the roundMenuItem-css-class
-                borderRadius: 'var(--basis)',
-                margin: '0',
-                padding: 'var(--basis) var(--basis_x2)',
-                // end of the roundMenuItem-css-class stuff
-              }}>
-                <ListItemIcon>
-                  <LogoutIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
-                  primary={<Localized id="logout" />}
-                />
-              </MenuItem>
-            </a>
-            : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-              <MenuItem className="clickable_card" style={{
-                // the following replaces the roundMenuItem-css-class
-                borderRadius: 'var(--basis)',
-                margin: '0',
-                padding: 'var(--basis) var(--basis_x2)',
-                // end of the roundMenuItem-css-class stuff
-              }}>
-                <ListItemIcon>
-                  <LoginIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
-                  primary={<Localized id="login" />}
-                />
-              </MenuItem>
-            </a>
+          showBlockTree
+            ? <div className={classes.card}>
+              <BlockTree
+                className={classes.content}
+                showBlockMenu={true}
+                scrollContainer={scrollContainerRef}
+              />
+            </div>
+            : null
         }
 
-        <br />
-
-        <BlocksLoader slugs={[
-          'glossary',
-          'vip',
-          'tools',
-        ]}>
-          {({ blocks, slugs }) => {
-            return slugs
-              .map(slug => {
-                const block = blocks.find(block => block?.properties?.slug === slug)
-                if (block) {
-                  return <ViewerAuto key={block._id} block={block} />
-                }
-                return null
-              })
-              .filter(Boolean)
-          }}
-        </BlocksLoader>
-
-        <br />
-
-        <BlocksLoader slugs={[
-          'about',
-          'volt_link_workplace_group',
-          'stats',
-          'volt_link_source_code',
-          'volt_link_contact',
-          'imprint',
-          'privacy_policy',
-        ]}>
-          {({ blocks, slugs }) => {
-            return slugs
-              .map(slug => {
-                const block = blocks.find(block => block?.properties?.slug === slug)
-                if (block) {
-                  return <ViewerAuto key={block._id} block={block} />
-                }
-                return null
-              })
-              .filter(Boolean)
-          }}
-        </BlocksLoader>
-      </MenuList>
-
-      <br />
-      <Divider style={{ opacity: 0.2, borderRadius: '10px' }} />
-      <br />
-
-      {/* All blocks: */}
-      {
-        showBlockTree
-        ? <BlockTree
-            showBlockMenu={true}
-            scrollContainer={scrollContainerRef}
-          />
-        : null
-      }
+      </div>
+              
     </div>
   </div>
 }
