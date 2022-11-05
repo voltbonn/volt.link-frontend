@@ -122,6 +122,10 @@ h2 .emoji {
   box-shadow: inset 0 0 0 1px rgba(var(--background-rgb),var(--alpha-more));
 
   border-radius: var(--basis_x2);
+
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
 }
 @media (prefers-color-scheme: dark) {
   .startpage_cards .card {
