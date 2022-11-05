@@ -130,6 +130,7 @@ html {
   --on-background: var(--purple);
   --on-background-rgb: var(--purple-rgb);
   --on-background-contrast: var(--purple-dark);
+  --on-background-contrast-rgb: var(--purple-dark-rgb);
   --shadow-color: var(--purple);
   --shadow-color-rgb: var(--purple-rgb);
   --shadow-color-rgba: rgba(var(--purple-rgb), var(--alpha-less));
@@ -147,6 +148,7 @@ html {
     --on-background: var(--white);
     --on-background-rgb: var(--white-rgb);
     --on-background-contrast: var(--dark-grey);
+    --on-background-contrast-rgb: var(--dark-grey-rgb);
     --shadow-color: var(--purple-dark);
     --shadow-color-rgb: var(--purple-dark-rgb);
     --shadow-color-rgba: rgba(var(--purple-dark-rgb), var(--alpha-less));
