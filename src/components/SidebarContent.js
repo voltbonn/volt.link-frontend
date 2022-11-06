@@ -226,7 +226,7 @@ export default function SidebarContent({ oneColumn = false }) {
 
             {
               matchesStartpage
-                ? <h1>Volt.Link</h1>
+                ? <h1 style={{ margin: 0 }}>Volt.Link</h1>
                 : <h2 style={{ margin: 0 }}>Volt.Link</h2>
             }
 

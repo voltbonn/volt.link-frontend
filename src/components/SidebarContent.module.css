@@ -20,7 +20,8 @@
   position: sticky;
 
   --minus_basis_x4: calc(-1 * var(--basis_x4));
-  margin: var(--minus_basis_x4) var(--minus_basis_x4) var(--basis_x4) var(--minus_basis_x4);
+  margin: var(--minus_basis_x4) var(--minus_basis_x4) var(--basis_x8) var(--minus_basis_x4);
+
   top: 0;
 
   background: var(--background-contrast);
@@ -36,9 +37,7 @@
 */
 @media (max-width: 1000px) {
   .header {
-    --minus_basis_x2: calc(-1 * var(--basis_x2));
-    --minus_basis_x4: calc(-1 * var(--basis_x4));
-    margin: var(--minus_basis_x4) var(--minus_basis_x2) var(--basis_x4) var(--minus_basis_x2);
+    padding: 0 var(--basis_x2);
   }
 }
 
