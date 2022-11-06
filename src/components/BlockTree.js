@@ -316,6 +316,7 @@ function BlockTree({
   createBlock = ()=>{},
   scrollContainer = window,
   showBlockMenu = true,
+  className = '',
 }) {
   const outerTreeRef = useRef(null)
   const innerTreeRef = useRef(null)
@@ -440,13 +441,17 @@ function BlockTree({
   return <div
       style={{
         height: outerHeight,
-        marginRight: '-12px',
-        marginLeft: '-12px',
+        // marginRight: '-12px',
+        // marginLeft: '-12px',
+        marginTop: 'var(--basis_x4)',
+        marginRight: '0',
+        marginLeft: '0',
         marginBottom: bottomMargin,
         overflowY: 'visible',
         overflowX: 'auto',
       }}
       ref={outerTreeRef}
+      className={className}
     >
       <VariableSizeList
         ref={listRef}

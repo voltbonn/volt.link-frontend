@@ -112,6 +112,7 @@ h2 .emoji {
   grid-template-rows: masonry;
 
   gap: var(--basis_x4);
+  padding-bottom: var(--basis_x64);
 }
 
 .startpage_cards .card {
@@ -169,4 +170,15 @@ h2 .emoji {
     grid-column-start: 1;
     grid-column-end: 2;
   }
+}
+.startpage_cards.oneColumn {
+  grid-template-columns: 1fr;
+  margin: calc(-1 * var(--basis_x4));
+}
+.startpage_cards.oneColumn .card {
+  border-radius: 0;
+}
+.startpage_cards.oneColumn .card.full_width {
+  grid-column-start: 1;
+  grid-column-end: 2;
 }

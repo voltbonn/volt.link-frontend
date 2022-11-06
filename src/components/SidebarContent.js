@@ -96,7 +96,7 @@ function debounce(func, wait, immediate) {
 	}
 }
 
-export default function SidebarContent() {
+export default function SidebarContent({ oneColumn = false }) {
   const mounted = useRef(false)
   useEffect(() => {
     mounted.current = true
@@ -231,7 +231,7 @@ export default function SidebarContent() {
 
 
 
-      <div className={classes.startpage_cards}>
+      <div className={`${classes.startpage_cards} ${oneColumn === true ? classes.oneColumn : ''}`}>
         <div className={`${classes.card} ${classes.full_width}`}>
           <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
 
