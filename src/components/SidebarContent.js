@@ -33,6 +33,7 @@ import { useNavigate, useMatch, Link } from 'react-router-dom'
 import { Localized, useLocalization } from '../fluent/Localized.js'
 import useUser from '../hooks/useUser.js'
 import useLoadBlocks from '../hooks/useLoadBlocks.js'
+import useLoadLastModifiedBlocks from '../hooks/useLoadLastModifiedBlocks.js'
 import { useSidebarContext } from './Sidebar.js'
 import AddMenu from './edit/AddMenu.js'
 import BlockTree from './BlockTree.js'
@@ -105,9 +106,10 @@ export default function SidebarContent({ oneColumn = false }) {
     }
   }, [])
 
-  const [favoriteBlocks, setFavoriteBlocks] = useState([])
   const loadBlocks = useLoadBlocks()
+  const loadLastModifiedBlocks = useLoadLastModifiedBlocks()
 
+  const [favoriteBlocks, setFavoriteBlocks] = useState([])
   const loadFavoriteBlocks = useCallback(async () => {
     const loadFavoriteBlockIds = (await loadBlocks({
       types: ['reaction'],
@@ -122,11 +124,22 @@ export default function SidebarContent({ oneColumn = false }) {
     })
     setFavoriteBlocks(favoriteBlocks)
   }, [loadBlocks])
+  
+  const [recentBlocks, setRecentBlocks] = useState([])
+  const loadRecentBlocks = useCallback(async () => {
+    const newRecentBlocks = await loadLastModifiedBlocks({
+      types: ['page', 'person', 'poster', 'redirect','definition'],
+      archived: false,
+      first: 5,
+    })
+    setRecentBlocks(newRecentBlocks)
+  }, [loadLastModifiedBlocks])
   useEffect(() => {
     if (mounted.current) {
       loadFavoriteBlocks()
+      loadRecentBlocks()
     }
-  }, [loadFavoriteBlocks])
+  }, [loadFavoriteBlocks, loadRecentBlocks])
 
   const {
     getString,
@@ -213,7 +226,7 @@ export default function SidebarContent({ oneColumn = false }) {
 
             {
               matchesStartpage
-                ? <h1>Volt.Link</h1>
+                ? <h1 style={{ margin: 0 }}>Volt.Link</h1>
                 : <h2 style={{ margin: 0 }}>Volt.Link</h2>
             }
 
@@ -284,6 +297,8 @@ export default function SidebarContent({ oneColumn = false }) {
 
           </MenuList>
         </div>
+
+
 
         {
           loggedIn
@@ -461,7 +476,6 @@ export default function SidebarContent({ oneColumn = false }) {
           </MenuList>
         </div>
 
-
         <div className={classes.card}>
           <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
 
@@ -508,6 +522,69 @@ export default function SidebarContent({ oneColumn = false }) {
             </BlocksLoader>
           </MenuList>
         </div>
+
+        {
+          loggedIn && recentBlocks.length > 0
+            ?
+            <div className={classes.card}>
+              <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
+
+                <h2 style={{ margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
+                  <Twemoji emojiClassName={classes.emoji} emoji="⏮️" /> <Localized id="recent_heading" />
+                </h2>
+                <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
+                  <Localized id="recent_description" />
+                </p>
+                {
+                  recentBlocks.length > 0
+                    ? recentBlocks
+                      .map(block => {
+                        if (block) {
+                          return <div
+                            key={block._id}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              flexDirection: 'row',
+                              height: 'auto',
+                            }}
+                            className={classes.blockRow}
+                          >
+                            <ViewerAuto key={block._id} block={block} />
+                            <div className={classes.blockRowActions}>
+                              <BlockMenu
+                                onReloadContext={loadRecentBlocks}
+                                {...{
+                                  block,
+                                  // createBlock,
+                                  // saveType,
+                                }}
+                                trigger={props => (
+                                  <button
+                                    {...props}
+                                    className={`text hasIcon`}
+                                    style={{
+                                      margin: '0',
+                                      padding: 'var(--basis) 0',
+                                      flexShrink: '0',
+                                    }}
+                                  >
+                                    <BlockMenuIcon className="icon" />
+                                  </button>
+                                )}
+                              />
+                            </div>
+                          </div>
+                        }
+                        return null
+                      })
+                      .filter(Boolean)
+                    : null
+                }
+              </MenuList>
+            </div>
+            : null
+        }
 
         {/* All blocks: */}
         {
