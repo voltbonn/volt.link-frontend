@@ -82,7 +82,7 @@ function Sidebar() {
       }}
     >
       <Suspense>
-        <SidebarContent />
+        <SidebarContent oneColumn={true} />
       </Suspense>
     </SwipeableDrawer>
   }
@@ -90,9 +90,9 @@ function Sidebar() {
   return null
 }
 
-function SidebarContent() {
+function SidebarContent({ oneColumn = false }) {
   return <Suspense>
-    <LazySidebarContent />
+    <LazySidebarContent oneColumn={oneColumn} />
   </Suspense>
 }
 function Main({ children }) {
