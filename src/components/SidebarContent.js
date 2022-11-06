@@ -299,6 +299,70 @@ export default function SidebarContent({ oneColumn = false }) {
         </div>
 
 
+
+        {
+          loggedIn
+            ?
+            <div className={classes.card}>
+              <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
+
+                <h2 style={{ margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
+                  <Twemoji emojiClassName={classes.emoji} emoji="⭐️" /> <Localized id="favorites_heading" />
+                </h2>
+                <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
+                  <Localized id="favorites_description" />
+                </p>
+                {
+                  favoriteBlocks.length > 0
+                    ? favoriteBlocks
+                      .map(block => {
+                        if (block) {
+                          return <div
+                            key={block._id}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              flexDirection: 'row',
+                              height: 'auto',
+                            }}
+                            className={classes.blockRow}
+                          >
+                            <ViewerAuto key={block._id} block={block} />
+                            <div className={classes.blockRowActions}>
+                              <BlockMenu
+                                onReloadContext={loadFavoriteBlocks}
+                                {...{
+                                  block,
+                                  // createBlock,
+                                  // saveType,
+                                }}
+                                trigger={props => (
+                                  <button
+                                    {...props}
+                                    className={`text hasIcon`}
+                                    style={{
+                                      margin: '0',
+                                      padding: 'var(--basis) 0',
+                                      flexShrink: '0',
+                                    }}
+                                  >
+                                    <BlockMenuIcon className="icon" />
+                                  </button>
+                                )}
+                              />
+                            </div>
+                          </div>
+                        }
+                        return null
+                      })
+                      .filter(Boolean)
+                    : null
+                }
+              </MenuList>
+            </div>
+            : null
+        }
+
         <div className={classes.card}>
           <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
 
@@ -490,69 +554,6 @@ export default function SidebarContent({ oneColumn = false }) {
                             <div className={classes.blockRowActions}>
                               <BlockMenu
                                 onReloadContext={loadRecentBlocks}
-                                {...{
-                                  block,
-                                  // createBlock,
-                                  // saveType,
-                                }}
-                                trigger={props => (
-                                  <button
-                                    {...props}
-                                    className={`text hasIcon`}
-                                    style={{
-                                      margin: '0',
-                                      padding: 'var(--basis) 0',
-                                      flexShrink: '0',
-                                    }}
-                                  >
-                                    <BlockMenuIcon className="icon" />
-                                  </button>
-                                )}
-                              />
-                            </div>
-                          </div>
-                        }
-                        return null
-                      })
-                      .filter(Boolean)
-                    : null
-                }
-              </MenuList>
-            </div>
-            : null
-        }
-
-        {
-          loggedIn
-            ?
-            <div className={classes.card}>
-              <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
-
-                <h2 style={{ margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
-                  <Twemoji emojiClassName={classes.emoji} emoji="⭐️" /> <Localized id="favorites_heading" />
-                </h2>
-                <p className="body2" style={{ opacity: 0.8, margin: '0 calc(1.85 * var(--basis)) var(--basis_x2) calc(1.85 * var(--basis))' }}>
-                  <Localized id="favorites_description" />
-                </p>
-                {
-                  favoriteBlocks.length > 0
-                    ? favoriteBlocks
-                      .map(block => {
-                        if (block) {
-                          return <div
-                            key={block._id}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              flexDirection: 'row',
-                              height: 'auto',
-                            }}
-                            className={classes.blockRow}
-                          >
-                            <ViewerAuto key={block._id} block={block} />
-                            <div className={classes.blockRowActions}>
-                              <BlockMenu
-                                onReloadContext={loadFavoriteBlocks}
                                 {...{
                                   block,
                                   // createBlock,
