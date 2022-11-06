@@ -165,6 +165,10 @@ h2 .emoji {
 @media (max-width: 700px) {
   .startpage_cards {
     grid-template-columns: 1fr;
+    margin: calc(-1 * var(--basis_x4));
+  }
+  .startpage_cards .card {
+    border-radius: 0;
   }
   .startpage_cards .card.full_width {
     grid-column-start: 1;
