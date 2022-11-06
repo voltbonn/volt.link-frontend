@@ -275,8 +275,15 @@ export default function SidebarContent({ oneColumn = false }) {
                 secondary={<span style={{
                   display: 'flex',
                   justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}>
-                  <Localized id="search" />
+                  <span style={{
+                    fontSize: 'var(--body-font-size)',
+                    fontWeight: 'bold',
+                  }}>
+                    <Localized id="search" />
+                  </span>
+                 
 
                   {
                     searchButtonSize?.width > 500
