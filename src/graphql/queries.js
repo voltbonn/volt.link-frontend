@@ -257,3 +257,23 @@ export const search_Query = gql`
     }
   }
 `
+
+export const getLastModifiedBlocks_Query = gql`
+  query getLastModifiedBlocks ($first: Int, $types: [String], $archived: Boolean) {
+    lastModifiedBlocks (first: $first, types: $types, archived: $archived) {
+    	_id
+      type
+      properties
+      metadata {
+        modified
+        modified_by
+      }
+      permissions
+      computed {
+        roles
+        inherited_block_permissions
+				contentAsPlaintext
+      }
+    }
+  }
+`
