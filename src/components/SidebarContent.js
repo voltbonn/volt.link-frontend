@@ -245,12 +245,15 @@ export default function SidebarContent({ oneColumn = false }) {
 
 
       <div className={`${classes.startpage_cards} ${oneColumn === true ? classes.oneColumn : ''}`}>
-        <div className={`${classes.card} ${classes.full_width}`}>
+        <div
+          className={`${classes.card} ${classes.full_width}`}
+          onClick={openSearch}
+          style={{ cursor: 'pointer' }}
+        >
           <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
 
             <MenuItem
               ref={searchButtonRef}
-              onClick={openSearch}
               style={{
                 width: '100%',
                 justifyContent: 'space-between',
