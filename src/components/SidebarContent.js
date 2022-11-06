@@ -105,9 +105,9 @@ export default function SidebarContent({ oneColumn = false }) {
     }
   }, [])
 
-  const [favoriteBlocks, setFavoriteBlocks] = useState([])
   const loadBlocks = useLoadBlocks()
-
+  
+  const [favoriteBlocks, setFavoriteBlocks] = useState([])
   const loadFavoriteBlocks = useCallback(async () => {
     const loadFavoriteBlockIds = (await loadBlocks({
       types: ['reaction'],
