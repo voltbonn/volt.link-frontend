@@ -326,6 +326,29 @@ function Viewer () {
     __html: renderInlineMarkdown(title)
   }
 
+  let contentPreviewText = ''
+  let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
+  if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length !== '') {
+    const maxTextLength = 200
+    const maxLines = 2
+
+    contentAsPlaintext = contentAsPlaintext
+      .replace(/[\r\n]+/g, '\n') // remove double line breaks
+
+    if (contentAsPlaintext.length > maxTextLength) {
+      contentAsPlaintext = contentAsPlaintext.slice(0, maxTextLength) + '…'
+    }
+
+    contentAsPlaintext = contentAsPlaintext
+      .split('\n')
+
+    if (contentAsPlaintext.length > maxLines) {
+      contentAsPlaintext = contentAsPlaintext.slice(0, maxLines)
+      contentAsPlaintext.push('…')
+    }
+      contentAsPlaintext
+    contentPreviewText = .join('\n')
+  }
 
   const coverphoto_url = getImageUrl(coverphoto, { width: 1400, height: 400 })
   const metadata_image_url = getImageUrl(coverphoto, { width: 1000, height: 1000 })
@@ -402,14 +425,22 @@ function Viewer () {
       <meta name="og:title" content={title} />
       <meta name="twitter:title" content={title} />
 
-      <meta name="description" content="" />
-      <meta property="og:description" content="" />
-      <meta name="twitter:description" content="" />
+      <meta name="description" content={contentPreviewText} />
+      <meta property="og:description" content={contentPreviewText} />
+      <meta name="twitter:description" content={contentPreviewText} />
 
       <meta property="og:image" content={metadata_image_url} />
       <meta name="twitter:image" content={metadata_image_url} />
 
+      <meta name="twitter:card" content="summary_large_image" />
       <meta property="twitter:card" content="summary" />
+
+      <meta property="og:url" content={window.location.href} />
+      <meta property="og:type" content="article" />
+
+      {/* <meta name="twitter:site" content={window.twitterHandle} /> */}
+      {/* <meta name="twitter:creator" content={window.twitterHandle} /> */}
+
     </Helmet>
 
     <Header
