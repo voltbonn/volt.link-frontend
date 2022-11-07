@@ -99,8 +99,14 @@ const sortableFieldsInfos = {
   },
 }
 
-function List({
+
+const defaultSorting = {
+  path: 'metadate.modified',
+  asc: true,
+}
+export function ListView({
   preselectedTypes = possibleTypes,
+  preselectedSorting = defaultSorting,
 }) {
 
   const filteredTypes = preselectedTypes.filter(type => possibleTypes.includes(type))
@@ -114,10 +120,7 @@ function List({
   const [loadedBlocks, setLoadedBlocks] = useState([])
   const [sortedBlocks, setSortedBlocks] = useState([])
   const loadBlocks = useLoadBlocks()
-  const [sorting, setSorting] = useState({
-    path: 'metadate.modified',
-    asc: true,
-  })
+  const [sorting, setSorting] = useState(preselectedSorting)
 
 
   const filters = useRef({
@@ -197,7 +200,7 @@ function List({
 
     const sortable_field_type = sortableFieldsInfos[sorting.path].type
     if (sortable_field_type === 'text') {
-      
+
       const newSortedBlocksWithHeadings = []
 
       // add the days between the blocks
@@ -243,9 +246,9 @@ function List({
           }
         }
 
-        newSortedBlocksWithHeadings.push(newSortedBlocks[i+1])
+        newSortedBlocksWithHeadings.push(newSortedBlocks[i + 1])
       }
-      
+
       setSortedBlocks(newSortedBlocksWithHeadings)
     } else if (sortable_field_type === 'date') {
 
@@ -294,7 +297,7 @@ function List({
           }
         }
 
-        newSortedBlocksWithHeadings.push(newSortedBlocks[i+1])
+        newSortedBlocksWithHeadings.push(newSortedBlocks[i + 1])
       }
 
       setSortedBlocks(newSortedBlocksWithHeadings)
@@ -359,6 +362,292 @@ function List({
     }
   }, [saveBlock, navigate])
 
+  return <div style={{
+    margin: 'var(--basis_x2) 0',
+  }}>
+
+    <div style={{
+      display: 'flex',
+      // gap: 'var(--basis)',
+      flexWrap: 'wrap',
+    }}>
+      <button
+        className="text hasIcon"
+        style={{
+          flexShrink: '0',
+          margin: '0',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          paddingInlineEnd: 'var(--basis_x0_5)',
+        }}
+        onClick={toggleSortDirection}
+      >
+        {
+          sorting.asc === true
+            ? <ArrowUpwardIcon className="icon" />
+            : <ArrowDownwardIcon className="icon" />
+        }
+      </button>
+
+      <PopoverMenu
+        trigger={triggerProps => (
+          <button
+            {...triggerProps}
+            className="text"
+            style={{
+              display: 'flex',
+              flexShrink: '0',
+              margin: '0',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              paddingInlineStart: 'var(--basis_x0_5)',
+            }}
+          >
+            <span style={{ verticalAlign: 'middle' }}>
+              <Localized id={'sort_label_' + sorting.path.replace(/\./g, '_')} />
+            </span>
+          </button>
+        )}
+      >
+
+        <div style={{ marginTop: '8px' }}></div>
+
+        {
+          sortableFields
+            .map(path => (
+              <MenuItem
+                className="roundMenuItem"
+                key={path}
+                onClick={() => changeSorting(path)}
+                selected={sorting.path === path}
+                sx={{
+                  marginTop: '2px !important',
+                  marginBottom: '2px !important',
+                }}
+              >
+                <ListItemText>
+                  <Localized id={'sort_label_' + path.replace(/\./g, '_')} />
+                </ListItemText>
+              </MenuItem>
+            ))
+        }
+      </PopoverMenu>
+    </div>
+    <hr className={classes.smallDivider} />
+
+    {
+      preselectedTypes.length > 1 || possibleRoles.length > 1
+        ? <>
+          <div style={{
+            display: 'flex',
+            gap: 'var(--basis)',
+            flexWrap: 'wrap',
+          }}>
+
+            {
+              preselectedTypes.length > 1
+                ? <PopoverMenu
+                  trigger={triggerProps => (
+                    <button
+                      {...triggerProps}
+                      className="text hasIcon"
+                      style={{
+                        flexShrink: '0',
+                        margin: '0',
+                        justifyContent: 'flex-start',
+                      }}
+                    >
+                      <FilterListIcon className="icon" />
+                      <span style={{ verticalAlign: 'middle' }}>
+                        {getString('block_menu_type_label_plural_' + filters.current.type)}
+                      </span>
+                    </button>
+                  )}
+                >
+
+                  <div style={{ marginTop: '8px' }}></div>
+
+                  {
+                    preselectedTypes
+                      .map(type => (
+                        <MenuItem
+                          className="roundMenuItem"
+                          key={type}
+                          onClick={() => setTypeFilter(type)}
+                          selected={filters.current.type === type}
+                          sx={{
+                            marginTop: '2px !important',
+                            marginBottom: '2px !important',
+                          }}
+                        >
+                          <ListItemIcon>
+                            {typeIcons[type]}
+                          </ListItemIcon>
+                          <ListItemText>
+                            <Localized id={'block_menu_type_label_plural_' + type} />
+                          </ListItemText>
+                        </MenuItem>
+                      ))
+                  }
+                </PopoverMenu>
+                : null
+            }
+
+            {
+              possibleRoles.length > 1
+                ? <PopoverMenu
+                  trigger={triggerProps => (
+                    <button
+                      {...triggerProps}
+                      className="text hasIcon"
+                      style={{
+                        flexShrink: '0',
+                        margin: '0',
+                        justifyContent: 'flex-start',
+                      }}
+                    >
+                      <FilterListIcon className="icon" />
+                      <span style={{ verticalAlign: 'middle' }}>
+                        {
+                          filters.current.roles.length === 0
+                            ? getString('path_editor_permissions')
+                            : filters.current.roles.map(role => getString('role_' + role)).join(', ')
+                        }
+                      </span>
+                    </button>
+                  )}
+                >
+
+                  <div style={{ marginTop: '8px' }}></div>
+
+                  {
+                    possibleRoles
+                      .map(role => (
+                        <MenuItem
+                          className="roundMenuItem"
+                          key={role}
+                          onClick={() => setRoleFilter(role)}
+                          selected={filters.current.roles.includes(role)}
+                          sx={{
+                            marginTop: '2px !important',
+                            marginBottom: '2px !important',
+                          }}
+                        >
+                          <ListItemIcon>
+                            {roleIcons[role]}
+                          </ListItemIcon>
+                          <ListItemText>
+                            <Localized id={'role_' + role} />
+                          </ListItemText>
+                        </MenuItem>
+                      ))
+                  }
+                </PopoverMenu>
+                : null
+            }
+          </div>
+          <hr className={classes.smallDivider} />
+        </>
+        : null
+    }
+
+    {
+      !['person'].includes(filters.current.type)
+        ? (
+          loggedIn
+            ? <>
+              <button
+                className="default green hasIcon"
+                style={{
+                  flexShrink: '0',
+                  margin: '0',
+                  justifyContent: 'flex-start',
+                }}
+                onClick={() => createBlock({ type: filters.current.type })}
+              >
+                <AddIcon className="icon" />
+                <span style={{ verticalAlign: 'middle' }}>
+                  {getString('block_type_new_' + filters.current.type)}
+                </span>
+              </button>
+              <br />
+              <br />
+            </>
+            : <>
+              <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                <button
+                  className="default green hasIcon"
+                  style={{
+                    flexShrink: '0',
+                    margin: '0',
+                    justifyContent: 'flex-start',
+                  }}
+                >
+                  <LoginIcon className="icon" />
+                  <span style={{ verticalAlign: 'middle' }}>
+                    {getString('needs_login_block_type_new_' + filters.current.type)}
+                  </span>
+                </button>
+              </a>
+              <br />
+              <br />
+            </>
+        )
+        : null
+    }
+
+    <React.Fragment key={sorting}>
+      {
+        sortedBlocks
+          .filter(Boolean)
+          .map(block => {
+            return <div
+              key={block._id}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'row',
+                height: 'auto',
+              }}
+              className={classes.blockRow}
+            >
+              <ViewerAuto size="card" block={block} />
+              {
+                block?.isSortHeading === true
+                  ? null
+                  : <div className={classes.blockRowActions}>
+                    <BlockMenu
+                      onReloadContext={loadList}
+                      block={block}
+                      trigger={props => (
+                        <button
+                          {...props}
+                          className={`text hasIcon`}
+                          style={{
+                            margin: '0',
+                            padding: 'var(--basis_x0_5) 0',
+                            flexShrink: '0',
+                          }}
+                        >
+                          <BlockMenuIcon className="icon" />
+                        </button>
+                      )}
+                    />
+                  </div>
+              }
+            </div>
+          })
+      }
+    </React.Fragment>
+  </div>
+}
+
+function List({
+  preselectedTypes,
+}) {
+
+  const { getString } = useLocalization()
+
   const openSearch = () => {
     const event = new CustomEvent('open_search')
     window.dispatchEvent(event)
@@ -410,9 +699,21 @@ function List({
             whiteSpace: 'pre-wrap',
           }}
         >
-          {getString('block_menu_type_label_plural_' + filters.current.type)}
+          {/* {getString('block_menu_type_label_plural_' + filters.current.type)} */}
+          Title
         </h1>
+
         <div className={classes.items}>
+          <ListView preselectedTypes={preselectedTypes} />
+        </div>
+      </main>
+    </div>
+  </div>
+}
+
+export default List
+
+/*
 
           <div style={{ display: 'flex', gap: 'var(--basis)', flexWrap: 'wrap' }}>
             <button
@@ -681,10 +982,4 @@ function List({
               })                 
           }
           </React.Fragment>
-        </div>
-      </main>
-    </div>
-  </div>
-}
-
-export default List
+*/

@@ -18,6 +18,7 @@ import useUser from '../hooks/useUser.js'
 
 import Header from '../components/Header.js'
 import ViewerAuto from '../components/view/ViewerAuto.js'
+import { ListView } from './List.js'
 
 import classes from './Viewer.module.css'
 
@@ -485,12 +486,25 @@ function Viewer () {
           </p>
           : null
         }
+
         <div className={classes.items}>
           {
             contentBlocks
             .filter(block => !!block)
             .filter(block => block.properties.active !== false)
             .map(contentBlock => <ViewerAuto key={contentBlock._id} block={contentBlock} locales={locales} />)
+          }
+
+          {
+            slug === 'glossary'
+            ? <ListView
+                preselectedTypes={['definition']}
+                preselectedSorting={{
+                  path: 'properties.text',
+                  asc: false,
+                }}
+              />
+            : null
           }
         </div>
       </main>
