@@ -17,7 +17,7 @@ import PopoverMenu from './PopoverMenu.js'
 import { useApolloClient } from '@apollo/client'
 import { getParentBlocks_Query } from '../graphql/queries' // getBlocks_Query
 
-export default function Header({ title, block = {}, rightActions, notificationBanner }) {
+export default function Header({ title, block = {}, rightActions, notificationBanner, className }) {
   const { open, toggleSidebar } = useSidebarContext()
   const apollo_client = useApolloClient()
 
@@ -180,7 +180,7 @@ export default function Header({ title, block = {}, rightActions, notificationBa
     </div>
   </>
 
-  return <header className={classes.header}>
+  return <header className={`${classes.header} ${className}`}>
     <div className={classes.headerBar}>
       {leftActions}
       {rightActions}

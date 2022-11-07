@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom'
 import classes from './ViewerLineAndCard.module.css'
 import BlockIcon from './BlockIcon.js'
 
+import { renderInlineMarkdown } from '../../markdown.js'
+
 function toSimpleIsoString(date) {
   let simpleIsoString = date.toISOString()
     .replace('T', ' ')
@@ -81,10 +83,19 @@ function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId,
 
       contentPreviewText = contentAsPlaintext.join('\n')
 
-      additionalInfos.push(<div importance="more" key="contentAsPlaintext">{
-        contentAsPlaintext
-          .map((line, index) => <div key={index}>{line}</div>)
-      }</div>)
+      const contentAsPlaintextWithRenderedMarkdown = {
+        __html: renderInlineMarkdown(contentAsPlaintext.join('\n'))
+      }
+
+      additionalInfos.push(<div
+        key="contentAsPlaintext"
+        importance="more"
+        dir="auto"
+        dangerouslySetInnerHTML={contentAsPlaintextWithRenderedMarkdown}
+        style={{
+          whiteSpace: 'pre-wrap',
+        }}
+      ></div>)
     }
   }
 

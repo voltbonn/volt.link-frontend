@@ -508,6 +508,8 @@ export default function SidebarContent({ oneColumn = false }) {
               />
             </MenuItem>
 
+            <br />
+
             {
               loggedIn
                 ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
@@ -517,6 +519,8 @@ export default function SidebarContent({ oneColumn = false }) {
                     margin: '0',
                     padding: 'var(--basis) var(--basis_x2)',
                     // end of the roundMenuItem-css-class stuff
+                    background: 'var(--red)',
+                    color: 'var(--on-red)',
                   }}>
                     <ListItemIcon>
                       <LogoutIcon />
@@ -534,6 +538,8 @@ export default function SidebarContent({ oneColumn = false }) {
                     margin: '0',
                     padding: 'var(--basis) var(--basis_x2)',
                     // end of the roundMenuItem-css-class stuff
+                    background: 'var(--green)',
+                    color: 'var(--on-green)',
                   }}>
                     <ListItemIcon>
                       <LoginIcon />

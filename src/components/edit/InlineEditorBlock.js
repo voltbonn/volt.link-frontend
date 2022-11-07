@@ -41,6 +41,9 @@ function InlineEditorBlockInbetweenComponent({ type = 'text', ...props }){
   let component = null
 
   switch (type) {
+    case 'text':
+      component = <InlineEditorBlockText {...props} />
+      break;
     case 'button':
       component = <InlineEditorBlockButton {...props} />
       break;
@@ -53,23 +56,17 @@ function InlineEditorBlockInbetweenComponent({ type = 'text', ...props }){
     case 'checkbox':
       component = <InlineEditorBlockCheckbox {...props} />
       break;
-    case 'person':
-      component = <InlineEditorBlockPage {...props} />
-      break;
-    case 'page':
-      component = <InlineEditorBlockPage {...props} />
-      break;
-    case 'poster':
-      component = <InlineEditorBlockPage {...props} />
-      break;
     case 'image':
       component = <InlineEditorBlockImage {...props} />
       break;
     case 'code':
       component = <InlineEditorBlockCode {...props} />
       break;
+    // case 'page':
+    //   component = <InlineEditorBlockPage {...props} />
+    //   break;
     default:
-      component = <InlineEditorBlockText {...props} />
+      component = <InlineEditorBlockPage {...props} /> // page person poster definition
   }
 
   return component
