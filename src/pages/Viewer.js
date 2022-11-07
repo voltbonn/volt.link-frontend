@@ -346,8 +346,8 @@ function Viewer () {
       contentAsPlaintext = contentAsPlaintext.slice(0, maxLines)
       contentAsPlaintext.push('…')
     }
-      contentAsPlaintext
-    contentPreviewText = .join('\n')
+      
+    contentPreviewText = contentAsPlaintext.join('\n')
   }
 
   const coverphoto_url = getImageUrl(coverphoto, { width: 1400, height: 400 })
