@@ -41,6 +41,7 @@ const blockTypeIcons = {
 const default_types = [
   'page',
   'redirect',
+  // 'poster',
   'definition',
 ]
 
