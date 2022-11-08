@@ -5,6 +5,7 @@ import {
   LinkSharp as RedirectIcon,
   PublicSharp as WebsiteIcon,
   WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
+  AbcSharp as DefinitionIcon,
 } from '@mui/icons-material'
 
 import Twemoji from '../Twemoji.js'
@@ -103,6 +104,9 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
         break
       case 'poster':
         iconComponent = <PosterIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
+      case 'definition':
+        iconComponent = <DefinitionIcon {...props} style={style} className={`${classes.icon} ${className}`} />
         break
       default:
         iconComponent = <PageIcon {...props} style={style} className={`${classes.icon} ${className}`} />
