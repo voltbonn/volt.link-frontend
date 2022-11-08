@@ -192,3 +192,4 @@ inline-editor-block-code-description = Dieser Code wird als HTML in der Seite da
 list_title = Liste
 sort_label_properties_text = Titel
 sort_label_metadate_modified = Änderungsdatum
+sort_label_properties_locale = Sprache

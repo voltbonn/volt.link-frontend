@@ -97,6 +97,9 @@ const sortableFieldsInfos = {
   'properties.text': {
     type: 'text',
   },
+  'properties.locale': {
+    type: 'text',
+  },
 }
 
 
@@ -176,15 +179,22 @@ export function ListView({
         }
 
         let sorting_text = ''
+        let sorting_display_text = ''
         if (sorting.path === 'metadate.modified') {
           sorting_text = block?.metadata?.modified || ''
+          sorting_display_text = sorting_text
         } else if (sorting.path === 'properties.text') {
-          sorting_text = getText(block)
+          sorting_text = getText(block) || ''
+          sorting_display_text = getFirstLetter(sorting_text)
+        } else if (sorting.path === 'properties.locale') {
+          sorting_text = String(block?.properties?.locale || 'en').toUpperCase()
+          sorting_display_text = sorting_text
         }
 
         return {
           ...block,
           sorting_text,
+          sorting_display_text,
         }
       })
       .sort((a, b) => {
@@ -204,18 +214,19 @@ export function ListView({
       const newSortedBlocksWithHeadings = []
 
       // add the days between the blocks
+      if (Array.isArray(newSortedBlocks) && newSortedBlocks.length > 0) {
       for (let i = -1; i <= newSortedBlocks.length - 2; i += 1) {
 
         const this_block_id = newSortedBlocks[i]?._id || ''
 
         let thisLetter = ''
         if (newSortedBlocks.length >= i) {
-          thisLetter = getFirstLetter(getText(newSortedBlocks[i]))
+          thisLetter = newSortedBlocks[i]?.sorting_display_text || ''
         }
 
         let nextLetter = ''
         if (newSortedBlocks.length >= i + 1) {
-          nextLetter = getFirstLetter(getText(newSortedBlocks[i + 1]))
+          nextLetter = newSortedBlocks[i + 1]?.sorting_display_text || ''
         }
 
         if (i <= newSortedBlocks.length - 2 && (i === 0 || thisLetter !== nextLetter)) {
@@ -248,12 +259,14 @@ export function ListView({
 
         newSortedBlocksWithHeadings.push(newSortedBlocks[i + 1])
       }
+      }
 
       setSortedBlocks(newSortedBlocksWithHeadings)
     } else if (sortable_field_type === 'date') {
 
       const newSortedBlocksWithHeadings = []
 
+      if (Array.isArray(newSortedBlocks) && newSortedBlocks.length > 0) {
       // add first letter starting blocks between the blocks
       for (let i = 0; i <= newSortedBlocks.length - 2; i += 1) {
 
@@ -298,6 +311,7 @@ export function ListView({
         }
 
         newSortedBlocksWithHeadings.push(newSortedBlocks[i + 1])
+      }
       }
 
       setSortedBlocks(newSortedBlocksWithHeadings)
