@@ -185,3 +185,4 @@ inline-editor-block-code-description = The below code will be rendered as HTML. 
 list_title = List
 sort_label_properties_text = Title
 sort_label_metadate_modified = Modification Date
+sort_label_properties_locale = Locale
