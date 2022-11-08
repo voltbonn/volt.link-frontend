@@ -324,6 +324,7 @@ export function ListView({
     const loadedContentBlocks = await loadBlocks({
       types: [filters.current.type],
       roles: filters.current.roles,
+      archived: false,
     })
     setLoadedBlocks(loadedContentBlocks)
     sortBlocks(loadedContentBlocks)
