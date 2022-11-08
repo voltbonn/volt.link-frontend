@@ -30,7 +30,7 @@ function MultiButton({ ariaLabel, items, defaultValue, onChange, style = {}, but
           onClick={handleClick}
           data-value={value}
         >
-          <span style={{pointerEvents: 'none'}}>
+          <span style={{ pointerEvents: 'none', display: 'flex', gap: 'var(--basis)' }}>
             {!!icon ? icon : null}
             {
               !!title
