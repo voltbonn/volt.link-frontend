@@ -20,6 +20,7 @@ import {
   // TitleSharp as HeadlineIcon,
   // NotesSharp as TextIcon,
   // Remove as DividerIcon,
+  AbcSharp as DefinitionIcon,
 
   PublicSharp as WebsiteIcon,
 
@@ -46,6 +47,7 @@ const blockTypeIcons = {
   person: <PersonIcon />,
   redirect: <RedirectIcon />,
   website: <WebsiteIcon />,
+  definition: <DefinitionIcon />,
 }
 
 const possibleTypes = [
@@ -54,6 +56,7 @@ const possibleTypes = [
   'redirect',
   'person',
   'website',
+  'definition'
 ]
 
 function SearchBox() {
