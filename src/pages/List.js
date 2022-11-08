@@ -700,7 +700,7 @@ function List({
           }}
         >
           {/* {getString('block_menu_type_label_plural_' + filters.current.type)} */}
-          {{ title }}
+          {title}
         </h1>
 
         <div className={classes.items}>
