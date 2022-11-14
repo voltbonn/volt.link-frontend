@@ -18,7 +18,15 @@ function toSimpleIsoString(date) {
   return simpleIsoString
 }
 
-function ViewerLineAndCard({ block, clickable = true, onClick, locales, forceId, pathSuffix, size = 'line' }) {
+function ViewerLineAndCard({
+  block,
+  clickable = true,
+  onClick,
+  locales,
+  forceId,
+  pathSuffix,
+  size = 'line',
+}) {
   const { getString, translateBlock, userLocales } = useLocalization()
 
   const type = block?.type || 'unknown'

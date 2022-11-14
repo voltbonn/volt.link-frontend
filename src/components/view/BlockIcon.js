@@ -1,11 +1,18 @@
 
 import {
-  InsertDriveFile as PageIcon,
-  Face as PersonIcon,
+  InsertDriveFileSharp as PageIcon,
   LinkSharp as RedirectIcon,
-  PublicSharp as WebsiteIcon,
+  PersonSharp as PersonIcon, // Face
+  Crop75Sharp as ButtonIcon,
+  NotesSharp as TextIcon,
+  Remove as DividerIcon,
+  CodeSharp as CodeIcon,
+  CheckBoxSharp as CheckboxIcon,
+  // EditSharp as EditIcon,
+  ImageSharp as ImageIcon,
   WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
   AbcSharp as DefinitionIcon,
+  PublicSharp as WebsiteIcon,
 } from '@mui/icons-material'
 
 import Twemoji from '../Twemoji.js'
@@ -93,6 +100,24 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
 
   if (iconComponent === null) {
     switch (block.type) {
+      case 'button':
+        iconComponent = <ButtonIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
+      case 'checkbox':
+        iconComponent = <CheckboxIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
+      case 'divider':
+        iconComponent = <DividerIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
+      case 'code':
+        iconComponent = <CodeIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
+      case 'image':
+        iconComponent = <ImageIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
+      case 'text':
+        iconComponent = <TextIcon {...props} style={style} className={`${classes.icon} ${className}`} />
+        break
       case 'person':
         iconComponent = <PersonIcon {...props} style={style} className={`${classes.icon} ${className}`} />
         break

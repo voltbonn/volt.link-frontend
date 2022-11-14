@@ -271,7 +271,7 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
 
   return <>
     {
-      type === 'poster'
+      type === 'poster' || type === 'image'
         ? <div style={{
           width: '1000px',
           maxWidth: '100%',
@@ -285,12 +285,13 @@ function PropertiesEditor({ getString, type, defaultProperties = {}, onChange })
       type === 'page' ||
         type === 'person' ||
         type === 'redirect' ||
-        type === 'poster'
+        type === 'poster' ||
+        type === 'image'
         ? <CoverphotoPicker
           coverphotoValue={properties.coverphoto}
           iconValue={properties.icon}
           onChange={newValue => updateProperty('coverphoto', newValue)}
-          noPreview={type === 'poster'}
+          noPreview={type === 'poster' || type === 'image'}
         />
         : null
     }

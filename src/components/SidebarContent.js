@@ -532,7 +532,7 @@ export default function SidebarContent({ oneColumn = false }) {
             <br />
 
             {
-              ['redirect', 'page', 'person', 'poster', 'definition']
+              ['redirect', 'page', 'person', 'images', 'definition', 'poster']
                 .map(type => (<Link key={type} to={`/list/${type}/`}>
                   <MenuItem className="clickable_card" style={{
                     // the following replaces the roundMenuItem-css-class
