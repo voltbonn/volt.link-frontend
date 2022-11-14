@@ -153,13 +153,18 @@ function ViewerAuto ({
       component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
       break
     case 'image':
-      component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      if (size === 'card') {
+        component = <ViewerImageCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      } else {
+        component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      }
       break
     case 'code':
       component = <ViewerCodeCard key={loadedBlock._id} block={loadedBlock} {...props} />
       break
     default:
-      component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      // component = null // JSON.stringify(loadedBlock) // <ViewerTextCard key={loadedBlock._id} block={loadedBlock} {...props} />
   }
 
   const mutationFunction = useMutation()
