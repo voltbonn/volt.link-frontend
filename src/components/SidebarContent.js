@@ -439,28 +439,49 @@ export default function SidebarContent({ oneColumn = false }) {
         <div className={classes.card}>
           <MenuList className={classes.content} style={{ maxWidth: '100%' }}>
 
+
             {
-              ['redirect', 'page', 'person', 'poster', 'definition']
-                .map(type => (<Link key={type} to={`/list/${type}/`}>
+              loggedIn
+                ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
                   <MenuItem className="clickable_card" style={{
                     // the following replaces the roundMenuItem-css-class
                     borderRadius: 'var(--basis)',
                     margin: '0',
                     padding: 'var(--basis) var(--basis_x2)',
                     // end of the roundMenuItem-css-class stuff
+                    background: 'var(--red)',
+                    color: 'var(--on-red)',
                   }}>
                     <ListItemIcon>
-                      {typeIcons[type]}
+                      <LogoutIcon />
                     </ListItemIcon>
                     <ListItemText
                       primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
-                      primary={<Localized id={`block_menu_type_label_plural_${type}`} />}
+                      primary={<Localized id="logout" />}
                     />
                   </MenuItem>
-                </Link>))
+                </a>
+                : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+                  <MenuItem className="clickable_card" style={{
+                    // the following replaces the roundMenuItem-css-class
+                    borderRadius: 'var(--basis)',
+                    margin: '0',
+                    padding: 'var(--basis) var(--basis_x2)',
+                    // end of the roundMenuItem-css-class stuff
+                    background: 'var(--green)',
+                    color: 'var(--on-green)',
+                  }}>
+                    <ListItemIcon>
+                      <LoginIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
+                      primary={<Localized id="login" />}
+                    />
+                  </MenuItem>
+                </a>
             }
 
-            <br />
 
             <MenuItem
               className="clickable_card"
@@ -511,45 +532,24 @@ export default function SidebarContent({ oneColumn = false }) {
             <br />
 
             {
-              loggedIn
-                ? <a href={`${window.domains.backend}logout?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+              ['redirect', 'page', 'person', 'poster', 'definition']
+                .map(type => (<Link key={type} to={`/list/${type}/`}>
                   <MenuItem className="clickable_card" style={{
                     // the following replaces the roundMenuItem-css-class
                     borderRadius: 'var(--basis)',
                     margin: '0',
                     padding: 'var(--basis) var(--basis_x2)',
                     // end of the roundMenuItem-css-class stuff
-                    background: 'var(--red)',
-                    color: 'var(--on-red)',
                   }}>
                     <ListItemIcon>
-                      <LogoutIcon />
+                      {typeIcons[type]}
                     </ListItemIcon>
                     <ListItemText
                       primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
-                      primary={<Localized id="logout" />}
+                      primary={<Localized id={`block_menu_type_label_plural_${type}`} />}
                     />
                   </MenuItem>
-                </a>
-                : <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
-                  <MenuItem className="clickable_card" style={{
-                    // the following replaces the roundMenuItem-css-class
-                    borderRadius: 'var(--basis)',
-                    margin: '0',
-                    padding: 'var(--basis) var(--basis_x2)',
-                    // end of the roundMenuItem-css-class stuff
-                    background: 'var(--green)',
-                    color: 'var(--on-green)',
-                  }}>
-                    <ListItemIcon>
-                      <LoginIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primaryTypographyProps={{ style: { fontWeight: 'bold', fontFamily: 'inherit' } }}
-                      primary={<Localized id="login" />}
-                    />
-                  </MenuItem>
-                </a>
+                </Link>))
             }
 
           </MenuList>
