@@ -108,6 +108,7 @@ block_menu_type_label_plural_person = People
 block_menu_type_label_plural_website = Websites
 block_menu_type_label_plural_poster = Posters
 block_menu_type_label_plural_definition = Definitions
+block_menu_type_label_plural_image = Images
 
 block_menu_type_label_page = Page
 block_menu_type_label_redirect = Redirect
