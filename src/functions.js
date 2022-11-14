@@ -21,7 +21,6 @@ function getImageUrl(imageObj, options) {
 }
 
 
-
 function hexToRGBArray(color) {
   if (color.startsWith('#')) {
     color = color.substring(1)
