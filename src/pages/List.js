@@ -41,7 +41,7 @@ import {
   PersonSharp as PersonIcon,
   // Crop75Sharp as ButtonIcon,
   // NotesSharp as TextIcon,
-  // ImageSharp as ImageIcon,
+  ImageSharp as ImageIcon,
   // CodeSharp as CodeIcon,
   // Remove as DividerIcon,
   // CheckBox as CheckboxIcon,
@@ -59,7 +59,7 @@ import {
 const typeIcons = {
   // button: <ButtonIcon />,
   // text: <TextIcon />,
-  // image: <ImageIcon />,
+  image: <ImageIcon />,
   // checkbox: <CheckboxIcon />,
   // code: <CodeIcon />,
   // divider: <DividerIcon />,
@@ -72,7 +72,7 @@ const typeIcons = {
 const possibleTypes = [
   // 'button',
   // 'text',
-  // 'image',
+  'image',
   // 'checkbox',
   // 'code',
   // 'divider',
@@ -626,7 +626,7 @@ export function ListView({
               }}
               className={classes.blockRow}
             >
-              <ViewerAuto size="card" block={block} />
+              <ViewerAuto size={block?.type === 'image' ? 'line' : 'card'} block={block} />
               {
                 block?.isSortHeading === true
                   ? null

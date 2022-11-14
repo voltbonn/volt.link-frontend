@@ -130,10 +130,10 @@ function App() {
         idOrSlug = parts.pop()      
       }
 
-      const typesSingular = 'redirect page poster person definition'.split(' ')
-      const typesPlural = 'redirects pages posters people definitions'.split(' ')
+      const typesSingular = 'redirect page poster person definition image'.split(' ')
+      const typesPlural = 'redirects pages posters people definitions images'.split(' ')
 
-      if (idOrSlug === 'list') {
+      if (idOrSlug === 'list' || idOrSlug === 'map' || idOrSlug === 'places') {
         newPathname = `/${idOrSlug}`
       } else if (typesSingular.includes(idOrSlug)) {
         newPathname = `/list/${idOrSlug}`
