@@ -123,13 +123,26 @@ function ViewerAuto ({
 
   switch (type) {
     case 'text':
-      component = <ViewerTextCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      if (size === 'card') {
+        component = <ViewerTextCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      } else {
+        component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      }
       break
     case 'button':
-      component = <ViewerButtonCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      if (size === 'card') {
+        component = <ViewerButtonCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      } else {
+        component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      }
       break
     case 'divider':
-      component = <ViewerDividerLine key={loadedBlock._id} block={loadedBlock} {...props} />
+      if (size === 'card') {
+        component = <ViewerDividerLine key={loadedBlock._id} block={loadedBlock} {...props} />
+        // todo change the naming from ViewerDividerLine to ViewerDividerCard
+      } else {
+        component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      }
       break
     case 'page':
       component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
@@ -160,7 +173,11 @@ function ViewerAuto ({
       }
       break
     case 'code':
-      component = <ViewerCodeCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      if (size === 'card') {
+        component = <ViewerCodeCard key={loadedBlock._id} block={loadedBlock} {...props} />
+      } else {
+        component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />
+      }
       break
     default:
       component = <ViewerLineAndCard key={loadedBlock._id} block={loadedBlock} size={size} {...props} />

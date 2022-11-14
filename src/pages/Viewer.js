@@ -492,7 +492,12 @@ function Viewer () {
             contentBlocks
             .filter(block => !!block)
             .filter(block => block.properties.active !== false)
-            .map(contentBlock => <ViewerAuto key={contentBlock._id} block={contentBlock} locales={locales} />)
+            .map(contentBlock => <ViewerAuto
+              key={contentBlock._id}
+              block={contentBlock}
+              locales={locales}
+              size={['page','person','redirect'].includes(contentBlock?.type || '') ? 'line' : 'card'}
+            />)
           }
 
           {
