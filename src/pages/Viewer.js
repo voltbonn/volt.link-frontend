@@ -356,7 +356,7 @@ function Viewer () {
 
   let coverphotoComponent = null
   if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
-    if (type === 'poster') {
+    if (type === 'poster' || type === 'image') {
       coverphotoComponent = <div style={{
         width: '1000px',
         maxWidth: '100%',
@@ -451,7 +451,7 @@ function Viewer () {
 
     <div className={`basis_0_8 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
-        (type === 'page' || type === 'person' || type === 'redirect' || type === 'poster')
+        (type === 'page' || type === 'person' || type === 'redirect' || type === 'poster' || type === 'image')
           ? coverphotoComponent
           : null
       }
