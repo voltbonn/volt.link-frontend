@@ -24,6 +24,9 @@ import {
   LinkSharp as RedirectIcon,
   PersonSharp as PersonIcon,
   WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
+  ImageSharp as ImageIcon,
+  AbcSharp as DefinitionIcon,
+
 } from '@mui/icons-material'
 
 import useSaveBlock from '../hooks/useSaveBlock.js'
@@ -52,7 +55,8 @@ const typeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   poster: <PosterIcon />,
-  definition: <PageIcon />, // todo change icon
+  definition: <DefinitionIcon />,
+  image: <ImageIcon />,
 }
 
 const useSize = target => {
@@ -532,7 +536,7 @@ export default function SidebarContent({ oneColumn = false }) {
             <br />
 
             {
-              ['redirect', 'page', 'person', 'images', 'definition', 'poster']
+              ['redirect', 'page', 'person', 'image', 'definition', 'poster']
                 .map(type => (<Link key={type} to={`/list/${type}/`}>
                   <MenuItem className="clickable_card" style={{
                     // the following replaces the roundMenuItem-css-class

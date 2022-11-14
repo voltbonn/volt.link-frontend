@@ -115,6 +115,7 @@ block_menu_type_label_plural_redirect = Weiterleitungen
 block_menu_type_label_plural_person = Personen
 block_menu_type_label_plural_poster = Plakate
 block_menu_type_label_plural_definition = Definitionen
+block_menu_type_label_plural_image = Bilder
 
 block_menu_type_label_page = Seite
 block_menu_type_label_redirect = Weiterleitung
