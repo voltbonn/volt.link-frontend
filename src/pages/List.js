@@ -54,6 +54,7 @@ import {
 
   ArrowUpward as ArrowUpwardIcon,
   ArrowDownward as ArrowDownwardIcon,
+  // Segment as GroupingIcon,
 } from '@mui/icons-material'
 
 const typeIcons = {
@@ -169,7 +170,6 @@ export function ListView({
 
   const sortableFields = Object.keys(sortableFieldsInfos)
   const sortBlocks = useCallback((loadedBlocks) => {
-    const sorting_diretion_modifier = sorting.asc === true ? -1 : 1
 
     let newSortedBlocks = loadedBlocks
       .filter(block => !!block)
@@ -205,8 +205,12 @@ export function ListView({
             ignorePunctuation: false,
             numeric: false,
           }
-        ) * sorting_diretion_modifier
+        )
       })
+
+    if (sorting.asc === false) {
+      newSortedBlocks = newSortedBlocks.reverse()
+    }
 
     const sortable_field_type = sortableFieldsInfos[sorting.path].type
     if (sortable_field_type === 'text') {
@@ -220,16 +224,16 @@ export function ListView({
         const this_block_id = newSortedBlocks[i]?._id || ''
 
         let thisLetter = ''
-        if (newSortedBlocks.length >= i) {
+        if (i >= 0 && newSortedBlocks.length >= i) {
           thisLetter = newSortedBlocks[i]?.sorting_display_text || ''
         }
 
         let nextLetter = ''
-        if (newSortedBlocks.length >= i + 1) {
+        if (i + 1 >= 0 && newSortedBlocks.length >= i + 1) {
           nextLetter = newSortedBlocks[i + 1]?.sorting_display_text || ''
         }
 
-        if (i <= newSortedBlocks.length - 2 && (i === 0 || thisLetter !== nextLetter)) {
+        if (i <= newSortedBlocks.length - 2 && (i === -1 || thisLetter !== nextLetter)) {
           if (nextLetter === '') {
             // undefined
             newSortedBlocksWithHeadings.push({
@@ -268,21 +272,21 @@ export function ListView({
 
       if (Array.isArray(newSortedBlocks) && newSortedBlocks.length > 0) {
       // add first letter starting blocks between the blocks
-      for (let i = 0; i <= newSortedBlocks.length - 2; i += 1) {
+      for (let i = -1; i <= newSortedBlocks.length - 2; i += 1) {
 
         const this_block_id = newSortedBlocks[i]?._id || ''
 
         let thisDateString = ''
-        if (newSortedBlocks.length >= i) {
+        if (i >= 0 && newSortedBlocks.length >= i) {
           thisDateString = (newSortedBlocks[i]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
         }
 
         let nextDateString = ''
-        if (newSortedBlocks.length >= i + 1) {
+        if (i + 1 >= 0 && newSortedBlocks.length >= i + 1) {
           nextDateString = (newSortedBlocks[i + 1]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
         }
 
-        if (i <= newSortedBlocks.length - 2 && (i === 0 || thisDateString !== nextDateString)) {
+        if (i <= newSortedBlocks.length - 2 && (i === -1 || thisDateString !== nextDateString)) {
           if (nextDateString === '') {
             // undefined
             newSortedBlocksWithHeadings.push({
@@ -383,17 +387,20 @@ export function ListView({
 
     <div style={{
       display: 'flex',
-      // gap: 'var(--basis)',
+      gap: 'var(--basis)',
       flexWrap: 'wrap',
+      justifyItems: 'flex-start',
     }}>
+      
       <button
         className="text hasIcon"
         style={{
-          flexShrink: '0',
-          margin: '0',
+          width: 'auto',
+          margin: '0 calc(-1 * var(--basis)) 0 0',
           justifyContent: 'flex-start',
           alignItems: 'center',
           paddingInlineEnd: 'var(--basis_x0_5)',
+          '--borderRadius': 'calc(0.3 * var(--body-font-size)) 0 0 calc(0.3 * var(--body-font-size))',
         }}
         onClick={toggleSortDirection}
       >
@@ -410,12 +417,13 @@ export function ListView({
             {...triggerProps}
             className="text"
             style={{
+              width: 'auto',
               display: 'flex',
-              flexShrink: '0',
               margin: '0',
               justifyContent: 'flex-start',
               alignItems: 'center',
               paddingInlineStart: 'var(--basis_x0_5)',
+              '--borderRadius': '0 calc(0.3 * var(--body-font-size)) calc(0.3 * var(--body-font-size)) 0',
             }}
           >
             <span style={{ verticalAlign: 'middle' }}>
@@ -447,18 +455,10 @@ export function ListView({
             ))
         }
       </PopoverMenu>
-    </div>
-    <hr className={classes.smallDivider} />
 
     {
       preselectedTypes.length > 1 || possibleRoles.length > 1
         ? <>
-          <div style={{
-            display: 'flex',
-            gap: 'var(--basis)',
-            flexWrap: 'wrap',
-          }}>
-
             {
               preselectedTypes.length > 1
                 ? <PopoverMenu
@@ -467,6 +467,7 @@ export function ListView({
                       {...triggerProps}
                       className="text hasIcon"
                       style={{
+                        width: 'auto',
                         flexShrink: '0',
                         margin: '0',
                         justifyContent: 'flex-start',
@@ -516,6 +517,7 @@ export function ListView({
                       {...triggerProps}
                       className="text hasIcon"
                       style={{
+                        width: 'auto',
                         flexShrink: '0',
                         margin: '0',
                         justifyContent: 'flex-start',
@@ -560,8 +562,6 @@ export function ListView({
                 </PopoverMenu>
                 : null
             }
-          </div>
-          <hr className={classes.smallDivider} />
         </>
         : null
     }
@@ -574,6 +574,7 @@ export function ListView({
               <button
                 className="default green hasIcon"
                 style={{
+                  width: 'auto',
                   flexShrink: '0',
                   margin: '0',
                   justifyContent: 'flex-start',
@@ -585,8 +586,6 @@ export function ListView({
                   {getString('block_type_new_' + filters.current.type)}
                 </span>
               </button>
-              <br />
-              <br />
             </>
             : <>
               <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
@@ -604,12 +603,14 @@ export function ListView({
                   </span>
                 </button>
               </a>
-              <br />
-              <br />
             </>
         )
         : null
     }
+
+    </div>
+    
+    <hr className={classes.smallDivider} />
 
     <React.Fragment key={sorting}>
       {
