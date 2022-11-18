@@ -169,7 +169,6 @@ export function ListView({
 
   const sortableFields = Object.keys(sortableFieldsInfos)
   const sortBlocks = useCallback((loadedBlocks) => {
-    const sorting_diretion_modifier = sorting.asc === true ? -1 : 1
 
     let newSortedBlocks = loadedBlocks
       .filter(block => !!block)
@@ -205,8 +204,12 @@ export function ListView({
             ignorePunctuation: false,
             numeric: false,
           }
-        ) * sorting_diretion_modifier
+        )
       })
+
+    if (sorting.asc === false) {
+      newSortedBlocks = newSortedBlocks.reverse()
+    }
 
     const sortable_field_type = sortableFieldsInfos[sorting.path].type
     if (sortable_field_type === 'text') {
