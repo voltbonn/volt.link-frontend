@@ -54,6 +54,7 @@ import {
 
   ArrowUpward as ArrowUpwardIcon,
   ArrowDownward as ArrowDownwardIcon,
+  // Segment as GroupingIcon,
 } from '@mui/icons-material'
 
 const typeIcons = {
@@ -386,14 +387,16 @@ export function ListView({
 
     <div style={{
       display: 'flex',
-      // gap: 'var(--basis)',
+      gap: 'var(--basis)',
       flexWrap: 'wrap',
+      justifyItems: 'flex-start',
     }}>
+      
       <button
         className="text hasIcon"
         style={{
-          flexShrink: '0',
-          margin: '0',
+          width: 'auto',
+          margin: '0 calc(-1 * var(--basis)) 0 0',
           justifyContent: 'flex-start',
           alignItems: 'center',
           paddingInlineEnd: 'var(--basis_x0_5)',
@@ -414,8 +417,8 @@ export function ListView({
             {...triggerProps}
             className="text"
             style={{
+              width: 'auto',
               display: 'flex',
-              flexShrink: '0',
               margin: '0',
               justifyContent: 'flex-start',
               alignItems: 'center',
@@ -452,18 +455,10 @@ export function ListView({
             ))
         }
       </PopoverMenu>
-    </div>
-    <hr className={classes.smallDivider} />
 
     {
       preselectedTypes.length > 1 || possibleRoles.length > 1
         ? <>
-          <div style={{
-            display: 'flex',
-            gap: 'var(--basis)',
-            flexWrap: 'wrap',
-          }}>
-
             {
               preselectedTypes.length > 1
                 ? <PopoverMenu
@@ -472,6 +467,7 @@ export function ListView({
                       {...triggerProps}
                       className="text hasIcon"
                       style={{
+                        width: 'auto',
                         flexShrink: '0',
                         margin: '0',
                         justifyContent: 'flex-start',
@@ -521,6 +517,7 @@ export function ListView({
                       {...triggerProps}
                       className="text hasIcon"
                       style={{
+                        width: 'auto',
                         flexShrink: '0',
                         margin: '0',
                         justifyContent: 'flex-start',
@@ -565,8 +562,6 @@ export function ListView({
                 </PopoverMenu>
                 : null
             }
-          </div>
-          <hr className={classes.smallDivider} />
         </>
         : null
     }
@@ -579,6 +574,7 @@ export function ListView({
               <button
                 className="default green hasIcon"
                 style={{
+                  width: 'auto',
                   flexShrink: '0',
                   margin: '0',
                   justifyContent: 'flex-start',
@@ -590,8 +586,6 @@ export function ListView({
                   {getString('block_type_new_' + filters.current.type)}
                 </span>
               </button>
-              <br />
-              <br />
             </>
             : <>
               <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
@@ -609,12 +603,14 @@ export function ListView({
                   </span>
                 </button>
               </a>
-              <br />
-              <br />
             </>
         )
         : null
     }
+
+    </div>
+    
+    <hr className={classes.smallDivider} />
 
     <React.Fragment key={sorting}>
       {
