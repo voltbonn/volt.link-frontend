@@ -223,16 +223,16 @@ export function ListView({
         const this_block_id = newSortedBlocks[i]?._id || ''
 
         let thisLetter = ''
-        if (newSortedBlocks.length >= i) {
+        if (i >= 0 && newSortedBlocks.length >= i) {
           thisLetter = newSortedBlocks[i]?.sorting_display_text || ''
         }
 
         let nextLetter = ''
-        if (newSortedBlocks.length >= i + 1) {
+        if (i + 1 >= 0 && newSortedBlocks.length >= i + 1) {
           nextLetter = newSortedBlocks[i + 1]?.sorting_display_text || ''
         }
 
-        if (i <= newSortedBlocks.length - 2 && (i === 0 || thisLetter !== nextLetter)) {
+        if (i <= newSortedBlocks.length - 2 && (i === -1 || thisLetter !== nextLetter)) {
           if (nextLetter === '') {
             // undefined
             newSortedBlocksWithHeadings.push({
@@ -271,21 +271,21 @@ export function ListView({
 
       if (Array.isArray(newSortedBlocks) && newSortedBlocks.length > 0) {
       // add first letter starting blocks between the blocks
-      for (let i = 0; i <= newSortedBlocks.length - 2; i += 1) {
+      for (let i = -1; i <= newSortedBlocks.length - 2; i += 1) {
 
         const this_block_id = newSortedBlocks[i]?._id || ''
 
         let thisDateString = ''
-        if (newSortedBlocks.length >= i) {
+        if (i >= 0 && newSortedBlocks.length >= i) {
           thisDateString = (newSortedBlocks[i]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
         }
 
         let nextDateString = ''
-        if (newSortedBlocks.length >= i + 1) {
+        if (i + 1 >= 0 && newSortedBlocks.length >= i + 1) {
           nextDateString = (newSortedBlocks[i + 1]?.metadata?.modified || '').slice(0, 10) // the first 10 letters are the date (YYYY-MM-DD)
         }
 
-        if (i <= newSortedBlocks.length - 2 && (i === 0 || thisDateString !== nextDateString)) {
+        if (i <= newSortedBlocks.length - 2 && (i === -1 || thisDateString !== nextDateString)) {
           if (nextDateString === '') {
             // undefined
             newSortedBlocksWithHeadings.push({
