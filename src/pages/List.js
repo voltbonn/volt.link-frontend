@@ -397,6 +397,7 @@ export function ListView({
           justifyContent: 'flex-start',
           alignItems: 'center',
           paddingInlineEnd: 'var(--basis_x0_5)',
+          '--borderRadius': 'calc(0.3 * var(--body-font-size)) 0 0 calc(0.3 * var(--body-font-size))',
         }}
         onClick={toggleSortDirection}
       >
@@ -419,6 +420,7 @@ export function ListView({
               justifyContent: 'flex-start',
               alignItems: 'center',
               paddingInlineStart: 'var(--basis_x0_5)',
+              '--borderRadius': '0 calc(0.3 * var(--body-font-size)) calc(0.3 * var(--body-font-size)) 0',
             }}
           >
             <span style={{ verticalAlign: 'middle' }}>
