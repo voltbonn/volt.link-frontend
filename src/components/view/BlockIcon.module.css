@@ -32,8 +32,9 @@
   word-break: break-word;
   font-size: calc(0.01 * var(--body-font-size));
   padding: calc(0.08 * var(--body-font-size)) calc(0.08 * var(--body-font-size));
-  line-height: calc(0.04 * var(--body-font-size));
-  -webkit-text-stroke: 0.5px currentColor;
+  line-height: calc(0.02 * var(--body-font-size));
+  -webkit-text-stroke: 1.5px currentColor;
+  /* border-radius: calc(var(--body-font-size)*0.06); */
 }
 /* check for dark mode*/
 @media (prefers-color-scheme: dark) {
@@ -43,7 +44,7 @@
   }
 }
 .icon.text_document > div {
-  margin-block-end: calc(0.04 * var(--body-font-size));
+  margin-block-end: calc(0.06 * var(--body-font-size));
 }
 .icon.text_document .coverphoto {
   height: calc(0.25 * var(--body-font-size));
@@ -51,6 +52,10 @@
   background-position: center;
   background-size: cover;
   opacity: var(--alpha);
+  box-shadow: 0 0 0 calc(var(--body-font-size)*0.02) currentColor;
+  /* border-radius: calc(var(--body-font-size)*0.01); */
+  width: calc(100% - calc(var(--body-font-size)*0.02));
+  margin: calc(var(--body-font-size)*0.02) auto calc(var(--body-font-size)*0.1) auto;
 }
 .icon img {
   width: 100%;
