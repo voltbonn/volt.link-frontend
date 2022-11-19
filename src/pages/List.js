@@ -75,6 +75,7 @@ const typeIcons = {
   poster: <PosterIcon />,
   definition: <DefinitionIcon />,
   website: <WebsiteIcon />,
+  file: <ImageIcon />,
 }
 const possibleTypes = [
   // 'button',
@@ -89,6 +90,7 @@ const possibleTypes = [
   'poster',
   'definition',
   'website',
+  'file',
 ]
 
 const roleIcons = {
