@@ -21,7 +21,13 @@ import { getImageUrl } from '../../functions.js'
 
 import classes from './BlockIcon.module.css'
 
-export default function BlockIcon({ block, style = {}, className = '', ...props }) {
+export default function BlockIcon({
+  block,
+  style = {},
+  className = '',
+  size = 40,
+  ...props
+}) {
   const type = block?.type || 'page'
   const properties = block.properties || {}
 
@@ -67,7 +73,7 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
         className={`${classes.icon} ${isSquareIcon ? classes.square : classes.round} ${className}`}
         style={{
           ...style,
-          backgroundImage: `url(${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=40&h=40&id=${encodeURIComponent(fileId)})`
+          backgroundImage: `url(${window.domains.storage}download_file/?f=${window.imageFormat || 'jpg'}&w=${size}&h=${size}&id=${encodeURIComponent(fileId)})`
         }}
         alt=""
       />
@@ -75,12 +81,12 @@ export default function BlockIcon({ block, style = {}, className = '', ...props 
   }
 
   if (iconComponent === null) {
-    let icon_url = canBeIcon ? getImageUrl(properties.icon, { width: 40, height: 40 }) : null
+    let icon_url = canBeIcon ? getImageUrl(properties.icon, { width: size, height: size }) : null
 
     if (!icon_url) {
       // coverphoto fallback
       isSquareIcon = true
-      icon_url = getImageUrl(properties.coverphoto, { width: 40, height: 40 })
+      icon_url = getImageUrl(properties.coverphoto, { width: size, height: size })
     }
 
     if (typeof icon_url === 'string' && icon_url.length !== 0) {
