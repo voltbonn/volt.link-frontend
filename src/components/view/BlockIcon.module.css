@@ -33,7 +33,7 @@
   font-size: calc(0.01 * var(--body-font-size));
   padding: calc(0.08 * var(--body-font-size)) calc(0.08 * var(--body-font-size));
   line-height: calc(0.02 * var(--body-font-size));
-  -webkit-text-stroke: 1.5px currentColor;
+  -webkit-text-stroke: calc(var(--body-font-size)*0.02) currentColor;
   /* border-radius: calc(var(--body-font-size)*0.06); */
 }
 /* check for dark mode*/
