@@ -33,7 +33,7 @@ export default function BlockIcon({
 
   let iconComponent = null
   let isSquareIcon = false
-  const canBeIcon = type !== 'poster' && type !== 'image'
+  const canBeIcon = !('poster image file'.split(' ').includes(type))
 
   let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
   const hasContent = typeof contentAsPlaintext === 'string' && contentAsPlaintext.length > 0
@@ -97,7 +97,7 @@ export default function BlockIcon({
   if (iconComponent === null) {
     let icon_url = canBeIcon ? getImageUrl(properties.icon, { width: size, height: size }) : null
 
-    if (!icon_url && !hasContent && hasCoverphoto) {
+    if (!icon_url && hasCoverphoto && (!canBeIcon || !hasContent)) {
       // coverphoto fallback
       isSquareIcon = true
       icon_url = coverphotoUrl
@@ -110,7 +110,7 @@ export default function BlockIcon({
         style={{
           ...style,
           backgroundImage: `url(${icon_url})`,
-          backgroundSize: 'poster image file'.split(' ').includes(type) ? 'contain' : 'cover',
+          backgroundSize: !canBeIcon ? 'contain' : 'cover',
         }}
         alt=""
       />
