@@ -43,8 +43,7 @@
   padding: var(--basis) var(--basis_x2);
 }
 .root[data-size='icon'] .icon {
-  width: var(--basis_x16) !important;
-  height: var(--basis_x16) !important;
+  --body-font-size: var(--basis_x16);
   margin: 0 !important;
 }
 
@@ -52,4 +51,11 @@
   display: inline;
   max-width: 100%;
   font-size: calc(0.6 * var(--body-font-size));
+}
+
+
+.root[data-size='icon'] .additionalInfos > div{
+  white-space: nowrap !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

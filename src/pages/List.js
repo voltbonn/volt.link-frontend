@@ -46,6 +46,8 @@ import {
   // Remove as DividerIcon,
   // CheckBox as CheckboxIcon,
   WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
+  AbcSharp as DefinitionIcon,
+  PublicSharp as WebsiteIcon,
 
   Visibility as ViewerIcon,
   Edit as EditorIcon,
@@ -71,7 +73,9 @@ const typeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   poster: <PosterIcon />,
-  definition: <PageIcon />, // todo: change icon
+  definition: <DefinitionIcon />,
+  website: <WebsiteIcon />,
+  file: <ImageIcon />,
 }
 const possibleTypes = [
   // 'button',
@@ -85,6 +89,8 @@ const possibleTypes = [
   'person',
   'poster',
   'definition',
+  'website',
+  'file',
 ]
 
 const roleIcons = {
@@ -111,9 +117,11 @@ const defaultSorting = {
   path: 'metadate.modified',
   asc: false,
 }
+const defaultLayout = 'list'
 export function ListView({
   preselectedTypes = possibleTypes,
   preselectedSorting = defaultSorting,
+  preselectedLayout = defaultLayout,
 }) {
 
   const filteredTypes = preselectedTypes.filter(type => possibleTypes.includes(type))
@@ -128,7 +136,7 @@ export function ListView({
   const [sortedBlockGroups, setSortedBlockGroups] = useState([])
   const loadBlocks = useLoadBlocks()
   const [sorting, setSorting] = useState(preselectedSorting)
-  const [layout, setLayout] = useState('list') // 'grid' or 'list'
+  const [layout, setLayout] = useState(preselectedLayout) // 'grid' or 'list'
   const isGrid = layout === 'grid'
 
   const filters = useRef({

@@ -130,8 +130,8 @@ function App() {
         idOrSlug = parts.pop()      
       }
 
-      const typesSingular = 'redirect page poster person definition image'.split(' ')
-      const typesPlural = 'redirects pages posters people definitions images'.split(' ')
+      const typesSingular = 'redirect page poster person definition image file'.split(' ')
+      const typesPlural = 'redirects pages posters people definitions images files'.split(' ')
 
       if (idOrSlug === 'list' || idOrSlug === 'map' || idOrSlug === 'places') {
         newPathname = `/${idOrSlug}`

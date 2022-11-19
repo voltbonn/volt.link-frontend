@@ -67,10 +67,10 @@ function ViewerLineAndCard({
   }
   
   let contentPreviewText = null
-  if (type === 'page' || type === 'person' || type === 'poster' || type === 'definition') {
+  if (size !== 'icon' && (type === 'page' || type === 'person' || type === 'poster' || type === 'definition')) {
     let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
 
-    if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length !== '') {
+    if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length > 0) {
       const maxTextLength = 200
       const maxLines = 2
 
@@ -121,7 +121,7 @@ function ViewerLineAndCard({
     title = getString('placeholder_headline_empty')
   }
 
-  if (size === 'line' || size === 'icon') {
+  if (size === 'line') {
     if (title !== '') {
       additionalInfos = []
     } else if (additionalInfos.length === 0) {

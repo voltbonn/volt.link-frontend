@@ -329,7 +329,7 @@ function Viewer () {
 
   let contentPreviewText = ''
   let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
-  if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length !== '') {
+  if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length > 0) {
     const maxTextLength = 200
     const maxLines = 2
 
