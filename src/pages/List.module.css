@@ -83,3 +83,17 @@
 .smallDivider {
   margin: var(--basis_x2) 0;
 }
+
+.grid_layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-gap: var(--basis);
+  margin: var(--basis) 0;
+  max-width: 100%;
+  gap: var(--basis_x4);
+}
+.list_layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}

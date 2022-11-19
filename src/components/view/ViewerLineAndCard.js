@@ -121,7 +121,7 @@ function ViewerLineAndCard({
     title = getString('placeholder_headline_empty')
   }
 
-  if (size === 'line') {
+  if (size === 'line' || size === 'icon') {
     if (title !== '') {
       additionalInfos = []
     } else if (additionalInfos.length === 0) {
@@ -129,8 +129,12 @@ function ViewerLineAndCard({
     }
   }
 
-  const content = <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-    <BlockIcon block={block} />
+  const content = <>
+    <BlockIcon
+      className={classes.icon}
+      block={block}
+      size={size === 'icon' ? 140 : 40}
+    />
     <div className={classes.content}>
       <div dir="auto" className={classes.title}>
         {title}
@@ -143,7 +147,7 @@ function ViewerLineAndCard({
           : null
       }
     </div>
-  </div>
+  </>
 
 
 
@@ -177,9 +181,9 @@ function ViewerLineAndCard({
         href={cardLink}
         target="_blank" rel="noreferrer"
         title={hoverTitlePreviewText}
+        data-size={size}
         className={`clickable_card ${classes.root}`}
         style={{
-          display: 'block',
           cursor: 'pointer',
           color,
           '--on-background-rgb': colorRGB,
@@ -192,9 +196,9 @@ function ViewerLineAndCard({
       return <Link
         to={cardLink}
         title={hoverTitlePreviewText}
+        data-size={size}
         className={`clickable_card ${classes.root}`}
         style={{
-          display: 'block',
           cursor: 'pointer',
           color,
           '--on-background-rgb': colorRGB,
@@ -208,6 +212,7 @@ function ViewerLineAndCard({
 
   return <div
     title={hoverTitlePreviewText}
+    data-size={size}
     className={`clickable_card ${classes.root}`}
     style={{
       cursor: 'auto',

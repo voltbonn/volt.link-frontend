@@ -29,3 +29,27 @@
   color: var(--background);
   font-weight: bold;
 }
+
+.root {
+  display: flex;
+  align-items: flex-start;
+}
+
+.root[data-size='icon'] {
+  /* background: red !important; */
+  flex-direction: column;
+  align-items: center;
+  gap: var(--basis_x2);
+  padding: var(--basis) var(--basis_x2);
+}
+.root[data-size='icon'] .icon {
+  width: var(--basis_x16) !important;
+  height: var(--basis_x16) !important;
+  margin: 0 !important;
+}
+
+.root[data-size='icon'] .content {
+  display: inline;
+  max-width: 100%;
+  font-size: calc(0.6 * var(--body-font-size));
+}
