@@ -109,7 +109,7 @@ const sortableFieldsInfos = {
 
 const defaultSorting = {
   path: 'metadate.modified',
-  asc: true,
+  asc: false,
 }
 export function ListView({
   preselectedTypes = possibleTypes,
