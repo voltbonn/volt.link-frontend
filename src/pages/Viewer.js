@@ -504,7 +504,7 @@ function Viewer () {
               key={contentBlock._id}
               block={contentBlock}
               locales={locales}
-              size={['page','person','redirect'].includes(contentBlock?.type || '') ? 'line' : 'card'}
+              size={['page','person','redirect','poster'].includes(contentBlock?.type || '') ? 'line' : 'card'}
             />)
           }
 
