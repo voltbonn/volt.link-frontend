@@ -40,7 +40,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--basis_x2);
-  passing: 0 var(--basis_x4);
+  padding: var(--basis) var(--basis_x2);
 }
 .root[data-size='icon'] .icon {
   width: var(--basis_x16) !important;
