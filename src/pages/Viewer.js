@@ -359,7 +359,6 @@ function Viewer () {
       }
       : coverphoto || null
   )
-    console.log('coverphotoPropertyValue', coverphotoPropertyValue)
   const coverphoto_url = getImageUrl(coverphotoPropertyValue, { width: 1400, height: 400 })
   const metadata_image_url = getImageUrl(coverphotoPropertyValue, { width: 1000, height: 1000 })
 
