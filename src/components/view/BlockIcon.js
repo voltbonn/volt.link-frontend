@@ -17,7 +17,7 @@ import {
 
 import Twemoji from '../Twemoji.js'
 
-import { getImageUrl } from '../../functions.js'
+import { getImageUrl, getBlockColor } from '../../functions.js'
 
 import classes from './BlockIcon.module.css'
 
@@ -33,7 +33,10 @@ export default function BlockIcon({
 
   let iconComponent = null
   let isSquareIcon = false
-  const canBeIcon = type !== 'poster'
+  const canBeIcon = type !== 'poster' && type !== 'image'
+
+  let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
+  const hasContent = typeof contentAsPlaintext === 'string' && contentAsPlaintext.length > 0
 
   if (
     canBeIcon
@@ -83,7 +86,7 @@ export default function BlockIcon({
   if (iconComponent === null) {
     let icon_url = canBeIcon ? getImageUrl(properties.icon, { width: size, height: size }) : null
 
-    if (!icon_url) {
+    if (!icon_url && !hasContent) {
       // coverphoto fallback
       isSquareIcon = true
       icon_url = getImageUrl(properties.coverphoto, { width: size, height: size })
@@ -103,6 +106,72 @@ export default function BlockIcon({
     }
   }
 
+  if (
+    iconComponent === null
+    && hasContent
+    && !(type === 'poster' || type === 'image')
+  ) {
+    const coverphotoUrl = getImageUrl(properties.coverphoto, { width: 40, height: 40 })
+    const hasCoverphoto = typeof coverphotoUrl === 'string' && coverphotoUrl.length > 1
+
+    let text = block?.properties?.text || null
+    const hasText = typeof text === 'string' && text.length !== ''
+
+    const {
+      color,
+      contrastingColor,
+    } = getBlockColor(block)
+
+    let lines = []
+
+    if (hasCoverphoto) {
+      lines.push(<div
+        className={classes.coverphoto}
+        // style={{
+        //   backgroundImage: `url(${coverphotoUrl})`,
+        // }}
+      />)
+    }
+
+    if (hasText) {
+      lines.push(<div>{
+        text
+          .replace(/[^\s]/gm, '█')
+          .replace(/ /gm, '     ')
+      }</div>)
+    }
+
+    if (hasContent) {
+      const maxTextLength = 500
+
+      if (contentAsPlaintext.length > maxTextLength) {
+        contentAsPlaintext = contentAsPlaintext.slice(0, maxTextLength)
+      }
+
+      contentAsPlaintext = contentAsPlaintext
+        .replace(/[^\s]/gm, '█') // █ ▓ ▒ ░
+        .replace(/ /gm, '     ')
+
+      lines = lines
+        .concat(
+          contentAsPlaintext
+            .split('\n')
+            .map(line => <div>{line}</div>)
+        )
+    }
+
+    iconComponent = <div
+      {...props}
+      className={`${classes.icon} ${classes.text_document} ${className}`}
+      style={{
+        ...style,
+        background: color,
+        color: contrastingColor,
+      }}
+    >
+      {lines}
+    </div>
+  }
 
   if (iconComponent === null) {
     switch (block.type) {
