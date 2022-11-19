@@ -191,6 +191,6 @@ blocktree_no_nodes_to_show = Nichts anzuzeigen. Vielleicht das Filtermenü kontr
 inline-editor-block-code-description = Dieser Code wird als HTML in der Seite dargestellt. Für iframes: Verwendet aspect-ratio="16/9" als Attribute um die Höhe zu ändern.
 
 list_title = Liste
-sort_label_properties_text = Titel
+sort_label_properties_text = Name / Titel
 sort_label_metadate_modified = Änderungsdatum
 sort_label_properties_locale = Sprache

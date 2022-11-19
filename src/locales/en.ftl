@@ -184,6 +184,6 @@ blocktree_no_nodes_to_show = Nothing to show. Maybe check the filter menu.
 inline-editor-block-code-description = The below code will be rendered as HTML. For iframes: Use aspect-ratio="16/9" as an attribute to change height.
 
 list_title = List
-sort_label_properties_text = Title
+sort_label_properties_text = Name / Title
 sort_label_metadate_modified = Modification Date
 sort_label_properties_locale = Locale
