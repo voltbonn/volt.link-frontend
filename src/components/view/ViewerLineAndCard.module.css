@@ -51,4 +51,5 @@
 .root[data-size='icon'] .content {
   display: inline;
   max-width: 100%;
+  font-size: calc(0.6 * var(--body-font-size));
 }
