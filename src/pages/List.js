@@ -117,9 +117,11 @@ const defaultSorting = {
   path: 'metadate.modified',
   asc: false,
 }
+const defaultLayout = 'list'
 export function ListView({
   preselectedTypes = possibleTypes,
   preselectedSorting = defaultSorting,
+  preselectedLayout = defaultLayout,
 }) {
 
   const filteredTypes = preselectedTypes.filter(type => possibleTypes.includes(type))
@@ -134,7 +136,7 @@ export function ListView({
   const [sortedBlockGroups, setSortedBlockGroups] = useState([])
   const loadBlocks = useLoadBlocks()
   const [sorting, setSorting] = useState(preselectedSorting)
-  const [layout, setLayout] = useState('list') // 'grid' or 'list'
+  const [layout, setLayout] = useState(preselectedLayout) // 'grid' or 'list'
   const isGrid = layout === 'grid'
 
   const filters = useRef({
