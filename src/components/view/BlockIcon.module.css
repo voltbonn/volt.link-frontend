@@ -34,7 +34,7 @@
   padding: calc(0.08 * var(--body-font-size)) calc(0.08 * var(--body-font-size));
   line-height: calc(0.02 * var(--body-font-size));
   -webkit-text-stroke: 1.5px currentColor;
-  border-radius: 4px;
+  /* border-radius: calc(var(--body-font-size)*0.06); */
 }
 /* check for dark mode*/
 @media (prefers-color-scheme: dark) {
@@ -52,9 +52,10 @@
   background-position: center;
   background-size: cover;
   opacity: var(--alpha);
-  border-radius: 1px;
-  box-shadow: 0 0 0 1px currentColor;
-  margin-block-end: calc(var(--body-font-size)*0.1);
+  box-shadow: 0 0 0 calc(var(--body-font-size)*0.02) currentColor;
+  /* border-radius: calc(var(--body-font-size)*0.01); */
+  width: calc(100% - calc(var(--body-font-size)*0.02));
+  margin: calc(var(--body-font-size)*0.02) auto calc(var(--body-font-size)*0.1) auto;
 }
 .icon img {
   width: 100%;
