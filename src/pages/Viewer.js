@@ -466,7 +466,7 @@ function Viewer () {
       }
       <main className={`${classes.contentWrapper}`}>
         {
-          (type === 'page' || type === 'person' || type === 'redirect')
+          'page person redirect'.split(' ').includes(type)
             ? iconComponent
             : null
         }
