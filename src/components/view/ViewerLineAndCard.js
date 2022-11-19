@@ -67,7 +67,7 @@ function ViewerLineAndCard({
   }
   
   let contentPreviewText = null
-  if (type === 'page' || type === 'person' || type === 'poster' || type === 'definition') {
+  if (size !== 'icon' && (type === 'page' || type === 'person' || type === 'poster' || type === 'definition')) {
     let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
 
     if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length !== '') {
