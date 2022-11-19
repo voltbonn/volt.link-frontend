@@ -43,8 +43,7 @@
   padding: var(--basis) var(--basis_x2);
 }
 .root[data-size='icon'] .icon {
-  width: var(--basis_x16) !important;
-  height: var(--basis_x16) !important;
+  --body-font-size: var(--basis_x16);
   margin: 0 !important;
 }
 
