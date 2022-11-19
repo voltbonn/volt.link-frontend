@@ -207,7 +207,7 @@ export const getParentBlocks_Query = gql`
         # inherited_block_permissions
 				# contentAsPlaintextPerBlock
 				# contentAsMarkdownPerBlock
-				# contentAsPlaintext
+				contentAsPlaintext
 				# contentAsMarkdown
       }
     }
