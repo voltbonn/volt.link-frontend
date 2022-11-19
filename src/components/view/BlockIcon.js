@@ -21,6 +21,15 @@ import { getImageUrl, getBlockColor } from '../../functions.js'
 
 import classes from './BlockIcon.module.css'
 
+function text2squares(text) {
+   // █ ▓ ▒ ░
+  return (
+    text.replace(/[^\n]/gm, '█')
+    // .replace(/[^\s]/gm, '█')
+    // .replace(/ /gm, '     ')
+  )
+}
+
 export default function BlockIcon({
   block,
   style = {},
@@ -142,11 +151,7 @@ export default function BlockIcon({
     }
 
     if (hasText) {
-      lines.push(<div>{
-        text
-          .replace(/[^\s]/gm, '█')
-          .replace(/ /gm, '     ')
-      }</div>)
+      lines.push(<div>{text2squares(text)}</div>)
     }
 
     if (hasContent) {
@@ -156,9 +161,7 @@ export default function BlockIcon({
         contentAsPlaintext = contentAsPlaintext.slice(0, maxTextLength)
       }
 
-      contentAsPlaintext = contentAsPlaintext
-        .replace(/[^\s]/gm, '█') // █ ▓ ▒ ░
-        .replace(/ /gm, '     ')
+      contentAsPlaintext = text2squares(contentAsPlaintext)
 
       lines = lines
         .concat(

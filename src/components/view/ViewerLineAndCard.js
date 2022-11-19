@@ -67,7 +67,7 @@ function ViewerLineAndCard({
   }
   
   let contentPreviewText = null
-  if (size !== 'icon' && (type === 'page' || type === 'person' || type === 'poster' || type === 'definition')) {
+  if (type === 'page' || type === 'person' || type === 'poster' || type === 'definition') {
     let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
 
     if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length > 0) {
@@ -91,19 +91,21 @@ function ViewerLineAndCard({
 
       contentPreviewText = contentAsPlaintext.join('\n')
 
-      const contentAsPlaintextWithRenderedMarkdown = {
-        __html: renderInlineMarkdown(contentAsPlaintext.join('\n'))
-      }
+      if (size !== 'icon') {
+        const contentAsPlaintextWithRenderedMarkdown = {
+          __html: renderInlineMarkdown(contentAsPlaintext.join('\n'))
+        }
 
-      additionalInfos.push(<div
-        key="contentAsPlaintext"
-        importance="more"
-        dir="auto"
-        dangerouslySetInnerHTML={contentAsPlaintextWithRenderedMarkdown}
-        style={{
-          whiteSpace: 'pre-wrap',
-        }}
-      ></div>)
+        additionalInfos.push(<div
+          key="contentAsPlaintext"
+          importance="more"
+          dir="auto"
+          dangerouslySetInnerHTML={contentAsPlaintextWithRenderedMarkdown}
+          style={{
+            whiteSpace: 'pre-wrap',
+          }}
+        ></div>)
+      }
     }
   }
 
