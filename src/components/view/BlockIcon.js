@@ -38,6 +38,17 @@ export default function BlockIcon({
   let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
   const hasContent = typeof contentAsPlaintext === 'string' && contentAsPlaintext.length > 0
 
+  const coverphotoPropertyValue = (
+    type === 'file'
+      ? {
+        type: 'file',
+        fileId: block._id,
+      }
+      : properties?.coverphoto || null
+   )
+  const coverphotoUrl = getImageUrl(coverphotoPropertyValue, { width: size, height: size })
+  const hasCoverphoto = typeof coverphotoUrl === 'string' && coverphotoUrl.length > 1
+
   if (
     canBeIcon
     && properties.hasOwnProperty('icon')
@@ -86,10 +97,10 @@ export default function BlockIcon({
   if (iconComponent === null) {
     let icon_url = canBeIcon ? getImageUrl(properties.icon, { width: size, height: size }) : null
 
-    if (!icon_url && !hasContent) {
+    if (!icon_url && !hasContent && hasCoverphoto) {
       // coverphoto fallback
       isSquareIcon = true
-      icon_url = getImageUrl(properties.coverphoto, { width: size, height: size })
+      icon_url = coverphotoUrl
     }
 
     if (typeof icon_url === 'string' && icon_url.length !== 0) {
@@ -99,7 +110,7 @@ export default function BlockIcon({
         style={{
           ...style,
           backgroundImage: `url(${icon_url})`,
-          backgroundSize: 'poster image'.split(' ').includes(type) ? 'contain' : 'cover',
+          backgroundSize: 'poster image file'.split(' ').includes(type) ? 'contain' : 'cover',
         }}
         alt=""
       />
@@ -111,9 +122,6 @@ export default function BlockIcon({
     && hasContent
     && !(type === 'poster' || type === 'image')
   ) {
-    const coverphotoUrl = getImageUrl(properties.coverphoto, { width: 40, height: 40 })
-    const hasCoverphoto = typeof coverphotoUrl === 'string' && coverphotoUrl.length > 1
-
     let text = block?.properties?.text || null
     const hasText = typeof text === 'string' && text.length !== ''
 
