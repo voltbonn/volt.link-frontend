@@ -145,7 +145,7 @@ export default function BlockIcon({
       lines.push(<div>{
         text
           .replace(/[^\s]/gm, '█')
-          .replace(/ /gm, '     ')
+          // .replace(/ /gm, '     ')
       }</div>)
     }
 
