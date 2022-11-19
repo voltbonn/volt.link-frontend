@@ -96,7 +96,7 @@ export default function BlockIcon({
         style={{
           ...style,
           backgroundImage: `url(${icon_url})`,
-          backgroundSize: type === 'poster' ? 'contain' : 'cover',
+          backgroundSize: 'poster image'.split(' ').includes(type) ? 'contain' : 'cover',
         }}
         alt=""
       />
