@@ -30,9 +30,9 @@
   font-family: monospace;
   white-space: pre-wrap;
   word-break: break-word;
-  font-size: calc(0.03 * var(--body-font-size));
+  font-size: calc(0.01 * var(--body-font-size));
   padding: calc(0.08 * var(--body-font-size)) calc(0.08 * var(--body-font-size));
-  line-height: calc(0.05 * var(--body-font-size));
+  line-height: calc(0.04 * var(--body-font-size));
   -webkit-text-stroke: 1px currentColor;
 }
 /* check for dark mode*/
@@ -43,7 +43,7 @@
   }
 }
 .icon.text_document > div {
-  margin-block-end: calc(0.08 * var(--body-font-size));
+  margin-block-end: calc(0.04 * var(--body-font-size));
 }
 .icon.text_document .coverphoto {
   height: calc(0.25 * var(--body-font-size));
