@@ -53,3 +53,10 @@
   max-width: 100%;
   font-size: calc(0.6 * var(--body-font-size));
 }
+
+
+.root[data-size='icon'] .additionalInfos > div{
+  white-space: nowrap !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

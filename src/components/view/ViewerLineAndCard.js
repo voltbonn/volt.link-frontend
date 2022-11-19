@@ -121,7 +121,7 @@ function ViewerLineAndCard({
     title = getString('placeholder_headline_empty')
   }
 
-  if (size === 'line' || size === 'icon') {
+  if (size === 'line') {
     if (title !== '') {
       additionalInfos = []
     } else if (additionalInfos.length === 0) {
