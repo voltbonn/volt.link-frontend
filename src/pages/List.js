@@ -46,6 +46,7 @@ import {
   // Remove as DividerIcon,
   // CheckBox as CheckboxIcon,
   WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
+  AbcSharp as DefinitionIcon,
 
   Visibility as ViewerIcon,
   Edit as EditorIcon,
@@ -71,7 +72,7 @@ const typeIcons = {
   page: <PageIcon />,
   person: <PersonIcon />,
   poster: <PosterIcon />,
-  definition: <PageIcon />, // todo: change icon
+  definition: <DefinitionIcon />,
 }
 const possibleTypes = [
   // 'button',
