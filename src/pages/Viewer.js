@@ -351,12 +351,21 @@ function Viewer () {
     contentPreviewText = contentAsPlaintext.join('\n')
   }
 
-  const coverphoto_url = getImageUrl(coverphoto, { width: 1400, height: 400 })
-  const metadata_image_url = getImageUrl(coverphoto, { width: 1000, height: 1000 })
+  const coverphotoPropertyValue = (
+    type === 'file'
+      ? {
+        type: 'file',
+        fileId: block._id,
+      }
+      : coverphoto || null
+  )
+    console.log('coverphotoPropertyValue', coverphotoPropertyValue)
+  const coverphoto_url = getImageUrl(coverphotoPropertyValue, { width: 1400, height: 400 })
+  const metadata_image_url = getImageUrl(coverphotoPropertyValue, { width: 1000, height: 1000 })
 
   let coverphotoComponent = null
   if (typeof coverphoto_url === 'string' && coverphoto_url.length > 0) {
-    if (type === 'poster' || type === 'image') {
+    if (type === 'poster' || type === 'image' || type === 'file') {
       coverphotoComponent = <div style={{
         width: '1000px',
         maxWidth: '100%',
@@ -451,7 +460,7 @@ function Viewer () {
 
     <div className={`basis_0_8 ${classes.app} ${classes.spine_aligned}`} dir="auto">
       {
-        (type === 'page' || type === 'person' || type === 'redirect' || type === 'poster' || type === 'image')
+        'page person redirect poster image file'.split(' ').includes(type)
           ? coverphotoComponent
           : null
       }
