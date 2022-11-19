@@ -47,6 +47,7 @@ import {
   // CheckBox as CheckboxIcon,
   WebStoriesSharp as PosterIcon, // WebStories book bookmark ContactPage CropPortrait Layers Note PhotoAlbum Photo ViewCarousel
   AbcSharp as DefinitionIcon,
+  PublicSharp as WebsiteIcon,
 
   Visibility as ViewerIcon,
   Edit as EditorIcon,
@@ -73,6 +74,7 @@ const typeIcons = {
   person: <PersonIcon />,
   poster: <PosterIcon />,
   definition: <DefinitionIcon />,
+  website: <WebsiteIcon />,
 }
 const possibleTypes = [
   // 'button',
@@ -86,6 +88,7 @@ const possibleTypes = [
   'person',
   'poster',
   'definition',
+  'website',
 ]
 
 const roleIcons = {
