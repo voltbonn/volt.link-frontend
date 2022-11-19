@@ -55,6 +55,9 @@ import {
   ArrowUpward as ArrowUpwardIcon,
   ArrowDownward as ArrowDownwardIcon,
   // Segment as GroupingIcon,
+
+  ViewStreamSharp as ListLayoutIcon, // ViewStreamSharp ViewListSharp ViewHeadlineSharp
+  GridViewSharp as GridLayoutIcon, // GridViewSharp ViewCompactSharp
 } from '@mui/icons-material'
 
 const typeIcons = {
@@ -122,15 +125,19 @@ export function ListView({
 
   const { getString, translateBlock, userLocales } = useLocalization()
   const [loadedBlocks, setLoadedBlocks] = useState([])
-  const [sortedBlocks, setSortedBlocks] = useState([])
+  const [sortedBlockGroups, setSortedBlockGroups] = useState([])
   const loadBlocks = useLoadBlocks()
   const [sorting, setSorting] = useState(preselectedSorting)
-
+  const [layout, setLayout] = useState('list') // 'grid' or 'list'
+  const isGrid = layout === 'grid'
 
   const filters = useRef({
     type: preselectedTypes[0],
     roles: [],
   })
+  const changeLayout = useCallback(() => {
+    setLayout(currentLayout => currentLayout === 'grid' ? 'list' : 'grid')
+  }, [])
 
   const { loggedIn } = useUser()
   const [possibleRoles, setPossibleRoles] = useState([])
@@ -215,13 +222,14 @@ export function ListView({
     const sortable_field_type = sortableFieldsInfos[sorting.path].type
     if (sortable_field_type === 'text') {
 
-      const newSortedBlocksWithHeadings = []
+      const newSortedBlocksWithHeadings = {}
 
       // add the days between the blocks
       if (Array.isArray(newSortedBlocks) && newSortedBlocks.length > 0) {
-      for (let i = -1; i <= newSortedBlocks.length - 2; i += 1) {
+        let currentHeading = '???'
+        for (let i = -1; i <= newSortedBlocks.length - 2; i += 1) {
 
-        const this_block_id = newSortedBlocks[i]?._id || ''
+        // const this_block_id = newSortedBlocks[i]?._id || ''
 
         let thisLetter = ''
         if (i >= 0 && newSortedBlocks.length >= i) {
@@ -236,45 +244,55 @@ export function ListView({
         if (i <= newSortedBlocks.length - 2 && (i === -1 || thisLetter !== nextLetter)) {
           if (nextLetter === '') {
             // undefined
-            newSortedBlocksWithHeadings.push({
-              _id: '???_' + this_block_id,
-              type: 'text',
-              properties: {
-                text: '???',
-                text_style: 'h2',
-                locale: 'en',
-              },
-              isSortHeading: true,
-            })
+            currentHeading = '???'
+            // newSortedBlocksWithHeadings.push({
+            //   _id: '???_' + this_block_id,
+            //   type: 'text',
+            //   properties: {
+            //     text: '???',
+            //     text_style: 'h2',
+            //     locale: 'en',
+            //   },
+            //   isSortHeading: true,
+            // })
           } else {
             // letter
-            newSortedBlocksWithHeadings.push({
-              _id: nextLetter + '_' + this_block_id,
-              type: 'text',
-              properties: {
-                text: nextLetter,
-                text_style: 'h2',
-                locale: 'en',
-              },
-              isSortHeading: true,
-            })
+            currentHeading = nextLetter
+            // newSortedBlocksWithHeadings.push({
+            //   _id: nextLetter + '_' + this_block_id,
+            //   type: 'text',
+            //   properties: {
+            //     text: nextLetter,
+            //     text_style: 'h2',
+            //     locale: 'en',
+            //   },
+            //   isSortHeading: true,
+            // })
           }
         }
 
-        newSortedBlocksWithHeadings.push(newSortedBlocks[i + 1])
-      }
+          if (!newSortedBlocksWithHeadings.hasOwnProperty(currentHeading)) {
+            newSortedBlocksWithHeadings[currentHeading] = {
+              heading: currentHeading,
+              blocks: [],
+            }
+          }
+
+          newSortedBlocksWithHeadings[currentHeading].blocks.push(newSortedBlocks[i + 1])
+        }
       }
 
-      setSortedBlocks(newSortedBlocksWithHeadings)
+      setSortedBlockGroups(Object.values(newSortedBlocksWithHeadings))
     } else if (sortable_field_type === 'date') {
 
-      const newSortedBlocksWithHeadings = []
+      const newSortedBlocksWithHeadings = {}
 
       if (Array.isArray(newSortedBlocks) && newSortedBlocks.length > 0) {
-      // add first letter starting blocks between the blocks
-      for (let i = -1; i <= newSortedBlocks.length - 2; i += 1) {
+        // add first letter starting blocks between the blocks
+        let currentHeading = '???'
+        for (let i = -1; i <= newSortedBlocks.length - 2; i += 1) {
 
-        const this_block_id = newSortedBlocks[i]?._id || ''
+        // const this_block_id = newSortedBlocks[i]?._id || ''
 
         let thisDateString = ''
         if (i >= 0 && newSortedBlocks.length >= i) {
@@ -289,40 +307,49 @@ export function ListView({
         if (i <= newSortedBlocks.length - 2 && (i === -1 || thisDateString !== nextDateString)) {
           if (nextDateString === '') {
             // undefined
-            newSortedBlocksWithHeadings.push({
-              _id: '???_' + this_block_id,
-              type: 'text',
-              properties: {
-                text: '???',
-                text_style: 'h2',
-                locale: 'en',
-              },
-              isSortHeading: true,
-            })
+            currentHeading = '???'
+            // newSortedBlocksWithHeadings.push({
+            //   _id: '???_' + this_block_id,
+            //   type: 'text',
+            //   properties: {
+            //     text: '???',
+            //     text_style: 'h2',
+            //     locale: 'en',
+            //   },
+            //   isSortHeading: true,
+            // })
           } else {
             // letter
-            newSortedBlocksWithHeadings.push({
-              _id: nextDateString + '_' + this_block_id,
-              type: 'text',
-              properties: {
-                text: nextDateString,
-                text_style: 'h2',
-                locale: 'en',
-              },
-              isSortHeading: true,
-            })
+            currentHeading = nextDateString
+            // newSortedBlocksWithHeadings.push({
+            //   _id: nextDateString + '_' + this_block_id,
+            //   type: 'text',
+            //   properties: {
+            //     text: nextDateString,
+            //     text_style: 'h2',
+            //     locale: 'en',
+            //   },
+            //   isSortHeading: true,
+            // })
           }
         }
 
-        newSortedBlocksWithHeadings.push(newSortedBlocks[i + 1])
-      }
+          if (!newSortedBlocksWithHeadings.hasOwnProperty(currentHeading)) {
+            newSortedBlocksWithHeadings[currentHeading] = {
+              heading: currentHeading,
+              blocks: [],
+            }
+          }
+
+        newSortedBlocksWithHeadings[currentHeading].blocks.push(newSortedBlocks[i + 1])
+        }
       }
 
-      setSortedBlocks(newSortedBlocksWithHeadings)
+      setSortedBlockGroups(Object.values(newSortedBlocksWithHeadings))
     } else {
-      setSortedBlocks(newSortedBlocks)
+      setSortedBlockGroups(newSortedBlocks)
     }
-  }, [sorting, setSortedBlocks, getText])
+  }, [sorting, setSortedBlockGroups, getText])
   const changeSorting = useCallback(path => {
     setSorting(oldSorting => ({
       ...oldSorting,
@@ -391,6 +418,37 @@ export function ListView({
       flexWrap: 'wrap',
       justifyItems: 'flex-start',
     }}>
+
+      <button
+        className={`${layout === 'list' ? 'default' : 'text'} hasIcon`}
+        style={{
+          width: 'auto',
+          margin: '0 calc(-1 * var(--basis)) 0 0',
+          '--borderRadius': (
+            layout === 'list'
+            ? '0'
+            : 'calc(0.3 * var(--body-font-size)) 0 0 calc(0.3 * var(--body-font-size))'
+          ),
+        }}
+        onClick={changeLayout}
+      >
+        <ListLayoutIcon className="icon" />
+      </button>
+      <button
+        className={`${layout === 'grid' ? 'default' : 'text'} hasIcon`}
+        style={{
+          width: 'auto',
+          margin: '0',
+          '--borderRadius': (
+            layout === 'grid'
+            ? '0'
+            : '0 calc(0.3 * var(--body-font-size)) calc(0.3 * var(--body-font-size)) 0'
+          ),
+        }}
+        onClick={changeLayout}
+      >
+        <GridLayoutIcon className="icon" />
+      </button>
       
       <button
         className="text hasIcon"
@@ -609,50 +667,71 @@ export function ListView({
     }
 
     </div>
-    
+
     <hr className={classes.smallDivider} />
 
     <React.Fragment key={sorting}>
       {
-        sortedBlocks
-          .filter(Boolean)
-          .map(block => {
-            return <div
-              key={block._id}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'row',
-                height: 'auto',
-              }}
-              className={classes.blockRow}
-            >
-              <ViewerAuto size={block?.type === 'image' ? 'line' : 'card'} block={block} />
-              {
-                block?.isSortHeading === true
-                  ? null
-                  : <div className={classes.blockRowActions}>
-                    <BlockMenu
-                      onReloadContext={loadList}
+        sortedBlockGroups
+        .filter(group => !!group.blocks && Array.isArray(group.blocks) && group.blocks.length > 0)
+        .map(group => (<>
+          <h2 style={{ marginTop: 'var(--basis_x8)' }}>{group.heading}</h2>
+          <div className={isGrid ? classes.grid_layout : classes.list_layout}>
+            {
+              group.blocks
+                .filter(Boolean)
+                .map(block => {
+                  return <div
+                    key={block._id}
+                    style={{
+                      // display: 'flex',
+                      alignItems: isGrid ? 'flex-start' : 'center',
+                      flexDirection: 'row',
+                      height: 'auto',
+                      display: 'inline-flex',
+                    }}
+                    className={classes.blockRow}
+                  >
+                    <ViewerAuto
+                      size={
+                        isGrid
+                          ? 'icon'
+                          : (
+                            block?.type === 'image'
+                              ? 'line'
+                              : 'card'
+                          )
+                      }
                       block={block}
-                      trigger={props => (
-                        <button
-                          {...props}
-                          className={`text hasIcon`}
-                          style={{
-                            margin: '0',
-                            padding: 'var(--basis_x0_5) 0',
-                            flexShrink: '0',
-                          }}
-                        >
-                          <BlockMenuIcon className="icon" />
-                        </button>
-                      )}
                     />
+                    {
+                      block?.isSortHeading === true
+                        ? null
+                        : <div className={classes.blockRowActions}>
+                          <BlockMenu
+                            onReloadContext={loadList}
+                            block={block}
+                            trigger={props => (
+                              <button
+                                {...props}
+                                className={`text hasIcon`}
+                                style={{
+                                  margin: '0',
+                                  padding: 'var(--basis_x0_5) 0',
+                                  flexShrink: '0',
+                                }}
+                              >
+                                <BlockMenuIcon className="icon" />
+                              </button>
+                            )}
+                          />
+                        </div>
+                    }
                   </div>
-              }
-            </div>
-          })
+                })
+            }
+          </div>
+        </>))
       }
     </React.Fragment>
   </div>
