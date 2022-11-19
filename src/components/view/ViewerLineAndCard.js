@@ -70,7 +70,7 @@ function ViewerLineAndCard({
   if (size !== 'icon' && (type === 'page' || type === 'person' || type === 'poster' || type === 'definition')) {
     let contentAsPlaintext = block?.computed?.contentAsPlaintext || null
 
-    if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length !== '') {
+    if (typeof contentAsPlaintext === 'string' && contentAsPlaintext.length > 0) {
       const maxTextLength = 200
       const maxLines = 2
 
