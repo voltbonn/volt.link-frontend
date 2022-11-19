@@ -685,7 +685,7 @@ export function ListView({
                     key={block._id}
                     style={{
                       // display: 'flex',
-                      alignItems: isGrid ? 'flex-start' : 'center',
+                      alignItems: isGrid ? 'flex-end' : 'center',
                       flexDirection: 'row',
                       height: 'auto',
                       display: 'inline-flex',
