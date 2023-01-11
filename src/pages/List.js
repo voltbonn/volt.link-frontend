@@ -424,6 +424,7 @@ export function ListView({
       margin: 'var(--basis_x2) 0',
     }}>
       <p>You need to login, to view the list.</p>
+      <br />
       <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
         <button
           className="default green hasIcon"
