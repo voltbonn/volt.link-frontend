@@ -383,8 +383,10 @@ export function ListView({
     sortBlocks(loadedContentBlocks)
   }, [loadBlocks, setLoadedBlocks, sortBlocks])
   useEffect(() => {
-    loadList()
-  }, [loadList])
+    if (loggedIn) {
+      loadList()
+    }
+  }, [loadList, loggedIn])
 
   const setTypeFilter = useCallback(newType => {
     filters.current.type = newType
@@ -415,6 +417,30 @@ export function ListView({
         })
     }
   }, [saveBlock, navigate])
+
+  if (!loggedIn) {
+    // inform that people need to login
+    return <div style={{
+      margin: 'var(--basis_x2) 0',
+    }}>
+      <p>You need to login, to view the list.</p>
+      <a href={`${window.domains.backend}login?redirect_to=${encodeURIComponent(window.location.toString())}`}>
+        <button
+          className="default green hasIcon"
+          style={{
+            flexShrink: '0',
+            margin: '0',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <LoginIcon className="icon" />
+          <span style={{ verticalAlign: 'middle' }}>
+            Login
+          </span>
+        </button>
+      </a>
+    </div>
+  }
 
   return <div style={{
     margin: 'var(--basis_x2) 0',
