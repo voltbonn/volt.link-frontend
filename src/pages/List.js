@@ -1,25 +1,15 @@
 import React from 'react'
 
-import classes from './App.module.css'
-
-import {
-  Outlet,
-  // Routes,
-  // Route,
-  // useLocation,
-  // useMatch,
-  // useParams,
-  // useNavigate,
-} from 'react-router-dom'
+import classes from './List.module.css'
 
 import { Helmet } from 'react-helmet'
 
 const title = 'Volt.Link'
 const description = 'Volt.Link makes content easily accessible in Volt Europa.'
 
-export default function App() {
+export default function List() {
   return (<>
-    <div className={classes.root}>        
+    <div className={classes.root}>
       <Helmet>
         <title>{title}</title>
         <meta name="title" content={title} />
@@ -31,7 +21,9 @@ export default function App() {
         <meta name="twitter:description" content={description} />
       </Helmet>
 
-      <Outlet />
+      <h1>{title}</h1>
+      <p>{description}</p>
+
 
     </div>
   </>)

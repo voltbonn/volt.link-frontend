@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import './index.css'
 
-import snackbarClasses from './Snackbar.module.css'
-
-import App from './pages/App.js'
+// import App from './pages/App.js'
 // import reportWebVitals from './reportWebVitals'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { router } from './router.js';
+import {
+  RouterProvider,
+} from 'react-router-dom'
 
 import 'intl-pluralrules'
-import { AppLocalizationProvider, locales } from './fluent/l10n.js'
+// import { AppLocalizationProvider, locales } from './fluent/l10n.js'
 // import { TranslatedInputProvider } from './components/edit/TranslatedInput.js'
 
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -55,10 +56,18 @@ const client = new ApolloClient({
   },
 })
 
-function Start() {
-  const [userLocales, setUserLocales] = useState(navigator.languages)
-  const [currentLocale, setCurrentLocale] = useState(null)
+// send pageviews to Umami when the url changes
+window.addEventListener('popstate', () => {
+  if (window.umami) {
+    window.umami.trackView(window.location.pathname + window.location.search + window.location.hash);
+  }
+});
 
+function Start() {
+  // const [userLocales, setUserLocales] = useState(navigator.languages)
+  // const [currentLocale, setCurrentLocale] = useState(null)
+
+  /*
   useEffect(() => {
     // get saved locale from localStorage
     const savedLocale = window.localStorage.getItem('locale') || null
@@ -114,6 +123,7 @@ function Start() {
       window.removeEventListener('change_locale', change_locale)
     }
   }, [userLocales, setUserLocales])
+  */
 
 
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
@@ -145,19 +155,30 @@ function Start() {
     [prefersDarkMode],
   )
 
-  return <AppLocalizationProvider
-    key="AppLocalizationProvider"
-    userLocales={userLocales}
-    onLocaleChange={handleCurrentLocalesChange}
-  >
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
-        </Router>
-      </ThemeProvider>
-    </ApolloProvider>
-  </AppLocalizationProvider>
+  return <ApolloProvider client={client}>
+    <ThemeProvider theme={theme}>
+      <RouterProvider
+        router={router}
+        fallbackElement="Loading…"
+      />
+    </ThemeProvider>
+  </ApolloProvider>
+
+  // return <AppLocalizationProvider
+  //   key="AppLocalizationProvider"
+  //   userLocales={userLocales}
+  //   onLocaleChange={handleCurrentLocalesChange}
+  // >
+  //   <ApolloProvider client={client}>
+  //     <ThemeProvider theme={theme}>
+  //       <RouterProvider
+  //         router={router}
+  //         fallbackElement="Loading…"
+  //       />
+  //         {/* <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} /> */}
+  //     </ThemeProvider>
+  //   </ApolloProvider>
+  // </AppLocalizationProvider>
 }
 
 const container = document.getElementById('root')
