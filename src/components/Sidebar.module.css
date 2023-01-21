@@ -1,5 +1,0 @@
-@media (min-width: 960px) {
-  .main.open{
-    margin-left: var(--sidebarWidth);
-  }
-}

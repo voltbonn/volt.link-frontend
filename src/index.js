@@ -16,8 +16,6 @@ import { AppLocalizationProvider, locales } from './fluent/l10n.js'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import { SnackbarProvider } from 'notistack'
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -26,14 +24,16 @@ import {
 
 window.process = {} // BUGFIX for CRA4 error-page after hot-reloading.
 
-window.env = 'prod' // dev / prod
+window.env = 'dev' // dev / prod
 window.domains = {
   frontend: 'https://volt.link/',
   backend: 'https://api.volt.link/',
   storage: 'https://storage.volt.link/',
-  // frontend: 'http://localhost:4003/',
-  // backend: 'http://localhost:4004/',
-  // storage: 'http://localhost:4006/',
+}
+if (window.env === 'dev') {
+  window.domains.frontend = 'http://localhost:4003/'
+  window.domains.backend = 'http://localhost:4004/'
+  window.domains.storage = 'http://localhost:4006/'
 }
 
 window.graphql_uri = window.domains.backend + 'graphql/v1/'
@@ -54,18 +54,6 @@ const client = new ApolloClient({
     },
   },
 })
-
-// client
-//   .query({
-//     query: gql`
-//       query GetRates {
-//         rates(currency: "USD") {
-//           currency
-//         }
-//       }
-//     `
-//   })
-//   .then(result => console.info(result));
 
 function Start() {
   const [userLocales, setUserLocales] = useState(navigator.languages)
@@ -157,44 +145,19 @@ function Start() {
     [prefersDarkMode],
   )
 
-  return <>
-  <div
-    id="react-notification"
-    key="react-notification"
-    style={{zIndex: '10000'}}
-  ></div>
-
-  <AppLocalizationProvider
+  return <AppLocalizationProvider
     key="AppLocalizationProvider"
     userLocales={userLocales}
     onLocaleChange={handleCurrentLocalesChange}
   >
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          style={{ minWidth: 'unset' }}
-          classes={{
-            variantSuccess: `${snackbarClasses.snackbar} ${snackbarClasses.success}`,
-            variantError: `${snackbarClasses.snackbar} ${snackbarClasses.error}`,
-            variantWarning: `${snackbarClasses.snackbar} ${snackbarClasses.warning}`,
-            variantInfo: `${snackbarClasses.snackbar} ${snackbarClasses.info}`,
-          }}
-          domRoot={document.getElementById('react-notification')}
-        >
-          {/* <TranslatedInputProvider> */}
-            <Router>
-              <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
-            </Router>
-          {/* </TranslatedInputProvider> */}
-        </SnackbarProvider>
+        <Router>
+          <App locales={locales} currentLocale={currentLocale} onLanguageChange={handleLanguageChange} />
+        </Router>
       </ThemeProvider>
     </ApolloProvider>
   </AppLocalizationProvider>
-  </>
 }
 
 const container = document.getElementById('root')
