@@ -125,12 +125,12 @@ html {
 
   --background: var(--white);
   --background-rgb: var(--white-rgb);
-  --background-contrast: var(--grey);
-  --background-contrast-rgb: var(--grey-rgb);
+  --background-contrast: var(--purple);
+  --background-contrast-rgb: var(--purple-rgb);
   --on-background: var(--purple);
   --on-background-rgb: var(--purple-rgb);
-  --on-background-contrast: var(--purple-dark);
-  --on-background-contrast-rgb: var(--purple-dark-rgb);
+  --on-background-contrast: var(--white);
+  --on-background-contrast-rgb: var(--white-rgb);
   --shadow-color: var(--purple);
   --shadow-color-rgb: var(--purple-rgb);
   --shadow-color-rgba: rgba(var(--purple-rgb), var(--alpha-less));
@@ -147,8 +147,8 @@ html {
     --background-contrast-rgb: var(--purple-rgb);
     --on-background: var(--white);
     --on-background-rgb: var(--white-rgb);
-    --on-background-contrast: var(--dark-grey);
-    --on-background-contrast-rgb: var(--dark-grey-rgb);
+    --on-background-contrast: var(--white-rgb);
+    --on-background-contrast-rgb: var(--white-grey-rgb);
     --shadow-color: var(--purple-dark);
     --shadow-color-rgb: var(--purple-dark-rgb);
     --shadow-color-rgba: rgba(var(--purple-dark-rgb), var(--alpha-less));
@@ -417,9 +417,6 @@ select,
 button[disabled]{
   cursor: default;
 }
-.type_button{
-  cursor: text;
-}
 
 select {
   -webkit-appearance: none;
@@ -439,32 +436,39 @@ select {
 }
 
 button,
+.type_button,
 .clickable_card{
   --borderRadius: calc(0.3 * var(--body-font-size));
   border-radius: var(--borderRadius);
 }
 button.default,
 button.square,
+button.sharp,
 .clickable_card.square {
   --borderRadius: 0;
 }
-button.yellow {
+button.yellow,
+.type_button.yellow {
   --button-background: var(--yellow);
   --button-color: var(--on-yellow);
 }
-button.green {
+button.green,
+.type_button.green {
   --button-background: var(--green);
   --button-color: var(--on-green);
 }
-button.blue {
+button.blue,
+.type_button.blue {
   --button-background: var(--blue);
   --button-color: var(--on-blue);
 }
-button.red {
+button.red,
+.type_button.red {
   --button-background: var(--red);
   --button-color: var(--on-red);
 }
-button.text {
+button.text,
+.type_button.text {
   --button-background: transparent;
   --button-color: var(--on-background);
 }
@@ -478,7 +482,9 @@ button:focus,
   transform: scale(1.05);
 } */
 button:not([disabled]).fakeHover:before,
-button:not([disabled]):hover:before {
+button:not([disabled]):hover:before,
+.type_button:not([disabled]).fakeHover:before,
+.type_button:not([disabled]):hover:before {
   content: "";
   position: absolute;
   top: 0;
@@ -491,7 +497,9 @@ button:not([disabled]):hover:before {
   border-radius: var(--borderRadius);
 }
 button.text:not([disabled]).fakeHover:before,
-button.text:not([disabled]):hover:before {
+button.text:not([disabled]):hover:before,
+.type_button.text:not([disabled]).fakeHover:before,
+.type_button.text:not([disabled]):hover:before {
   opacity: var(--alpha-less);
   mix-blend-mode: normal;
   background-color: var(--on-background);

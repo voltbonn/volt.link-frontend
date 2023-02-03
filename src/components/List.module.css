@@ -1,0 +1,21 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, auto));
+  gap: var(--basis_x2) var(--basis);
+  margin: 0 var(--basis);
+}
+.list hr {
+  margin: 0;
+}
+.list a {
+  word-wrap: anywhere;
+  word-break: break-all;
+  margin: var(--basis) var(--basis_x2);
+  display: inline-block;
+}
+.list button {
+  margin: var(--basis);
+}
+.list .full_width {
+  grid-column: 1 / -1;
+}

@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 
 import './index.css'
 
-// import App from './pages/App.js'
 // import reportWebVitals from './reportWebVitals'
 import { router } from './router.js';
 import {
@@ -16,12 +15,6 @@ import 'intl-pluralrules'
 
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from '@apollo/client'
 
 window.process = {} // BUGFIX for CRA4 error-page after hot-reloading.
 
@@ -37,24 +30,7 @@ if (window.env === 'dev') {
   window.domains.storage = 'http://localhost:4006/'
 }
 
-window.graphql_uri = window.domains.backend + 'graphql/v1/'
-
-const client = new ApolloClient({
-  uri: window.graphql_uri,
-  cache: new InMemoryCache(),
-  credentials: 'include',
-  defaultOptions: {
-    watchQuery: {
-      // fetchPolicy: 'cache-and-network',
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'ignore',
-    },
-    query: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'all',
-    },
-  },
-})
+window.rest_uri = window.domains.backend + 'rest/v1/'
 
 // send pageviews to Umami when the url changes
 window.addEventListener('popstate', () => {
@@ -155,14 +131,12 @@ function Start() {
     [prefersDarkMode],
   )
 
-  return <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
-      <RouterProvider
-        router={router}
-        fallbackElement="Loading…"
-      />
-    </ThemeProvider>
-  </ApolloProvider>
+  return <ThemeProvider theme={theme}>
+    <RouterProvider
+      router={router}
+      fallbackElement="Loading…"
+    />
+  </ThemeProvider>
 
   // return <AppLocalizationProvider
   //   key="AppLocalizationProvider"
