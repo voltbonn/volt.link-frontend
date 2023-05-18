@@ -67,6 +67,15 @@ const client = new ApolloClient({
 //   })
 //   .then(result => console.info(result));
 
+// send pageviews to Umami when the url changes
+window.addEventListener('popstate', () => {
+  if (window.umami) {
+    const url = window.location.pathname + window.location.search + window.location.hash
+    window.umami.track(props => ({ ...props, url }))
+    // window.umami.track()
+  }
+});
+
 function Start() {
   const [userLocales, setUserLocales] = useState(navigator.languages)
   const [currentLocale, setCurrentLocale] = useState(null)
@@ -90,7 +99,7 @@ function Start() {
 
           const language = locale.split('-')[0]
           if (typeof language === 'string' && language !== '') {
-            window.umami.trackEvent('L: ' + language) // Log just the language.
+            window.umami.track('L: ' + language) // Log just the language.
           }
         }
       }
