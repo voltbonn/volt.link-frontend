@@ -90,7 +90,7 @@ function Start() {
 
           const language = locale.split('-')[0]
           if (typeof language === 'string' && language !== '') {
-            window.umami.trackEvent('L: ' + language) // Log just the language.
+            window.umami.track('L: ' + language) // Log just the language.
           }
         }
       }
