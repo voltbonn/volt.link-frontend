@@ -50,7 +50,7 @@ function Editor() {
       && error.hasOwnProperty('code')
       && typeof error.code === 'string'
     ) {
-      window.umami.trackEvent('E: ' + error.code)
+      window.umami.track('E: ' + error.code)
     }
   }, [setError])
 

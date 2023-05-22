@@ -78,13 +78,13 @@ function Viewer () {
       && error.hasOwnProperty('code')
       && typeof error.code === 'string'
     ) {
-      window.umami.trackEvent('E: ' + error.code)
+      window.umami.track('E: ' + error.code)
     }
   }, [setError])
 
   const viewStatistics = () => {
     const a = document.createElement('a')
-    a.href = `https://umami.qiekub.org/share/s0ZHBZbb/volt.link?url=%2F${slug}`
+    a.href = `https://umami.volt.link/share/s0ZHBZbb/volt.link?url=%2F${slug}`
     a.target = '_blank'
     a.rel = 'noreferrer'
     a.click()
